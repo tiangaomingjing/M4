@@ -1,0 +1,13 @@
+build-ServoMain-Qt5_5_1Vs2013x86-Debug/
+build-ServoMain-Qt5_5_1Vs2013x86-Release/
+debug/
+release/Custom/configuser/
+release/Custom/configlist.xml
+test-build/
+
+*.exp
+*.dll
+*.lib
+*.rar
+*.pro.user
+*.exe

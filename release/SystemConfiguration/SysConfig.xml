@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Com(通信设备类型 ：与Comclassname头文件定义一致) -->
+<!-- Type(产品类型：id与程序中定义的产品枚举类型一致) -->
+<!-- Model(产品型号：axisCount表示产品轴数) -->
+<!-- Tree(产品调试窗口导航栏树形控件节点及对应动态库属性) -->
+<!-- Root(根节点属性) -->
+<!-- Child(子节点属性) -->
+<!-- 对应的classname放在执行程序同级的“classname”文件夹中 -->
+<GTSD>
+  <Com id="0" name="PcDebug"/>
+  <Com id="1" name="RnNet"/>
+  <!--Com id="2" name="TCP/IP"/-->
+  <!--Com id="3" name="USB2Uart"/-->
+  <!--Com id="4" name="Virtual"/-->
+
+  <Type id="0" name="GTSD_4X">
+    <Model name="GTSD41" axisCount ="4">
+		<FirmWare name="V122"/>
+		<FirmWare name="V123"/>
+	</Model>
+	<Model name="GTSD42" axisCount ="4">
+		<FirmWare name="V122"/>
+		<FirmWare name="V123"/>
+		<FirmWare name="V124"/>
+		<FirmWare name="V125"/>
+	</Model>
+    <Tree>
+      <Root name="参数配置">
+		<Child name="电机参数" classname="CfgMotor" PrmFuncFile="PrmFuncMotor"/>
+		<Child name="编码器" classname="CfgEncoder" PrmFuncFile="PrmFuncEncoder"/>
+		<Child name="功率配置" classname="CfgDriverPower" PrmFuncFile="PrmFuncPower"/>
+        <Child name="电流/力矩控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
+        <Child name="速度控制器" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
+        <Child name="位置控制器" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
+        <!--Child name="阈值设定" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" /-->
+        <!--Child name="运动规划" classname="CfgMoveProfile" PrmFuncFile="PrmFuncPositionloop"/-->
+        <!--Child name="输入输出" classname="CfgIO" PrmFuncFile="PrmFuncPositionloop"/-->
+      </Root>
+      
+      <Root name="运行监视">
+        <Child name="设备状态" classname="DeviceStatus" PrmFuncFile="PrmFuncDeviceStatus"/>
+      </Root>
+	  
+	  <Root name="高级功能">
+        <Child name="RamAcess" classname="AdvRAM" PrmFuncFile="PrmRAMAxis"/>
+        <Child name="FlashAcess" classname="AdvFLASH" PrmFuncFile="PrmFlashAxis"/>
+      </Root>
+
+    </Tree>
+  </Type>
+  
+  <Type id="1" name="GTSD_6X">
+    <Model name="GTSD61" axisCount ="6">
+		<FirmWare name="V123"/>
+	</Model>
+    <Tree>
+      <Root name="参数配置">
+		<Child name="电机参数" classname="CfgMotor" PrmFuncFile="PrmFuncMotor"/>
+		<Child name="编码器" classname="CfgEncoder" PrmFuncFile="PrmFuncEncoder"/>
+		<Child name="功率配置" classname="CfgDriverPower" PrmFuncFile="PrmFuncPower"/>
+        <Child name="电流/力矩控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
+        <Child name="速度控制器" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
+        <Child name="位置控制器" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
+        <!--Child name="阈值设定" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" /-->
+        <!--Child name="运动规划" classname="CfgMoveProfile" PrmFuncFile="PrmFuncPositionloop"/-->
+        <!--Child name="输入输出" classname="CfgIO" PrmFuncFile="PrmFuncPositionloop"/-->
+      </Root>
+      
+      <Root name="运行监视">
+        <Child name="设备状态" classname="DeviceStatus" PrmFuncFile="PrmFuncDeviceStatus"/>
+      </Root>
+	  
+	  <Root name="高级功能">
+        <Child name="RamAcess" classname="AdvRAM" PrmFuncFile="PrmRAMAxis"/>
+        <Child name="FlashAcess" classname="AdvFLASH" PrmFuncFile="PrmFlashAxis"/>
+      </Root>
+    </Tree>
+  </Type>
+</GTSD>

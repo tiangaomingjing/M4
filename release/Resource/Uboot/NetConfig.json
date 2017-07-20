@@ -1,0 +1,12 @@
+{
+  "netId" : 0,
+  "netName":"PcDebug",
+  "parameters" : { 
+	  "IpAddress" : "192.168.0.1",
+	  "IpPort" : 8086 ,
+	  "RnStation":240,
+	  "BaudRate":115200,
+	  "UartBootCmd":1,
+	  "UartInputKey":"a5e4b8a4d71d04d2f89d8318fec19283"
+	  }
+}
