@@ -6,8 +6,5 @@ release/Custom/configlist.xml
 test-build/
 
 *.exp
-*.dll
-*.lib
 *.rar
 *.pro.user
-*.exe
