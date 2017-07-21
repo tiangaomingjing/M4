@@ -74,6 +74,10 @@ DftWidget::DftWidget(PlotWave *plot, QWidget *parent) :
   ui->tableWidget->insertColumn(3);
   ui->tableWidget->hideColumn(3);
   ui->tableWidget->setMouseTracking(true);
+  ui->tableWidget->horizontalHeader()->resizeSection(0,75);
+  ui->tableWidget->horizontalHeader()->resizeSection(1,100);
+  ui->tableWidget->horizontalHeader()->resizeSection(2,75);
+//  ui->tableWidget->horizontalHeader()->setStretchLastSection(true);//最后一列拉开
   QStringList headerList;
   headerList<<tr("Visible")<<tr("CurveName")<<tr("UserNote")<<tr("CurveID");
   ui->tableWidget->setHorizontalHeaderLabels(headerList);
@@ -157,8 +161,8 @@ void DftWidget::addCurve(quint16 id,QString &name,QString &fullName,QString &not
   ui->dftPlot_2->graph(rowCount)->addData(fftData.freq,fftData.ph);
   ui->dftPlot_2->rescaleAxes(true);
 
-  ui->tableWidget->resizeColumnsToContents();
-  ui->tableWidget->resizeRowsToContents();
+//  ui->tableWidget->resizeColumnsToContents();
+//  ui->tableWidget->resizeRowsToContents();
 
   QPen pen;
   pen.setColor(Qt::yellow);
@@ -454,7 +458,7 @@ void DftWidget::onBtnSaveClicked()
   quint16 id;
   QString fileName;
   QString fileNameSrc;
-  QString fileNameDefaultQString =tr("curve_fft_")+ QDateTime::currentDateTime().toString("yyyyMMddhhmmss");//默认文件名
+  QString fileNameDefaultQString =tr("curve_fft_")+ QDateTime::currentDateTime().toString("yyyyMMdd");//默认文件名
   fileName = QFileDialog::getSaveFileName(this, tr("Save curve"), fileNameDefaultQString, tr("curve file (*.dat)"));
   if (fileName.isNull()) return;
   QFileInfo fileInfo;
@@ -488,20 +492,22 @@ void DftWidget::onBtnSaveClicked()
   QVector<quint16> curveIndexs;
   bool hasSelectCurveFlag=false;
 
-  for(int i=0;i<ui->tableWidget->rowCount();i++)
-  {
-    if(ui->tableWidget->item(i,COL_PRM_TABLE_NAME)->isSelected())
-      curveCount++;
-  }
+//  for(int i=0;i<ui->tableWidget->rowCount();i++)
+//  {
+//    if(ui->tableWidget->item(i,COL_PRM_TABLE_NAME)->isSelected())
+//      curveCount++;
+//  }
+
+  curveCount=ui->tableWidget->rowCount();
 
   dataOut.setDevice(&file);
   dataOut.setVersion(QDataStream::Qt_5_5);
   dataOut<<quint16(dataOut.version())<<curveCount;
   qDebug()<<"version:"<<dataOut.version()<<"count:"<<curveCount;
-  for(int i=0;i<ui->tableWidget->rowCount();i++)
+  for(int i=0;i<curveCount;i++)
   {
-    if(ui->tableWidget->item(i,COL_PRM_TABLE_NAME)->isSelected())
-    {
+//    if(ui->tableWidget->item(i,COL_PRM_TABLE_NAME)->isSelected())
+//    {
       id=ui->tableWidget->item(i,3)->text().toUInt();//获得id
       isDraw=m_curveShowVector.at(i);
       curveName=ui->tableWidget->item(i,COL_PRM_TABLE_NAME)->text();
@@ -527,7 +533,7 @@ void DftWidget::onBtnSaveClicked()
       ams.clear();
       phas.clear();
       hasSelectCurveFlag=true;
-    }
+//    }
   }
   if(hasSelectCurveFlag)
     emit saveSourceCurve(fileNameSrc,curveIndexs);
@@ -707,15 +713,15 @@ void DftWidget::onTableItemClicked(QTableWidgetItem * item)
   }
   if(item->column()==COL_PRM_TABLE_NAME)//改变其显示与否
   {
-    for(int i=0;i<ui->dftPlot->graphCount();i++)
-    {
-      ui->dftPlot->graph(i)->setSelected(false);
-      ui->dftPlot_2->graph(i)->setSelected(false);
-    }
-    ui->dftPlot->graph(row)->setSelected(true);
-    ui->dftPlot_2->graph(row)->setSelected(true);
-    ui->dftPlot->replot();
-    ui->dftPlot_2->replot();
+//    for(int i=0;i<ui->dftPlot->graphCount();i++)
+//    {
+//      ui->dftPlot->graph(i)->setSelected(false);
+//      ui->dftPlot_2->graph(i)->setSelected(false);
+//    }
+//    ui->dftPlot->graph(row)->setSelected(true);
+//    ui->dftPlot_2->graph(row)->setSelected(true);
+//    ui->dftPlot->replot();
+//    ui->dftPlot_2->replot();
   }
 }
 

@@ -325,8 +325,8 @@ Rectangle {
     Text{
         id:m_messageShow;
         anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-        anchors.top: m_currentAxis.bottom;
-        anchors.topMargin: 30;
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin: 10;
         horizontalAlignment: Text.AlignHCenter;
         text:qsTr(" ");
         visible: false;

@@ -1280,7 +1280,7 @@ void PlotWave::onBtnSaveClicked()
   QString fileName;
   QVector<quint16>curveIndexs;
   QString fileNameDefaultQString =tr("sampling_curve_")+ QDateTime::currentDateTime().toString("yyyyMMdd");//默认文件名
-  fileName=QFileDialog::getSaveFileName(this, tr("Save curve"), fileNameDefaultQString, tr("curve file (*.src)"));
+  fileName=QFileDialog::getSaveFileName(this, tr("Save curve"), fileNameDefaultQString, tr("curve file (*.src);;text file(*.txt)"));
   if(fileName.isEmpty())
     return;
 
@@ -3895,32 +3895,66 @@ void PlotWave::saveCurve(QString &fileName, QVector<quint16> &curveIndexVector)
 {
   QFile file;
   file.setFileName(fileName);
-  if(!file.open(QIODevice::WriteOnly))
+  //判断是哪一种保存方式
+  QFileInfo fileInfo(fileName);
+  QString suffix=fileInfo.suffix();
+  if(suffix=="src")
   {
-    QMessageBox::information(0,tr("file error"),tr("can not open file :\n%1").arg(fileName));
-    return;
+    if(!file.open(QIODevice::WriteOnly))
+    {
+      QMessageBox::information(0,tr("file error"),tr("can not open file :\n%1").arg(fileName));
+      return;
+    }
+
+    quint16 idCount=curveIndexVector.count();
+    QDataStream out;
+    out.setDevice(&file);
+    out.setVersion(QDataStream::Qt_5_5);
+    out<<quint16(out.version())<<idCount;
+
+    TableParameters pars;
+    foreach (double id, curveIndexVector)
+    {
+      pars.axisNum=m_tablePlotPrmList.at(id).axisNum;
+      pars.bytes=m_tablePlotPrmList.at(id).bytes;
+      pars.color=m_tablePlotPrmList.at(id).color;
+      pars.fullName=m_tablePlotPrmList.at(id).fullName;
+      pars.isDraw=m_tablePlotPrmList.at(id).isDraw;
+      pars.offsetAddr=m_tablePlotPrmList.at(id).offsetAddr;
+      pars.curveKey=m_tablePlotPrmList.at(id).data.curveKey;
+      pars.curveValue=m_tablePlotPrmList.at(id).data.curveValue;
+      out<<pars;
+    }
+    file.close();
   }
-
-  quint16 idCount=curveIndexVector.count();
-  QDataStream out;
-  out.setDevice(&file);
-  out.setVersion(QDataStream::Qt_5_5);
-  out<<quint16(out.version())<<idCount;
-
-  TableParameters pars;
-  foreach (double id, curveIndexVector)
+  else if(suffix=="txt")
   {
-    pars.axisNum=m_tablePlotPrmList.at(id).axisNum;
-    pars.bytes=m_tablePlotPrmList.at(id).bytes;
-    pars.color=m_tablePlotPrmList.at(id).color;
-    pars.fullName=m_tablePlotPrmList.at(id).fullName;
-    pars.isDraw=m_tablePlotPrmList.at(id).isDraw;
-    pars.offsetAddr=m_tablePlotPrmList.at(id).offsetAddr;
-    pars.curveKey=m_tablePlotPrmList.at(id).data.curveKey;
-    pars.curveValue=m_tablePlotPrmList.at(id).data.curveValue;
-    out<<pars;
+    QFile fdata(fileName);
+    if (fdata.open(QFile::WriteOnly | QFile::Truncate|QIODevice::Text))
+    {
+        QTextStream out(&fdata);
+        out <<qSetFieldWidth(15) << left <<"time(s)";
+        QStringList strList;
+        foreach (PlotTablePrm prm, m_tablePlotPrmList)
+        {
+          strList=prm.fullName.split(".");
+          out<<strList.last();
+        }
+        out<<qSetFieldWidth(0) << left<<endl;
+        quint64 length=m_tablePlotPrmList.at(0).data.curveKey.length();
+        for(int i=0;i<length;i++)
+        {
+          out<<qSetFieldWidth(15) << left<<m_tablePlotPrmList.at(0).data.curveKey.at(i);
+          foreach (PlotTablePrm prm, m_tablePlotPrmList)
+          {
+            out<<prm.data.curveValue.at(i);
+          }
+          out<<qSetFieldWidth(0) << left<<endl;
+        }
+
+        fdata.close();
+    }
   }
-  file.close();
 }
 void PlotWave::addCurve(TableParameters &pars)
 {
