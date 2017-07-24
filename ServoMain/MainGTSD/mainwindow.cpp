@@ -125,6 +125,7 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
 //  qDebug()<<str;
   m_actConfigExit->setVisible(false);
   ui->btn_navigation->setVisible(false);
+  m_actFullScreen->setVisible(false);
 }
 
 MainWindow::~MainWindow()

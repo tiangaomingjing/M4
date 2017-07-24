@@ -2977,19 +2977,32 @@ void PlotWave::initialUi()
            <<tr("11 STOP_VCTL")\
            <<tr("12 Circle current Follow");
   QStringList modeList;
-  modeList<<tr("0IDLE")
-          <<tr("1ADC")
-          <<tr("2IPA")
-          <<tr("3MPI")
-          <<tr("4COL")
-          <<tr("5CCL")
-          <<tr("6VCL")
-          <<tr("7VPL")
-          <<tr("8VSL")
-          <<tr("9FIX")
-          <<tr("10PT")
-          <<tr("11DB")
-          <<tr("12CSC");
+//  modeList<<tr("0IDLE")
+//          <<tr("1ADC")
+//          <<tr("2IPA")
+//          <<tr("3MPI")
+//          <<tr("4COL")
+//          <<tr("5CCL")
+//          <<tr("6VCL")
+//          <<tr("7VPL")
+//          <<tr("8VSL")
+//          <<tr("9FIX")
+//          <<tr("10PT")
+//          <<tr("11DB")
+//          <<tr("12CSC");
+  modeList<<tr("IDLE")
+          <<tr("ADC")
+          <<tr("IPA")
+          <<tr("MPI")
+          <<tr("COL")
+          <<tr("CCL")
+          <<tr("VCL")
+          <<tr("VPL")
+          <<tr("VSL")
+          <<tr("FIX")
+          <<tr("PT")
+          <<tr("DB")
+          <<tr("CSC");
 
   ui->listWidget_mode->addItems(m_servoModeNameList);
   ui->listWidget_mode->setResizeMode(QListView::Adjust);
