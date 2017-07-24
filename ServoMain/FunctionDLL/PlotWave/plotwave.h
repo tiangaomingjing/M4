@@ -180,6 +180,7 @@ private slots:
   void onShowCurrentModeInfo(int axis,int index);//当滚轮拖拉，鼠标悬停时显示信息
   void onRollBoxBtnClicked(int axis);
   void onRollBoxStopedAt(int axis,int index);
+  void onRollBoxMoveOut(int axis);
   void onTabWidgetCurrentChanged(int index);//响应tab切换
 
 

@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QMap>
 #include <useractionwidget.h>
-#define TEST_QTTREEWIDGET_RW 0
+#define TEST_QTTREEWIDGET_RW 1
 #define TEST_QTABLE_MENU 1
 
 namespace Ui {

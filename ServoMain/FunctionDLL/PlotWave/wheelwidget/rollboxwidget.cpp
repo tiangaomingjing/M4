@@ -17,6 +17,7 @@ public:
   QVector<QPushButton *>m_buttonVector;
   int m_axisCount;
   bool m_keyCtlIsPressed;
+  int m_currentAxis;
 //  QLabel *m_title;
   QStringList m_btnNameList;
   QGridLayout *m_gridLayout;
@@ -24,6 +25,7 @@ public:
 
 RollBoxWidgetPrivate::RollBoxWidgetPrivate(RollBoxWidget *q):
   q_ptr(q),
+  m_currentAxis(0),
   m_keyCtlIsPressed(false)
 {
   QString style="QPushButton{\
@@ -114,6 +116,7 @@ RollBoxWidget::RollBoxWidget(int axisCount, const QStringList &strList, QWidget 
   setUiStyleSheet();
   d_ptr->m_buttonVector.at(0)->setChecked(true);
   this->layout()->setMargin(0);
+  setFocusPolicy(Qt::StrongFocus);
 }
 RollBoxWidget::~RollBoxWidget()
 {
@@ -240,17 +243,21 @@ void RollBoxWidget::onStopped(int index)
   qDebug()<<"stop: axis="<<axis<<"emit index="<<index;
   setSingleButtonActived(d_ptr->m_buttonVector.at(axis));
   emit stopAt(axis,index);
+  d_ptr->m_currentAxis=axis;
 }
 void RollBoxWidget::onBtnClicked()
 {
   QPushButton *btn=qobject_cast<QPushButton *>(sender());
   int axis=d_ptr->m_buttonVector.indexOf(btn);
   qDebug()<<"btn click axis="<<axis<<"count="<<d_ptr->m_buttonVector.count();
+
   if(d_ptr->m_keyCtlIsPressed==false)
   {
     setSingleButtonActived(btn);
   }
   emit clickedAt(axis);
+  if(btn->isChecked())
+    d_ptr->m_currentAxis=axis;
 }
 void RollBoxWidget::onDragIndex(int index)
 {
@@ -289,6 +296,19 @@ void RollBoxWidget::keyReleaseEvent(QKeyEvent *e)
     QWidget::keyReleaseEvent(e);
   }
 }
+void RollBoxWidget::leaveEvent(QEvent *e)
+{
+  Q_UNUSED(e)
+  qDebug()<<"mouse leave....";
+  emit moveOut(d_ptr->m_currentAxis);
+}
+void RollBoxWidget::enterEvent(QEvent *e)
+{
+  Q_UNUSED(e)
+  qDebug()<<"mouse enter....";
+  this->setFocus();
+}
+
 void RollBoxWidget::setSingleButtonActived(QPushButton *btn)
 {
   foreach (QPushButton *btn2, d_ptr->m_buttonVector)

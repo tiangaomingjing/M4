@@ -2332,6 +2332,12 @@ void PlotWave::onRollBoxStopedAt(int axis, int index)
   ui->label_showMode->setText(m_servoModeNameList.at(index));
   setServoOnUi(m_servoStatusList.at(axis).isOn);
 }
+void PlotWave::onRollBoxMoveOut(int axis)
+{
+  qDebug()<<"move out ="<<axis;
+  int index=m_servoStatusList[axis].currentModeIndex;
+  ui->label_showMode->setText(m_servoModeNameList.at(index));
+}
 
 void PlotWave::onTabWidgetCurrentChanged(int index)
 {
@@ -3011,6 +3017,7 @@ void PlotWave::initialUi()
   ui->listWidget_mode->hide();
   ui->listWidget_axis->hide();
   ui->label_showMode->setAlignment(Qt::AlignCenter);
+  //滚轮控件
   m_rollBoxUi=new RollBoxWidget(mp_userConfig->model.axisCount,modeList);
 //  m_rollBoxUi->show();
   ui->hLayout_modeTab->insertWidget(0,m_rollBoxUi,1);
@@ -3018,6 +3025,7 @@ void PlotWave::initialUi()
   connect(m_rollBoxUi,SIGNAL(dragIndexAt(int,int)),this,SLOT(onShowCurrentModeInfo(int,int)));
   connect(m_rollBoxUi,SIGNAL(clickedAt(int)),this,SLOT(onRollBoxBtnClicked(int)));
   connect(m_rollBoxUi,SIGNAL(stopAt(int,int)),this,SLOT(onRollBoxStopedAt(int,int)));
+  connect(m_rollBoxUi,SIGNAL(moveOut(int)),this,SLOT(onRollBoxMoveOut(int)));
 
 //  ui->stackedWidget->setCurrentIndex(0);
   setListViewAxisNum(mp_userConfig->model.axisCount);//初始化轴号选择列表tab1 tab2

@@ -410,6 +410,11 @@ void ServoControl::updateFunctionValueFromFlash(QTreeWidgetItem *item, QTreeWidg
         if(checkedCmdReturnValue(result))
         {
           ret=value64+0.0;
+          if(type.contains("U"))
+          {
+            Uint64 val=(Uint64)value64;
+            ret=val+0.0;
+          }
           ret=ret/kgain;
           item->setText(COL_VALUE, QString::number(ret,'f',3));
         }
@@ -420,6 +425,11 @@ void ServoControl::updateFunctionValueFromFlash(QTreeWidgetItem *item, QTreeWidg
         if(checkedCmdReturnValue(result))
         {
           ret=value32+0.0;
+          if(type.contains("U"))
+          {
+            Uint32 val=(Uint32)value32;
+            ret=val+0.0;
+          }
           ret=ret/kgain;
           item->setText(COL_VALUE, QString::number(ret,'f',3));
         }
@@ -430,6 +440,11 @@ void ServoControl::updateFunctionValueFromFlash(QTreeWidgetItem *item, QTreeWidg
         if(checkedCmdReturnValue(result))
         {
           ret=value16+0.0;
+          if(type.contains("U"))
+          {
+            Uint16 val=(Uint16)value16;
+            ret=val+0.0;
+          }
           ret=ret/kgain;
           item->setText(COL_VALUE, QString::number(ret,'f',3));
         }
@@ -815,6 +830,11 @@ void ServoControl::writeFunctionValue2Flash(QTreeWidgetItem *item,QTreeWidget *c
           if(checkedCmdReturnValue(result))
           {
             ret=value64+0.0;
+            if(type.contains("U"))
+            {
+              Uint64 value=(Uint64)value64;
+              ret=value+0.0;
+            }
             ret=ret/kgain;
 //            value64=value64/kgain+0.5;
             item->setText(COL_VALUE, QString::number(ret,'f',3));
@@ -830,6 +850,11 @@ void ServoControl::writeFunctionValue2Flash(QTreeWidgetItem *item,QTreeWidget *c
           if(checkedCmdReturnValue(result))
           {
             ret=value32+0.0;
+            if(type.contains("U"))
+            {
+              Uint32 value=(Uint32)value32;
+              ret=value+0.0;
+            }
             ret=ret/kgain;
             item->setText(COL_VALUE, QString::number(ret,'f',3));
           }
@@ -844,6 +869,11 @@ void ServoControl::writeFunctionValue2Flash(QTreeWidgetItem *item,QTreeWidget *c
           if(checkedCmdReturnValue(result))
           {
             ret=value16+0.0;
+            if(type.contains("U"))
+            {
+              Uint16 value=(Uint16)value16;
+              ret=value+0.0;
+            }
             ret=ret/kgain;
             item->setText(COL_VALUE, QString::number(ret,'f',3));
           }

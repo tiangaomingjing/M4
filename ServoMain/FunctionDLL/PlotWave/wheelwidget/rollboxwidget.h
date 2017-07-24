@@ -27,6 +27,7 @@ signals:
   void hoverAt(int axis,int index);
   void clickedAt(int axis);
   void dragIndexAt(int axis,int index);
+  void moveOut(int axis);
 
 public slots:
 
@@ -39,6 +40,8 @@ private slots:
 protected:
   void keyPressEvent(QKeyEvent *e)Q_DECL_OVERRIDE;
   void keyReleaseEvent(QKeyEvent *e)Q_DECL_OVERRIDE;
+  void leaveEvent(QEvent *e)Q_DECL_OVERRIDE;
+  void enterEvent(QEvent *e)Q_DECL_OVERRIDE;
 
 private :
   void setSingleButtonActived(QPushButton *btn);
