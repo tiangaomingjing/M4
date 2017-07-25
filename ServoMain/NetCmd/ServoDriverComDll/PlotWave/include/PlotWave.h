@@ -1,4 +1,4 @@
-Ôªø//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	plot wave function 		 									//
 //	file				:	PlotWave.h													//
 //	Description			:	plot all the var in the arm  								//
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 #ifndef  __GTSD_PLOT_WAVE__
 #define	 __GTSD_PLOT_WAVE__	
 
@@ -31,98 +31,127 @@ public:
 	CRn_NoTimer*    m_rn_noTimer;
 
 public:
-	static const int32		RAW_BUFFER_LENTH				= 200000;		//PCËØªÂèñFPGAÁºìÂ≠òÁöÑbufferÔºåÊ≤°ÊúâÂàÜÁ¶ªÊõ≤Á∫ø
-	static const int32		WAVE_LINE_BUFFER_LENTH			= 200000;		//Êõ≤Á∫øbuffuer
-	static const int32		READ_LENTH_ONCE					= 10000;		//pc‰∏ÄÊ¨°ËØªÂèñÁöÑdoubleÊï∞ÊçÆÁöÑ‰∏™Êï∞ÔºåÊØè‰∏ÄÊù°Á∫øÁöÑÊï∞ÊçÆ‰∏™Êï∞,Ê†πÊçÆFPGAbufferÁöÑÂ§ßÂ∞èËÄåÂÆö‰πâ
+	static const int32		RAW_BUFFER_LENTH				= 200000;		//PC∂¡»°FPGAª∫¥Êµƒbuffer£¨√ª”–∑÷¿Î«˙œﬂ
+	static const int32		WAVE_LINE_BUFFER_LENTH			= 200000;		//«˙œﬂbuffuer
+	static const int32		READ_LENTH_ONCE					= 10000;		//pc“ª¥Œ∂¡»°µƒdouble ˝æ›µƒ∏ˆ ˝£¨√ø“ªÃıœﬂµƒ ˝æ›∏ˆ ˝,∏˘æ›FPGAbufferµƒ¥Û–°∂¯∂®“Â
 	static const int32		RAW_CACHE_BUFFER_LENTH			= 10000;		//raw data buffer lenth
 
 	
-	static const int32		FRAME_KEYWORD_LOW				= 0xaaaa;		//ÂêåÊ≠•Â∏ßÁöÑÂÆö‰πâ
+	static const int32		FRAME_KEYWORD_LOW				= 0xaaaa;		//Õ¨≤Ω÷°µƒ∂®“Â
 	static const int32		FRAME_KEYWORD_HIGH				= 0x5555;
-	static const int16		pw_MaxAxis						= 4;			//ÊúÄÂ§ßËΩ¥Êï∞ÂÆö‰πâ
+	static const int16		pw_MaxAxis						= MAX_DSP_WAVE*2;			//◊Ó¥Û÷· ˝∂®“Â
 
 	//////////////////////////////////////////////////////////////////////////
-	int16		raw_Buffer_dspA[RAW_BUFFER_LENTH];					//ÂÆö‰πâ‰∏§‰∏™bufferÔºåÂàÜÂà´ÊîæÁΩÆDSPAÁöÑrawÊï∞ÊçÆÂíåDSPBÁöÑrawÊï∞ÊçÆ
-	int16		raw_Buffer_dspB[RAW_BUFFER_LENTH];
+	int16		raw_Buffer_dsp[MAX_DSP_WAVE][RAW_BUFFER_LENTH];
+// 	int16		raw_Buffer_dspA[RAW_BUFFER_LENTH];					//∂®“Â¡Ω∏ˆbuffer£¨∑÷±∑≈÷√DSPAµƒraw ˝æ›∫ÕDSPBµƒraw ˝æ›
+// 	int16		raw_Buffer_dspB[RAW_BUFFER_LENTH];
 
-	int16		raw_CacheBuffer_dspA[RAW_CACHE_BUFFER_LENTH];		//ÂÆö‰πâ‰∏§‰∏™cacheÔºåÁî®‰∫éÂ§ÑÁêÜ‰∏äÈù¢ÁöÑbufferÁéØÂõûÁöÑÊó∂ÂÄôÁöÑrawÊï∞ÊçÆ
-	int16		raw_CacheBuffer_dspB[RAW_CACHE_BUFFER_LENTH];
+	int16		raw_CacheBuffer_dsp[MAX_DSP_WAVE][RAW_CACHE_BUFFER_LENTH];
+// 	int16		raw_CacheBuffer_dspA[RAW_CACHE_BUFFER_LENTH];		//∂®“Â¡Ω∏ˆcache£¨”√”⁄¥¶¿Ì…œ√Êµƒbufferª∑ªÿµƒ ±∫Úµƒraw ˝æ›
+// 	int16		raw_CacheBuffer_dspB[RAW_CACHE_BUFFER_LENTH];
 
-	int32		raw_Data_Index_dspA;								//‰ªéFPGAÁöÑFIFO‰∏≠ËØªÂèñÁöÑrawÊï∞ÊçÆÁöÑindex
-	int32		raw_Data_Index_dspB;
+	int32		raw_Data_Index_dsp[MAX_DSP_WAVE];
+// 	int32		raw_Data_Index_dspA;								//¥”FPGAµƒFIFO÷–∂¡»°µƒraw ˝æ›µƒindex
+// 	int32		raw_Data_Index_dspB;
 
-	int32		raw_Data_ParseIndex_dspA;							//Ëß£Êûê‰ªéFPGAÁöÑFIFO‰∏≠ËØªÂèñÁöÑrawÊï∞ÊçÆÁöÑindexÔºå
-	int32		raw_Data_ParseIndex_dspB;							//ËÆ∞ÂΩïÂÆûÈôÖËß£ÊûêÁöÑindexÔºåÂõ†‰∏∫ÊØèÊ¨°Ëß£ÊûêÈÉΩËß£ÊûêÂà∞Â∏ßÁªìÊùüÁöÑÂú∞Êñπ„ÄÇ
+	int32		raw_Data_ParseIndex_dsp[MAX_DSP_WAVE];
+// 	int32		raw_Data_ParseIndex_dspA;							//Ω‚Œˆ¥”FPGAµƒFIFO÷–∂¡»°µƒraw ˝æ›µƒindex£¨
+// 	int32		raw_Data_ParseIndex_dspB;							//º«¬º µº Ω‚Œˆµƒindex£¨“ÚŒ™√ø¥ŒΩ‚Œˆ∂ºΩ‚ŒˆµΩ÷°Ω· ¯µƒµÿ∑Ω°£
 
-	int32		raw_Data_ParseLeftNumber_dspA;						//Ëß£ÊûêÂ§ÑÁêÜÁéØÂõûÈÉ®ÂàÜÁöÑÊó∂ÂÄôÈúÄË¶ÅËÆ∞ÂøÜÂ∞æÈÉ®ËøòÂâ©‰∏ãÂ§öÂ∞ëÈúÄË¶ÅËß£Êûê
-	int32		raw_Data_ParseLeftNumber_dspB;
+	int32		raw_Data_ParseLeftNumber_dsp[MAX_DSP_WAVE];
+// 	int32		raw_Data_ParseLeftNumber_dspA;						//Ω‚Œˆ¥¶¿Ìª∑ªÿ≤ø∑÷µƒ ±∫Ú–Ë“™º«“‰Œ≤≤øªπ £œ¬∂‡…Ÿ–Ë“™Ω‚Œˆ
+// 	int32		raw_Data_ParseLeftNumber_dspB;
 	
-	bool		raw_Data_GoBack_Flag_dspA;							//rawÊï∞ÊçÆbufferÁéØÂõûÁöÑÊ†áÂøó
-	bool		raw_Data_GoBack_Flag_dspB;
+	bool		raw_Data_GoBack_Flag_dsp[MAX_DSP_WAVE];
+// 	bool		raw_Data_GoBack_Flag_dspA;							//raw ˝æ›bufferª∑ªÿµƒ±Í÷æ
+// 	bool		raw_Data_GoBack_Flag_dspB;
 
-	bool	    raw_Data_GoBack_Aux_Flag_dspA;						//ËøáÂúàÊ†áÂøóËæÖÂä©Ê†áÂøóÔºåÂõ†‰∏∫ÊúâÊó∂ÂÄôÂπ∂‰∏çÊòØÁúüÊ≠£ÁöÑËøáÂúàÔºåÂõ†‰∏∫Ë¶ÅÊâæÂà∞‰∏ÄÂ∏ßÁöÑÁªìÊùü
-	bool	    raw_Data_GoBack_Aux_Flag_dspB;
+	bool		raw_Data_GoBack_Aux_Flag_dsp[MAX_DSP_WAVE];
+// 	bool	    raw_Data_GoBack_Aux_Flag_dspA;						//π˝»¶±Í÷æ∏®÷˙±Í÷æ£¨“ÚŒ™”– ±∫Ú≤¢≤ª «’Ê’˝µƒπ˝»¶£¨“ÚŒ™“™’“µΩ“ª÷°µƒΩ· ¯
+// 	bool	    raw_Data_GoBack_Aux_Flag_dspB;
 
-	int32		dataFrame_Lenth_dspA;								//Êï∞ÊçÆÂ∏ßÁöÑÊÄªÈïøÂ∫¶Ôºàint16ÁöÑÈïøÂ∫¶Ôºâ
-	int32		dataFrame_Lenth_dspB;								//Êï∞ÊçÆÂ∏ßÁöÑÈïøÂ∫¶ËÆ∞ÂΩï
+	int32		dataFrame_Lenth_dsp[MAX_DSP_WAVE];
+// 	int32		dataFrame_Lenth_dspA;								// ˝æ›÷°µƒ◊‹≥§∂»£®int16µƒ≥§∂»£©
+// 	int32		dataFrame_Lenth_dspB;								// ˝æ›÷°µƒ≥§∂»º«¬º
 
-	int32		waveLine_Index_dspA;								//Áî®Êù•Âæ™ÁéØË¶ÅËØªÂèñÁöÑÊõ≤Á∫øÁöÑ‰∏™Êï∞Ôºå‰æãÂ¶ÇË¶ÅÁúã5Êù°Êõ≤Á∫øÔºåÊØè‰∏ÄÂ∏ßÂ∞±ÊòØ5Êù°Êõ≤Á∫øÁöÑÊï∞ÊçÆÁªÑÊàêÁöÑÁªìÊûÑ
-	int32		waveLine_Index_dspB;								//Áî®Êù•Âæ™ÁéØË¶ÅËØªÂèñÁöÑÊõ≤Á∫øÁöÑ‰∏™Êï∞Ôºå‰æãÂ¶ÇË¶ÅÁúã5Êù°Êõ≤Á∫øÔºåÊØè‰∏ÄÂ∏ßÂ∞±ÊòØ5Êù°Êõ≤Á∫øÁöÑÊï∞ÊçÆÁªÑÊàêÁöÑÁªìÊûÑ
+	int32		waveLine_Index_dsp[MAX_DSP_WAVE];
+// 	int32		waveLine_Index_dspA;								//”√¿¥—≠ª∑“™∂¡»°µƒ«˙œﬂµƒ∏ˆ ˝£¨¿˝»Á“™ø¥5Ãı«˙œﬂ£¨√ø“ª÷°æÕ «5Ãı«˙œﬂµƒ ˝æ›◊È≥…µƒΩ·ππ
+// 	int32		waveLine_Index_dspB;								//”√¿¥—≠ª∑“™∂¡»°µƒ«˙œﬂµƒ∏ˆ ˝£¨¿˝»Á“™ø¥5Ãı«˙œﬂ£¨√ø“ª÷°æÕ «5Ãı«˙œﬂµƒ ˝æ›◊È≥…µƒΩ·ππ
 
-	int16		syncFrame_Flag_dspA;								//ÊâæÂà∞Â∏ßÁöÑÊ†áÂøó
-	int16		syncFrame_Flag_dspB;								//ÊâæÂà∞Â∏ßÁöÑÊ†áÂøó
+	int16		syncFrame_Flag_dsp[MAX_DSP_WAVE];
+// 	int16		syncFrame_Flag_dspA;								//’“µΩ÷°µƒ±Í÷æ
+// 	int16		syncFrame_Flag_dspB;								//’“µΩ÷°µƒ±Í÷æ
 
+	int64		recv_SyncFrame_Num_dsp[MAX_DSP_WAVE];
+// 	int64		recv_SyncFrame_Num_dspA;							//ºÏ≤‚µΩµƒÕ¨≤Ω÷°µƒ∏ˆ ˝//≤‚ ‘º«¬º π”√
+// 	int64		recv_SyncFrame_Num_dspB;							//ºÏ≤‚µΩµƒÕ¨≤Ω÷°µƒ∏ˆ ˝
+
+	int64		recv_DataFrame_Num_dsp[MAX_DSP_WAVE];
+// 	int64		recv_DataFrame_Num_dspA;							//ºÏ≤‚µΩµƒ ˝æ›÷°µƒ∏ˆ ˝
+// 	int64		recv_DataFrame_Num_dspB;							//ºÏ≤‚µΩµƒ ˝æ›÷°µƒ∏ˆ ˝
+
+	double		waveLine_Buffer_dsp[MAX_DSP_WAVE*MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
+//	double		waveLine_Buffer_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
+// 	double		waveLine_Buffer_dspA[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];		//”√”⁄¥Ê∑≈Ω‚ŒˆÕÍ≥…µƒ ˝æ›
+// 	double		waveLine_Buffer_dspB[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
+		
+	int32		waveLine_RdIndex_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
+// 	int32		waveLine_RdIndex_dspA[MAX_WAVE_PLOT_NUM];			//«˙œﬂ ˝æ›µƒ∂¡index
+// 	int32		waveLine_RdIndex_dspB[MAX_WAVE_PLOT_NUM];
+
+	int32		waveLine_WrIndex_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
+// 	int32		waveLine_WrIndex_dspA[MAX_WAVE_PLOT_NUM];			//«˙œﬂ ˝æ›µƒ–¥index
+// 	int32		waveLine_WrIndex_dspB[MAX_WAVE_PLOT_NUM];
 	
-	int64		recv_SyncFrame_Num_dspA;							//Ê£ÄÊµãÂà∞ÁöÑÂêåÊ≠•Â∏ßÁöÑ‰∏™Êï∞//ÊµãËØïËÆ∞ÂΩï‰ΩøÁî®
-	int64		recv_SyncFrame_Num_dspB;							//Ê£ÄÊµãÂà∞ÁöÑÂêåÊ≠•Â∏ßÁöÑ‰∏™Êï∞
-
-	int64		recv_DataFrame_Num_dspA;							//Ê£ÄÊµãÂà∞ÁöÑÊï∞ÊçÆÂ∏ßÁöÑ‰∏™Êï∞
-	int64		recv_DataFrame_Num_dspB;							//Ê£ÄÊµãÂà∞ÁöÑÊï∞ÊçÆÂ∏ßÁöÑ‰∏™Êï∞
-
+	int32		waveLine_WrNumOnce_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
+// 	int32		waveLine_WrNumOnce_dspA[MAX_WAVE_PLOT_NUM];			//“ª¥Œ–¥»Îµƒ∏ˆ ˝
+// 	int32		waveLine_WrNumOnce_dspB[MAX_WAVE_PLOT_NUM];
 	
-	double		waveLine_Buffer_dspA[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];		//Áî®‰∫éÂ≠òÊîæËß£ÊûêÂÆåÊàêÁöÑÊï∞ÊçÆ
-	double		waveLine_Buffer_dspB[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
+	int32		waveLine_WrNumSum_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
+// 	int32		waveLine_WrNumSum_dspA[MAX_WAVE_PLOT_NUM];			//◊‹µƒ∏ˆ ˝£¨¿€º”√ø“ª¥Œ–¥»Îµƒ∏ˆ ˝
+// 	int32		waveLine_WrNumSum_dspB[MAX_WAVE_PLOT_NUM];
 
-
-	int32		waveLine_RdIndex_dspA[MAX_WAVE_PLOT_NUM];			//Êõ≤Á∫øÊï∞ÊçÆÁöÑËØªindex
-	int32		waveLine_RdIndex_dspB[MAX_WAVE_PLOT_NUM];
-
-	int32		waveLine_WrIndex_dspA[MAX_WAVE_PLOT_NUM];			//Êõ≤Á∫øÊï∞ÊçÆÁöÑÂÜôindex
-	int32		waveLine_WrIndex_dspB[MAX_WAVE_PLOT_NUM];
+	int16		m_dsp_line_number[MAX_DSP_WAVE];
+// 	int16		m_dspA_line_number;									//∂¡»°µƒ«˙œﬂµƒ∏ˆ ˝£¨‘›¥Ê
+// 	int16		m_dspB_line_number;									//∂¡»°µƒ«˙œﬂµƒ∏ˆ ˝£¨‘›¥Ê
 	
-	int32		waveLine_WrNumOnce_dspA[MAX_WAVE_PLOT_NUM];			//‰∏ÄÊ¨°ÂÜôÂÖ•ÁöÑ‰∏™Êï∞
-	int32		waveLine_WrNumOnce_dspB[MAX_WAVE_PLOT_NUM];
-	
-	int32		waveLine_WrNumSum_dspA[MAX_WAVE_PLOT_NUM];			//ÊÄªÁöÑ‰∏™Êï∞ÔºåÁ¥ØÂä†ÊØè‰∏ÄÊ¨°ÂÜôÂÖ•ÁöÑ‰∏™Êï∞
-	int32		waveLine_WrNumSum_dspB[MAX_WAVE_PLOT_NUM];
-
-	int16		m_dspA_line_number;									//ËØªÂèñÁöÑÊõ≤Á∫øÁöÑ‰∏™Êï∞ÔºåÊöÇÂ≠ò
-	int16		m_dspB_line_number;									//ËØªÂèñÁöÑÊõ≤Á∫øÁöÑ‰∏™Êï∞ÔºåÊöÇÂ≠ò
-	
-	double		plotDataBuffer_dspA[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//Áî®‰∫éÂ≠òÊîæ‰∏äÂ±ÇËØªÂèñÁöÑÊï∞ÊçÆ
-	double		plotDataBuffer_dspB[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];
+	double		plotDataBuffer_dsp[MAX_DSP_WAVE*MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//”√”⁄¥Ê∑≈…œ≤„∂¡»°µƒ ˝æ›
+//	double		plotDataBuffer_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//”√”⁄¥Ê∑≈…œ≤„∂¡»°µƒ ˝æ›
+// 	double		plotDataBuffer_dspA[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//”√”⁄¥Ê∑≈…œ≤„∂¡»°µƒ ˝æ›
+// 	double		plotDataBuffer_dspB[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];
 
 	bool		pw_RunFlag[(pw_MaxAxis >> 1)];						
 
-	int16 InitDspAWaveVar(WAVE_BUF_PRM& wave);
-	int16 InitDspBWaveVar(WAVE_BUF_PRM& wave);
-	int16 CloseDspAWave(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
-	int16 CloseDspBWave(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+// 	int16 InitDspAWaveVar(WAVE_BUF_PRM& wave);
+// 	int16 InitDspBWaveVar(WAVE_BUF_PRM& wave);
+	int16 InitDspWaveVar(int16 dsp_number, WAVE_BUF_PRM& wave);
+
+// 	int16 CloseDspAWave(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+// 	int16 CloseDspBWave(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+	int16 CloseDspWave(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+
 	int16 ReadPlotWaveDataFromFPGA(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET);
-	int16 ParseDspAPlotWaveData(WAVE_BUF_PRM& wave, int32 number);
-	int16 ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number);
 
-	//ÂêØÂä®ÂÅúÊ≠¢DSPAÁöÑÁîªÂõæ
-	int16 PW_StartDspAPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
-	int16 PW_StopDspAPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+// 	int16 ParseDspAPlotWaveData(WAVE_BUF_PRM& wave, int32 number);
+// 	int16 ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number);
+	int16 ParseDspPlotWaveData(int16 dsp_number, WAVE_BUF_PRM& wave, int32 number);
 
-	//‰ªéDSPAÊàñËÄÖÊòØDSPBËé∑ÂèñÊï∞ÊçÆ
-	int16 PW_PcGetDspAWaveData(double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
-	int16 PW_PcGetDspBWaveData(double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
+// 	//∆Ù∂ØÕ£÷πDSPAµƒª≠Õº
+// 	int16 PW_StartDspAPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+// 	int16 PW_StopDspAPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-	//ÂêØÂä®ÂÅúÊ≠¢DSPBÁöÑÁîªÂõæ
-	int16 PW_StartDspBPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
-	int16 PW_StopDspBPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+// 	//¥”DSPAªÚ’ﬂ «DSPBªÒ»° ˝æ›
+// 	int16 PW_PcGetDspAWaveData(double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
+// 	int16 PW_PcGetDspBWaveData(double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
+	int16 PW_PcGetDspWaveData(int16 dsp_number, double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
+
+// 	//∆Ù∂ØÕ£÷πDSPBµƒª≠Õº
+// 	int16 PW_StartDspBPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+// 	int16 PW_StopDspBPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+
+	//∆Ù∂ØÕ£÷πDSPµƒª≠Õº
+	int16 PW_StartDspPlot(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+	int16 PW_StopDspPlot(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
 	bool cpu_timer_openFlag;
 	bool rn_noTimer_openFlag;

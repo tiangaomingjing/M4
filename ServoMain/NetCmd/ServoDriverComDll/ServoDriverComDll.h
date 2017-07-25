@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton cmd layer Define		 						//
 //	file				:	ServoDriverComDll.h											//
 //	Description			:	use for cmd define											//
@@ -6,7 +6,7 @@
 //																						//
 //======================================================================================//
 //		programmer:		|	date:		|	Corporation:	|		copyright(C):		//
-//-------------------------------------------------------------------------------------//
+//--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -15,12 +15,12 @@
 
 
 
-// ä¸‹åˆ— ifdef å—æ˜¯åˆ›å»ºä½¿ä» DLL å¯¼å‡ºæ›´ç®€å•çš„
-// å®çš„æ ‡å‡†æ–¹æ³•ã€‚æ­¤ DLL ä¸­çš„æ‰€æœ‰æ–‡ä»¶éƒ½æ˜¯ç”¨å‘½ä»¤è¡Œä¸Šå®šä¹‰çš„ SERVODRIVERCOMDLL_EXPORTS
-// ç¬¦å·ç¼–è¯‘çš„ã€‚åœ¨ä½¿ç”¨æ­¤ DLL çš„
-// ä»»ä½•å…¶ä»–é¡¹ç›®ä¸Šä¸åº”å®šä¹‰æ­¤ç¬¦å·ã€‚è¿™æ ·ï¼Œæºæ–‡ä»¶ä¸­åŒ…å«æ­¤æ–‡ä»¶çš„ä»»ä½•å…¶ä»–é¡¹ç›®éƒ½ä¼šå°†
-// SERVODRIVERCOMDLL_API å‡½æ•°è§†ä¸ºæ˜¯ä» DLL å¯¼å…¥çš„ï¼Œè€Œæ­¤ DLL åˆ™å°†ç”¨æ­¤å®å®šä¹‰çš„
-// ç¬¦å·è§†ä¸ºæ˜¯è¢«å¯¼å‡ºçš„ã€‚
+// ÏÂÁĞ ifdef ¿éÊÇ´´½¨Ê¹´Ó DLL µ¼³ö¸ü¼òµ¥µÄ
+// ºêµÄ±ê×¼·½·¨¡£´Ë DLL ÖĞµÄËùÓĞÎÄ¼ş¶¼ÊÇÓÃÃüÁîĞĞÉÏ¶¨ÒåµÄ SERVODRIVERCOMDLL_EXPORTS
+// ·ûºÅ±àÒëµÄ¡£ÔÚÊ¹ÓÃ´Ë DLL µÄ
+// ÈÎºÎÆäËûÏîÄ¿ÉÏ²»Ó¦¶¨Òå´Ë·ûºÅ¡£ÕâÑù£¬Ô´ÎÄ¼şÖĞ°üº¬´ËÎÄ¼şµÄÈÎºÎÆäËûÏîÄ¿¶¼»á½«
+// SERVODRIVERCOMDLL_API º¯ÊıÊÓÎªÊÇ´Ó DLL µ¼ÈëµÄ£¬¶ø´Ë DLL Ôò½«ÓÃ´Ëºê¶¨ÒåµÄ
+// ·ûºÅÊÓÎªÊÇ±»µ¼³öµÄ¡£
 #ifdef SERVODRIVERCOMDLL_EXPORTS
 #define SERVODRIVERCOMDLL_API __declspec(dllexport)
 #else
@@ -28,294 +28,298 @@
 #endif
 
 //////////////////////////////////////////////////////////////////////////
-//å‘½ä»¤è¿”å›å€¼
+//ÃüÁî·µ»ØÖµ
 
-//23---è¯´æ˜armè¶…æ—¶æ²¡æœ‰å“åº”
-//25---è¯´æ˜ç½‘ç»œé€šä¿¡ä¸æ­£å¸¸
-//27---è¯´æ˜ä¸Šä¸€æ¡æŒ‡ä»¤æ²¡æœ‰å®Œæˆï¼Œè¿™æ—¶å¯å¿½ç•¥é€šä¿¡é”™è¯¯è®¡æ•°
+//23---ËµÃ÷arm³¬Ê±Ã»ÓĞÏìÓ¦
+//25---ËµÃ÷ÍøÂçÍ¨ĞÅ²»Õı³£
+//27---ËµÃ÷ÉÏÒ»ÌõÖ¸ÁîÃ»ÓĞÍê³É£¬ÕâÊ±¿ÉºöÂÔÍ¨ĞÅ´íÎó¼ÆÊı
 //////////////////////////////////////////////////////////////////////////
-#include "Basetype_def.h"
+//#include "Basetype_def.h"
 #include <iostream>
 #include <string>
 using namespace std;
 //////////////////////////////////////////////////////////////////////////
-//å‘½ä»¤è¿”å›å€¼
+//ÃüÁî·µ»ØÖµ
 //0---right command
-//23---è¯´æ˜armè¶…æ—¶æ²¡æœ‰å“åº”
-//25---è¯´æ˜ç½‘ç»œé€šä¿¡ä¸æ­£å¸¸
-//27---è¯´æ˜ä¸Šä¸€æ¡æŒ‡ä»¤æ²¡æœ‰å®Œæˆï¼Œè¿™æ—¶å¯å¿½ç•¥é€šä¿¡é”™è¯¯è®¡æ•°
-typedef enum com_error
-{
-	COM_OK,
-	COM_ARM_OUT_TIME = 23,
-	COM_NET_ERROR = 25,
-	COM_NOT_FINISH = 27
-}COM_ERROR;
-
-typedef enum _servoTaskMode
-{
-  SERTASKMODE_IDLE=0,
-  SERTASKMODE_ADC=1,
-  SERTASKMODE_INIT_POSADJ=2,
-  SERTASKMODE_MOTOR_PAM_IDENTIFICATION=3,
-  SERTASKMODE_VOL_OPEN=4,
-  SERTASKMODE_CURRENT_CLOSE=5,
-  SERTASKMODE_VEL_CLOSE=6,
-  SERTASKMODE_VEL_PROFILE=7,
-  SERTASKMODE_VEL_SYNC=8,
-  SERTASKMODE_POS_FIXED=9,
-  SERTASKMODE_POS_SYNC=10,
-  SERTASKMODE_DB_BRAKE=11,
-  SERTASKMODE_CURRENT_SYNC=12,
-
-  SERTASKMODE_COUNT
-}ServoTaskMode;
-
-//////////////////////////////////////////////////////////////////////////
-const int32						MAX_WAVE_PLOT_NUM = 20;
-
-/************************************************************************/
-/* å®šä¹‰é€šä¿¡ç±»å‹                                                        */
-/************************************************************************/
-typedef enum com_type
-{
-	GTSD_COM_TYPE_NET,			//è£¸æœºç½‘å£
-	GTSD_COM_TYPE_RNNET,		//ç­‰ç¯ç½‘
-	GTSD_COM_TYPE_TCPIP,		//TCP/IPåè®®ç½‘å£
-	GTSD_COM_TYPE_USB2UART,		//usbè½¬ä¸²å£
-	GTSD_COM_TYPE_VIRTUAL,		//è™šæ‹Ÿè®¾å¤‡
-	GTSD_COM_TYPE_MAX			//æœ€å¤§å€¼
-}COM_TYPE;
-
-typedef enum
-{
-	SERVO_EN_COMM = 0,																// MpiServoEnable()	----------> ID|0
-	SERVO_TASK_COMM = 1,															// MpiServoTaskMode() -----------> ID|1
-	MIX_MODE_COMM = 2,																// MpiMixMode()
-	WR_16BIT_COMM = 3,																// MpiWr16BitByAdr
-	WR_32BIT_COMM = 4,																// MpiWr32BitByAdr
-	WR_64BIT_COMM = 5,																// MpiWr64BitByAdr
-	ID_REF_WR_COMM = 6,																// id reference read/write
-	IQ_REF_WR_COMM = 7,																// iq reference read/write
-	SPD_REF_WR_COMM = 8,															// speed reference read/write
-	PRE_REF_WR_COMM = 9,
-	UD_REF_WR_COMM = 10,															// d axis voltage reference read/write
-	UQ_REF_WR_COMM = 11,															// q axis voltage reference read/write
-	UA_REF_WR_COMM = 12,															// a phase voltage reference read/write	
-	UB_REF_WR_COMM = 13,															// b phase voltage reference read/write
-	UC_REF_WR_COMM = 14,															// c phase voltage reference read/write
-	POS_ADJ_IREF_COMM = 15,															// motor position adjust reference read/write
-	POS_REF_WR_COMM = 16,															// position reference read/write 
-	FND_CURR_WR_COMM = 17,															// d axis fn value set in current loop
-	FNQ_CURR_WR_COMM = 18,															// q axis fn value set in current loop
-	TID_CURR_WR_COMM = 19,															// d axis integrate time constant set	
-	TIQ_CURR_WR_COMM = 20,															// q axis integrate time constant set	
-	FN_VEL_WR_COMM = 21,															// velocity loop fn value set
-	TI_VEL_WR_COMM = 22,															// velocity loop integrate time constant set
-	ABS_LIM_VEL_WR_COMM = 23,														// absolute saturate limit rate of of velocity loop output 			
-	POS_LIM_VEL_WR_COMM = 24,														// positive saturate limit rate of of velocity loop output 
-	NEG_LIM_VEL_WR_COMM = 25,														// negative saturate limit rate of of velocity loop output
-	FN_POS_WR_COMM = 26,															// fn value of position loop 
-	ABS_LIM_POS_WR_COMM = 27,														// absolute limit rate value of position loop output
-	POS_LIM_POS_WR_COMM = 28,														// positive limit rate value of position loop output
-	NEG_LIM_POS_WR_COMM = 29,														// negative limit rate velue of position loop output
-	KGA_FF_POS_WR_COMM = 30,														// kga value of accelerate feedforward 	
-	KGV_FF_POS_WR_COMM = 31,														// kgv value of velocity feedforward
-	TFA_FF_POS_WR_COMM = 32,														// tfa value of accelerate feedforward		
-	TFV_FF_POS_WR_COMM = 33,														// tfv value of accelerate feedforward	
-	WAVE_BUF_SET_WR_COMM = 34,														//è®¾ç½®æ›²çº¿		
-	WR_FRAM_16BIT_COMM = 35,														// MpiFramWr16BitByAdr
-	WR_FRAM_32BIT_COMM = 36,														// MpiFramWr32BitByAdr
-	WR_FRAM_64BIT_COMM = 37,														// MpiFramWr64BitByAdr
-	WR_SPI_FLASH_COMM = 38,	                                                        // burn spi flash 
-	SPI_ERASE_FLASH_COMM = 39,                                                      // erase all flash
-	INTERRUPT_SWITCH_COMM = 40,														// interrupt enable and disable 
-	GET_DRV_VAR_INFO_COMM = 41,                                                     // get var information according to the id 
-	RESET_SYSTEM_COMM = 42,                                                         // reset system to reset isr routine
-	CHECK_RESET_FINISH_COMM = 43,													// check reset finish
-	RD_PROCESSOR_VER_COMM = 44,														// read processor version
-	ALARM_CLEAR_COMM = 45,															// clear alarm
-	RD_ALARM_LOG_CODE_COM = 46,                                                     // read alarm log code ,just log ten recently
-	RD_ALARM_LOG_TIMES_COM = 47,                                                    // read different kind of alarm times 
-	TUNNING_MESSAGE_MAX
-}tTuningMessageId;
-
-
-typedef struct servo_state
-{
-	int16 act_on_tmp;
-	int16 act_on;
-	int16 sec_on;
-	int16 sof_st_on;
-  int16 serv_ready;//0 æ²¡ä¸Šä¼ºæœ 1ä¸Šä¼ºæœ
-}SERVO_STATE;
-
-typedef struct servo_mode
-{
-	int16 usr_mode;
-	int16 cmd_id;
-	int16 curr_id;
-	int16 curr_state;
-}SERVO_MODE;
-
-typedef struct id_state
-{
-	double chd_idr_tmp;
-	double tsk_id_ref;
-	double ctl_id_ref;
-	double ctl_id;
-}ID_STATE;
-
-typedef struct iq_state
-{
-	double chd_iqr_tmp;
-	double tsk_iq_ref;
-	double ctl_iq_ref;
-	double ctl_iq;
-}IQ_STATE;
-
-typedef struct spd_state
-{
-	double chd_spd_tmp;
-	double tsk_spd_ref;
-	double ctl_spd_ref;
-	double ctl_spd_fd;
-	double rsv_mot_spd;
-}SPD_STATE;
-
-typedef struct ud_state
-{
-	double chd_ud_tmp;
-	double tsk_ud_ref;
-	double cur_ud;
-}UD_STATE;
-typedef struct uq_state
-{
-	double chd_uq_tmp;
-	double tsk_uq_ref;
-	double cur_uq;
-}UQ_STATE;
-
-typedef struct ua_state
-{
-	double chd_ua_tmp;
-	double tsk_ua_ref;
-	double cur_ua;
-}UA_STATE;
-typedef struct ub_state
-{
-	double chd_ub_tmp;
-	double tsk_ub_ref;
-	double cur_ub;
-}UB_STATE;
-typedef struct uc_state
-{
-	double chd_uc_tmp;
-	double tsk_uc_ref;
-	double cur_uc;
-}UC_STATE;
-typedef struct pos_adj_state
-{
-	double chd_pos_adj_tmp;
-	double tsk_pos_adj_ref;
-	double ctl_id_ref;
-	double ctl_id;
-	double ctl_iq_ref;
-	double ctl_iq;
-	int16 rsv_pos_elec;
-	int32 rsv_pos;
-	int32 rsv_pos_in;
-	int16 mfj_pos_adj_flag;
-
-}POS_ADJ_STATE;
-
-
-typedef struct		wave_buf_cmd
-{
-	Uint16		TIM : 8;												// sample times
-	Uint16		NUM : 5;												// wave number
-	Uint16		ENP : 1;												// wave plot enable bit
-	Uint16		res : 2;												// rsvd
-}WAVE_BUF_CMD;
-
-typedef	union
-{
-	Uint16					all;
-	WAVE_BUF_CMD			bit;
-}tWaveBufCmd;
-
-//-------------------------------------------------------------------------------------
-typedef		struct	wave_info
-{
-	Uint16		bytes;																	// variable storage bytes
-	Uint16		ofst;																	// variable storage offset
-	Uint16		base;
-}WAVE_INFO;
-
-
-
-typedef		struct	wave_buf_prm
-{
-	tWaveBufCmd			cmd;															// wave buffer command information
-	WAVE_INFO			inf[MAX_WAVE_PLOT_NUM];											// wave plot variable information
-}WAVE_BUF_PRM;
-
-#define INTEL_HEX_FRAME_DAT_LENTH       100
-
-
-//////////////////////////////////////////////////////////////////////////
-
-//define INTEL HEX struct 
-typedef struct intel_hex_frame
-{
-	Uint16			lenth;									//é•¿åº¦   (unit :byte)   
-	Uint32			addr;									//åœ°å€      
-	Uint16			type;									//è®°å½•ç±»å‹ï¼Œ0ï¼æ•°æ®ï¼Œ1ï¼ç»ˆæ­¢     
-	int16			data[INTEL_HEX_FRAME_DAT_LENTH];		//æ•°æ®     
-	int16			checksum;								//æ ¡éªŒå’Œ 
-}INTEL_HEX_FRAME;
-
-
-//////////////////////////////////////////////////////////////////////////
-
-
-typedef struct generalFunction
-{
-	Uint16			mode;
-	Uint16			cmd;
-	Uint16			dataLenth;
-	int16*			data;
-}GENERALFUNCTION;
-
-typedef enum
-{
-	UART_PROGRAM = 1,
-	UART_ERASE = 4
-}UARTBOOT;
-
-typedef enum
-{
-	SEV_SECTION = 0,
-	AUX_SECTION = 1
-}tRwRamPrm;
-//å‚æ•°ï¼Œ0ï¼šsevï¼Œ 1ï¼šaux
+//23---ËµÃ÷arm³¬Ê±Ã»ÓĞÏìÓ¦
+//25---ËµÃ÷ÍøÂçÍ¨ĞÅ²»Õı³£
+//27---ËµÃ÷ÉÏÒ»ÌõÖ¸ÁîÃ»ÓĞÍê³É£¬ÕâÊ±¿ÉºöÂÔÍ¨ĞÅ´íÎó¼ÆÊı
+#include "ServoDriverComDef.h"
+// typedef enum
+// {
+// 	COM_OK,
+// 	COM_ARM_OUT_TIME = 23,
+// 	COM_NET_ERROR = 25,
+// 	COM_NOT_FINISH = 27
+// }COM_ERROR;
+// 
+// typedef enum _servoTaskMode
+// {
+//   SERTASKMODE_IDLE=0,
+//   SERTASKMODE_ADC=1,
+//   SERTASKMODE_INIT_POSADJ=2,
+//   SERTASKMODE_MOTOR_PAM_IDENTIFICATION=3,
+//   SERTASKMODE_VOL_OPEN=4,
+//   SERTASKMODE_CURRENT_CLOSE=5,
+//   SERTASKMODE_VEL_CLOSE=6,
+//   SERTASKMODE_VEL_PROFILE=7,
+//   SERTASKMODE_VEL_SYNC=8,
+//   SERTASKMODE_POS_FIXED=9,
+//   SERTASKMODE_POS_SYNC=10,
+//   SERTASKMODE_DB_BRAKE=11,
+//   SERTASKMODE_CURRENT_SYNC=12,
+// 
+//   SERTASKMODE_COUNT
+// }ServoTaskMode;
+// 
+// //////////////////////////////////////////////////////////////////////////
+// const int32						MAX_WAVE_PLOT_NUM = 12;
+// 
+// /************************************************************************/
+// /* ¶¨ÒåÍ¨ĞÅÀàĞÍ                                                        */
+// /************************************************************************/
+// typedef enum
+// {
+// 	GTSD_COM_TYPE_NET,			//Âã»úÍø¿Ú
+// 	GTSD_COM_TYPE_RNNET,		//µÈ»·Íø
+// 	GTSD_COM_TYPE_TCPIP,		//TCP/IPĞ­ÒéÍø¿Ú
+// 	GTSD_COM_TYPE_USB2UART,		//usb×ª´®¿Ú
+// 	GTSD_COM_TYPE_VIRTUAL,		//ĞéÄâÉè±¸
+// 	GTSD_COM_TYPE_RINGNET,		//µÈ»·Íø
+// 	GTSD_COM_TYPE_MAX			//×î´óÖµ
+// 	
+// }COM_TYPE;
+// 
+// typedef enum
+// {
+// 	SERVO_EN_COMM = 0,																// MpiServoEnable()	----------> ID|0
+// 	SERVO_TASK_COMM = 1,															// MpiServoTaskMode() -----------> ID|1
+// 	MIX_MODE_COMM = 2,																// MpiMixMode()
+// 	WR_16BIT_COMM = 3,																// MpiWr16BitByAdr
+// 	WR_32BIT_COMM = 4,																// MpiWr32BitByAdr
+// 	WR_64BIT_COMM = 5,																// MpiWr64BitByAdr
+// 	ID_REF_WR_COMM = 6,																// id reference read/write
+// 	IQ_REF_WR_COMM = 7,																// iq reference read/write
+// 	SPD_REF_WR_COMM = 8,															// speed reference read/write
+// 	PRE_REF_WR_COMM = 9,
+// 	UD_REF_WR_COMM = 10,															// d axis voltage reference read/write
+// 	UQ_REF_WR_COMM = 11,															// q axis voltage reference read/write
+// 	UA_REF_WR_COMM = 12,															// a phase voltage reference read/write	
+// 	UB_REF_WR_COMM = 13,															// b phase voltage reference read/write
+// 	UC_REF_WR_COMM = 14,															// c phase voltage reference read/write
+// 	POS_ADJ_IREF_COMM = 15,															// motor position adjust reference read/write
+// 	POS_REF_WR_COMM = 16,															// position reference read/write 
+// 	FND_CURR_WR_COMM = 17,															// d axis fn value set in current loop
+// 	FNQ_CURR_WR_COMM = 18,															// q axis fn value set in current loop
+// 	TID_CURR_WR_COMM = 19,															// d axis integrate time constant set	
+// 	TIQ_CURR_WR_COMM = 20,															// q axis integrate time constant set	
+// 	FN_VEL_WR_COMM = 21,															// velocity loop fn value set
+// 	TI_VEL_WR_COMM = 22,															// velocity loop integrate time constant set
+// 	ABS_LIM_VEL_WR_COMM = 23,														// absolute saturate limit rate of of velocity loop output 			
+// 	POS_LIM_VEL_WR_COMM = 24,														// positive saturate limit rate of of velocity loop output 
+// 	NEG_LIM_VEL_WR_COMM = 25,														// negative saturate limit rate of of velocity loop output
+// 	FN_POS_WR_COMM = 26,															// fn value of position loop 
+// 	ABS_LIM_POS_WR_COMM = 27,														// absolute limit rate value of position loop output
+// 	POS_LIM_POS_WR_COMM = 28,														// positive limit rate value of position loop output
+// 	NEG_LIM_POS_WR_COMM = 29,														// negative limit rate velue of position loop output
+// 	KGA_FF_POS_WR_COMM = 30,														// kga value of accelerate feedforward 	
+// 	KGV_FF_POS_WR_COMM = 31,														// kgv value of velocity feedforward
+// 	TFA_FF_POS_WR_COMM = 32,														// tfa value of accelerate feedforward		
+// 	TFV_FF_POS_WR_COMM = 33,														// tfv value of accelerate feedforward	
+// 	WAVE_BUF_SET_WR_COMM = 34,														//ÉèÖÃÇúÏß		
+// 	WR_FRAM_16BIT_COMM = 35,														// MpiFramWr16BitByAdr
+// 	WR_FRAM_32BIT_COMM = 36,														// MpiFramWr32BitByAdr
+// 	WR_FRAM_64BIT_COMM = 37,														// MpiFramWr64BitByAdr
+// 	WR_SPI_FLASH_COMM = 38,	                                                        // burn spi flash 
+// 	SPI_ERASE_FLASH_COMM = 39,                                                      // erase all flash
+// 	INTERRUPT_SWITCH_COMM = 40,														// interrupt enable and disable 
+// 	GET_DRV_VAR_INFO_COMM = 41,                                                     // get var information according to the id 
+// 	RESET_SYSTEM_COMM = 42,                                                         // reset system to reset isr routine
+// 	CHECK_RESET_FINISH_COMM = 43,													// check reset finish
+// 	RD_PROCESSOR_VER_COMM = 44,														// read processor version
+// 	ALARM_CLEAR_COMM = 45,															// clear alarm
+// 	RD_ALARM_LOG_CODE_COM = 46,                                                     // read alarm log code ,just log ten recently
+// 	RD_ALARM_LOG_TIMES_COM = 47,                                                    // read different kind of alarm times 
+// 	TUNNING_MESSAGE_MAX
+// }tTuningMessageId;
+// 
+// 
+// typedef struct servo_state
+// {
+// 	int16 act_on_tmp;
+// 	int16 act_on;
+// 	int16 sec_on;
+// 	int16 sof_st_on;
+// 	int16 serv_ready;
+// }SERVO_STATE;
+// 
+// typedef struct servo_mode
+// {
+// 	int16 usr_mode;
+// 	int16 cmd_id;
+// 	int16 curr_id;
+// 	int16 curr_state;
+// }SERVO_MODE;
+// 
+// typedef struct id_state
+// {
+// 	double chd_idr_tmp;
+// 	double tsk_id_ref;
+// 	double ctl_id_ref;
+// 	double ctl_id;
+// }ID_STATE;
+// 
+// typedef struct iq_state
+// {
+// 	double chd_iqr_tmp;
+// 	double tsk_iq_ref;
+// 	double ctl_iq_ref;
+// 	double ctl_iq;
+// }IQ_STATE;
+// 
+// typedef struct spd_state
+// {
+// 	double chd_spd_tmp;
+// 	double tsk_spd_ref;
+// 	double ctl_spd_ref;
+// 	double ctl_spd_fd;
+// 	double rsv_mot_spd;
+// }SPD_STATE;
+// 
+// typedef struct ud_state
+// {
+// 	double chd_ud_tmp;
+// 	double tsk_ud_ref;
+// 	double cur_ud;
+// }UD_STATE;
+// typedef struct uq_state
+// {
+// 	double chd_uq_tmp;
+// 	double tsk_uq_ref;
+// 	double cur_uq;
+// }UQ_STATE;
+// 
+// typedef struct ua_state
+// {
+// 	double chd_ua_tmp;
+// 	double tsk_ua_ref;
+// 	double cur_ua;
+// }UA_STATE;
+// typedef struct ub_state
+// {
+// 	double chd_ub_tmp;
+// 	double tsk_ub_ref;
+// 	double cur_ub;
+// }UB_STATE;
+// typedef struct uc_state
+// {
+// 	double chd_uc_tmp;
+// 	double tsk_uc_ref;
+// 	double cur_uc;
+// }UC_STATE;
+// typedef struct pos_adj_state
+// {
+// 	double chd_pos_adj_tmp;
+// 	double tsk_pos_adj_ref;
+// 	double ctl_id_ref;
+// 	double ctl_id;
+// 	double ctl_iq_ref;
+// 	double ctl_iq;
+// 	int16 rsv_pos_elec;
+// 	int32 rsv_pos;
+// 	int32 rsv_pos_in;
+// 	int16 mfj_pos_adj_flag;
+// 
+// }POS_ADJ_STATE;
+// 
+// 
+// typedef struct		wave_buf_cmd
+// {
+// 	Uint16		TIM : 8;												// sample times
+// 	Uint16		NUM : 5;												// wave number
+// 	Uint16		ENP : 1;												// wave plot enable bit
+// 	Uint16		res : 2;												// rsvd
+// }WAVE_BUF_CMD;
+// 
+// typedef	union
+// {
+// 	Uint16					all;
+// 	WAVE_BUF_CMD			bit;
+// }tWaveBufCmd;
+// 
+// //-------------------------------------------------------------------------------------
+// typedef		struct	wave_info
+// {
+// 	Uint16		bytes;																	// variable storage bytes
+// 	Uint16		ofst;																	// variable storage offset
+// 	Uint16		base;
+// }WAVE_INFO;
+// 
+// 
+// 
+// typedef		struct	wave_buf_prm
+// {
+// 	tWaveBufCmd			cmd;															// wave buffer command information
+// 	WAVE_INFO			inf[MAX_WAVE_PLOT_NUM];											// wave plot variable information
+// }WAVE_BUF_PRM;
+// 
+// #define INTEL_HEX_FRAME_DAT_LENTH       100
+// 
+// 
+// //////////////////////////////////////////////////////////////////////////
+// 
+// //define INTEL HEX struct 
+// typedef struct intel_hex_frame
+// {
+// 	Uint16			lenth;									//³¤¶È   (unit :byte)   
+// 	Uint32			addr;									//µØÖ·      
+// 	Uint16			type;									//¼ÇÂ¼ÀàĞÍ£¬0£­Êı¾İ£¬1£­ÖÕÖ¹     
+// 	int16			data[INTEL_HEX_FRAME_DAT_LENTH];		//Êı¾İ     
+// 	int16			checksum;								//Ğ£ÑéºÍ 
+// }INTEL_HEX_FRAME;
+// 
+// 
+// //////////////////////////////////////////////////////////////////////////
+// 
+// 
+// typedef struct generalFunction
+// {
+// 	Uint16			mode;
+// 	Uint16			cmd;
+// 	Uint16			dataLenth;
+// 	int16*			data;
+// }GENERALFUNCTION;
+// 
+// typedef enum
+// {
+// 	UART_PROGRAM = 1,
+// 	UART_ERASE = 4
+// }UARTBOOT;
+// 
+// typedef enum
+// {
+// 	SEV_SECTION = 0,
+// 	AUX_SECTION = 1
+// }tRwRamPrm;
+// //²ÎÊı£¬0£ºsev£¬ 1£ºaux
 
 
 //////////////////////////////////////////////////////////////////////////
 #define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
 #define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
-extern wstring NetCardName;//ç”¨äºå­˜å‚¨ç½‘å¡æè¿°ä¿¡æ¯
+extern wstring NetCardName;//ÓÃÓÚ´æ´¢Íø¿¨ÃèÊöĞÅÏ¢
 extern wstring NetCardNum;
-//è¿”å›0 ï¼šé€Ÿåº¦ä¸ºåƒå…†
-//è¿”å›1ï¼šå‡½æ•°å†…éƒ¨åœ°å€åˆ†é…é”™è¯¯
-//è¿”å›2ï¼šé€Ÿåº¦ä¸æ˜¯åƒå…†
-//è¿”å›3ï¼šæ²¡æœ‰æ‰¾åˆ°å¯¹åº”çš„ç½‘å¡
-//è¯¥å‡½æ•°åœ¨openä»¥åè°ƒç”¨ï¼Œå¦‚æœopenå¤±è´¥å°±ä¸éœ€è¦è°ƒç”¨è¯¥å‡½æ•°äº†ï¼Œè°ƒç”¨openæˆåŠŸååˆ¤æ–­æ˜¯å¦æ˜¯åƒå…†è¿æ¥
+//·µ»Ø0 £ºËÙ¶ÈÎªÇ§Õ×
+//·µ»Ø1£ºº¯ÊıÄÚ²¿µØÖ··ÖÅä´íÎó
+//·µ»Ø2£ºËÙ¶È²»ÊÇÇ§Õ×
+//·µ»Ø3£ºÃ»ÓĞÕÒµ½¶ÔÓ¦µÄÍø¿¨
+//¸Ãº¯ÊıÔÚopenÒÔºóµ÷ÓÃ£¬Èç¹ûopenÊ§°Ü¾Í²»ĞèÒªµ÷ÓÃ¸Ãº¯ÊıÁË£¬µ÷ÓÃopen³É¹¦ºóÅĞ¶ÏÊÇ·ñÊÇÇ§Õ×Á¬½Ó
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void);
 //////////////////////////////////////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type = GTSD_COM_TYPE_NET);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Close(int16 com_type = GTSD_COM_TYPE_NET);
 
+/////////////////////////////////com vs dsp/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOn(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOff(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetServoState(int16 axis, SERVO_STATE* serv, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
@@ -378,6 +382,8 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetKgaFfdPos(int16 axis, int16* kgaffdpos, 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetKgvFfdPos(int16 axis, int16 kgvffdpos, int16 com_type = GTSD_COM_TYPE_NET);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetKgvFfdPos(int16 axis, int16* kgvffdpos, int16 com_type = GTSD_COM_TYPE_NET);
 */
+
+/////////////////////////////////com vs fpga/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pvalue, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
@@ -389,6 +395,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetWaveBuf(int16 dsp_number, tWaveBufCmd* c
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetWaveData(int16 dsp_number, int16* read_num, int16** data, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClearFpgaFifo(int16 dsp_number, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
+/////////////////////////////////com vs dsp/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write16BitByAdr(int16 axis, int16 ofst, int16 value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read16BitByAdr(int16 axis, int16 ofst, int16* value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write32BitByAdr(int16 axis, int16 ofst, int32 value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
@@ -396,25 +403,26 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read32BitByAdr(int16 axis, int16 ofst,
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write64BitByAdr(int16 axis, int16 ofst, int64 value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);						//å¯åŠ¨ARMç”»å›¾
-SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);							//åœæ­¢ARMç”»å›¾
-SERVODRIVERCOMDLL_API int16 GTSD_CMD_PcGetWaveData(int16& axis, double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);			//ä»ARMè·å–æ•°æ®
-SERVODRIVERCOMDLL_API bool GTSD_CMD_CheckPlotState(int16& axis, int16 stationId = 0xf0);										//æŸ¥è¯¢ç”»å›¾çŠ¶æ€
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);						//Æô¶¯ARM»­Í¼
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);							//Í£Ö¹ARM»­Í¼
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_PcGetWaveData(int16& axis, double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);			//´ÓARM»ñÈ¡Êı¾İ
+SERVODRIVERCOMDLL_API bool GTSD_CMD_CheckPlotState(int16& axis, int16 stationId = 0xf0);										//²éÑ¯»­Í¼×´Ì¬
 
 typedef	void(*tpfUpdataProgressPt)(void*, int16*);
 
+/////////////////////////////////com vs dsp burn the dsp program/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& filePath, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+/////////////////////////////////com vs dsp burn the fpga program/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& filePath, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-//ä¸éœ€è¦å¯¼å‡ºçš„å‡½æ•°ï¼Œå†…éƒ¨ä½¿ç”¨
+//²»ĞèÒªµ¼³öµÄº¯Êı£¬ÄÚ²¿Ê¹ÓÃ
 int16 GTSD_CMD_FlashWrite(int16 axis, INTEL_HEX_FRAME* packet, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 int16 GTSD_CMD_FlashRead(int16 axis, INTEL_HEX_FRAME* packet_w, INTEL_HEX_FRAME* packet_r, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 int16 GTSD_CMD_FlashErase(int16 axis, int16 blockNum,int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 int16 GTSD_CMD_InterruptSwitch(int16 axis,int16 int_switch, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-
+/////////////////////////////////com vs dsp/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorGeneralFunc(int16 axis, GENERALFUNCTION* gefunc, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
-
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ResetSystem(int16 axis,int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_finish, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
@@ -430,19 +438,32 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadLogAlarmTimes(int16 axis, Uint16* alarm
 
 //-----------------------------------------------------------------------------------------------------
 
-//use for uart boot .out è½¬åŒ–ä¸º .ldr
+//use for uart boot .out ×ª»¯Îª .ldr
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Hex2Ldr(wstring& HexFile, wstring& LdrFile, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-//å¯ä»¥ä½¿ç”¨hexæ–‡ä»¶æˆ–è€…æ˜¯.outè½¬åŒ–çš„ldræ–‡ä»¶ï¼Œldræœ¬èº«å·²ç»æ˜¯äºŒè¿›åˆ¶çš„æ–‡ä»¶äº†ï¼Œhexè¿˜éœ€è¦å•ç‹¬æå–äºŒè¿›åˆ¶ä¿¡æ¯ã€‚
+//¿ÉÒÔÊ¹ÓÃhexÎÄ¼ş»òÕßÊÇ.out×ª»¯µÄldrÎÄ¼ş£¬ldr±¾ÉíÒÑ¾­ÊÇ¶ş½øÖÆµÄÎÄ¼şÁË£¬hex»¹ĞèÒªµ¥¶ÀÌáÈ¡¶ş½øÖÆĞÅÏ¢¡£
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_OpenSerialPort(int16 axis, int32 baudRate, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_CloseSerialPort(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadSerialPort(int16 axis, Uint8 *buf, int32 length, int32 *length_read, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteSerialPort(int16 axis, Uint8 *buf, int32 length, int32 *length_written, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-
+/////////////////////////////////com vs fppa uart to burn the dsp/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstring& filePath, int32 baudRate, int16 cmd, string& inputKey, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-//wstringå’Œstringè½¬åŒ–
+/////////////////////////////////com vs fppa eeprom/////////////////////////////////////////
+//EEPROM ¶ÁĞ´,²Á³ı
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadEEPROM(int16 axis, int32& ofst, int8* value,int16& num,int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteEEPROM(int16 axis, int32& ofst, int8* value, int16& num, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClearEEPROM(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ResetFPGA(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ConfigEEPROM(int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+
+//Í¨ĞÅÁ¬½Óºó£¬ĞèÉ¨ÃèÍøÂç½á¹¹£¬Í¨¹ı·¢ËÍ¹ã²¥ÏûÏ¢¸øFPGA£¬Í¨¹ı·µ»ØµÄÊı¾İ°üÖĞµÄÕ¾ºÅºÍÉè±¸ÀàĞÍÀ´ÅĞ¶ÏÍøÂç½á¹¹
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ScanRnTopology(int16 com_type = GTSD_COM_TYPE_RNNET, int16 stationId = 0xff);
+
+
+//wstringºÍstring×ª»¯
 string ws2s(const wstring& ws);
 wstring s2ws(const string& s);
 

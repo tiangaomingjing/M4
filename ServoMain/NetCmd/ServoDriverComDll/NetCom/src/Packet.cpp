@@ -1,4 +1,4 @@
-Ôªø//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton Packet Define		 							//
 //	file				:	Packet.cpp													//
 //	Description			:	use for pc and fpga communicaiton							//
@@ -32,7 +32,7 @@ CPacket::~CPacket(void)
 
 void CPacket::init_pack()
 {
-  //0xff,0xff,0xff,0xff,0xff,0xff,//dmac 6
+	//	0xff,0xff,0xff,0xff,0xff,0xff,//dmac 6
 
 	for (int i = 0; i < MAC_ADDR_BYTE_LENTH;i++)
 	{
@@ -71,11 +71,11 @@ bool CPacket::decoder_return_flag(int16 mode)
 	if ((pRx->type0 != pTx->type0) || (pRx->type1 != pTx->type1))
 		return false;
 
-	if (mode == PACKET_MODE_READ_FPGA)  //FPGAËØªÊ®°Âºè
+	if (mode == PACKET_MODE_READ_FPGA)  //FPGA∂¡ƒ£ Ω
 	{
 		int16 data = 0;
 		memcpy_s(&data, sizeof(int16), &(pRx->dataSection[0]), sizeof(int16));
-		return (((data & RETURN_REQUEST_MASK) != 0) ? true : false);//Âà§Êñ≠bit1‰ΩçÊòØÂê¶‰∏∫1ÔºåÂ¶ÇÊûú‰∏∫1ÔºåÈÇ£‰πàËØ¥ÊòéÊåá‰ª§Â∑≤ÁªèËøîÂõûÔºåÂèØ‰ª•ËØªÂèñËøîÂõûÂÄºÔºåÂ¶ÇÊûú‰∏∫0ÔºåÈÇ£‰πàËØ¥ÊòéÊåá‰ª§Ê≤°ÊúâËøîÂõû„ÄÇ
+		return (((data & RETURN_REQUEST_MASK) != 0) ? true : false);//≈–∂œbit1Œª «∑ÒŒ™1£¨»Áπ˚Œ™1£¨ƒ«√¥Àµ√˜÷∏¡Ó“—æ≠∑µªÿ£¨ø…“‘∂¡»°∑µªÿ÷µ£¨»Áπ˚Œ™0£¨ƒ«√¥Àµ√˜÷∏¡Ó√ª”–∑µªÿ°£
 	}
 	else
 	{
@@ -94,16 +94,16 @@ int16 CPacket::decoder_dsp_packet(Uint8 index, int16* pData, int16 &dma_num)
 	if (pRx->index != index)
 		return Net_Rt_Index_Unmatch;
 
-	//ËØªÂèñÂåÖÈïøÂ∫¶
+	//∂¡»°∞¸≥§∂»
 	int16 data	= 0;
 	memcpy_s(&data, sizeof(int16), &(pRx->lengthbit7_0), sizeof(int16));
 	int16 lenth = (LENTH_MASK & data);
 
-	//ËØªÂèñÊï∞ÊçÆÈïøÂ∫¶
+	//∂¡»° ˝æ›≥§∂»
 	memcpy_s(&data, sizeof(int16), &pRx->dma_numbit7_0, sizeof(int16));
 	dma_num		= (DMA_NUMBER_MASK & data);
 
-	//Êü•ËØ¢ËøîÂõû‰ø°ÊÅØÊòØÂê¶Ê≠£Á°Æ
+	//≤È—Ø∑µªÿ–≈œ¢ «∑Ò’˝»∑
 	switch (pRx->dataSection[4])
 	{
 	case NET_COM_EXECUTE_FAIL:
@@ -138,12 +138,12 @@ int16 CPacket::decoder_fpga_packet(Uint8 index, int16* pData, int16 &dma_num)
 	if (pRx->index != index)
 		return Net_Rt_Index_Unmatch;
 
-	//ËØªÂèñÂåÖÈïøÂ∫¶
+	//∂¡»°∞¸≥§∂»
 	int16 data	= 0;
 	memcpy_s(&data, sizeof(int16), &(pRx->lengthbit7_0), sizeof(int16));
 	int16 lenth = (LENTH_MASK & data);
 	
-	//ËØªÂèñÊï∞ÊçÆÈïøÂ∫¶
+	//∂¡»° ˝æ›≥§∂»
 	memcpy_s(&data, sizeof(int16), &pRx->dma_numbit7_0, sizeof(int16));
 	dma_num		= (DMA_NUMBER_MASK & data);
 
@@ -151,42 +151,42 @@ int16 CPacket::decoder_fpga_packet(Uint8 index, int16* pData, int16 &dma_num)
 	return Rt_Success;
 }
 
-static int32 getLocalMac(Uint8 *mac, const int8* adapterName) //Ëé∑ÂèñÊú¨Êú∫MACÂùÄ 
+static int32 getLocalMac(Uint8 *mac, const int8* adapterName) //ªÒ»°±æª˙MAC÷∑ 
 {
-	//PIP_ADAPTER_INFOÁªìÊûÑ‰ΩìÊåáÈíàÂ≠òÂÇ®Êú¨Êú∫ÁΩëÂç°‰ø°ÊÅØ
+	//PIP_ADAPTER_INFOΩ·ππÃÂ÷∏’Î¥Ê¥¢±æª˙Õ¯ø®–≈œ¢
 	PIP_ADAPTER_INFO pIpAdapterInfo = new IP_ADAPTER_INFO();
 
-	//ÂæóÂà∞ÁªìÊûÑ‰ΩìÂ§ßÂ∞è,Áî®‰∫éGetAdaptersInfoÂèÇÊï∞
+	//µ√µΩΩ·ππÃÂ¥Û–°,”√”⁄GetAdaptersInfo≤Œ ˝
 	Uint32 stSize = sizeof(IP_ADAPTER_INFO);
 
-	//Ë∞ÉÁî®GetAdaptersInfoÂáΩÊï∞,Â°´ÂÖÖpIpAdapterInfoÊåáÈíàÂèòÈáè;ÂÖ∂‰∏≠stSizeÂèÇÊï∞Êó¢ÊòØ‰∏Ä‰∏™ËæìÂÖ•Èáè‰πüÊòØ‰∏Ä‰∏™ËæìÂá∫Èáè
+	//µ˜”√GetAdaptersInfo∫Ø ˝,ÃÓ≥‰pIpAdapterInfo÷∏’Î±‰¡ø;∆‰÷–stSize≤Œ ˝º» «“ª∏ˆ ‰»Î¡ø“≤ «“ª∏ˆ ‰≥ˆ¡ø
 	int32 nRel = GetAdaptersInfo(pIpAdapterInfo, &stSize);
 
-	//ËÆ∞ÂΩïÁΩëÂç°Êï∞Èáè
+	//º«¬ºÕ¯ø® ˝¡ø
 	int32 netCardNum = 0;
 
-	//ËÆ∞ÂΩïÊØèÂº†ÁΩëÂç°‰∏äÁöÑIPÂú∞ÂùÄÊï∞Èáè
+	//º«¬º√ø’≈Õ¯ø®…œµƒIPµÿ÷∑ ˝¡ø
 	int32 IPnumPerNetCard = 0;
 
 	if (ERROR_BUFFER_OVERFLOW == nRel)
 	{
-		//Â¶ÇÊûúÂáΩÊï∞ËøîÂõûÁöÑÊòØERROR_BUFFER_OVERFLOW
-		//ÂàôËØ¥ÊòéGetAdaptersInfoÂèÇÊï∞‰º†ÈÄíÁöÑÂÜÖÂ≠òÁ©∫Èó¥‰∏çÂ§ü,ÂêåÊó∂ÂÖ∂‰º†Âá∫stSize,Ë°®Á§∫ÈúÄË¶ÅÁöÑÁ©∫Èó¥Â§ßÂ∞è
-		//Ëøô‰πüÊòØËØ¥Êòé‰∏∫‰ªÄ‰πàstSizeÊó¢ÊòØ‰∏Ä‰∏™ËæìÂÖ•Èáè‰πüÊòØ‰∏Ä‰∏™ËæìÂá∫Èáè
-		//ÈáäÊîæÂéüÊù•ÁöÑÂÜÖÂ≠òÁ©∫Èó¥
+		//»Áπ˚∫Ø ˝∑µªÿµƒ «ERROR_BUFFER_OVERFLOW
+		//‘ÚÀµ√˜GetAdaptersInfo≤Œ ˝¥´µ›µƒƒ⁄¥Êø’º‰≤ªπª,Õ¨ ±∆‰¥´≥ˆstSize,±Ì æ–Ë“™µƒø’º‰¥Û–°
+		//’‚“≤ «Àµ√˜Œ™ ≤√¥stSizeº» «“ª∏ˆ ‰»Î¡ø“≤ «“ª∏ˆ ‰≥ˆ¡ø
+		// Õ∑≈‘≠¿¥µƒƒ⁄¥Êø’º‰
 		delete pIpAdapterInfo;
 
-		//ÈáçÊñ∞Áî≥ËØ∑ÂÜÖÂ≠òÁ©∫Èó¥Áî®Êù•Â≠òÂÇ®ÊâÄÊúâÁΩëÂç°‰ø°ÊÅØ
+		//÷ÿ–¬…Í«Îƒ⁄¥Êø’º‰”√¿¥¥Ê¥¢À˘”–Õ¯ø®–≈œ¢
 		pIpAdapterInfo = (PIP_ADAPTER_INFO)new BYTE[stSize];
 
-		//ÂÜçÊ¨°Ë∞ÉÁî®GetAdaptersInfoÂáΩÊï∞,Â°´ÂÖÖpIpAdapterInfoÊåáÈíàÂèòÈáè
+		//‘Ÿ¥Œµ˜”√GetAdaptersInfo∫Ø ˝,ÃÓ≥‰pIpAdapterInfo÷∏’Î±‰¡ø
 		nRel = GetAdaptersInfo(pIpAdapterInfo, &stSize);
 	}
 
 	int32 iCount = 0;
-	while (pIpAdapterInfo)//ÈÅçÂéÜÊØè‰∏ÄÂº†ÁΩëÂç°
+	while (pIpAdapterInfo)//±È¿˙√ø“ª’≈Õ¯ø®
 	{
-		//  pIpAdapterInfo->Address MACÂùÄ
+		//  pIpAdapterInfo->Address MAC÷∑
 		if (strstr(adapterName, pIpAdapterInfo->AdapterName) != NULL)
 		{
 			for (int32 i = 0; i < (int32)pIpAdapterInfo->AddressLength; i++)
@@ -236,7 +236,7 @@ void CPacket::fillPacket(int16 dma_addr, int16* pData, int16 dma_num, int16 FPGA
 
 	int16 dmanum			= dma_num;
 
-	if (FPGAmode == PACKET_MODE_READ_FPGA)//ËØªÊ®°Âºè
+	if (FPGAmode == PACKET_MODE_READ_FPGA)//∂¡ƒ£ Ω
 		dmanum				&= DMA_NUMBER_MASK;
 	else
 		dmanum				|= DMA_NUMBER_MASK_WRITE;

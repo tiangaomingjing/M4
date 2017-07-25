@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -27,12 +27,12 @@ Hex::~Hex()
 	
 }
 
-//è·å–è®°å½•æ ‡è¯†
+//»ñÈ¡¼ÇÂ¼±êÊ¶
 int8 Hex::GetRecordMark()
 {
 	return this->m_cRecordMark;
 }
-//è·å–æ¯æ¡è®°å½•çš„é•¿åº¦
+//»ñÈ¡Ã¿Ìõ¼ÇÂ¼µÄ³¤¶È
 Uint16 Hex::GetRecordLength()
 {
 	if (strlen(m_cBuffer) >= 2)
@@ -42,17 +42,17 @@ Uint16 Hex::GetRecordLength()
 		m_nRecordLength[1]	= m_cBuffer[1];
 		m_nRecordLength[2]	= '\0';
 		int8 *p = NULL;
-		return (Uint16)strtol(m_nRecordLength, &p, 16);  //å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´å½¢
+		return (Uint16)strtol(m_nRecordLength, &p, 16);  //½«×Ö·û´®×ª»¯ÎªÕûĞÎ
 	}
 	else
 	{
-    return 0;
+		return 0;
 	}
 }
-//è·å–è£…è½½åç§»
+//»ñÈ¡×°ÔØÆ«ÒÆ
 Uint32 Hex::GetLoadOffset()
 {
-	if (strlen(m_cBuffer) == (GetRecordLength() + 5) * 2) //å»æ‰markä»¥åï¼Œä¸¤ä¸ªå­—ç¬¦å ä¸€ä¸ªå­—èŠ‚
+	if (strlen(m_cBuffer) == (GetRecordLength() + 5) * 2) //È¥µômarkÒÔºó£¬Á½¸ö×Ö·ûÕ¼Ò»¸ö×Ö½Ú
 	{
 		m_pLoadOffset = new int8[5];
 		for (int i = 0; i < 4; ++i)
@@ -62,14 +62,14 @@ Uint32 Hex::GetLoadOffset()
 		m_pLoadOffset[4] = '\0';
 
 		int8 *p = NULL;
-		return strtol(m_pLoadOffset, &p, 16);  //å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´å½¢
+		return strtol(m_pLoadOffset, &p, 16);  //½«×Ö·û´®×ª»¯ÎªÕûĞÎ
 	}
 	else
 	{
 		return  0;
 	}
 }
-//è·å–è®°å½•ç±»å‹
+//»ñÈ¡¼ÇÂ¼ÀàĞÍ
 Uint16 Hex::GetRecordType()
 {
 	if (strlen(m_cBuffer) == (GetRecordLength() + 5) * 2)
@@ -79,7 +79,7 @@ Uint16 Hex::GetRecordType()
 		m_pRecordType[1]	= m_cBuffer[7];
 		m_pRecordType[2]	= '\0';
 		int8 *p = NULL;
-		return (Uint16)strtol(m_pRecordType, &p, 16);  //å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´å½¢
+		return (Uint16)strtol(m_pRecordType, &p, 16);  //½«×Ö·û´®×ª»¯ÎªÕûĞÎ
 	}
 	else
 	{
@@ -87,7 +87,7 @@ Uint16 Hex::GetRecordType()
 	}
 	
 }
-//è·å–æ•°æ®
+//»ñÈ¡Êı¾İ
 int16* Hex::GetData()
 {
 	if (strlen(m_cBuffer) == (GetRecordLength() + 5) * 2)
@@ -103,8 +103,8 @@ int16* Hex::GetData()
 			{
 				m_pData[i]					= '\0';
 				int8 *p = NULL;
-				m_pDataValid[((i>>1)-1)]	= (int16)strtol(&m_pData[i - 2], &p, 16);  //å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´å½¢
-				//æ¢å¤ä¹‹å‰çš„æ•°æ®
+				m_pDataValid[((i>>1)-1)]	= (int16)strtol(&m_pData[i - 2], &p, 16);  //½«×Ö·û´®×ª»¯ÎªÕûĞÎ
+				//»Ö¸´Ö®Ç°µÄÊı¾İ
 				m_pData[i]					= m_cBuffer[i + 8];
 			}	
 		}
@@ -112,12 +112,12 @@ int16* Hex::GetData()
 		{
 			m_pData[len * 2]				= '\0';
 			int8 *p = NULL;
-			m_pDataValid[((i >> 1) - 1)]	= (int16)strtol(&m_pData[i - 2], &p, 16);  //å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´å½¢
+			m_pDataValid[((i >> 1) - 1)]	= (int16)strtol(&m_pData[i - 2], &p, 16);  //½«×Ö·û´®×ª»¯ÎªÕûĞÎ
 		}	
 	}
 	return m_pDataValid;
 }
-//è·å–æ ¡éªŒå’Œ
+//»ñÈ¡Ğ£ÑéºÍ
 Uint16 Hex::GetChecksum()
 {
 	int32 len = GetRecordLength();
@@ -128,7 +128,7 @@ Uint16 Hex::GetChecksum()
 		m_pChecksum[1]		= m_cBuffer[(len + 5) * 2 - 1];
 		m_pChecksum[2]		= '\0';
 		int8 *p = NULL;
-		return (Uint16)strtol(m_pChecksum, &p, 16);  //å°†å­—ç¬¦ä¸²è½¬åŒ–ä¸ºæ•´å½¢
+		return (Uint16)strtol(m_pChecksum, &p, 16);  //½«×Ö·û´®×ª»¯ÎªÕûĞÎ
 	}
 	else
 	{
@@ -145,7 +145,7 @@ int16 Hex::ResetVar()
 	return 0;
 }
 
-//è§£æHexæ–‡ä»¶ä¸­çš„æ¯ä¸€æ¡è®°å½•
+//½âÎöHexÎÄ¼şÖĞµÄÃ¿Ò»Ìõ¼ÇÂ¼
 int16 Hex::ParseRecord(int8 ch)
 {
 	INTEL_HEX_FRAME tmp;
@@ -166,10 +166,10 @@ int16 Hex::ParseRecord(int8 ch)
 	
 	if ((buf_len == (GetRecordLength() + 5) * 2 - 1))
 	{
-		//æ¥æ”¶æœ€åä¸€ä¸ªå­—ç¬¦
+		//½ÓÊÕ×îºóÒ»¸ö×Ö·û
 		m_cBuffer[buf_len]		= ch;
 		m_cBuffer[buf_len + 1]	= '\0';
-		//æ£€éªŒæ¥æ”¶çš„æ•°æ®
+		//¼ìÑé½ÓÊÕµÄÊı¾İ
 		int8 temp[3];
 		int8 *p					= NULL;
 		int32 checksum		= 0;
@@ -181,8 +181,8 @@ int16 Hex::ParseRecord(int8 ch)
 			checksum			+= strtol(temp, &p, 16);
 			temp[0]				= '\0';
 		}
-		checksum				&= 0x00ff;//å–è®¡ç®—ç»“æœçš„ä½8ä½
-		if (checksum == 0)//checksumä¸º0è¯´æ˜æ¥æ”¶çš„æ•°æ®æ— è¯¯
+		checksum				&= 0x00ff;//È¡¼ÆËã½á¹ûµÄµÍ8Î»
+		if (checksum == 0)//checksumÎª0ËµÃ÷½ÓÊÕµÄÊı¾İÎŞÎó
 		{
 			
 			tmp.lenth			= GetRecordLength();
@@ -191,19 +191,19 @@ int16 Hex::ParseRecord(int8 ch)
 			memcpy_s(&(tmp.data[0]), tmp.lenth*sizeof(int16), GetData(), tmp.lenth*sizeof(int16));
 			tmp.checksum		= GetChecksum();
 
-			if (tmp.type == 4) //çº¿æ€§æ‰©å±•åœ°å€
+			if (tmp.type == 4) //ÏßĞÔÀ©Õ¹µØÖ·
 			{
 				m_baseAddr = (((tmp.data[0] << 8) | (tmp.data[1]))<<16);
 			}
-			else if (tmp.type == 5)//èµ·å§‹çº¿æ€§åœ°å€
+			else if (tmp.type == 5)//ÆğÊ¼ÏßĞÔµØÖ·
 			{
 				m_baseAddr = (((tmp.data[0] << 24) | (tmp.data[1]<<16)|(tmp.data[2]<<8)|(tmp.data[3])));
 			}
-			else if (tmp.type == 1)//åœæ­¢
+			else if (tmp.type == 1)//Í£Ö¹
 			{
 
 			}
-			else if (tmp.type == 0)//æ•°æ®
+			else if (tmp.type == 0)//Êı¾İ
 			{
 				m_hex_frame_write.push_back(tmp);
 				dataLenth += tmp.lenth;
@@ -212,19 +212,19 @@ int16 Hex::ParseRecord(int8 ch)
 			{
 			}	
 		}
-		else//å¦åˆ™æ¥æ”¶æ•°æ®æœ‰è¯¯
+		else//·ñÔò½ÓÊÕÊı¾İÓĞÎó
 		{
 			return 1;
 		}
 		m_cBuffer[0] = '\0';
 		m_bRecvStatus = false;
 
-		delete m_nRecordLength;						//è®°å½•é•¿åº¦
-		delete m_pLoadOffset;						//è£…è½½åç§»
-		delete m_pRecordType;						//è®°å½•ç±»å‹
-		delete m_pData;								//æ•°æ®å­—æ®µ
-		if (tmp.type != 1){ delete m_pDataValid; }//æœ‰æ•ˆæ•°æ®
-		delete m_pChecksum;							//æ ¡éªŒå’Œ
+		delete m_nRecordLength;						//¼ÇÂ¼³¤¶È
+		delete m_pLoadOffset;						//×°ÔØÆ«ÒÆ
+		delete m_pRecordType;						//¼ÇÂ¼ÀàĞÍ
+		delete m_pData;								//Êı¾İ×Ö¶Î
+		if (tmp.type != 1){ delete m_pDataValid; }//ÓĞĞ§Êı¾İ
+		delete m_pChecksum;							//Ğ£ÑéºÍ
 
 		m_nRecordLength		= NULL;
 		m_pLoadOffset		= NULL;
@@ -339,23 +339,23 @@ int16 Hex::WriteHexFile(string filename, vector<INTEL_HEX_FRAME>* frame)
 		file_out << setiosflags(ios::left) << setw(10) << "addr:" << setw(8) << hex << (*it).addr << endl;
 		file_out << setiosflags(ios::left) << setw(10) << "lenth:" << setiosflags(ios::right) << setw(2) << setfill('0') << hex << (*it).lenth << endl;
 		file_out << setfill(' ');
-		file_out << resetiosflags(ios::right);//é‡ç½®æ ‡è®°
+		file_out << resetiosflags(ios::right);//ÖØÖÃ±ê¼Ç
 		file_out << setiosflags(ios::left) << setw(10) << "data:";
 		for (int16 i = 0; i < (*it).lenth; ++i)
 		{
-			file_out << resetiosflags(ios::left);//é‡ç½®æ ‡è®°
+			file_out << resetiosflags(ios::left);//ÖØÖÃ±ê¼Ç
 			file_out << setiosflags(ios::right) << setw(2) << setfill('0') << hex << (*it).data[i];
 		}
 		file_out << endl;
 
-		file_out << resetiosflags(ios::right);//é‡ç½®æ ‡è®°
+		file_out << resetiosflags(ios::right);//ÖØÖÃ±ê¼Ç
 		file_out << setfill(' ') << endl;
 	}
 	file_out.close();
 	return 0;
 }
 
-//è§£æHexæ–‡ä»¶
+//½âÎöHexÎÄ¼ş
 int16 Hex::ParseHex(string filename)
 {
 	fstream file;

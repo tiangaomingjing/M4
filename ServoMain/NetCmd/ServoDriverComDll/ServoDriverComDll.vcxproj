@@ -52,14 +52,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;SERVODRIVERCOMDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\NetCom\include;.\NetCom\wpcap\Include\pcap;.\NetCom\wpcap\Include;.\AbsCom\include;.\Cmd\include;.\PlotWave\include;.\;.\..\;.\ParseIntelHex\include;.\FirmwareDL\include;.\UartBoot\include;.\RingNetCom\include;.\socketCom\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\NetCom\include;.\NetCom\wpcap\Include\pcap;.\NetCom\wpcap\Include;.\AbsCom\include;.\Cmd\include;.\PlotWave\include;.\;.\..\;.\ParseIntelHex\include;.\FirmwareDL\include;.\UartBoot\include;.\RingNetCom\include;.\socketCom\include;.\eeprom\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>.\NetCom\wpcap\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>.\NetCom\wpcap\lib\wpcap.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <StackReserveSize>10000000</StackReserveSize>
+      <StackReserveSize>100000000</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,7 +71,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;SERVODRIVERCOMDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>.\NetCom\include;.\NetCom\wpcap\Include\pcap;.\NetCom\wpcap\Include;.\AbsCom\include;.\Cmd\include;.\PlotWave\include;.\;.\..\;.\ParseIntelHex\include;.\FirmwareDL\include;.\UartBoot\include;.\RingNetCom\include;.\socketCom\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\NetCom\include;.\NetCom\wpcap\Include\pcap;.\NetCom\wpcap\Include;.\AbsCom\include;.\Cmd\include;.\PlotWave\include;.\;.\..\;.\ParseIntelHex\include;.\FirmwareDL\include;.\UartBoot\include;.\RingNetCom\include;.\socketCom\include;.\eeprom\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -84,14 +84,22 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.h" />
+    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.h" />
+    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.h" />
     <ClInclude Include="AbsCom\include\AbsCom.h" />
     <ClInclude Include="Cmd\include\ST_GTSD_Cmd.h" />
+    <ClInclude Include="DeviceDataBase.h" />
+    <ClInclude Include="eeprom\include\eepromOpt.h" />
     <ClInclude Include="FirmwareDL\include\FirmwareDl.h" />
+    <ClInclude Include="MotionControlComDll.h" />
+    <ClInclude Include="MotionCtrlCom.h" />
     <ClInclude Include="NetCom\include\BaseReturn_def.h" />
     <ClInclude Include="NetCom\include\Basetype_def.h" />
     <ClInclude Include="NetCom\include\Net.h" />
     <ClInclude Include="NetCom\include\NetCommunication.h" />
     <ClInclude Include="NetCom\include\Packet.h" />
+    <ClInclude Include="NetDriver.h" />
     <ClInclude Include="ParseIntelHex\include\ParseHex.h" />
     <ClInclude Include="PlotWave\include\cpu_timer.h" />
     <ClInclude Include="PlotWave\include\gdef.h" />
@@ -101,19 +109,36 @@
     <ClInclude Include="RingNetCom\include\RingNetCom.h" />
     <ClInclude Include="RingNetCom\include\RingNetPacket.h" />
     <ClInclude Include="RingNetCom\include\Rninterface.h" />
+    <ClInclude Include="RingNetDeviceDef.h" />
+    <ClInclude Include="RingNetDriver.h" />
+    <ClInclude Include="RingNetInterface.h" />
+    <ClInclude Include="RnSerialPort.h" />
+    <ClInclude Include="RnServoAxiMapping.h" />
+    <ClInclude Include="RnDeviceDataBase.h" />
+    <ClInclude Include="RnDriverPlot.h" />
+    <ClInclude Include="RnDriverWave.h" />
+    <ClInclude Include="ServoDriverCom.h" />
+    <ClInclude Include="ServoDriverComDef.h" />
     <ClInclude Include="ServoDriverComDll.h" />
     <ClInclude Include="SocketCom\include\SocketCom.h" />
     <ClInclude Include="SocketCom\include\SocketInterface.h" />
     <ClInclude Include="SocketCom\include\SocketPacket.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="StRingNetComUser.h" />
+    <ClInclude Include="StRingNetRegDef.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UartBoot\include\hex2ldr.h" />
     <ClInclude Include="UartBoot\include\ihex.h" />
     <ClInclude Include="UartBoot\include\serialport.h" />
+    <ClInclude Include="UserResp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.c" />
+    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.c" />
+    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.c" />
     <ClCompile Include="AbsCom\src\AbsCom.cpp" />
     <ClCompile Include="Cmd\src\ST_GTSD_Cmd.cpp" />
+    <ClCompile Include="DeviceDataBase.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -122,10 +147,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="eeprom\src\eepromOpt.cpp" />
     <ClCompile Include="FirmwareDL\src\FirmwareDl.cpp" />
+    <ClCompile Include="MotionControlComDll.cpp" />
+    <ClCompile Include="MotionCtrlCom.cpp" />
     <ClCompile Include="NetCom\src\Net.cpp" />
     <ClCompile Include="NetCom\src\NetCommunication.cpp" />
     <ClCompile Include="NetCom\src\Packet.cpp" />
+    <ClCompile Include="NetDriver.cpp" />
     <ClCompile Include="ParseIntelHex\src\ParseHex.cpp" />
     <ClCompile Include="PlotWave\src\cpu_timer.cpp" />
     <ClCompile Include="PlotWave\src\gdef.cpp" />
@@ -135,6 +164,14 @@
     <ClCompile Include="RingNetCom\src\RingNetCom.cpp" />
     <ClCompile Include="RingNetCom\src\RingNetPacket.cpp" />
     <ClCompile Include="RingNetCom\src\Rninterface.cpp" />
+    <ClCompile Include="RingNetDriver.cpp" />
+    <ClCompile Include="RingNetInterface.cpp" />
+    <ClCompile Include="RnSerialPort.cpp" />
+    <ClCompile Include="RnServoAxiMapping.cpp" />
+    <ClCompile Include="RnDeviceDataBase.cpp" />
+    <ClCompile Include="RnDriverPlot.cpp" />
+    <ClCompile Include="RnDriverWave.cpp" />
+    <ClCompile Include="ServoDriverCom.cpp" />
     <ClCompile Include="ServoDriverComDll.cpp" />
     <ClCompile Include="SocketCom\src\SocketCom.cpp" />
     <ClCompile Include="SocketCom\src\SocketInterface.cpp" />
@@ -146,6 +183,7 @@
     <ClCompile Include="UartBoot\src\hex2ldr.cpp" />
     <ClCompile Include="UartBoot\src\ihex.cpp" />
     <ClCompile Include="UartBoot\src\serialport.cpp" />
+    <ClCompile Include="UserResp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="NetCom\wpcap\lib\wpcap.lib" />

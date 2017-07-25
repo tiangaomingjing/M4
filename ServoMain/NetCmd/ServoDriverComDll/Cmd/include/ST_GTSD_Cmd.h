@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton cmd layer Define		 						//
 //	file				:	ST_GTSD_Cmd.h												//
 //	Description			:	use for cmd define											//
@@ -9,27 +9,28 @@
 //--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 #ifndef			__GTSD_ST_CMD__
 #define			__GTSD_ST_CMD__	
 //////////////////////////////////////////////////////////////////////////
 
 #include "AbsCom.h"
 #include "ServoDriverComDll.h"
-const int32						GTSD_DSP_WRITE			= 0;					  //dspå®šä¹‰çš„è¯»å†™	
+const int32						GTSD_DSP_WRITE			= 0;					  //dsp¶¨ÒåµÄ¶ÁÐ´	
 const int32						GTSD_DSP_READ			= 1;
 
-// pcdebug åœ°å€ä¸ºdspä¸Žfpgaä¹‹é—´é€šä¿¡çš„fpgaåœ°å€ï¼Œä¸åŒçš„dspå¯¹åº”ä¸åŒçš„fpgaåœ°å€ã€‚
-const int32						DSPA_COMADDR			= 0x0400;				 //åœ°å€ä¸ºshortåœ°å€
+// pcdebug µØÖ·ÎªdspÓëfpgaÖ®¼äÍ¨ÐÅµÄfpgaµØÖ·£¬²»Í¬µÄdsp¶ÔÓ¦²»Í¬µÄfpgaµØÖ·¡£
+const int32						DSPA_COMADDR			= 0x0400;				 //µØÖ·ÎªshortµØÖ·
 const int32						DSPB_COMADDR			= 0x8400;
 
 const int32						FPGA_DSPA_BASEADDR		= 0;		
-const int32						FPGA_DSPB_BASEADDR		= 0x8000;				//shortåœ°å€
+const int32						FPGA_DSPB_BASEADDR		= 0x8000;				//shortµØÖ·
 
-const int32						COM_AXIS_MAX			= 4;					//è½´æœ€å¤§ä¸ªæ•°ä¸º4	
+const int32						COM_AXIS_MAX			= 240;					//Öá×î´ó¸öÊýÎª4	
 
 const int32						GTSD_DSP_A				= 0;
 const int32						GTSD_DSP_B				= 1;
+const int32						GTSD_DSP_C				= 2;
 
 const int32						PLOTWAVE_DSPA_NUM_ADDR	= 0x0006;
 const int32						PLOTWAVE_DSPB_NUM_ADDR	= 0x8006;
@@ -39,9 +40,9 @@ const int32						PLOTWAVE_DSPB_DATA_ADDR = 0x8600;//0x8800//
 
 const int32						FPGA_VERSION = 0x0000;
 
-//ç­‰çŽ¯ç½‘èƒ½è®¿é—®çš„FPGAåœ°å€
+//µÈ»·ÍøÄÜ·ÃÎÊµÄFPGAµØÖ·
 
-//å’Œdspç›¸å…³çš„åœ°å€åç§»
+//ºÍdspÏà¹ØµÄµØÖ·Æ«ÒÆ
 const int32						FPGA_RN_ENC_START_OFST	= 0x100;
 const int32						FPGA_RN_ENC_END_OFST	= 0x1FF;
 
@@ -57,7 +58,7 @@ const int32						FPGA_RN_REF_END_OFST	= 0x5FF;
 const int32						FPGA_RN_UART_START_OFST = 0x800;
 const int32						FPGA_RN_UART_END_OFST	= 0x8FF;
 
-//å’Œdspæ— å…³çš„åœ°å€åç§»
+//ºÍdspÎÞ¹ØµÄµØÖ·Æ«ÒÆ
 
 const int32						FPGA_RN_CTL_START_OFST	= 0x000;
 const int32						FPGA_RN_CTL_END_OFST	= 0x0FF;
@@ -84,66 +85,66 @@ const int32						FPGA_RN_APP_START_OFST	= 0xFF00;
 const int32						FPGA_RN_APP_END_OFST	= 0xFFFF;
 
 //////////////////////////////////////////////////////////////////////////
-//uart åŸºåœ°å€å®šä¹‰
-//pcdebug åœ°å€å’Œ ç­‰çŽ¯ç½‘æŒ‚çš„åœ°å€ä¸åŒ
+//uart »ùµØÖ·¶¨Òå
+//pcdebug µØÖ·ºÍ µÈ»·Íø¹ÒµÄµØÖ·²»Í¬
 const int32						FPGA_DSPA_UART_PCDEBUG_BASEADDR = 0x0380;
 const int32						FPGA_DSPB_UART_PCDEBUG_BASEADDR = 0x8380;
 
-//ç­‰çŽ¯ç½‘åœ°å€
+//µÈ»·ÍøµØÖ·
 const int32						FPGA_DSPA_UART_RNNET_BASEADDR	= 0x0800;
 const int32						FPGA_DSPB_UART_RNNET_BASEADDR	= 0x8800;
 
-//ä¸‹é¢åœ°å€æ˜¯åç§»åœ°å€ï¼Œä¸¤ä¸ªdspå¯¹åº”çš„åç§»ä¸€è‡´ï¼ŒåŸºåœ°å€ä¸åŒ,åç§»éƒ½æ˜¯byteåœ°å€ï¼Œä¸‹é¢ä½¿ç”¨çš„æ—¶å€™éœ€è¦å³ç§»ä¸€ä½
-const int32						FPGA_UART_CONFIG_W		= 0x00; //è¯» / å†™ åŒ…æŽ§åˆ¶è®¾ç½®
+//ÏÂÃæµØÖ·ÊÇÆ«ÒÆµØÖ·£¬Á½¸ödsp¶ÔÓ¦µÄÆ«ÒÆÒ»ÖÂ£¬»ùµØÖ·²»Í¬,Æ«ÒÆ¶¼ÊÇbyteµØÖ·£¬ÏÂÃæÊ¹ÓÃµÄÊ±ºòÐèÒªÓÒÒÆÒ»Î»
+const int32						FPGA_UART_CONFIG_W		= 0x00; //¶Á / Ð´ °ü¿ØÖÆÉèÖÃ
 const int32						FPGA_UART_CONFIG_R		= 0x00;
-//å†™æ—¶
-//D8 - D10:ä¼ è¾“æ•°æ®ä½å®½ï¼Œ
-//3â€™b100 : 5bit;
-//3â€™b101: 6bit;
-//3â€™b110: 7bit
-//3â€™b111 : 8bit;
-//D11:åœæ­¢ä½è®¾ç½®
-//1â€™b0ï¼š1bit;
-//2â€™b1ï¼š2bit;
-//D12 - D13:å¥‡å¶æ ¡éªŒè®¾ç½®
-//2â€™b01ï¼šå¥‡æ ¡éªŒï¼›
-//2â€™b10 : å¶æ ¡éªŒï¼›
-//å…¶ä»–ï¼šæ— æ ¡éªŒï¼›
-//D15 - D14 : ä¿ç•™
+//Ð´Ê±
+//D8 - D10:´«ÊäÊý¾ÝÎ»¿í£¬
+//3¡¯b100 : 5bit;
+//3¡¯b101: 6bit;
+//3¡¯b110: 7bit
+//3¡¯b111 : 8bit;
+//D11:Í£Ö¹Î»ÉèÖÃ
+//1¡¯b0£º1bit;
+//2¡¯b1£º2bit;
+//D12 - D13:ÆæÅ¼Ð£ÑéÉèÖÃ
+//2¡¯b01£ºÆæÐ£Ñé£»
+//2¡¯b10 : Å¼Ð£Ñé£»
+//ÆäËû£ºÎÞÐ£Ñé£»
+//D15 - D14 : ±£Áô
 
-//è¯»æ—¶
-//D14 - D14:ä¿ç•™
-//D15ï¼šæ¨¡å—ä½¿èƒ½çŠ¶æ€
-//1ï¼šæ¨¡å—ä½¿èƒ½
-//0ï¼šæ¨¡å—å…³é—­
+//¶ÁÊ±
+//D14 - D14:±£Áô
+//D15£ºÄ£¿éÊ¹ÄÜ×´Ì¬
+//1£ºÄ£¿éÊ¹ÄÜ
+//0£ºÄ£¿é¹Ø±Õ
 
-const int32						FPGA_UART_TX_STATE_R = 0x02; //ä¸²å£FIFOçŠ¶æ€å¯„å­˜å™¨
-//D9 - D0ï¼šå½“å‰TX FIFOä¸ªæ•°
-//D10ï¼šå‘é€TX FIFOå†™æ»¡æ ‡å¿—ä½
-//ä¸º1è¡¨ç¤ºå‘é€FIFOå†™æ»¡ï¼›
-//ä¸º0è¡¨ç¤ºæœªæ»¡ï¼›
-//D11 : æŽ¥æ”¶TX FIFOç©ºæ ‡å¿—ä½
-//	  ä¸º1è¡¨ç¤ºæŽ¥å—FIFOä¸ºç©ºï¼›
-//	  ä¸º0è¡¨ç¤ºæŽ¥å—FIFOéžç©ºï¼›
-//D12 : TX FIFOå‘ç”Ÿè¿‡å†™æº¢å‡º
-//D13 - D15ï¼šä¿ç•™ï¼›
+const int32						FPGA_UART_TX_STATE_R = 0x02; //´®¿ÚFIFO×´Ì¬¼Ä´æÆ÷
+//D9 - D0£ºµ±Ç°TX FIFO¸öÊý
+//D10£º·¢ËÍTX FIFOÐ´Âú±êÖ¾Î»
+//Îª1±íÊ¾·¢ËÍFIFOÐ´Âú£»
+//Îª0±íÊ¾Î´Âú£»
+//D11 : ½ÓÊÕTX FIFO¿Õ±êÖ¾Î»
+//	  Îª1±íÊ¾½ÓÊÜFIFOÎª¿Õ£»
+//	  Îª0±íÊ¾½ÓÊÜFIFO·Ç¿Õ£»
+//D12 : TX FIFO·¢Éú¹ýÐ´Òç³ö
+//D13 - D15£º±£Áô£»
 
-const int32						FPGA_UART_BAUDRATE_WR	= 0x04; //æ³¢ç‰¹çŽ‡è®¾ç½®
+const int32						FPGA_UART_BAUDRATE_WR	= 0x04; //²¨ÌØÂÊÉèÖÃ
 
 const int32						FPGA_UART_STARTEND_W	= 0x06;
 
 const int32						FPGA_UART_RX_STATE_R	= 0x06;
 
-const int32						FPGA_UART_SEND_FIFO_W	= 0x08; //ä¸²å£å‘é€FIFO
-//åº”ç”¨å±‚å‘FIFOå†™å…¥å‡†å¤‡å‘é€çš„æ•°æ®
-//D7 - D0:ä¸ºå†™å…¥çš„æ•°æ®ï¼›æ ¹æ®æ•°æ®ä½å®½è®¾ç½®ï¼Œç¡®å®šæœ‰æ•ˆä½ï¼š
-//æ¯”å¦‚ ä¼ è¾“æ•°æ®ä½å®½è®¾å®šä¸º3â€™b100ï¼Œå³ä¼ è¾“æ•°æ®ä½å®½ä¸º5ä½ï¼ˆD4 - D0ï¼‰ï¼ŒD7 - D5è¡¥0ï¼›
-//D15 - D8 : ä¿ç•™ï¼ˆè¡¥0ï¼‰
+const int32						FPGA_UART_SEND_FIFO_W	= 0x08; //´®¿Ú·¢ËÍFIFO
+//Ó¦ÓÃ²ãÏòFIFOÐ´Èë×¼±¸·¢ËÍµÄÊý¾Ý
+//D7 - D0:ÎªÐ´ÈëµÄÊý¾Ý£»¸ù¾ÝÊý¾ÝÎ»¿íÉèÖÃ£¬È·¶¨ÓÐÐ§Î»£º
+//±ÈÈç ´«ÊäÊý¾ÝÎ»¿íÉè¶¨Îª3¡¯b100£¬¼´´«ÊäÊý¾ÝÎ»¿íÎª5Î»£¨D4 - D0£©£¬D7 - D5²¹0£»
+//D15 - D8 : ±£Áô£¨²¹0£©
 
-const int32						FPGA_UART_RECEIVE_FIFO_R = 0x08; //ä¸²å£æŽ¥æ”¶FIFOå¯„å­˜å™¨
-//ä¸²å£æŽ¥æ”¶çš„çš„16ä½å¹¶è¡Œæ•°æ®ï¼ˆä½Ž8ä½æœ‰æ•ˆï¼‰
-//æ ¹æ®æ•°æ®ä½å®½è®¾ç½®ï¼Œç¡®å®šæœ‰æ•ˆä½ï¼š
-//æ¯”å¦‚ ä¼ è¾“æ•°æ®ä½å®½è®¾å®šä¸º3â€™b100ï¼Œå³8ä½å¹¶è¡Œæ•°æ®é«˜5ä½æœ‰æ•ˆï¼Œä½Žä¸‰ä½æ— æ„ä¹‰
+const int32						FPGA_UART_RECEIVE_FIFO_R = 0x08; //´®¿Ú½ÓÊÕFIFO¼Ä´æÆ÷
+//´®¿Ú½ÓÊÕµÄµÄ16Î»²¢ÐÐÊý¾Ý£¨µÍ8Î»ÓÐÐ§£©
+//¸ù¾ÝÊý¾ÝÎ»¿íÉèÖÃ£¬È·¶¨ÓÐÐ§Î»£º
+//±ÈÈç ´«ÊäÊý¾ÝÎ»¿íÉè¶¨Îª3¡¯b100£¬¼´8Î»²¢ÐÐÊý¾Ý¸ß5Î»ÓÐÐ§£¬µÍÈýÎ»ÎÞÒâÒå
 
 
 const double					FPGA_CLOCK = 125000000.0;
@@ -151,7 +152,44 @@ const double					FPGA_CLOCK = 125000000.0;
 const int32						PLOTWAVE_GET_DATA_MAX_ONCE = 480;
 
 //////////////////////////////////////////////////////////////////////////
-//æœ¬åœ°å‡½æ•°å£°æ˜Ž
+//eeprom »ùµØÖ·¶¨Òå
+//pcdebug µØÖ·ºÍ µÈ»·Íø¹ÒµÄµØÖ·²»Í¬
+const int32						FPGA_EEPROM_PCDEBUG_BASEADDR	= 0x0800; //shortµØÖ· byteµØÖ·0x1000-0x10ff
+
+//µÈ»·ÍøµØÖ·
+const int32						FPGA_EEPROM_RNNET_BASEADDR		= 0x1000; //byteµØÖ· 
+
+//byteµØÖ·£¬¶ÔÓÚµÈ»·ÍøºÍpcdebu¶¼ÊÇÒ»ÑùµÄÆ«ÒÆ£¬ÓÃÓÚpcdebugÊ±ÐèÒª·¢ÏÂÈ¥shortµØÖ·£¬ËùÒÔÒªÓÒÒÆÒ»Î»
+const int32						FPGA_EEPROM_CTL					= 0x00;   //¿ØÖÆ¼Ä´æÆ÷
+//D0:  eeprom ¶ÁÐ´¿ØÖÆÎ»
+//	   1'b0 :Ð´eeprom²Ù×÷£»
+//	   1'b1 :¶Áeeprom²Ù×÷£»
+//D1 - D3: eepromÐ¾Æ¬Ó²¼þµØÖ·£¬6ÖáÖ÷°åÎª3'b000;
+//D4: eeprom¶ÁÐ´Ä£¿éÊ¹ÄÜÎ»
+//	  1'b1£ºÊ¹ÄÜeeprom¶ÁÐ´Ä£¿é£»
+//	  1'b0: ²»Ê¹ÄÜ£»
+//D5: eepromÐ¾Æ¬Èí¸´Î»Î»
+//	  1'b1£ºÍ¬Ê±D4Î»Îª1£¬eepromÐ¾Æ¬Èí¸´Î»
+//	  1'b0: ²»¸´Î»£»
+//D6 - D15£º±£Áô£»
+const int32						FPGA_EEPROM_WRITE_ADDR			= 0x02;  //Ð´µØÖ·¼Ä´æÆ÷
+//D0 - D7£ºÐ´eepromµÄµØÖ·£»
+//D8 - D15£º±£Áô£»
+const int32						FPGA_EEPROM_WRITE_DAT			= 0x04;  //Ð´Êý¾Ý¼Ä´æÆ÷
+//D0 - D7£ºÐ´eeprom¹Ì¶¨µØÖ·µÄÊý¾Ý£»
+//D8 - D15£º±£Áô£»
+const int32						FPGA_EEPROM_READ_ADDR			= 0x06;  //¶ÁµØÖ·¼Ä´æÆ÷
+//D0 - D7£º¶ÁeepromµÄµØÖ·£»
+//D8 - D15£º±£Áô£»
+const int32						FPGA_EEPROM_READ_DAT			= 0x0a;  //¶ÁÊý¾Ý¼Ä´æÆ÷
+//D0 - D7£º¶Áeeprom¹Ì¶¨µØÖ·µÄÊý¾Ý£»
+//D8 - D15£º±£Áô£»
+const int32						FPGA_EEPROM_STATUS				= 0x08;  //×´Ì¬¼Ä´æÆ÷
+//D0: ¶ÁÐ´´íÎó±êÖ¾Î»£¬¼´¶ÁÐ´²Ù×÷ÎÞÓ¦´ð¡£1'b0:ÎÞ´íÎó£¬1'b1 : ¶ÁÐ´ÎÞÓ¦´ð£»
+//D1 : ¶ÁÐ´Íê³É±êÖ¾ 1'b0:Ã»Íê³É£¬1'b1 : ¶ÁÐ´Íê³É
+
+//////////////////////////////////////////////////////////////////////////
+//±¾µØº¯ÊýÉùÃ÷
 static int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);
 
 //////////////////////////////////////////////////////////////////////////
@@ -265,6 +303,18 @@ int16 GTSD_CMD_ST_OpenSerialPort(int16 axis, int32 baudRate, int16 com_type = GT
 int16 GTSD_CMD_ST_CloseSerialPort(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 int16 GTSD_CMD_ST_ReadSerialPort(int16 axis, Uint8 *buf, int32 length, int32 *length_read, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 int16 GTSD_CMD_ST_WriteSerialPort(int16 axis, Uint8 *buf, int32 length, int32 *length_written, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+
+
+//É¨ÃèÕ¾ÍØÆË½á¹¹
+int16 GTSD_CMD_ST_ScanRnTopology(int16 com_type = GTSD_COM_TYPE_RNNET, int16 stationId = 0xff);
+
+//EEPROM ¶ÁÐ´,²Á³ý
+int16 GTSD_CMD_ST_ReadEEPROM(int16 axis, int32& ofst, int8* value, int16& num, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+int16 GTSD_CMD_ST_WriteEEPROM(int16 axis, int32& ofst, int8* value, int16& num, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+int16 GTSD_CMD_ST_ClearEEPROM(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+
+int16 GTSD_CMD_ST_ResetFPGA(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+int16 GTSD_CMD_ST_ConfigEEPROM(int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
 
 #endif  

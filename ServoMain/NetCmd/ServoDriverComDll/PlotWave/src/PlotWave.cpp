@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	plot wave function 		 									//
 //	file				:	PlotWave.cpp													//
 //	Description			:	plot all the var in the arm  								//
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 #include "stdafx.h"
 #include <new>
@@ -25,18 +25,30 @@ CPlotWave* g_plotWave = NULL;
 
 CPlotWave::CPlotWave( int16 com_type /*= GTSD_COM_TYPE_NET*/ )
 {
-	raw_Buffer_dspA[RAW_BUFFER_LENTH] = { 0 };
-	raw_CacheBuffer_dspA[RAW_CACHE_BUFFER_LENTH] = { 0 };
-
-	raw_Buffer_dspB[RAW_BUFFER_LENTH] = { 0 };
-	raw_CacheBuffer_dspB[RAW_CACHE_BUFFER_LENTH] = { 0 };
+	int i, j;
+	for (i = 0; i < MAX_DSP_WAVE; i++)
+	{
+		for (j = 0; j < RAW_BUFFER_LENTH; j++)
+		{
+			raw_Buffer_dsp[i][j] = 0;
+		}
+		for (j = 0; j < RAW_CACHE_BUFFER_LENTH;j++)
+		{
+			raw_CacheBuffer_dsp[i][j] = 0;
+		}
+	}
+// 	raw_Buffer_dspA[RAW_BUFFER_LENTH] = { 0 };
+// 	raw_CacheBuffer_dspA[RAW_CACHE_BUFFER_LENTH] = { 0 };
+// 
+// 	raw_Buffer_dspB[RAW_BUFFER_LENTH] = { 0 };
+// 	raw_CacheBuffer_dspB[RAW_CACHE_BUFFER_LENTH] = { 0 };
 
 	pw_RunFlag[(pw_MaxAxis >> 1)] = { false };
 
 	switch(com_type)
 	{
 	case GTSD_COM_TYPE_NET:
-		//å®šä¹‰å¯¹è±¡
+		//¶¨Òå¶ÔÏó
 		m_cpu_timer				= new CCpu_Timer;
 		m_mt_timer				= new CMtimer;
 		cpu_timer_openFlag		= false;
@@ -76,31 +88,36 @@ CPlotWave::~CPlotWave(void)
 	}
 	
 }
-//åˆå§‹åŒ–dspAwave
-int16 CPlotWave::InitDspAWaveVar(WAVE_BUF_PRM& wave)
-{
-	dataFrame_Lenth_dspA				= 0;	
-	for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)										//è®¡ç®—æ•´ä¸ªæ•°æ®å¸§çš„é•¿åº¦
-	{
-		waveLine_RdIndex_dspA[i]		= 0;
-		waveLine_WrIndex_dspA[i]		= 0;
-		waveLine_WrNumOnce_dspA[i]		= 0;
-		waveLine_WrNumSum_dspA[i]		= 0;
-		dataFrame_Lenth_dspA			+= wave.inf[i].bytes;
-	}
-	dataFrame_Lenth_dspA				= (dataFrame_Lenth_dspA >> 1);					//è½¬åŒ–åˆ°int16çš„ä¸ªæ•°
 
-	//åˆå§‹åŒ–å˜é‡
-	recv_SyncFrame_Num_dspA				= 0;
-	recv_DataFrame_Num_dspA				= 0;
-	waveLine_Index_dspA					= 0;
-	syncFrame_Flag_dspA					= 0;
-	m_dspA_line_number					= wave.cmd.bit.NUM;
-	raw_Data_GoBack_Flag_dspA			= false;
-	raw_Data_GoBack_Aux_Flag_dspA		= false;
-	raw_Data_ParseLeftNumber_dspA		= 0;
-	raw_Data_ParseIndex_dspA			= 0;
-	raw_Data_Index_dspA					= 0;
+//³õÊ¼»¯dspAwave
+int16 CPlotWave::InitDspWaveVar(int16 dsp_number, WAVE_BUF_PRM& wave)
+{
+	if (dsp_number >= MAX_DSP_WAVE)
+	{
+		return -1;
+	}
+	dataFrame_Lenth_dsp[dsp_number] = 0;
+	for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)										//¼ÆËãÕû¸öÊı¾İÖ¡µÄ³¤¶È
+	{
+		waveLine_RdIndex_dsp[dsp_number][i] = 0;
+		waveLine_WrIndex_dsp[dsp_number][i] = 0;
+		waveLine_WrNumOnce_dsp[dsp_number][i] = 0;
+		waveLine_WrNumSum_dsp[dsp_number][i] = 0;
+		dataFrame_Lenth_dsp[dsp_number] += wave.inf[i].bytes;
+	}
+	dataFrame_Lenth_dsp[dsp_number] = (dataFrame_Lenth_dsp[dsp_number] >> 1);					//×ª»¯µ½int16µÄ¸öÊı
+
+	//³õÊ¼»¯±äÁ¿
+	recv_SyncFrame_Num_dsp[dsp_number] = 0;
+	recv_DataFrame_Num_dsp[dsp_number] = 0;
+	waveLine_Index_dsp[dsp_number] = 0;
+	syncFrame_Flag_dsp[dsp_number] = 0;
+	m_dsp_line_number[dsp_number] = wave.cmd.bit.NUM;
+	raw_Data_GoBack_Flag_dsp[dsp_number] = false;
+	raw_Data_GoBack_Aux_Flag_dsp[dsp_number] = false;
+	raw_Data_ParseLeftNumber_dsp[dsp_number] = 0;
+	raw_Data_ParseIndex_dsp[dsp_number] = 0;
+	raw_Data_Index_dsp[dsp_number] = 0;
 
 #ifdef TIME_TEST
 	value_exceed = 0;
@@ -108,47 +125,84 @@ int16 CPlotWave::InitDspAWaveVar(WAVE_BUF_PRM& wave)
 
 	return 0;
 }
-//åˆå§‹åŒ–dspBwave
-int16 CPlotWave::InitDspBWaveVar(WAVE_BUF_PRM& wave)
+
+////³õÊ¼»¯dspAwave
+//int16 CPlotWave::InitDspAWaveVar(WAVE_BUF_PRM& wave)
+//{
+//	dataFrame_Lenth_dspA				= 0;	
+//	for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)										//¼ÆËãÕû¸öÊı¾İÖ¡µÄ³¤¶È
+//	{
+//		waveLine_RdIndex_dspA[i]		= 0;
+//		waveLine_WrIndex_dspA[i]		= 0;
+//		waveLine_WrNumOnce_dspA[i]		= 0;
+//		waveLine_WrNumSum_dspA[i]		= 0;
+//		dataFrame_Lenth_dspA			+= wave.inf[i].bytes;
+//	}
+//	dataFrame_Lenth_dspA				= (dataFrame_Lenth_dspA >> 1);					//×ª»¯µ½int16µÄ¸öÊı
+//
+//	//³õÊ¼»¯±äÁ¿
+//	recv_SyncFrame_Num_dspA				= 0;
+//	recv_DataFrame_Num_dspA				= 0;
+//	waveLine_Index_dspA					= 0;
+//	syncFrame_Flag_dspA					= 0;
+//	m_dspA_line_number					= wave.cmd.bit.NUM;
+//	raw_Data_GoBack_Flag_dspA			= false;
+//	raw_Data_GoBack_Aux_Flag_dspA		= false;
+//	raw_Data_ParseLeftNumber_dspA		= 0;
+//	raw_Data_ParseIndex_dspA			= 0;
+//	raw_Data_Index_dspA					= 0;
+//
+//#ifdef TIME_TEST
+//	value_exceed = 0;
+//#endif
+//
+//	return 0;
+//}
+////³õÊ¼»¯dspBwave
+//int16 CPlotWave::InitDspBWaveVar(WAVE_BUF_PRM& wave)
+//{
+//	dataFrame_Lenth_dspB = 0;
+//	for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)										//¼ÆËãÕû¸öÊı¾İÖ¡µÄ³¤¶È
+//	{
+//		waveLine_RdIndex_dspB[i]		= 0;
+//		waveLine_WrIndex_dspB[i]		= 0;
+//		waveLine_WrNumOnce_dspB[i]		= 0;
+//		waveLine_WrNumSum_dspB[i]		= 0;
+//		dataFrame_Lenth_dspB			+= wave.inf[i].bytes;
+//	}
+//	dataFrame_Lenth_dspB				= (dataFrame_Lenth_dspB >> 1);					//×ª»¯µ½int16µÄ¸öÊı
+//
+//	//³õÊ¼»¯±äÁ¿
+//	recv_SyncFrame_Num_dspB				= 0;
+//	recv_DataFrame_Num_dspB				= 0;
+//	waveLine_Index_dspB					= 0;
+//	syncFrame_Flag_dspB					= 0;
+//	m_dspB_line_number					= wave.cmd.bit.NUM;
+//	raw_Data_GoBack_Flag_dspB			= false;
+//	raw_Data_GoBack_Aux_Flag_dspB		= false;
+//	raw_Data_ParseLeftNumber_dspB		= 0;
+//	raw_Data_ParseIndex_dspB			= 0;
+//	raw_Data_Index_dspB					= 0;
+//
+//	return 0;
+//}
+//¹Ø±ÕdspAwave
+int16 CPlotWave::CloseDspWave(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	dataFrame_Lenth_dspB = 0;
-	for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)										//è®¡ç®—æ•´ä¸ªæ•°æ®å¸§çš„é•¿åº¦
+	if (dsp_number >= MAX_DSP_WAVE)
 	{
-		waveLine_RdIndex_dspB[i]		= 0;
-		waveLine_WrIndex_dspB[i]		= 0;
-		waveLine_WrNumOnce_dspB[i]		= 0;
-		waveLine_WrNumSum_dspB[i]		= 0;
-		dataFrame_Lenth_dspB			+= wave.inf[i].bytes;
+		return -1;
 	}
-	dataFrame_Lenth_dspB				= (dataFrame_Lenth_dspB >> 1);					//è½¬åŒ–åˆ°int16çš„ä¸ªæ•°
-
-	//åˆå§‹åŒ–å˜é‡
-	recv_SyncFrame_Num_dspB				= 0;
-	recv_DataFrame_Num_dspB				= 0;
-	waveLine_Index_dspB					= 0;
-	syncFrame_Flag_dspB					= 0;
-	m_dspB_line_number					= wave.cmd.bit.NUM;
-	raw_Data_GoBack_Flag_dspB			= false;
-	raw_Data_GoBack_Aux_Flag_dspB		= false;
-	raw_Data_ParseLeftNumber_dspB		= 0;
-	raw_Data_ParseIndex_dspB			= 0;
-	raw_Data_Index_dspB					= 0;
-
-	return 0;
-}
-//å…³é—­dspAwave
-int16 CPlotWave::CloseDspAWave(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
-{
-	//åœæ­¢dspAå‘FPGAçš„FIFOä¸­å†™æ•°æ®
+	//Í£Ö¹dspAÏòFPGAµÄFIFOÖĞĞ´Êı¾İ
 	wave.cmd.bit.ENP = 0;
-	GTSD_CMD_SetWaveBuf(GTSD_DSP_A, wave,com_type,stationId);
-	
-	//åœæ­¢å¯¹DSPAçš„æ“ä½œ
-	g_dspA_wave_prm.cmd.bit.ENP = 0;
-	
+	GTSD_CMD_SetWaveBuf(dsp_number, wave, com_type, stationId);
+
+	//Í£Ö¹¶ÔDSPAµÄ²Ù×÷
+	g_dsp_wave_prm[dsp_number].cmd.bit.ENP = 0;
+
 	switch (com_type)
 	{
-	//-------------------------------------------------------
+		//-------------------------------------------------------
 	case GTSD_COM_TYPE_NET:
 
 #ifdef GETDATA_TYPE_THREAD
@@ -163,169 +217,217 @@ int16 CPlotWave::CloseDspAWave(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_T
 #endif
 
 		break;
-	//-------------------------------------------------------
+		//-------------------------------------------------------
 	case GTSD_COM_TYPE_RNNET:
 		//if (rn_noTimer_openFlag == true)
 		//{
-			Sleep(100);
-			m_rn_noTimer->StopNoTimer(GTSD_DSP_A);
-			//rn_noTimer_openFlag = false;
+		Sleep(100);
+		m_rn_noTimer->StopNoTimer(dsp_number);
+		//rn_noTimer_openFlag = false;
 		//}
 		break;
-	//-------------------------------------------------------
+		//-------------------------------------------------------
 	default:
 		break;
 	}
-	
+
 	return 0;
 }
-//å…³é—­dspBwave
-int16 CPlotWave::CloseDspBWave(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
-{
-	//åœæ­¢dspB
-	wave.cmd.bit.ENP = 0;
-	GTSD_CMD_SetWaveBuf(GTSD_DSP_B, wave,com_type,stationId);
 
-	//åœæ­¢å¯¹DSPBçš„æ“ä½œ
-	g_dspB_wave_prm.cmd.bit.ENP = 0;
-	
-	switch (com_type)
+////¹Ø±ÕdspAwave
+//int16 CPlotWave::CloseDspAWave(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+//{
+//	//Í£Ö¹dspAÏòFPGAµÄFIFOÖĞĞ´Êı¾İ
+//	wave.cmd.bit.ENP = 0;
+//	GTSD_CMD_SetWaveBuf(GTSD_DSP_A, wave,com_type,stationId);
+//	
+//	//Í£Ö¹¶ÔDSPAµÄ²Ù×÷
+//	g_dspA_wave_prm.cmd.bit.ENP = 0;
+//	
+//	switch (com_type)
+//	{
+//	//-------------------------------------------------------
+//	case GTSD_COM_TYPE_NET:
+//
+//#ifdef GETDATA_TYPE_THREAD
+//		if (cpu_timer_openFlag == true)
+//		{
+//			m_cpu_timer->StopCpuTimer();
+//			cpu_timer_openFlag = false;
+//		}
+//
+//#else
+//		m_mt_timer->Stop_MutimediaTimer();
+//#endif
+//
+//		break;
+//	//-------------------------------------------------------
+//	case GTSD_COM_TYPE_RNNET:
+//		//if (rn_noTimer_openFlag == true)
+//		//{
+//			Sleep(100);
+//			m_rn_noTimer->StopNoTimer(GTSD_DSP_A);
+//			//rn_noTimer_openFlag = false;
+//		//}
+//		break;
+//	//-------------------------------------------------------
+//	default:
+//		break;
+//	}
+//	
+//	return 0;
+//}
+////¹Ø±ÕdspBwave
+//int16 CPlotWave::CloseDspBWave(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+//{
+//	//Í£Ö¹dspB
+//	wave.cmd.bit.ENP = 0;
+//	GTSD_CMD_SetWaveBuf(GTSD_DSP_B, wave,com_type,stationId);
+//
+//	//Í£Ö¹¶ÔDSPBµÄ²Ù×÷
+//	g_dspB_wave_prm.cmd.bit.ENP = 0;
+//	
+//	switch (com_type)
+//	{
+//	case GTSD_COM_TYPE_NET:
+//
+//#ifdef GETDATA_TYPE_THREAD
+//		if (cpu_timer_openFlag == true)
+//		{
+//			m_cpu_timer->StopCpuTimer();
+//			cpu_timer_openFlag = false;
+//		}
+//#else
+//		m_mt_timer->Stop_MutimediaTimer();
+//#endif
+//
+//		break;
+//	case GTSD_COM_TYPE_RNNET:
+//		//if (rn_noTimer_openFlag == true)
+//		//{
+//			Sleep(100);
+//			m_rn_noTimer->StopNoTimer(GTSD_DSP_B);
+//			//rn_noTimer_openFlag = false;
+//		//}
+//		break;
+//	default:
+//		break;
+//	}
+//	return 0;
+//}
+
+int16 CPlotWave::ParseDspPlotWaveData(int16 dsp_number, WAVE_BUF_PRM& wave, int32 number)
+{
+	if (dsp_number >= MAX_DSP_WAVE)
 	{
-	case GTSD_COM_TYPE_NET:
-
-#ifdef GETDATA_TYPE_THREAD
-		if (cpu_timer_openFlag == true)
-		{
-			m_cpu_timer->StopCpuTimer();
-			cpu_timer_openFlag = false;
-		}
-#else
-		m_mt_timer->Stop_MutimediaTimer();
-#endif
-
-		break;
-	case GTSD_COM_TYPE_RNNET:
-		//if (rn_noTimer_openFlag == true)
-		//{
-			Sleep(100);
-			m_rn_noTimer->StopNoTimer(GTSD_DSP_B);
-			//rn_noTimer_openFlag = false;
-		//}
-		break;
-	default:
-		break;
+		return -1;
 	}
-	return 0;
-}
-
-int16 CPlotWave::ParseDspAPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
-{
-	//å…ˆæ¸…ç©ºè®¡æ•°å™¨
+	//ÏÈÇå¿Õ¼ÆÊıÆ÷
 	for (int16 w = 0; w < wave.cmd.bit.NUM; ++w)
 	{
-		waveLine_WrNumOnce_dspA[w] = 0;
+		waveLine_WrNumOnce_dsp[dsp_number][w] = 0;
 	}
-	//è¿‡åœˆçš„å¤„ç†
-	if (raw_Data_GoBack_Flag_dspA == true)
+	//¹ıÈ¦µÄ´¦Àí
+	if (raw_Data_GoBack_Flag_dsp[dsp_number] == true)
 	{
-		//å…ˆå°†é—ç•™çš„æ•°æ®å’Œæ–°çš„è¿™ä¸€ç»„æ•°æ®æ”¾åˆ°æ–°çš„cacheä¸­å¤„ç†
-		int32 leftnumber = RAW_BUFFER_LENTH - raw_Data_ParseIndex_dspA;
-		memcpy_s(raw_CacheBuffer_dspA, leftnumber*sizeof(int16), &(raw_Buffer_dspA[raw_Data_ParseIndex_dspA]), leftnumber*sizeof(int16));
-		memcpy_s(&(raw_CacheBuffer_dspA[leftnumber]), (number + raw_Data_ParseLeftNumber_dspA - leftnumber)*sizeof(int16), &(raw_Buffer_dspA[0]), (number + raw_Data_ParseLeftNumber_dspA - leftnumber)*sizeof(int16));
+		//ÏÈ½«ÒÅÁôµÄÊı¾İºÍĞÂµÄÕâÒ»×éÊı¾İ·Åµ½ĞÂµÄcacheÖĞ´¦Àí
+		int32 leftnumber = RAW_BUFFER_LENTH - raw_Data_ParseIndex_dsp[dsp_number];
+		memcpy_s(raw_CacheBuffer_dsp[dsp_number], leftnumber*sizeof(int16), &(raw_Buffer_dsp[dsp_number][raw_Data_ParseIndex_dsp[dsp_number]]), leftnumber*sizeof(int16));
+		memcpy_s(&(raw_CacheBuffer_dsp[dsp_number][leftnumber]), (number + raw_Data_ParseLeftNumber_dsp[dsp_number] - leftnumber)*sizeof(int16), &(raw_Buffer_dsp[dsp_number][0]), (number + raw_Data_ParseLeftNumber_dsp[dsp_number] - leftnumber)*sizeof(int16));
 		int16 j;
-		for (j = 0; j < (number + raw_Data_ParseLeftNumber_dspA);)
+		for (j = 0; j < (number + raw_Data_ParseLeftNumber_dsp[dsp_number]);)
 		{
-			if (((number + raw_Data_ParseLeftNumber_dspA - j) <= dataFrame_Lenth_dspA) && (waveLine_Index_dspA == wave.cmd.bit.NUM))
+			if (((number + raw_Data_ParseLeftNumber_dsp[dsp_number] - j) <= dataFrame_Lenth_dsp[dsp_number]) && (waveLine_Index_dsp[dsp_number] == wave.cmd.bit.NUM))
 			{
-				//å¤ä½è¯¥ä¿¡å·
-				raw_Data_ParseLeftNumber_dspA = number + raw_Data_ParseLeftNumber_dspA - j;
-				//åˆ†ä¸¤ç§æƒ…å†µï¼Œå¦‚æœåˆšåˆšè¿‡åœˆä¸€ç‚¹çš„æ—¶å€™å¯èƒ½å› ä¸ºè¦è§£æåˆ°ä¸€å¸§ç»“æŸè€Œå¹¶æ²¡æœ‰è§£æè¿‡åœˆ
-				if (j<leftnumber)
+				//¸´Î»¸ÃĞÅºÅ
+				raw_Data_ParseLeftNumber_dsp[dsp_number] = number + raw_Data_ParseLeftNumber_dsp[dsp_number] - j;
+				//·ÖÁ½ÖÖÇé¿ö£¬Èç¹û¸Õ¸Õ¹ıÈ¦Ò»µãµÄÊ±ºò¿ÉÄÜÒòÎªÒª½âÎöµ½Ò»Ö¡½áÊø¶ø²¢Ã»ÓĞ½âÎö¹ıÈ¦
+				if (j < leftnumber)
 				{
-					//è®°å½•è¯¥ä½ç½®çš„å€¼ç”¨äºä¸‹æ¬¡çš„içš„èµ·å§‹å€¼
-					raw_Data_ParseIndex_dspA += j;
-					raw_Data_GoBack_Aux_Flag_dspA = true;
+					//¼ÇÂ¼¸ÃÎ»ÖÃµÄÖµÓÃÓÚÏÂ´ÎµÄiµÄÆğÊ¼Öµ
+					raw_Data_ParseIndex_dsp[dsp_number] += j;
+					raw_Data_GoBack_Aux_Flag_dsp[dsp_number] = true;
 				}
 				else
 				{
-					raw_Data_ParseIndex_dspA = j - leftnumber;
-					raw_Data_GoBack_Aux_Flag_dspA = false;
+					raw_Data_ParseIndex_dsp[dsp_number] = j - leftnumber;
+					raw_Data_GoBack_Aux_Flag_dsp[dsp_number] = false;
 				}
-				
-				//æ›²çº¿çš„indexå¤ä½
-				waveLine_Index_dspA = 0;
-				//è·³å‡ºè¯¥å¾ªç¯
+
+				//ÇúÏßµÄindex¸´Î»
+				waveLine_Index_dsp[dsp_number] = 0;
+				//Ìø³ö¸ÃÑ­»·
 				break;
 			}
-			//å‡å¦‚æ‰¾åˆ°åŒæ­¥å¸§çš„ä½ä½ï¼Œè¿ç»­åˆæ‰¾åˆ°åŒæ­¥å¸§çš„é«˜ä½
-			if ((raw_CacheBuffer_dspA[j] == (int16)FRAME_KEYWORD_LOW) && (raw_CacheBuffer_dspA[j + 1] == (int16)FRAME_KEYWORD_HIGH))
+			//¼ÙÈçÕÒµ½Í¬²½Ö¡µÄµÍÎ»£¬Á¬ĞøÓÖÕÒµ½Í¬²½Ö¡µÄ¸ßÎ»
+			if ((raw_CacheBuffer_dsp[dsp_number][j] == (int16)FRAME_KEYWORD_LOW) && (raw_CacheBuffer_dsp[dsp_number][j + 1] == (int16)FRAME_KEYWORD_HIGH))
 			{
-				//è¯´æ˜æ˜¯åŒæ­¥å¸§ï¼Œæ ‡å¿—ç½®ä½
-				syncFrame_Flag_dspA = 1;
+				//ËµÃ÷ÊÇÍ¬²½Ö¡£¬±êÖ¾ÖÃÎ»
+				syncFrame_Flag_dsp[dsp_number] = 1;
 				j += 2;
 
-				//å¦‚æœåªæœ‰ä¸€æ¡16bitçš„æ›²çº¿æ—¶éœ€è¦åšç‰¹æ®Šå¤„ç†ï¼Œå‡å¦‚æ­£å¥½åœ¨æœ€åæœ‰åŒæ­¥å¸§ï¼Œé‚£ä¹ˆjç›´æ¥è·³å‡ºäº†ï¼Œ
-				//ä¸ä¼šæ›´æ–°g_pcbuffer_dspA_parseindexå’Œg_pcbuffer_dspA_ParseLeftNumber
-				if (j == (number + raw_Data_ParseLeftNumber_dspA))
+				//Èç¹ûÖ»ÓĞÒ»Ìõ16bitµÄÇúÏßÊ±ĞèÒª×öÌØÊâ´¦Àí£¬¼ÙÈçÕıºÃÔÚ×îºóÓĞÍ¬²½Ö¡£¬ÄÇÃ´jÖ±½ÓÌø³öÁË£¬
+				//²»»á¸üĞÂg_pcbuffer_dspA_parseindexºÍg_pcbuffer_dspA_ParseLeftNumber
+				if (j == (number + raw_Data_ParseLeftNumber_dsp[dsp_number]))
 				{
-					raw_Data_ParseIndex_dspA			= j - leftnumber;
-					raw_Data_ParseLeftNumber_dspA		= 0;
-				} 
-			
-				//è®°å½•æ”¶åˆ°çš„åŒæ­¥å¸§ä¸ªæ•°
-				recv_SyncFrame_Num_dspA++;
-				//è¿™é‡Œå› ä¸ºæ˜¯åŒæ­¥å¸§æ‰€ä»¥ä¸éœ€è¦å†™å…¥æ•°æ®ï¼Œè·³å‡ºæ­¤æ¬¡å¾ªç¯
+					raw_Data_ParseIndex_dsp[dsp_number] = j - leftnumber;
+					raw_Data_ParseLeftNumber_dsp[dsp_number] = 0;
+				}
+
+				//¼ÇÂ¼ÊÕµ½µÄÍ¬²½Ö¡¸öÊı
+				recv_SyncFrame_Num_dsp[dsp_number]++;
+				//ÕâÀïÒòÎªÊÇÍ¬²½Ö¡ËùÒÔ²»ĞèÒªĞ´ÈëÊı¾İ£¬Ìø³ö´Ë´ÎÑ­»·
 				continue;
 			}
 			//reset waveLine_Index_dspA
-			if (waveLine_Index_dspA >= wave.cmd.bit.NUM)
+			if (waveLine_Index_dsp[dsp_number] >= wave.cmd.bit.NUM)
 			{
-				waveLine_Index_dspA = 0;
-				//å®Œæ•´å¸§çš„ä¸ªæ•°åŠ 1
-				recv_DataFrame_Num_dspA++;
+				waveLine_Index_dsp[dsp_number] = 0;
+				//ÍêÕûÖ¡µÄ¸öÊı¼Ó1
+				recv_DataFrame_Num_dsp[dsp_number]++;
 			}
-			if (syncFrame_Flag_dspA == 1)//å‡å¦‚å‡ºç°ä¸€ä¸ªåŒæ­¥å¸§
+			if (syncFrame_Flag_dsp[dsp_number] == 1)//¼ÙÈç³öÏÖÒ»¸öÍ¬²½Ö¡
 			{
-				if (waveLine_Index_dspA != 0)
+				if (waveLine_Index_dsp[dsp_number] != 0)
 				{
-					//è¡¥é½ç¼ºå°‘çš„å€¼
-					for (int32 p = waveLine_Index_dspA; p < wave.cmd.bit.NUM; ++p)
+					//²¹ÆëÈ±ÉÙµÄÖµ
+					for (int32 p = waveLine_Index_dsp[dsp_number]; p < wave.cmd.bit.NUM; ++p)
 					{
-						(waveLine_WrIndex_dspA[p])++;
+						(waveLine_WrIndex_dsp[dsp_number][p])++;
 
-						//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-						waveLine_WrNumOnce_dspA[p]++;
-						//å†™æŒ‡é’ˆå¤ä½
-						if ((waveLine_WrIndex_dspA[p]) >= WAVE_LINE_BUFFER_LENTH)
+						//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+						waveLine_WrNumOnce_dsp[dsp_number][p]++;
+						//Ğ´Ö¸Õë¸´Î»
+						if ((waveLine_WrIndex_dsp[dsp_number][p]) >= WAVE_LINE_BUFFER_LENTH)
 						{
-							(waveLine_WrIndex_dspA[p]) = 0;
+							(waveLine_WrIndex_dsp[dsp_number][p]) = 0;
 						}
 					}
-					//é‡æ–°å®šä½åˆ°0æ›²çº¿ä½ç½®
-					waveLine_Index_dspA = 0;
+					//ÖØĞÂ¶¨Î»µ½0ÇúÏßÎ»ÖÃ
+					waveLine_Index_dsp[dsp_number] = 0;
 				}
 			}
-			//å°†å½“å‰å€¼ä½œä¸ºæ•°æ®å†™å…¥,æ ¹æ®å æ®çš„å­—èŠ‚æ•°ä¸åŒï¼Œä»bufferä¸­å–å¾—ä¸ªæ•°ä¸åŒ
-			switch (wave.inf[waveLine_Index_dspA].bytes)
+			//½«µ±Ç°Öµ×÷ÎªÊı¾İĞ´Èë,¸ù¾İÕ¼¾İµÄ×Ö½ÚÊı²»Í¬£¬´ÓbufferÖĞÈ¡µÃ¸öÊı²»Í¬
+			switch (wave.inf[waveLine_Index_dsp[dsp_number]].bytes)
 			{
 			case 2:
 			{
-				waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)raw_CacheBuffer_dspA[j];
-				j++;
-				break;
+					  waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]])++] = (double)raw_CacheBuffer_dsp[dsp_number][j];
+					  j++;
+					  break;
 			}
 			case 4:
 			{
-				waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)((int32)(((raw_CacheBuffer_dspA[j] & 0x0000ffff) | ((raw_CacheBuffer_dspA[j + 1] << 16) & 0xffff0000))));
-				j += 2;
-				break;
+					  waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]])++] = (double)((int32)(((raw_CacheBuffer_dsp[dsp_number][j] & 0x0000ffff) | ((raw_CacheBuffer_dsp[dsp_number][j + 1] << 16) & 0xffff0000))));
+					  j += 2;
+					  break;
 			}
 			case 8:
 			{
-				waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] =
-					(double)((int64)((((int64)(raw_CacheBuffer_dspA[j] & 0x0000ffff)) | ((((int64)raw_CacheBuffer_dspA[j + 1]) << 16) & 0xffff0000) | ((((int64)raw_CacheBuffer_dspA[j + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_CacheBuffer_dspA[j + 3]) << 48) & 0xffff000000000000))));
-				j += 4;
-				break;
+					  waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]])++] =
+						  (double)((int64)((((int64)(raw_CacheBuffer_dsp[dsp_number][j] & 0x0000ffff)) | ((((int64)raw_CacheBuffer_dsp[dsp_number][j + 1]) << 16) & 0xffff0000) | ((((int64)raw_CacheBuffer_dsp[dsp_number][j + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_CacheBuffer_dsp[dsp_number][j + 3]) << 48) & 0xffff000000000000))));
+					  j += 4;
+					  break;
 			}
 			default:
 				return -2;
@@ -334,26 +436,26 @@ int16 CPlotWave::ParseDspAPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
 			//////////////////////////////////////////////////////////////////////////
 			//test
 #ifdef TIME_TEST
-			if (waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA]) - 1] > 50000.0)
+			if (waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]) - 1] > 50000.0)
 			{
 				value_exceed++;
 			}
 #endif
 			//////////////////////////////////////////////////////////////////////////
 
-			//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-			waveLine_WrNumOnce_dspA[waveLine_Index_dspA]++;
+			//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+			waveLine_WrNumOnce_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]++;
 
-			//å†™æŒ‡é’ˆå¤ä½
-			if ((waveLine_WrIndex_dspA[waveLine_Index_dspA]) >= WAVE_LINE_BUFFER_LENTH)
+			//Ğ´Ö¸Õë¸´Î»
+			if ((waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]) >= WAVE_LINE_BUFFER_LENTH)
 			{
-				(waveLine_WrIndex_dspA[waveLine_Index_dspA]) = 0;
+				(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]) = 0;
 			}
-			//æ›²çº¿indexé¡ºåºå¢åŠ 
-			waveLine_Index_dspA++;
+			//ÇúÏßindexË³ĞòÔö¼Ó
+			waveLine_Index_dsp[dsp_number]++;
 
-			//æ¸…ç©ºåŒæ­¥å¸§çš„æ ‡å¿—
-			syncFrame_Flag_dspA = 0;
+			//Çå¿ÕÍ¬²½Ö¡µÄ±êÖ¾
+			syncFrame_Flag_dsp[dsp_number] = 0;
 		}
 #ifdef TIME_TEST
 		allnumber_test[allnumber_test_index] = (int16)waveLine_WrNumOnce_dspA[0];
@@ -366,339 +468,85 @@ int16 CPlotWave::ParseDspAPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
 	{
 		int32 i;
 #ifdef TIME_TEST
-		if (raw_Data_ParseIndex_dspA>raw_Data_Index_dspA)
+		if (raw_Data_ParseIndex_dspA > raw_Data_Index_dspA)
 		{
 			i = raw_Data_ParseIndex_dspA;
 		}
 #endif
-		//è¯¥æ¬¡è§£æçš„èŒƒå›´æ˜¯ä»ä¸Šä¸€æ¬¡è§£æçš„æœ€ååˆ°ç›®å‰ä»fpgaè¯»å–åˆ°çš„æ•°æ®
-		for (i = raw_Data_ParseIndex_dspA; i < (raw_Data_Index_dspA);)
+		//¸Ã´Î½âÎöµÄ·¶Î§ÊÇ´ÓÉÏÒ»´Î½âÎöµÄ×îºóµ½Ä¿Ç°´Ófpga¶ÁÈ¡µ½µÄÊı¾İ
+		for (i = raw_Data_ParseIndex_dsp[dsp_number]; i < (raw_Data_Index_dsp[dsp_number]);)
 		{
-			//åªè¦å‰©ä¸‹çš„ä¸ªæ•°å°äºæˆ–è€…ç­‰äºæ•´ä¸ªæ•°æ®å¸§çš„é•¿åº¦å¹¶ä¸”æ›²çº¿çš„indexæ˜¯æœ€åä¸€æ¡æ›²çº¿çš„index
-			if (((raw_Data_Index_dspA - i) <= dataFrame_Lenth_dspA) && (waveLine_Index_dspA == wave.cmd.bit.NUM))
-			{	
-				raw_Data_ParseIndex_dspA		= i;								//è®°å½•è¯¥ä½ç½®çš„å€¼ç”¨äºä¸‹æ¬¡çš„içš„èµ·å§‹å€¼			
-				waveLine_Index_dspA				= 0;								//æ›²çº¿çš„indexå¤ä½				
-				raw_Data_ParseLeftNumber_dspA = raw_Data_Index_dspA - i;		//æ›´æ–°å‰©ä¸‹çš„ä¸ªæ•°
-				break;																//è·³å‡ºè¯¥å¾ªç¯
-			}
-			//é¦–å…ˆåˆ¤æ–­æ•°æ®ä¸­æ˜¯å¦æœ‰åŒæ­¥å¸§
-			//å‡å¦‚æ‰¾åˆ°åŒæ­¥å¸§çš„ä½ä½ï¼Œè¿ç»­åˆæ‰¾åˆ°åŒæ­¥å¸§çš„é«˜ä½
-			if ((raw_Buffer_dspA[i] == (int16)FRAME_KEYWORD_LOW) && (raw_Buffer_dspA[i + 1] == (int16)FRAME_KEYWORD_HIGH))
+			//Ö»ÒªÊ£ÏÂµÄ¸öÊıĞ¡ÓÚ»òÕßµÈÓÚÕû¸öÊı¾İÖ¡µÄ³¤¶È²¢ÇÒÇúÏßµÄindexÊÇ×îºóÒ»ÌõÇúÏßµÄindex
+			if (((raw_Data_Index_dsp[dsp_number] - i) <= dataFrame_Lenth_dsp[dsp_number]) && (waveLine_Index_dsp[dsp_number] == wave.cmd.bit.NUM))
 			{
-				syncFrame_Flag_dspA				= 1;								//è¯´æ˜æ˜¯åŒæ­¥å¸§ï¼Œæ ‡å¿—ç½®ä½
-				i+= 2;																//æ›´æ–°i
+				raw_Data_ParseIndex_dsp[dsp_number] = i;								//¼ÇÂ¼¸ÃÎ»ÖÃµÄÖµÓÃÓÚÏÂ´ÎµÄiµÄÆğÊ¼Öµ			
+				waveLine_Index_dsp[dsp_number] = 0;								//ÇúÏßµÄindex¸´Î»				
+				raw_Data_ParseLeftNumber_dsp[dsp_number] = raw_Data_Index_dsp[dsp_number] - i;		//¸üĞÂÊ£ÏÂµÄ¸öÊı
+				break;																//Ìø³ö¸ÃÑ­»·
+			}
+			//Ê×ÏÈÅĞ¶ÏÊı¾İÖĞÊÇ·ñÓĞÍ¬²½Ö¡
+			//¼ÙÈçÕÒµ½Í¬²½Ö¡µÄµÍÎ»£¬Á¬ĞøÓÖÕÒµ½Í¬²½Ö¡µÄ¸ßÎ»
+			if ((raw_Buffer_dsp[dsp_number][i] == (int16)FRAME_KEYWORD_LOW) && (raw_Buffer_dsp[dsp_number][i + 1] == (int16)FRAME_KEYWORD_HIGH))
+			{
+				syncFrame_Flag_dsp[dsp_number] = 1;								//ËµÃ÷ÊÇÍ¬²½Ö¡£¬±êÖ¾ÖÃÎ»
+				i += 2;																//¸üĞÂi
 
-				//å¦‚æœåªæœ‰ä¸€æ¡16bitçš„æ›²çº¿æ—¶éœ€è¦åšç‰¹æ®Šå¤„ç†ï¼Œå‡å¦‚æ­£å¥½åœ¨æœ€åæœ‰åŒæ­¥å¸§ï¼Œé‚£ä¹ˆjç›´æ¥è·³å‡ºäº†ï¼Œ
-				//ä¸ä¼šæ›´æ–°g_pcbuffer_dspA_parseindexå’Œg_pcbuffer_dspA_ParseLeftNumber
-				if (i == (raw_Data_Index_dspA))
+				//Èç¹ûÖ»ÓĞÒ»Ìõ16bitµÄÇúÏßÊ±ĞèÒª×öÌØÊâ´¦Àí£¬¼ÙÈçÕıºÃÔÚ×îºóÓĞÍ¬²½Ö¡£¬ÄÇÃ´jÖ±½ÓÌø³öÁË£¬
+				//²»»á¸üĞÂg_pcbuffer_dspA_parseindexºÍg_pcbuffer_dspA_ParseLeftNumber
+				if (i == (raw_Data_Index_dsp[dsp_number]))
 				{
-					raw_Data_ParseIndex_dspA		= raw_Data_Index_dspA;
-					raw_Data_ParseLeftNumber_dspA = 0;
+					raw_Data_ParseIndex_dsp[dsp_number] = raw_Data_Index_dsp[dsp_number];
+					raw_Data_ParseLeftNumber_dsp[dsp_number] = 0;
 				}
 
-				recv_SyncFrame_Num_dspA++;											//è®°å½•æ”¶åˆ°çš„åŒæ­¥å¸§ä¸ªæ•°
-				continue;															//è¿™é‡Œå› ä¸ºæ˜¯åŒæ­¥å¸§æ‰€ä»¥ä¸éœ€è¦å†™å…¥æ•°æ®ï¼Œè·³å‡ºæ­¤æ¬¡å¾ªç¯ï¼Œç»§ç»­å¾ªç¯
+				recv_SyncFrame_Num_dsp[dsp_number]++;											//¼ÇÂ¼ÊÕµ½µÄÍ¬²½Ö¡¸öÊı
+				continue;															//ÕâÀïÒòÎªÊÇÍ¬²½Ö¡ËùÒÔ²»ĞèÒªĞ´ÈëÊı¾İ£¬Ìø³ö´Ë´ÎÑ­»·£¬¼ÌĞøÑ­»·
 			}
-			//å¤ä½æ›²çº¿æ¡æ•°index
-			if (waveLine_Index_dspA >= wave.cmd.bit.NUM)							
+			//¸´Î»ÇúÏßÌõÊıindex
+			if (waveLine_Index_dsp[dsp_number] >= wave.cmd.bit.NUM)
 			{
-				waveLine_Index_dspA = 0;			
-				recv_DataFrame_Num_dspA++;												//å®Œæ•´å¸§çš„ä¸ªæ•°åŠ 1
+				waveLine_Index_dsp[dsp_number] = 0;
+				recv_DataFrame_Num_dsp[dsp_number]++;												//ÍêÕûÖ¡µÄ¸öÊı¼Ó1
 			}
-	
-			if (syncFrame_Flag_dspA == 1)//å‡å¦‚å‡ºç°ä¸€ä¸ªåŒæ­¥å¸§		
+
+			if (syncFrame_Flag_dsp[dsp_number] == 1)//¼ÙÈç³öÏÖÒ»¸öÍ¬²½Ö¡		
 			{
-				if (waveLine_Index_dspA != 0)
+				if (waveLine_Index_dsp[dsp_number] != 0)
 				{
-					//è¡¥é½ç¼ºå°‘çš„å€¼
-					for (int32 p = waveLine_Index_dspA; p < wave.cmd.bit.NUM; ++p)
+					//²¹ÆëÈ±ÉÙµÄÖµ
+					for (int32 p = waveLine_Index_dsp[dsp_number]; p < wave.cmd.bit.NUM; ++p)
 					{
-						(waveLine_WrIndex_dspA[p])++;
-						waveLine_WrNumOnce_dspA[p]++;								//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-						if ((waveLine_WrIndex_dspA[p]) >= WAVE_LINE_BUFFER_LENTH)
+						(waveLine_WrIndex_dsp[dsp_number][p])++;
+						waveLine_WrNumOnce_dsp[dsp_number][p]++;								//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+						if ((waveLine_WrIndex_dsp[dsp_number][p]) >= WAVE_LINE_BUFFER_LENTH)
 						{
-							(waveLine_WrIndex_dspA[p]) = 0;					//å†™æŒ‡é’ˆå¤ä½
+							(waveLine_WrIndex_dsp[dsp_number][p]) = 0;					//Ğ´Ö¸Õë¸´Î»
 						}
 					}
-					waveLine_Index_dspA = 0;											//é‡ç½®æ›²çº¿æ¡æ•°index					
+					waveLine_Index_dsp[dsp_number] = 0;											//ÖØÖÃÇúÏßÌõÊıindex					
 				}
 			}
-			//å°†å½“å‰å€¼ä½œä¸ºæ•°æ®å†™å…¥,æ ¹æ®å æ®çš„å­—èŠ‚æ•°ä¸åŒï¼Œä»bufferä¸­å–å¾—ä¸ªæ•°ä¸åŒ
-			switch (wave.inf[waveLine_Index_dspA].bytes)
-			{
-				case 2:
-				{
-					waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)raw_Buffer_dspA[i];
-					i++;
-					break;
-				}
-				case 4:
-				{
-					waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)((int32)((raw_Buffer_dspA[i] & 0x0000ffff) | ((raw_Buffer_dspA[i + 1] << 16) & 0x0000ffff0000)));
-					i += 2;
-					break;
-				}
-				case 8:
-				{
-					waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] =
-						(double)((int64)(((int64)(raw_Buffer_dspA[i] & 0x000000000000ffff) | ((((int64)raw_Buffer_dspA[i + 1]) << 16) & 0x00000000ffff0000) | ((((int64)raw_Buffer_dspA[i + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_Buffer_dspA[i + 3]) << 48) & 0xffff000000000000))));
-					i += 4;
-					break;
-				}
-				default:
-					return -2;
-					break;
-			}
-			//////////////////////////////////////////////////////////////////////////
-			//test
-
-#ifdef TIME_TEST
-			if (waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA]) - 1] > 50000.0)
-			{
-				value_exceed++;
-			}
-			if (value_exceed != 0)
-			{
-				value_exceed++;
-				if (value_exceed == 3000)
-				{
-					value_exceed = 0;
-				}
-			}
-#endif
-/**/
-			//////////////////////////////////////////////////////////////////////////
-
-			//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-			waveLine_WrNumOnce_dspA[waveLine_Index_dspA]++;
-
-			//å†™æŒ‡é’ˆå¤ä½
-			if ((waveLine_WrIndex_dspA[waveLine_Index_dspA]) >= WAVE_LINE_BUFFER_LENTH)
-			{
-				(waveLine_WrIndex_dspA[waveLine_Index_dspA]) = 0;
-			}
-			//æ›²çº¿indexé¡ºåºå¢åŠ 
-			waveLine_Index_dspA++;
-
-			//æ¸…ç©ºåŒæ­¥å¸§çš„æ ‡å¿—
-			syncFrame_Flag_dspA = 0;
-		}
-
-	}
-	return 0;
-}
-int16 CPlotWave::ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
-{
-	//å…ˆæ¸…ç©ºè®¡æ•°å™¨
-	for (int16 w = 0; w < wave.cmd.bit.NUM; ++w)
-	{
-		waveLine_WrNumOnce_dspB[w] = 0;
-	}
-	//è¿‡åœˆçš„å¤„ç†
-	if (raw_Data_GoBack_Flag_dspB == true)
-	{
-		//å…ˆå°†é—ç•™çš„æ•°æ®å’Œæ–°çš„è¿™ä¸€ç»„æ•°æ®æ”¾åˆ°æ–°çš„cacheä¸­å¤„ç†
-		int32 leftnumber = RAW_BUFFER_LENTH - raw_Data_ParseIndex_dspB;
-		memcpy_s(raw_CacheBuffer_dspB, leftnumber*sizeof(int16), &(raw_Buffer_dspB[raw_Data_ParseIndex_dspB]), leftnumber*sizeof(int16));
-		memcpy_s(&(raw_CacheBuffer_dspB[leftnumber]), (number + raw_Data_ParseLeftNumber_dspB - leftnumber)*sizeof(int16), &(raw_Buffer_dspB[0]), (number + raw_Data_ParseLeftNumber_dspB - leftnumber)*sizeof(int16));
-		int16 j;
-		for (j = 0; j < (number + raw_Data_ParseLeftNumber_dspB);)
-		{
-			if (((number + raw_Data_ParseLeftNumber_dspB - j) <= dataFrame_Lenth_dspB) && (waveLine_Index_dspB == wave.cmd.bit.NUM))
-			{
-				//å¤ä½è¯¥ä¿¡å·
-				raw_Data_ParseLeftNumber_dspB = number + raw_Data_ParseLeftNumber_dspB - j;
-				//åˆ†ä¸¤ç§æƒ…å†µï¼Œå¦‚æœåˆšåˆšè¿‡åœˆä¸€ç‚¹çš„æ—¶å€™å¯èƒ½å› ä¸ºè¦è§£æåˆ°ä¸€å¸§ç»“æŸè€Œå¹¶æ²¡æœ‰è§£æè¿‡åœˆ
-				if (j < leftnumber)
-				{
-					//è®°å½•è¯¥ä½ç½®çš„å€¼ç”¨äºä¸‹æ¬¡çš„içš„èµ·å§‹å€¼
-					raw_Data_ParseIndex_dspB += j;
-					raw_Data_GoBack_Aux_Flag_dspB = true;
-				}
-				else
-				{
-					raw_Data_ParseIndex_dspB = j - leftnumber;
-					raw_Data_GoBack_Aux_Flag_dspB = false;
-				}
-
-				//æ›²çº¿çš„indexå¤ä½
-				waveLine_Index_dspB = 0;
-				//è·³å‡ºè¯¥å¾ªç¯
-				break;
-			}
-			//å‡å¦‚æ‰¾åˆ°åŒæ­¥å¸§çš„ä½ä½ï¼Œè¿ç»­åˆæ‰¾åˆ°åŒæ­¥å¸§çš„é«˜ä½
-			if ((raw_CacheBuffer_dspB[j] == (int16)FRAME_KEYWORD_LOW) && (raw_CacheBuffer_dspB[j + 1] == (int16)FRAME_KEYWORD_HIGH))
-			{
-				//è¯´æ˜æ˜¯åŒæ­¥å¸§ï¼Œæ ‡å¿—ç½®ä½
-				syncFrame_Flag_dspB = 1;
-				j += 2;
-				//è®°å½•æ”¶åˆ°çš„åŒæ­¥å¸§ä¸ªæ•°
-				recv_SyncFrame_Num_dspB++;
-				//è¿™é‡Œå› ä¸ºæ˜¯åŒæ­¥å¸§æ‰€ä»¥ä¸éœ€è¦å†™å…¥æ•°æ®ï¼Œè·³å‡ºæ­¤æ¬¡å¾ªç¯
-				continue;
-			}
-			//reset g_dspB_wave_index
-			if (waveLine_Index_dspB >= wave.cmd.bit.NUM)
-			{
-				waveLine_Index_dspB = 0;
-				//å®Œæ•´å¸§çš„ä¸ªæ•°åŠ 1
-				recv_DataFrame_Num_dspB++;
-			}
-			if (syncFrame_Flag_dspB == 1)//å‡å¦‚å‡ºç°ä¸€ä¸ªåŒæ­¥å¸§
-			{
-				if (waveLine_Index_dspB != 0)
-				{
-					//è¡¥é½ç¼ºå°‘çš„å€¼
-					for (int32 p = waveLine_Index_dspB; p < wave.cmd.bit.NUM; ++p)
-					{
-						(waveLine_WrIndex_dspB[p])++;
-
-						//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-						waveLine_WrNumOnce_dspB[p]++;
-						//å†™æŒ‡é’ˆå¤ä½
-						if ((waveLine_WrIndex_dspB[p]) >= WAVE_LINE_BUFFER_LENTH)
-						{
-							(waveLine_WrIndex_dspB[p]) = 0;
-						}
-					}
-					//é‡æ–°å®šä½åˆ°0æ›²çº¿ä½ç½®
-					waveLine_Index_dspB = 0;
-				}
-			}
-			//å°†å½“å‰å€¼ä½œä¸ºæ•°æ®å†™å…¥,æ ¹æ®å æ®çš„å­—èŠ‚æ•°ä¸åŒï¼Œä»bufferä¸­å–å¾—ä¸ªæ•°ä¸åŒ
-			switch (wave.inf[waveLine_Index_dspB].bytes)
+			//½«µ±Ç°Öµ×÷ÎªÊı¾İĞ´Èë,¸ù¾İÕ¼¾İµÄ×Ö½ÚÊı²»Í¬£¬´ÓbufferÖĞÈ¡µÃ¸öÊı²»Í¬
+			switch (wave.inf[waveLine_Index_dsp[dsp_number]].bytes)
 			{
 			case 2:
 			{
-				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)raw_CacheBuffer_dspB[j];
-				j++;
-				break;
+					  waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]])++] = (double)raw_Buffer_dsp[dsp_number][i];
+					  i++;
+					  break;
 			}
 			case 4:
 			{
-				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)((int32)(((raw_CacheBuffer_dspB[j] & 0x0000ffff) | ((raw_CacheBuffer_dspB[j + 1] << 16) & 0xffff0000))));
-				j += 2;
-				break;
+					  waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]])++] = (double)((int32)((raw_Buffer_dsp[dsp_number][i] & 0x0000ffff) | ((raw_Buffer_dsp[dsp_number][i + 1] << 16) & 0x0000ffff0000)));
+					  i += 2;
+					  break;
 			}
 			case 8:
 			{
-				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] =
-					(double)((int64)((((int64)(raw_CacheBuffer_dspB[j] & 0x0000ffff)) | ((((int64)raw_CacheBuffer_dspB[j + 1]) << 16) & 0xffff0000) | ((((int64)raw_CacheBuffer_dspB[j + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_CacheBuffer_dspB[j + 3]) << 48) & 0xffff000000000000))));
-				j += 4;
-				break;
-			}
-			default:
-				return -2;
-				break;
-			}
-			//////////////////////////////////////////////////////////////////////////
-			//test
-#ifdef TIME_TEST
-			if (waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB]) - 1] > 50000.0)
-			{
-				value_exceed++;
-			}
-#endif
-			/**/
-			//////////////////////////////////////////////////////////////////////////
-
-			//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-			waveLine_WrNumOnce_dspB[waveLine_Index_dspB]++;
-
-			//å†™æŒ‡é’ˆå¤ä½
-			if ((waveLine_WrIndex_dspB[waveLine_Index_dspB]) >= WAVE_LINE_BUFFER_LENTH)
-			{
-				(waveLine_WrIndex_dspB[waveLine_Index_dspB]) = 0;
-			}
-			//æ›²çº¿indexé¡ºåºå¢åŠ 
-			waveLine_Index_dspB++;
-
-			//æ¸…ç©ºåŒæ­¥å¸§çš„æ ‡å¿—
-			syncFrame_Flag_dspB = 0;
-		}
-#ifdef TIME_TEST
-		allnumber_test[allnumber_test_index] = (int16)waveLine_WrNumOnce_dspB[0];
-		allnumber_test_index++;
-		if (allnumber_test_index >= 10000)
-			allnumber_test_index = 0;
-
-#endif	
-	}
-	else
-	{
-		int32 i;
-#ifdef TIME_TEST
-		if (raw_Data_ParseIndex_dspB > raw_Data_Index_dspB)
-		{
-			i = raw_Data_ParseIndex_dspB;
-		}
-#endif
-		//è¯¥æ¬¡è§£æçš„èŒƒå›´æ˜¯ä»ä¸Šä¸€æ¬¡è§£æçš„æœ€ååˆ°ç›®å‰ä»fpgaè¯»å–åˆ°çš„æ•°æ®
-		for (i = raw_Data_ParseIndex_dspB; i < (raw_Data_Index_dspB);)
-		{
-			//åªè¦å‰©ä¸‹çš„ä¸ªæ•°å°äºæˆ–è€…ç­‰äºæ•´ä¸ªæ•°æ®å¸§çš„é•¿åº¦å¹¶ä¸”æ›²çº¿çš„indexæ˜¯æœ€åä¸€æ¡æ›²çº¿çš„index
-			if (((raw_Data_Index_dspB - i) <= dataFrame_Lenth_dspB) && (waveLine_Index_dspB == wave.cmd.bit.NUM))
-			{
-				raw_Data_ParseIndex_dspB = i;								//è®°å½•è¯¥ä½ç½®çš„å€¼ç”¨äºä¸‹æ¬¡çš„içš„èµ·å§‹å€¼			
-				waveLine_Index_dspB = 0;								//æ›²çº¿çš„indexå¤ä½				
-				raw_Data_ParseLeftNumber_dspB = raw_Data_Index_dspB - i;		//æ›´æ–°å‰©ä¸‹çš„ä¸ªæ•°
-				break;																//è·³å‡ºè¯¥å¾ªç¯
-			}
-			//é¦–å…ˆåˆ¤æ–­æ•°æ®ä¸­æ˜¯å¦æœ‰åŒæ­¥å¸§
-			//å‡å¦‚æ‰¾åˆ°åŒæ­¥å¸§çš„ä½ä½ï¼Œè¿ç»­åˆæ‰¾åˆ°åŒæ­¥å¸§çš„é«˜ä½
-			if ((raw_Buffer_dspB[i] == (int16)FRAME_KEYWORD_LOW) && (raw_Buffer_dspB[i + 1] == (int16)FRAME_KEYWORD_HIGH))
-			{
-				syncFrame_Flag_dspB = 1;								//è¯´æ˜æ˜¯åŒæ­¥å¸§ï¼Œæ ‡å¿—ç½®ä½
-				i += 2;																//æ›´æ–°i
-				recv_SyncFrame_Num_dspB++;											//è®°å½•æ”¶åˆ°çš„åŒæ­¥å¸§ä¸ªæ•°
-				continue;															//è¿™é‡Œå› ä¸ºæ˜¯åŒæ­¥å¸§æ‰€ä»¥ä¸éœ€è¦å†™å…¥æ•°æ®ï¼Œè·³å‡ºæ­¤æ¬¡å¾ªç¯ï¼Œç»§ç»­å¾ªç¯
-			}
-			//å¤ä½æ›²çº¿æ¡æ•°index
-			if (waveLine_Index_dspB >= wave.cmd.bit.NUM)
-			{
-				waveLine_Index_dspB = 0;
-				recv_DataFrame_Num_dspB++;												//å®Œæ•´å¸§çš„ä¸ªæ•°åŠ 1
-			}
-
-			if (syncFrame_Flag_dspB == 1)//å‡å¦‚å‡ºç°ä¸€ä¸ªåŒæ­¥å¸§		
-			{
-				if (waveLine_Index_dspB != 0)
-				{
-					//è¡¥é½ç¼ºå°‘çš„å€¼
-					for (int32 p = waveLine_Index_dspB; p < wave.cmd.bit.NUM; ++p)
-					{
-						(waveLine_WrIndex_dspB[p])++;
-						waveLine_WrNumOnce_dspB[p]++;								//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-						if ((waveLine_WrIndex_dspB[p]) >= WAVE_LINE_BUFFER_LENTH)
-						{
-							(waveLine_WrIndex_dspB[p]) = 0;					//å†™æŒ‡é’ˆå¤ä½
-						}
-					}
-					waveLine_Index_dspB = 0;											//é‡ç½®æ›²çº¿æ¡æ•°index					
-				}
-			}
-			//å°†å½“å‰å€¼ä½œä¸ºæ•°æ®å†™å…¥,æ ¹æ®å æ®çš„å­—èŠ‚æ•°ä¸åŒï¼Œä»bufferä¸­å–å¾—ä¸ªæ•°ä¸åŒ
-			switch (wave.inf[waveLine_Index_dspB].bytes)
-			{
-			case 2:
-			{
-				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)raw_Buffer_dspB[i];
-				i++;
-				break;
-			}
-			case 4:
-			{
-				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)((int32)((raw_Buffer_dspB[i] & 0x0000ffff) | ((raw_Buffer_dspB[i + 1] << 16) & 0xffff0000)));
-				i += 2;
-				break;
-			}
-			case 8:
-			{
-				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] =
-					(double)((int64)(((int64)(raw_Buffer_dspB[i] & 0x0000ffff) | ((((int64)raw_Buffer_dspB[i + 1]) << 16) & 0xffff0000) | ((((int64)raw_Buffer_dspB[i + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_Buffer_dspB[i + 3]) << 48) & 0xffff000000000000))));
-				i += 4;
-				break;
+					  waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]])++] =
+						  (double)((int64)(((int64)(raw_Buffer_dsp[dsp_number][i] & 0x000000000000ffff) | ((((int64)raw_Buffer_dsp[dsp_number][i + 1]) << 16) & 0x00000000ffff0000) | ((((int64)raw_Buffer_dsp[dsp_number][i + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_Buffer_dsp[dsp_number][i + 3]) << 48) & 0xffff000000000000))));
+					  i += 4;
+					  break;
 			}
 			default:
 				return -2;
@@ -708,7 +556,7 @@ int16 CPlotWave::ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
 			//test
 
 #ifdef TIME_TEST
-			if (waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB]) - 1] > 50000.0)
+			if (waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + waveLine_Index_dsp[dsp_number]][(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]) - 1] > 50000.0)
 			{
 				value_exceed++;
 			}
@@ -724,34 +572,564 @@ int16 CPlotWave::ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
 			/**/
 			//////////////////////////////////////////////////////////////////////////
 
-			//è¯¥ç»„æ•°æ®å®é™…å†™å…¥æ›²çº¿ä¸­çš„ä¸ªæ•°
-			waveLine_WrNumOnce_dspB[waveLine_Index_dspB]++;
+			//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+			waveLine_WrNumOnce_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]++;
 
-			//å†™æŒ‡é’ˆå¤ä½
-			if ((waveLine_WrIndex_dspB[waveLine_Index_dspB]) >= WAVE_LINE_BUFFER_LENTH)
+			//Ğ´Ö¸Õë¸´Î»
+			if ((waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]) >= WAVE_LINE_BUFFER_LENTH)
 			{
-				(waveLine_WrIndex_dspB[waveLine_Index_dspB]) = 0;
+				(waveLine_WrIndex_dsp[dsp_number][waveLine_Index_dsp[dsp_number]]) = 0;
 			}
-			//æ›²çº¿indexé¡ºåºå¢åŠ 
-			waveLine_Index_dspB++;
+			//ÇúÏßindexË³ĞòÔö¼Ó
+			waveLine_Index_dsp[dsp_number]++;
 
-			//æ¸…ç©ºåŒæ­¥å¸§çš„æ ‡å¿—
-			syncFrame_Flag_dspB = 0;
+			//Çå¿ÕÍ¬²½Ö¡µÄ±êÖ¾
+			syncFrame_Flag_dsp[dsp_number] = 0;
 		}
 
 	}
 	return 0;
 }
-//ä»fpgaçš„bufferä¸­è¯»å–æ•°æ®ï¼Œæ ¹æ®dspä¸åŒè¦ä»ä¸é€šçš„åœ°å€è¯»å–ï¼Œå¹¶ä¸”æ”¾åˆ°ä¸åŒçš„pcbufferä¸­
+
+// int16 CPlotWave::ParseDspAPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
+// {
+// 	//ÏÈÇå¿Õ¼ÆÊıÆ÷
+// 	for (int16 w = 0; w < wave.cmd.bit.NUM; ++w)
+// 	{
+// 		waveLine_WrNumOnce_dspA[w] = 0;
+// 	}
+// 	//¹ıÈ¦µÄ´¦Àí
+// 	if (raw_Data_GoBack_Flag_dspA == true)
+// 	{
+// 		//ÏÈ½«ÒÅÁôµÄÊı¾İºÍĞÂµÄÕâÒ»×éÊı¾İ·Åµ½ĞÂµÄcacheÖĞ´¦Àí
+// 		int32 leftnumber = RAW_BUFFER_LENTH - raw_Data_ParseIndex_dspA;
+// 		memcpy_s(raw_CacheBuffer_dspA, leftnumber*sizeof(int16), &(raw_Buffer_dspA[raw_Data_ParseIndex_dspA]), leftnumber*sizeof(int16));
+// 		memcpy_s(&(raw_CacheBuffer_dspA[leftnumber]), (number + raw_Data_ParseLeftNumber_dspA - leftnumber)*sizeof(int16), &(raw_Buffer_dspA[0]), (number + raw_Data_ParseLeftNumber_dspA - leftnumber)*sizeof(int16));
+// 		int16 j;
+// 		for (j = 0; j < (number + raw_Data_ParseLeftNumber_dspA);)
+// 		{
+// 			if (((number + raw_Data_ParseLeftNumber_dspA - j) <= dataFrame_Lenth_dspA) && (waveLine_Index_dspA == wave.cmd.bit.NUM))
+// 			{
+// 				//¸´Î»¸ÃĞÅºÅ
+// 				raw_Data_ParseLeftNumber_dspA = number + raw_Data_ParseLeftNumber_dspA - j;
+// 				//·ÖÁ½ÖÖÇé¿ö£¬Èç¹û¸Õ¸Õ¹ıÈ¦Ò»µãµÄÊ±ºò¿ÉÄÜÒòÎªÒª½âÎöµ½Ò»Ö¡½áÊø¶ø²¢Ã»ÓĞ½âÎö¹ıÈ¦
+// 				if (j<leftnumber)
+// 				{
+// 					//¼ÇÂ¼¸ÃÎ»ÖÃµÄÖµÓÃÓÚÏÂ´ÎµÄiµÄÆğÊ¼Öµ
+// 					raw_Data_ParseIndex_dspA += j;
+// 					raw_Data_GoBack_Aux_Flag_dspA = true;
+// 				}
+// 				else
+// 				{
+// 					raw_Data_ParseIndex_dspA = j - leftnumber;
+// 					raw_Data_GoBack_Aux_Flag_dspA = false;
+// 				}
+// 				
+// 				//ÇúÏßµÄindex¸´Î»
+// 				waveLine_Index_dspA = 0;
+// 				//Ìø³ö¸ÃÑ­»·
+// 				break;
+// 			}
+// 			//¼ÙÈçÕÒµ½Í¬²½Ö¡µÄµÍÎ»£¬Á¬ĞøÓÖÕÒµ½Í¬²½Ö¡µÄ¸ßÎ»
+// 			if ((raw_CacheBuffer_dspA[j] == (int16)FRAME_KEYWORD_LOW) && (raw_CacheBuffer_dspA[j + 1] == (int16)FRAME_KEYWORD_HIGH))
+// 			{
+// 				//ËµÃ÷ÊÇÍ¬²½Ö¡£¬±êÖ¾ÖÃÎ»
+// 				syncFrame_Flag_dspA = 1;
+// 				j += 2;
+// 
+// 				//Èç¹ûÖ»ÓĞÒ»Ìõ16bitµÄÇúÏßÊ±ĞèÒª×öÌØÊâ´¦Àí£¬¼ÙÈçÕıºÃÔÚ×îºóÓĞÍ¬²½Ö¡£¬ÄÇÃ´jÖ±½ÓÌø³öÁË£¬
+// 				//²»»á¸üĞÂg_pcbuffer_dspA_parseindexºÍg_pcbuffer_dspA_ParseLeftNumber
+// 				if (j == (number + raw_Data_ParseLeftNumber_dspA))
+// 				{
+// 					raw_Data_ParseIndex_dspA			= j - leftnumber;
+// 					raw_Data_ParseLeftNumber_dspA		= 0;
+// 				} 
+// 			
+// 				//¼ÇÂ¼ÊÕµ½µÄÍ¬²½Ö¡¸öÊı
+// 				recv_SyncFrame_Num_dspA++;
+// 				//ÕâÀïÒòÎªÊÇÍ¬²½Ö¡ËùÒÔ²»ĞèÒªĞ´ÈëÊı¾İ£¬Ìø³ö´Ë´ÎÑ­»·
+// 				continue;
+// 			}
+// 			//reset waveLine_Index_dspA
+// 			if (waveLine_Index_dspA >= wave.cmd.bit.NUM)
+// 			{
+// 				waveLine_Index_dspA = 0;
+// 				//ÍêÕûÖ¡µÄ¸öÊı¼Ó1
+// 				recv_DataFrame_Num_dspA++;
+// 			}
+// 			if (syncFrame_Flag_dspA == 1)//¼ÙÈç³öÏÖÒ»¸öÍ¬²½Ö¡
+// 			{
+// 				if (waveLine_Index_dspA != 0)
+// 				{
+// 					//²¹ÆëÈ±ÉÙµÄÖµ
+// 					for (int32 p = waveLine_Index_dspA; p < wave.cmd.bit.NUM; ++p)
+// 					{
+// 						(waveLine_WrIndex_dspA[p])++;
+// 
+// 						//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 						waveLine_WrNumOnce_dspA[p]++;
+// 						//Ğ´Ö¸Õë¸´Î»
+// 						if ((waveLine_WrIndex_dspA[p]) >= WAVE_LINE_BUFFER_LENTH)
+// 						{
+// 							(waveLine_WrIndex_dspA[p]) = 0;
+// 						}
+// 					}
+// 					//ÖØĞÂ¶¨Î»µ½0ÇúÏßÎ»ÖÃ
+// 					waveLine_Index_dspA = 0;
+// 				}
+// 			}
+// 			//½«µ±Ç°Öµ×÷ÎªÊı¾İĞ´Èë,¸ù¾İÕ¼¾İµÄ×Ö½ÚÊı²»Í¬£¬´ÓbufferÖĞÈ¡µÃ¸öÊı²»Í¬
+// 			switch (wave.inf[waveLine_Index_dspA].bytes)
+// 			{
+// 			case 2:
+// 			{
+// 				waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)raw_CacheBuffer_dspA[j];
+// 				j++;
+// 				break;
+// 			}
+// 			case 4:
+// 			{
+// 				waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)((int32)(((raw_CacheBuffer_dspA[j] & 0x0000ffff) | ((raw_CacheBuffer_dspA[j + 1] << 16) & 0xffff0000))));
+// 				j += 2;
+// 				break;
+// 			}
+// 			case 8:
+// 			{
+// 				waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] =
+// 					(double)((int64)((((int64)(raw_CacheBuffer_dspA[j] & 0x0000ffff)) | ((((int64)raw_CacheBuffer_dspA[j + 1]) << 16) & 0xffff0000) | ((((int64)raw_CacheBuffer_dspA[j + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_CacheBuffer_dspA[j + 3]) << 48) & 0xffff000000000000))));
+// 				j += 4;
+// 				break;
+// 			}
+// 			default:
+// 				return -2;
+// 				break;
+// 			}
+// 			//////////////////////////////////////////////////////////////////////////
+// 			//test
+// #ifdef TIME_TEST
+// 			if (waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA]) - 1] > 50000.0)
+// 			{
+// 				value_exceed++;
+// 			}
+// #endif
+// 			//////////////////////////////////////////////////////////////////////////
+// 
+// 			//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 			waveLine_WrNumOnce_dspA[waveLine_Index_dspA]++;
+// 
+// 			//Ğ´Ö¸Õë¸´Î»
+// 			if ((waveLine_WrIndex_dspA[waveLine_Index_dspA]) >= WAVE_LINE_BUFFER_LENTH)
+// 			{
+// 				(waveLine_WrIndex_dspA[waveLine_Index_dspA]) = 0;
+// 			}
+// 			//ÇúÏßindexË³ĞòÔö¼Ó
+// 			waveLine_Index_dspA++;
+// 
+// 			//Çå¿ÕÍ¬²½Ö¡µÄ±êÖ¾
+// 			syncFrame_Flag_dspA = 0;
+// 		}
+// #ifdef TIME_TEST
+// 		allnumber_test[allnumber_test_index] = (int16)waveLine_WrNumOnce_dspA[0];
+// 		allnumber_test_index++;
+// 		if (allnumber_test_index >= 10000)
+// 			allnumber_test_index = 0;
+// #endif	
+// 	}
+// 	else
+// 	{
+// 		int32 i;
+// #ifdef TIME_TEST
+// 		if (raw_Data_ParseIndex_dspA>raw_Data_Index_dspA)
+// 		{
+// 			i = raw_Data_ParseIndex_dspA;
+// 		}
+// #endif
+// 		//¸Ã´Î½âÎöµÄ·¶Î§ÊÇ´ÓÉÏÒ»´Î½âÎöµÄ×îºóµ½Ä¿Ç°´Ófpga¶ÁÈ¡µ½µÄÊı¾İ
+// 		for (i = raw_Data_ParseIndex_dspA; i < (raw_Data_Index_dspA);)
+// 		{
+// 			//Ö»ÒªÊ£ÏÂµÄ¸öÊıĞ¡ÓÚ»òÕßµÈÓÚÕû¸öÊı¾İÖ¡µÄ³¤¶È²¢ÇÒÇúÏßµÄindexÊÇ×îºóÒ»ÌõÇúÏßµÄindex
+// 			if (((raw_Data_Index_dspA - i) <= dataFrame_Lenth_dspA) && (waveLine_Index_dspA == wave.cmd.bit.NUM))
+// 			{	
+// 				raw_Data_ParseIndex_dspA		= i;								//¼ÇÂ¼¸ÃÎ»ÖÃµÄÖµÓÃÓÚÏÂ´ÎµÄiµÄÆğÊ¼Öµ			
+// 				waveLine_Index_dspA				= 0;								//ÇúÏßµÄindex¸´Î»				
+// 				raw_Data_ParseLeftNumber_dspA = raw_Data_Index_dspA - i;		//¸üĞÂÊ£ÏÂµÄ¸öÊı
+// 				break;																//Ìø³ö¸ÃÑ­»·
+// 			}
+// 			//Ê×ÏÈÅĞ¶ÏÊı¾İÖĞÊÇ·ñÓĞÍ¬²½Ö¡
+// 			//¼ÙÈçÕÒµ½Í¬²½Ö¡µÄµÍÎ»£¬Á¬ĞøÓÖÕÒµ½Í¬²½Ö¡µÄ¸ßÎ»
+// 			if ((raw_Buffer_dspA[i] == (int16)FRAME_KEYWORD_LOW) && (raw_Buffer_dspA[i + 1] == (int16)FRAME_KEYWORD_HIGH))
+// 			{
+// 				syncFrame_Flag_dspA				= 1;								//ËµÃ÷ÊÇÍ¬²½Ö¡£¬±êÖ¾ÖÃÎ»
+// 				i+= 2;																//¸üĞÂi
+// 
+// 				//Èç¹ûÖ»ÓĞÒ»Ìõ16bitµÄÇúÏßÊ±ĞèÒª×öÌØÊâ´¦Àí£¬¼ÙÈçÕıºÃÔÚ×îºóÓĞÍ¬²½Ö¡£¬ÄÇÃ´jÖ±½ÓÌø³öÁË£¬
+// 				//²»»á¸üĞÂg_pcbuffer_dspA_parseindexºÍg_pcbuffer_dspA_ParseLeftNumber
+// 				if (i == (raw_Data_Index_dspA))
+// 				{
+// 					raw_Data_ParseIndex_dspA		= raw_Data_Index_dspA;
+// 					raw_Data_ParseLeftNumber_dspA = 0;
+// 				}
+// 
+// 				recv_SyncFrame_Num_dspA++;											//¼ÇÂ¼ÊÕµ½µÄÍ¬²½Ö¡¸öÊı
+// 				continue;															//ÕâÀïÒòÎªÊÇÍ¬²½Ö¡ËùÒÔ²»ĞèÒªĞ´ÈëÊı¾İ£¬Ìø³ö´Ë´ÎÑ­»·£¬¼ÌĞøÑ­»·
+// 			}
+// 			//¸´Î»ÇúÏßÌõÊıindex
+// 			if (waveLine_Index_dspA >= wave.cmd.bit.NUM)							
+// 			{
+// 				waveLine_Index_dspA = 0;			
+// 				recv_DataFrame_Num_dspA++;												//ÍêÕûÖ¡µÄ¸öÊı¼Ó1
+// 			}
+// 	
+// 			if (syncFrame_Flag_dspA == 1)//¼ÙÈç³öÏÖÒ»¸öÍ¬²½Ö¡		
+// 			{
+// 				if (waveLine_Index_dspA != 0)
+// 				{
+// 					//²¹ÆëÈ±ÉÙµÄÖµ
+// 					for (int32 p = waveLine_Index_dspA; p < wave.cmd.bit.NUM; ++p)
+// 					{
+// 						(waveLine_WrIndex_dspA[p])++;
+// 						waveLine_WrNumOnce_dspA[p]++;								//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 						if ((waveLine_WrIndex_dspA[p]) >= WAVE_LINE_BUFFER_LENTH)
+// 						{
+// 							(waveLine_WrIndex_dspA[p]) = 0;					//Ğ´Ö¸Õë¸´Î»
+// 						}
+// 					}
+// 					waveLine_Index_dspA = 0;											//ÖØÖÃÇúÏßÌõÊıindex					
+// 				}
+// 			}
+// 			//½«µ±Ç°Öµ×÷ÎªÊı¾İĞ´Èë,¸ù¾İÕ¼¾İµÄ×Ö½ÚÊı²»Í¬£¬´ÓbufferÖĞÈ¡µÃ¸öÊı²»Í¬
+// 			switch (wave.inf[waveLine_Index_dspA].bytes)
+// 			{
+// 				case 2:
+// 				{
+// 					waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)raw_Buffer_dspA[i];
+// 					i++;
+// 					break;
+// 				}
+// 				case 4:
+// 				{
+// 					waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] = (double)((int32)((raw_Buffer_dspA[i] & 0x0000ffff) | ((raw_Buffer_dspA[i + 1] << 16) & 0x0000ffff0000)));
+// 					i += 2;
+// 					break;
+// 				}
+// 				case 8:
+// 				{
+// 					waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA])++] =
+// 						(double)((int64)(((int64)(raw_Buffer_dspA[i] & 0x000000000000ffff) | ((((int64)raw_Buffer_dspA[i + 1]) << 16) & 0x00000000ffff0000) | ((((int64)raw_Buffer_dspA[i + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_Buffer_dspA[i + 3]) << 48) & 0xffff000000000000))));
+// 					i += 4;
+// 					break;
+// 				}
+// 				default:
+// 					return -2;
+// 					break;
+// 			}
+// 			//////////////////////////////////////////////////////////////////////////
+// 			//test
+// 
+// #ifdef TIME_TEST
+// 			if (waveLine_Buffer_dspA[waveLine_Index_dspA][(waveLine_WrIndex_dspA[waveLine_Index_dspA]) - 1] > 50000.0)
+// 			{
+// 				value_exceed++;
+// 			}
+// 			if (value_exceed != 0)
+// 			{
+// 				value_exceed++;
+// 				if (value_exceed == 3000)
+// 				{
+// 					value_exceed = 0;
+// 				}
+// 			}
+// #endif
+// /**/
+// 			//////////////////////////////////////////////////////////////////////////
+// 
+// 			//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 			waveLine_WrNumOnce_dspA[waveLine_Index_dspA]++;
+// 
+// 			//Ğ´Ö¸Õë¸´Î»
+// 			if ((waveLine_WrIndex_dspA[waveLine_Index_dspA]) >= WAVE_LINE_BUFFER_LENTH)
+// 			{
+// 				(waveLine_WrIndex_dspA[waveLine_Index_dspA]) = 0;
+// 			}
+// 			//ÇúÏßindexË³ĞòÔö¼Ó
+// 			waveLine_Index_dspA++;
+// 
+// 			//Çå¿ÕÍ¬²½Ö¡µÄ±êÖ¾
+// 			syncFrame_Flag_dspA = 0;
+// 		}
+// 
+// 	}
+// 	return 0;
+// }
+// int16 CPlotWave::ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number)
+// {
+// 	//ÏÈÇå¿Õ¼ÆÊıÆ÷
+// 	for (int16 w = 0; w < wave.cmd.bit.NUM; ++w)
+// 	{
+// 		waveLine_WrNumOnce_dspB[w] = 0;
+// 	}
+// 	//¹ıÈ¦µÄ´¦Àí
+// 	if (raw_Data_GoBack_Flag_dspB == true)
+// 	{
+// 		//ÏÈ½«ÒÅÁôµÄÊı¾İºÍĞÂµÄÕâÒ»×éÊı¾İ·Åµ½ĞÂµÄcacheÖĞ´¦Àí
+// 		int32 leftnumber = RAW_BUFFER_LENTH - raw_Data_ParseIndex_dspB;
+// 		memcpy_s(raw_CacheBuffer_dspB, leftnumber*sizeof(int16), &(raw_Buffer_dspB[raw_Data_ParseIndex_dspB]), leftnumber*sizeof(int16));
+// 		memcpy_s(&(raw_CacheBuffer_dspB[leftnumber]), (number + raw_Data_ParseLeftNumber_dspB - leftnumber)*sizeof(int16), &(raw_Buffer_dspB[0]), (number + raw_Data_ParseLeftNumber_dspB - leftnumber)*sizeof(int16));
+// 		int16 j;
+// 		for (j = 0; j < (number + raw_Data_ParseLeftNumber_dspB);)
+// 		{
+// 			if (((number + raw_Data_ParseLeftNumber_dspB - j) <= dataFrame_Lenth_dspB) && (waveLine_Index_dspB == wave.cmd.bit.NUM))
+// 			{
+// 				//¸´Î»¸ÃĞÅºÅ
+// 				raw_Data_ParseLeftNumber_dspB = number + raw_Data_ParseLeftNumber_dspB - j;
+// 				//·ÖÁ½ÖÖÇé¿ö£¬Èç¹û¸Õ¸Õ¹ıÈ¦Ò»µãµÄÊ±ºò¿ÉÄÜÒòÎªÒª½âÎöµ½Ò»Ö¡½áÊø¶ø²¢Ã»ÓĞ½âÎö¹ıÈ¦
+// 				if (j < leftnumber)
+// 				{
+// 					//¼ÇÂ¼¸ÃÎ»ÖÃµÄÖµÓÃÓÚÏÂ´ÎµÄiµÄÆğÊ¼Öµ
+// 					raw_Data_ParseIndex_dspB += j;
+// 					raw_Data_GoBack_Aux_Flag_dspB = true;
+// 				}
+// 				else
+// 				{
+// 					raw_Data_ParseIndex_dspB = j - leftnumber;
+// 					raw_Data_GoBack_Aux_Flag_dspB = false;
+// 				}
+// 
+// 				//ÇúÏßµÄindex¸´Î»
+// 				waveLine_Index_dspB = 0;
+// 				//Ìø³ö¸ÃÑ­»·
+// 				break;
+// 			}
+// 			//¼ÙÈçÕÒµ½Í¬²½Ö¡µÄµÍÎ»£¬Á¬ĞøÓÖÕÒµ½Í¬²½Ö¡µÄ¸ßÎ»
+// 			if ((raw_CacheBuffer_dspB[j] == (int16)FRAME_KEYWORD_LOW) && (raw_CacheBuffer_dspB[j + 1] == (int16)FRAME_KEYWORD_HIGH))
+// 			{
+// 				//ËµÃ÷ÊÇÍ¬²½Ö¡£¬±êÖ¾ÖÃÎ»
+// 				syncFrame_Flag_dspB = 1;
+// 				j += 2;
+// 				//¼ÇÂ¼ÊÕµ½µÄÍ¬²½Ö¡¸öÊı
+// 				recv_SyncFrame_Num_dspB++;
+// 				//ÕâÀïÒòÎªÊÇÍ¬²½Ö¡ËùÒÔ²»ĞèÒªĞ´ÈëÊı¾İ£¬Ìø³ö´Ë´ÎÑ­»·
+// 				continue;
+// 			}
+// 			//reset g_dspB_wave_index
+// 			if (waveLine_Index_dspB >= wave.cmd.bit.NUM)
+// 			{
+// 				waveLine_Index_dspB = 0;
+// 				//ÍêÕûÖ¡µÄ¸öÊı¼Ó1
+// 				recv_DataFrame_Num_dspB++;
+// 			}
+// 			if (syncFrame_Flag_dspB == 1)//¼ÙÈç³öÏÖÒ»¸öÍ¬²½Ö¡
+// 			{
+// 				if (waveLine_Index_dspB != 0)
+// 				{
+// 					//²¹ÆëÈ±ÉÙµÄÖµ
+// 					for (int32 p = waveLine_Index_dspB; p < wave.cmd.bit.NUM; ++p)
+// 					{
+// 						(waveLine_WrIndex_dspB[p])++;
+// 
+// 						//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 						waveLine_WrNumOnce_dspB[p]++;
+// 						//Ğ´Ö¸Õë¸´Î»
+// 						if ((waveLine_WrIndex_dspB[p]) >= WAVE_LINE_BUFFER_LENTH)
+// 						{
+// 							(waveLine_WrIndex_dspB[p]) = 0;
+// 						}
+// 					}
+// 					//ÖØĞÂ¶¨Î»µ½0ÇúÏßÎ»ÖÃ
+// 					waveLine_Index_dspB = 0;
+// 				}
+// 			}
+// 			//½«µ±Ç°Öµ×÷ÎªÊı¾İĞ´Èë,¸ù¾İÕ¼¾İµÄ×Ö½ÚÊı²»Í¬£¬´ÓbufferÖĞÈ¡µÃ¸öÊı²»Í¬
+// 			switch (wave.inf[waveLine_Index_dspB].bytes)
+// 			{
+// 			case 2:
+// 			{
+// 				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)raw_CacheBuffer_dspB[j];
+// 				j++;
+// 				break;
+// 			}
+// 			case 4:
+// 			{
+// 				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)((int32)(((raw_CacheBuffer_dspB[j] & 0x0000ffff) | ((raw_CacheBuffer_dspB[j + 1] << 16) & 0xffff0000))));
+// 				j += 2;
+// 				break;
+// 			}
+// 			case 8:
+// 			{
+// 				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] =
+// 					(double)((int64)((((int64)(raw_CacheBuffer_dspB[j] & 0x0000ffff)) | ((((int64)raw_CacheBuffer_dspB[j + 1]) << 16) & 0xffff0000) | ((((int64)raw_CacheBuffer_dspB[j + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_CacheBuffer_dspB[j + 3]) << 48) & 0xffff000000000000))));
+// 				j += 4;
+// 				break;
+// 			}
+// 			default:
+// 				return -2;
+// 				break;
+// 			}
+// 			//////////////////////////////////////////////////////////////////////////
+// 			//test
+// #ifdef TIME_TEST
+// 			if (waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB]) - 1] > 50000.0)
+// 			{
+// 				value_exceed++;
+// 			}
+// #endif
+// 			/**/
+// 			//////////////////////////////////////////////////////////////////////////
+// 
+// 			//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 			waveLine_WrNumOnce_dspB[waveLine_Index_dspB]++;
+// 
+// 			//Ğ´Ö¸Õë¸´Î»
+// 			if ((waveLine_WrIndex_dspB[waveLine_Index_dspB]) >= WAVE_LINE_BUFFER_LENTH)
+// 			{
+// 				(waveLine_WrIndex_dspB[waveLine_Index_dspB]) = 0;
+// 			}
+// 			//ÇúÏßindexË³ĞòÔö¼Ó
+// 			waveLine_Index_dspB++;
+// 
+// 			//Çå¿ÕÍ¬²½Ö¡µÄ±êÖ¾
+// 			syncFrame_Flag_dspB = 0;
+// 		}
+// #ifdef TIME_TEST
+// 		allnumber_test[allnumber_test_index] = (int16)waveLine_WrNumOnce_dspB[0];
+// 		allnumber_test_index++;
+// 		if (allnumber_test_index >= 10000)
+// 			allnumber_test_index = 0;
+// 
+// #endif	
+// 	}
+// 	else
+// 	{
+// 		int32 i;
+// #ifdef TIME_TEST
+// 		if (raw_Data_ParseIndex_dspB > raw_Data_Index_dspB)
+// 		{
+// 			i = raw_Data_ParseIndex_dspB;
+// 		}
+// #endif
+// 		//¸Ã´Î½âÎöµÄ·¶Î§ÊÇ´ÓÉÏÒ»´Î½âÎöµÄ×îºóµ½Ä¿Ç°´Ófpga¶ÁÈ¡µ½µÄÊı¾İ
+// 		for (i = raw_Data_ParseIndex_dspB; i < (raw_Data_Index_dspB);)
+// 		{
+// 			//Ö»ÒªÊ£ÏÂµÄ¸öÊıĞ¡ÓÚ»òÕßµÈÓÚÕû¸öÊı¾İÖ¡µÄ³¤¶È²¢ÇÒÇúÏßµÄindexÊÇ×îºóÒ»ÌõÇúÏßµÄindex
+// 			if (((raw_Data_Index_dspB - i) <= dataFrame_Lenth_dspB) && (waveLine_Index_dspB == wave.cmd.bit.NUM))
+// 			{
+// 				raw_Data_ParseIndex_dspB = i;								//¼ÇÂ¼¸ÃÎ»ÖÃµÄÖµÓÃÓÚÏÂ´ÎµÄiµÄÆğÊ¼Öµ			
+// 				waveLine_Index_dspB = 0;								//ÇúÏßµÄindex¸´Î»				
+// 				raw_Data_ParseLeftNumber_dspB = raw_Data_Index_dspB - i;		//¸üĞÂÊ£ÏÂµÄ¸öÊı
+// 				break;																//Ìø³ö¸ÃÑ­»·
+// 			}
+// 			//Ê×ÏÈÅĞ¶ÏÊı¾İÖĞÊÇ·ñÓĞÍ¬²½Ö¡
+// 			//¼ÙÈçÕÒµ½Í¬²½Ö¡µÄµÍÎ»£¬Á¬ĞøÓÖÕÒµ½Í¬²½Ö¡µÄ¸ßÎ»
+// 			if ((raw_Buffer_dspB[i] == (int16)FRAME_KEYWORD_LOW) && (raw_Buffer_dspB[i + 1] == (int16)FRAME_KEYWORD_HIGH))
+// 			{
+// 				syncFrame_Flag_dspB = 1;								//ËµÃ÷ÊÇÍ¬²½Ö¡£¬±êÖ¾ÖÃÎ»
+// 				i += 2;																//¸üĞÂi
+// 				recv_SyncFrame_Num_dspB++;											//¼ÇÂ¼ÊÕµ½µÄÍ¬²½Ö¡¸öÊı
+// 				continue;															//ÕâÀïÒòÎªÊÇÍ¬²½Ö¡ËùÒÔ²»ĞèÒªĞ´ÈëÊı¾İ£¬Ìø³ö´Ë´ÎÑ­»·£¬¼ÌĞøÑ­»·
+// 			}
+// 			//¸´Î»ÇúÏßÌõÊıindex
+// 			if (waveLine_Index_dspB >= wave.cmd.bit.NUM)
+// 			{
+// 				waveLine_Index_dspB = 0;
+// 				recv_DataFrame_Num_dspB++;												//ÍêÕûÖ¡µÄ¸öÊı¼Ó1
+// 			}
+// 
+// 			if (syncFrame_Flag_dspB == 1)//¼ÙÈç³öÏÖÒ»¸öÍ¬²½Ö¡		
+// 			{
+// 				if (waveLine_Index_dspB != 0)
+// 				{
+// 					//²¹ÆëÈ±ÉÙµÄÖµ
+// 					for (int32 p = waveLine_Index_dspB; p < wave.cmd.bit.NUM; ++p)
+// 					{
+// 						(waveLine_WrIndex_dspB[p])++;
+// 						waveLine_WrNumOnce_dspB[p]++;								//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 						if ((waveLine_WrIndex_dspB[p]) >= WAVE_LINE_BUFFER_LENTH)
+// 						{
+// 							(waveLine_WrIndex_dspB[p]) = 0;					//Ğ´Ö¸Õë¸´Î»
+// 						}
+// 					}
+// 					waveLine_Index_dspB = 0;											//ÖØÖÃÇúÏßÌõÊıindex					
+// 				}
+// 			}
+// 			//½«µ±Ç°Öµ×÷ÎªÊı¾İĞ´Èë,¸ù¾İÕ¼¾İµÄ×Ö½ÚÊı²»Í¬£¬´ÓbufferÖĞÈ¡µÃ¸öÊı²»Í¬
+// 			switch (wave.inf[waveLine_Index_dspB].bytes)
+// 			{
+// 			case 2:
+// 			{
+// 				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)raw_Buffer_dspB[i];
+// 				i++;
+// 				break;
+// 			}
+// 			case 4:
+// 			{
+// 				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] = (double)((int32)((raw_Buffer_dspB[i] & 0x0000ffff) | ((raw_Buffer_dspB[i + 1] << 16) & 0xffff0000)));
+// 				i += 2;
+// 				break;
+// 			}
+// 			case 8:
+// 			{
+// 				waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB])++] =
+// 					(double)((int64)(((int64)(raw_Buffer_dspB[i] & 0x0000ffff) | ((((int64)raw_Buffer_dspB[i + 1]) << 16) & 0xffff0000) | ((((int64)raw_Buffer_dspB[i + 2]) << 32) & 0x0000ffff00000000) | ((((int64)raw_Buffer_dspB[i + 3]) << 48) & 0xffff000000000000))));
+// 				i += 4;
+// 				break;
+// 			}
+// 			default:
+// 				return -2;
+// 				break;
+// 			}
+// 			//////////////////////////////////////////////////////////////////////////
+// 			//test
+// 
+// #ifdef TIME_TEST
+// 			if (waveLine_Buffer_dspB[waveLine_Index_dspB][(waveLine_WrIndex_dspB[waveLine_Index_dspB]) - 1] > 50000.0)
+// 			{
+// 				value_exceed++;
+// 			}
+// 			if (value_exceed != 0)
+// 			{
+// 				value_exceed++;
+// 				if (value_exceed == 3000)
+// 				{
+// 					value_exceed = 0;
+// 				}
+// 			}
+// #endif
+// 			/**/
+// 			//////////////////////////////////////////////////////////////////////////
+// 
+// 			//¸Ã×éÊı¾İÊµ¼ÊĞ´ÈëÇúÏßÖĞµÄ¸öÊı
+// 			waveLine_WrNumOnce_dspB[waveLine_Index_dspB]++;
+// 
+// 			//Ğ´Ö¸Õë¸´Î»
+// 			if ((waveLine_WrIndex_dspB[waveLine_Index_dspB]) >= WAVE_LINE_BUFFER_LENTH)
+// 			{
+// 				(waveLine_WrIndex_dspB[waveLine_Index_dspB]) = 0;
+// 			}
+// 			//ÇúÏßindexË³ĞòÔö¼Ó
+// 			waveLine_Index_dspB++;
+// 
+// 			//Çå¿ÕÍ¬²½Ö¡µÄ±êÖ¾
+// 			syncFrame_Flag_dspB = 0;
+// 		}
+// 
+// 	}
+// 	return 0;
+// }
+//´ÓfpgaµÄbufferÖĞ¶ÁÈ¡Êı¾İ£¬¸ù¾İdsp²»Í¬Òª´Ó²»Í¨µÄµØÖ·¶ÁÈ¡£¬²¢ÇÒ·Åµ½²»Í¬µÄpcbufferÖĞ
 int16 CPlotWave::ReadPlotWaveDataFromFPGA(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/)
 {
 	int16	read_num;
 	int16*	data = NULL;
 
+	if (dsp_number >= MAX_DSP_WAVE)
+	{
+		return -1;
+	}
+
 	switch (com_type)
 	{
 	case GTSD_COM_TYPE_NET:
-		//è·å–æ•°æ®
+		//»ñÈ¡Êı¾İ
 		GTSD_CMD_GetWaveData(dsp_number,&read_num,&data);
 		break;
 	case GTSD_COM_TYPE_RNNET:
@@ -787,194 +1165,264 @@ int16 CPlotWave::ReadPlotWaveDataFromFPGA(int16 dsp_number, WAVE_BUF_PRM& wave, 
 		}
 	}
 #endif
-
-	//å°†æ•°æ®æ”¾åˆ°pcbufferä¸­
+//////////////////////////////////////////////////////////////////////////
+	//½«Êı¾İ·Åµ½pcbufferÖĞ
 	if (read_num != 0)
 	{
-		if (dsp_number == GTSD_DSP_A)
+		//½«Êı¾İ·Åµ½dspaµÄpcbufferÖĞ
+		int32 tmp;
+		tmp = raw_Data_Index_dsp[dsp_number] + read_num;
+		//Èç¹ûÒÑ¾­¹ıÈ¦£¬ĞèÒª¸´ÖÆÁ½²¿·Ö£¬½«Òç³ö²¿·Ö¸´ÖÆµ½×îÇ°Ãæ
+		if (tmp >= (RAW_BUFFER_LENTH))
 		{
-			//å°†æ•°æ®æ”¾åˆ°dspaçš„pcbufferä¸­
-			int32 tmp;
-			tmp = raw_Data_Index_dspA + read_num;
-			//å¦‚æœå·²ç»è¿‡åœˆï¼Œéœ€è¦å¤åˆ¶ä¸¤éƒ¨åˆ†ï¼Œå°†æº¢å‡ºéƒ¨åˆ†å¤åˆ¶åˆ°æœ€å‰é¢
-			if (tmp >=(RAW_BUFFER_LENTH))
+			errno_t err = memcpy_s(&(raw_Buffer_dsp[dsp_number][raw_Data_Index_dsp[dsp_number]]), (RAW_BUFFER_LENTH - raw_Data_Index_dsp[dsp_number])*sizeof(int16), data, (RAW_BUFFER_LENTH - raw_Data_Index_dsp[dsp_number])*sizeof(int16));
+			if (err != 0)
 			{
-				errno_t err = memcpy_s(&(raw_Buffer_dspA[raw_Data_Index_dspA]), (RAW_BUFFER_LENTH - raw_Data_Index_dspA)*sizeof(int16), data, (RAW_BUFFER_LENTH - raw_Data_Index_dspA)*sizeof(int16));
-				if (err != 0)
-				{
-					err = 0;
-				}
-				err = memcpy_s(&(raw_Buffer_dspA[0]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16), &(data[(RAW_BUFFER_LENTH - raw_Data_Index_dspA)]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16));
-				if (err != 0)
-				{
-					err = 0;
-				}
-				raw_Data_GoBack_Flag_dspA = true;		//è¿‡åœˆæ ‡å¿—
+				err = 0;
 			}
-			else
+			err = memcpy_s(&(raw_Buffer_dsp[dsp_number][0]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16), &(data[(RAW_BUFFER_LENTH - raw_Data_Index_dsp[dsp_number])]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16));
+			if (err != 0)
 			{
-				errno_t err = memcpy_s(&(raw_Buffer_dspA[raw_Data_Index_dspA]), read_num*sizeof(int16), data, read_num*sizeof(int16));
-				if (err!=0)
-				{
-					err = 0;
-				}
-				raw_Data_GoBack_Flag_dspA = false;		//è¿‡åœˆæ ‡å¿—
-				if (raw_Data_GoBack_Aux_Flag_dspA == true)
-				{
-					raw_Data_GoBack_Flag_dspA = true;
-				}
+				err = 0;
 			}
-			
-			//æ›´æ–°index
-			raw_Data_Index_dspA += read_num;
-
-			if (raw_Data_Index_dspA > (RAW_BUFFER_LENTH-1))
-			{
-				raw_Data_Index_dspA = raw_Data_Index_dspA - (RAW_BUFFER_LENTH);
-
-#ifdef TIME_TEST
-				overflow_flag++;
-#endif
-/**/
-			}
-			//å¼€å§‹è§£ææ•°æ®åˆ°æ¯æ¡æ›²çº¿çš„bufferä¸­,ä¸€æ¬¡è¯»åˆ°å¤šå°‘å°±è§£æå¤šå°‘
-		
-			//è§£ææ•°æ®åˆ°æœ€åä¸€ä¸ªå®Œæ•´çš„å¸§ï¼Œå‰©ä¸‹çš„ç•™åˆ°ä¸‹ä¸€æ¬¡è§£æ
-			ParseDspAPlotWaveData(wave, read_num);
-
-			EnterCriticalSection(&g_cs_dspA);
-			for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)
-			{
-				//bufferä¸­å®é™…æœ‰çš„æ•°æ®ä¸ªæ•°ï¼Œåº”è¯¥æ¯æ¡æ›²çº¿éƒ½æ˜¯ä¸€æ ·çš„æ‰å¯¹
-				waveLine_WrNumSum_dspA[i] += waveLine_WrNumOnce_dspA[i];
-			}
-	
-			LeaveCriticalSection(&g_cs_dspA);
-
-
-		}
-		else if (dsp_number == GTSD_DSP_B)
-		{
-			//å°†æ•°æ®æ”¾åˆ°dspaçš„pcbufferä¸­
-			int32 tmp;
-			tmp = raw_Data_Index_dspB + read_num;
-			//å¦‚æœå·²ç»è¿‡åœˆï¼Œéœ€è¦å¤åˆ¶ä¸¤éƒ¨åˆ†ï¼Œå°†æº¢å‡ºéƒ¨åˆ†å¤åˆ¶åˆ°æœ€å‰é¢
-			if (tmp >= (RAW_BUFFER_LENTH))
-			{
-				errno_t err = memcpy_s(&(raw_Buffer_dspB[raw_Data_Index_dspB]), (RAW_BUFFER_LENTH - raw_Data_Index_dspB)*sizeof(int16), data, (RAW_BUFFER_LENTH - raw_Data_Index_dspB)*sizeof(int16));
-				if (err != 0)
-				{
-					err = 0;
-				}
-				err = memcpy_s(&(raw_Buffer_dspB[0]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16), &(data[(RAW_BUFFER_LENTH - raw_Data_Index_dspB)]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16));
-				if (err != 0)
-				{
-					err = 0;
-				}
-				raw_Data_GoBack_Flag_dspB = true;		//è¿‡åœˆæ ‡å¿—
-			}
-			else
-			{
-				errno_t err = memcpy_s(&(raw_Buffer_dspB[raw_Data_Index_dspB]), read_num*sizeof(int16), data, read_num*sizeof(int16));
-				if (err != 0)
-				{
-					err = 0;
-				}
-				raw_Data_GoBack_Flag_dspB = false;		//è¿‡åœˆæ ‡å¿—
-				if (raw_Data_GoBack_Aux_Flag_dspB == true)
-				{
-					raw_Data_GoBack_Flag_dspB = true;
-				}
-			}
-
-			//æ›´æ–°index
-			raw_Data_Index_dspB += read_num;
-
-			if (raw_Data_Index_dspB > (RAW_BUFFER_LENTH - 1))
-			{
-				raw_Data_Index_dspB = raw_Data_Index_dspB - (RAW_BUFFER_LENTH);
-
-#ifdef TIME_TEST
-				overflow_flag++;
-#endif
-				/**/
-			}
-		
-			//è§£ææ•°æ®åˆ°æœ€åä¸€ä¸ªå®Œæ•´çš„å¸§ï¼Œå‰©ä¸‹çš„ç•™åˆ°ä¸‹ä¸€æ¬¡è§£æ
-			ParseDspBPlotWaveData(wave, read_num);
-				
-			EnterCriticalSection(&g_cs_dspB);
-			for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)
-			{
-				//bufferä¸­å®é™…æœ‰çš„æ•°æ®ä¸ªæ•°ï¼Œåº”è¯¥æ¯æ¡æ›²çº¿éƒ½æ˜¯ä¸€æ ·çš„æ‰å¯¹
-				waveLine_WrNumSum_dspB[i] += waveLine_WrNumOnce_dspB[i];
-			}
-			LeaveCriticalSection(&g_cs_dspB);	
+			raw_Data_GoBack_Flag_dsp[dsp_number] = true;		//¹ıÈ¦±êÖ¾
 		}
 		else
 		{
-			return -1;
+			errno_t err = memcpy_s(&(raw_Buffer_dsp[dsp_number][raw_Data_Index_dsp[dsp_number]]), read_num*sizeof(int16), data, read_num*sizeof(int16));
+			if (err != 0)
+			{
+				err = 0;
+			}
+			raw_Data_GoBack_Flag_dsp[dsp_number] = false;		//¹ıÈ¦±êÖ¾
+			if (raw_Data_GoBack_Aux_Flag_dsp[dsp_number] == true)
+			{
+				raw_Data_GoBack_Flag_dsp[dsp_number] = true;
+			}
 		}
+
+		//¸üĞÂindex
+		raw_Data_Index_dsp[dsp_number] += read_num;
+
+		if (raw_Data_Index_dsp[dsp_number] > (RAW_BUFFER_LENTH - 1))
+		{
+			raw_Data_Index_dsp[dsp_number] = raw_Data_Index_dsp[dsp_number] - (RAW_BUFFER_LENTH);
+
+#ifdef TIME_TEST
+			overflow_flag++;
+#endif
+			/**/
+		}
+		//¿ªÊ¼½âÎöÊı¾İµ½Ã¿ÌõÇúÏßµÄbufferÖĞ,Ò»´Î¶Áµ½¶àÉÙ¾Í½âÎö¶àÉÙ
+
+		//½âÎöÊı¾İµ½×îºóÒ»¸öÍêÕûµÄÖ¡£¬Ê£ÏÂµÄÁôµ½ÏÂÒ»´Î½âÎö
+		ParseDspPlotWaveData(dsp_number, wave, read_num);
+
+		EnterCriticalSection(&g_cs_dsp[dsp_number]);
+		for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)
+		{
+			//bufferÖĞÊµ¼ÊÓĞµÄÊı¾İ¸öÊı£¬Ó¦¸ÃÃ¿ÌõÇúÏß¶¼ÊÇÒ»ÑùµÄ²Å¶Ô
+			waveLine_WrNumSum_dsp[dsp_number][i] += waveLine_WrNumOnce_dsp[dsp_number][i];
+		}
+
+		LeaveCriticalSection(&g_cs_dsp[dsp_number]);
 	}
+
+
+
+//////////////////////////////////////////////////////////////////////////
+
+// 	//½«Êı¾İ·Åµ½pcbufferÖĞ
+// 	if (read_num != 0)
+// 	{
+// 		if (dsp_number == GTSD_DSP_A)
+// 		{
+// 			//½«Êı¾İ·Åµ½dspaµÄpcbufferÖĞ
+// 			int32 tmp;
+// 			tmp = raw_Data_Index_dspA + read_num;
+// 			//Èç¹ûÒÑ¾­¹ıÈ¦£¬ĞèÒª¸´ÖÆÁ½²¿·Ö£¬½«Òç³ö²¿·Ö¸´ÖÆµ½×îÇ°Ãæ
+// 			if (tmp >=(RAW_BUFFER_LENTH))
+// 			{
+// 				errno_t err = memcpy_s(&(raw_Buffer_dspA[raw_Data_Index_dspA]), (RAW_BUFFER_LENTH - raw_Data_Index_dspA)*sizeof(int16), data, (RAW_BUFFER_LENTH - raw_Data_Index_dspA)*sizeof(int16));
+// 				if (err != 0)
+// 				{
+// 					err = 0;
+// 				}
+// 				err = memcpy_s(&(raw_Buffer_dspA[0]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16), &(data[(RAW_BUFFER_LENTH - raw_Data_Index_dspA)]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16));
+// 				if (err != 0)
+// 				{
+// 					err = 0;
+// 				}
+// 				raw_Data_GoBack_Flag_dspA = true;		//¹ıÈ¦±êÖ¾
+// 			}
+// 			else
+// 			{
+// 				errno_t err = memcpy_s(&(raw_Buffer_dspA[raw_Data_Index_dspA]), read_num*sizeof(int16), data, read_num*sizeof(int16));
+// 				if (err!=0)
+// 				{
+// 					err = 0;
+// 				}
+// 				raw_Data_GoBack_Flag_dspA = false;		//¹ıÈ¦±êÖ¾
+// 				if (raw_Data_GoBack_Aux_Flag_dspA == true)
+// 				{
+// 					raw_Data_GoBack_Flag_dspA = true;
+// 				}
+// 			}
+// 			
+// 			//¸üĞÂindex
+// 			raw_Data_Index_dspA += read_num;
+// 
+// 			if (raw_Data_Index_dspA > (RAW_BUFFER_LENTH-1))
+// 			{
+// 				raw_Data_Index_dspA = raw_Data_Index_dspA - (RAW_BUFFER_LENTH);
+// 
+// #ifdef TIME_TEST
+// 				overflow_flag++;
+// #endif
+// /**/
+// 			}
+// 			//¿ªÊ¼½âÎöÊı¾İµ½Ã¿ÌõÇúÏßµÄbufferÖĞ,Ò»´Î¶Áµ½¶àÉÙ¾Í½âÎö¶àÉÙ
+// 		
+// 			//½âÎöÊı¾İµ½×îºóÒ»¸öÍêÕûµÄÖ¡£¬Ê£ÏÂµÄÁôµ½ÏÂÒ»´Î½âÎö
+// 			ParseDspAPlotWaveData(wave, read_num);
+// 
+// 			EnterCriticalSection(&g_cs_dspA);
+// 			for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)
+// 			{
+// 				//bufferÖĞÊµ¼ÊÓĞµÄÊı¾İ¸öÊı£¬Ó¦¸ÃÃ¿ÌõÇúÏß¶¼ÊÇÒ»ÑùµÄ²Å¶Ô
+// 				waveLine_WrNumSum_dspA[i] += waveLine_WrNumOnce_dspA[i];
+// 			}
+// 	
+// 			LeaveCriticalSection(&g_cs_dspA);
+// 
+// 
+// 		}
+// 		else if (dsp_number == GTSD_DSP_B)
+// 		{
+// 			//½«Êı¾İ·Åµ½dspaµÄpcbufferÖĞ
+// 			int32 tmp;
+// 			tmp = raw_Data_Index_dspB + read_num;
+// 			//Èç¹ûÒÑ¾­¹ıÈ¦£¬ĞèÒª¸´ÖÆÁ½²¿·Ö£¬½«Òç³ö²¿·Ö¸´ÖÆµ½×îÇ°Ãæ
+// 			if (tmp >= (RAW_BUFFER_LENTH))
+// 			{
+// 				errno_t err = memcpy_s(&(raw_Buffer_dspB[raw_Data_Index_dspB]), (RAW_BUFFER_LENTH - raw_Data_Index_dspB)*sizeof(int16), data, (RAW_BUFFER_LENTH - raw_Data_Index_dspB)*sizeof(int16));
+// 				if (err != 0)
+// 				{
+// 					err = 0;
+// 				}
+// 				err = memcpy_s(&(raw_Buffer_dspB[0]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16), &(data[(RAW_BUFFER_LENTH - raw_Data_Index_dspB)]), (tmp - RAW_BUFFER_LENTH)*sizeof(int16));
+// 				if (err != 0)
+// 				{
+// 					err = 0;
+// 				}
+// 				raw_Data_GoBack_Flag_dspB = true;		//¹ıÈ¦±êÖ¾
+// 			}
+// 			else
+// 			{
+// 				errno_t err = memcpy_s(&(raw_Buffer_dspB[raw_Data_Index_dspB]), read_num*sizeof(int16), data, read_num*sizeof(int16));
+// 				if (err != 0)
+// 				{
+// 					err = 0;
+// 				}
+// 				raw_Data_GoBack_Flag_dspB = false;		//¹ıÈ¦±êÖ¾
+// 				if (raw_Data_GoBack_Aux_Flag_dspB == true)
+// 				{
+// 					raw_Data_GoBack_Flag_dspB = true;
+// 				}
+// 			}
+// 
+// 			//¸üĞÂindex
+// 			raw_Data_Index_dspB += read_num;
+// 
+// 			if (raw_Data_Index_dspB > (RAW_BUFFER_LENTH - 1))
+// 			{
+// 				raw_Data_Index_dspB = raw_Data_Index_dspB - (RAW_BUFFER_LENTH);
+// 
+// #ifdef TIME_TEST
+// 				overflow_flag++;
+// #endif
+// 				/**/
+// 			}
+// 		
+// 			//½âÎöÊı¾İµ½×îºóÒ»¸öÍêÕûµÄÖ¡£¬Ê£ÏÂµÄÁôµ½ÏÂÒ»´Î½âÎö
+// 			ParseDspBPlotWaveData(wave, read_num);
+// 				
+// 			EnterCriticalSection(&g_cs_dspB);
+// 			for (int16 i = 0; i < wave.cmd.bit.NUM; ++i)
+// 			{
+// 				//bufferÖĞÊµ¼ÊÓĞµÄÊı¾İ¸öÊı£¬Ó¦¸ÃÃ¿ÌõÇúÏß¶¼ÊÇÒ»ÑùµÄ²Å¶Ô
+// 				waveLine_WrNumSum_dspB[i] += waveLine_WrNumOnce_dspB[i];
+// 			}
+// 			LeaveCriticalSection(&g_cs_dspB);	
+// 		}
+// 		else
+// 		{
+// 			return -1;
+// 		}
+// 	}
 	return 0;
 }
-//numberå®é™…å–åˆ°çš„æ•°æ®ï¼Œæ•°æ®çš„æŒ‡é’ˆ
-int16 CPlotWave::PW_PcGetDspAWaveData(double** data, int32& number, int16 com_type /*= GTSD_COM_TYPE_NET*/)
+//numberÊµ¼ÊÈ¡µ½µÄÊı¾İ£¬Êı¾İµÄÖ¸Õë
+int16 CPlotWave::PW_PcGetDspWaveData(int16 dsp_number, double** data, int32& number, int16 com_type /*= GTSD_COM_TYPE_NET*/)
 {
-	//å› ä¸ºæ¯æ¡çº¿ä¸­çš„æ•°æ®éƒ½æ˜¯ä¸€æ ·çš„ï¼ŒåŒæ­¥çš„ï¼Œæ‰€ä»¥è¿™é‡Œåªåˆ¤æ–­ä¸€æ¡çº¿çš„ä¸ªæ•°å³å¯
-	int32 realnumber;
-	if (g_dspA_wave_prm.cmd.bit.ENP == 1)
+	if (dsp_number >= MAX_DSP_WAVE)
 	{
-		EnterCriticalSection(&g_cs_dspA);
-		realnumber = waveLine_WrNumSum_dspA[0];
-		LeaveCriticalSection(&g_cs_dspA);
+		return -1;
+	}
+	//ÒòÎªÃ¿ÌõÏßÖĞµÄÊı¾İ¶¼ÊÇÒ»ÑùµÄ£¬Í¬²½µÄ£¬ËùÒÔÕâÀïÖ»ÅĞ¶ÏÒ»ÌõÏßµÄ¸öÊı¼´¿É
+	int32 realnumber;
+	if (g_dsp_wave_prm[dsp_number].cmd.bit.ENP == 1)
+	{
+		EnterCriticalSection(&g_cs_dsp[dsp_number]);
+		realnumber = waveLine_WrNumSum_dsp[dsp_number][0];
+		LeaveCriticalSection(&g_cs_dsp[dsp_number]);
 	}
 	else
 	{
-		realnumber = waveLine_WrNumSum_dspA[0];
+		realnumber = waveLine_WrNumSum_dsp[dsp_number][0];
 	}
 	
 
 	if (realnumber == 0)
 	{
-		*data	= (double*)plotDataBuffer_dspA;
+		*data = (double*)plotDataBuffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM];
 		number	= 0;
 		return 0;
 	}
 
-	(*data)		= (double*)plotDataBuffer_dspA;
-	for (int16 i = 0; i < m_dspA_line_number; ++i)
+	(*data) = (double*)plotDataBuffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM];
+	for (int16 i = 0; i < m_dsp_line_number[dsp_number]; ++i)
 	{
 		int32 tmp;
 		int32 left;
-		tmp = waveLine_RdIndex_dspA[i] + realnumber;
+		tmp = waveLine_RdIndex_dsp[dsp_number][i] + realnumber;
 		if (tmp >= WAVE_LINE_BUFFER_LENTH)
 		{
 			left = tmp - WAVE_LINE_BUFFER_LENTH;
-			memcpy_s(&(plotDataBuffer_dspA[i][0]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspA[i])*sizeof(double), &(waveLine_Buffer_dspA[i][waveLine_RdIndex_dspA[i]]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspA[i])*sizeof(double));
-			memcpy_s((&(plotDataBuffer_dspA[i][(WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspA[i])])), left*sizeof(double), &(waveLine_Buffer_dspA[i][0]), left*sizeof(double));
+			memcpy_s(&(plotDataBuffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + i][0]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dsp[dsp_number][i])*sizeof(double), &(waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + i][waveLine_RdIndex_dsp[dsp_number][i]]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dsp[dsp_number][i])*sizeof(double));
+			memcpy_s((&(plotDataBuffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + i][(WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dsp[dsp_number][i])])), left*sizeof(double), &(waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + i][0]), left*sizeof(double));
 		}
 		else
 		{
-			memcpy_s(&(plotDataBuffer_dspA[i][0]), realnumber * sizeof(double), &(waveLine_Buffer_dspA[i][waveLine_RdIndex_dspA[i]]), realnumber * sizeof(double));
+			memcpy_s(&(plotDataBuffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + i][0]), realnumber * sizeof(double), &(waveLine_Buffer_dsp[dsp_number*MAX_WAVE_PLOT_NUM + i][waveLine_RdIndex_dsp[dsp_number][i]]), realnumber * sizeof(double));
 		}
-		//è¯»è®¡æ•°å€¼å¢åŠ 
-		(waveLine_RdIndex_dspA[i]) += realnumber;
-		//å‡å¦‚è¯»çš„æ•°æ®è®¡æ•°å€¼è¶…è¿‡äº†æ›²çº¿bufferçš„æ€»é•¿åº¦ï¼Œç¯å›åˆ°å¼€å¤´
-		if (waveLine_RdIndex_dspA[i] >= WAVE_LINE_BUFFER_LENTH)
+		//¶Á¼ÆÊıÖµÔö¼Ó
+		(waveLine_RdIndex_dsp[dsp_number][i]) += realnumber;
+		//¼ÙÈç¶ÁµÄÊı¾İ¼ÆÊıÖµ³¬¹ıÁËÇúÏßbufferµÄ×Ü³¤¶È£¬»·»Øµ½¿ªÍ·
+		if (waveLine_RdIndex_dsp[dsp_number][i] >= WAVE_LINE_BUFFER_LENTH)
 		{
-			waveLine_RdIndex_dspA[i] = waveLine_RdIndex_dspA[i] - WAVE_LINE_BUFFER_LENTH;
+			waveLine_RdIndex_dsp[dsp_number][i] = waveLine_RdIndex_dsp[dsp_number][i] - WAVE_LINE_BUFFER_LENTH;
 		}
-		if (g_dspA_wave_prm.cmd.bit.ENP == 1)
+		if (g_dsp_wave_prm[dsp_number].cmd.bit.ENP == 1)
 		{
-			EnterCriticalSection(&g_cs_dspA);
-			//bufferä¸­å®é™…æœ‰çš„æ•°æ®ä¸ªæ•°ï¼Œåº”è¯¥æ¯æ¡æ›²çº¿éƒ½æ˜¯ä¸€æ ·çš„æ‰å¯¹
-			waveLine_WrNumSum_dspA[i] -= realnumber;
-			LeaveCriticalSection(&g_cs_dspA);
+			EnterCriticalSection(&g_cs_dsp[dsp_number]);
+			//bufferÖĞÊµ¼ÊÓĞµÄÊı¾İ¸öÊı£¬Ó¦¸ÃÃ¿ÌõÇúÏß¶¼ÊÇÒ»ÑùµÄ²Å¶Ô
+			waveLine_WrNumSum_dsp[dsp_number][i] -= realnumber;
+			LeaveCriticalSection(&g_cs_dsp[dsp_number]);
 		}
 		else
 		{
-			waveLine_WrNumSum_dspA[i] -= realnumber;
+			waveLine_WrNumSum_dsp[dsp_number][i] -= realnumber;
 		}
 
 	}
@@ -993,202 +1441,351 @@ int16 CPlotWave::PW_PcGetDspAWaveData(double** data, int32& number, int16 com_ty
 	}
 
 #endif	
-	//è¿”å›è¯»å–çš„ä¸ªæ•°
+	//·µ»Ø¶ÁÈ¡µÄ¸öÊı
 	number = realnumber;
 	return 0;
 }
-int16 CPlotWave::PW_PcGetDspBWaveData(double** data, int32& number, int16 com_type /*= GTSD_COM_TYPE_NET*/)
+// int16 CPlotWave::PW_PcGetDspAWaveData(double** data, int32& number, int16 com_type /*= GTSD_COM_TYPE_NET*/)
+// {
+// 	//ÒòÎªÃ¿ÌõÏßÖĞµÄÊı¾İ¶¼ÊÇÒ»ÑùµÄ£¬Í¬²½µÄ£¬ËùÒÔÕâÀïÖ»ÅĞ¶ÏÒ»ÌõÏßµÄ¸öÊı¼´¿É
+// 	int32 realnumber;
+// 	if (g_dspA_wave_prm.cmd.bit.ENP == 1)
+// 	{
+// 		EnterCriticalSection(&g_cs_dspA);
+// 		realnumber = waveLine_WrNumSum_dspA[0];
+// 		LeaveCriticalSection(&g_cs_dspA);
+// 	}
+// 	else
+// 	{
+// 		realnumber = waveLine_WrNumSum_dspA[0];
+// 	}
+// 	
+// 
+// 	if (realnumber == 0)
+// 	{
+// 		*data	= (double*)plotDataBuffer_dspA;
+// 		number	= 0;
+// 		return 0;
+// 	}
+// 
+// 	(*data)		= (double*)plotDataBuffer_dspA;
+// 	for (int16 i = 0; i < m_dspA_line_number; ++i)
+// 	{
+// 		int32 tmp;
+// 		int32 left;
+// 		tmp = waveLine_RdIndex_dspA[i] + realnumber;
+// 		if (tmp >= WAVE_LINE_BUFFER_LENTH)
+// 		{
+// 			left = tmp - WAVE_LINE_BUFFER_LENTH;
+// 			memcpy_s(&(plotDataBuffer_dspA[i][0]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspA[i])*sizeof(double), &(waveLine_Buffer_dspA[i][waveLine_RdIndex_dspA[i]]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspA[i])*sizeof(double));
+// 			memcpy_s((&(plotDataBuffer_dspA[i][(WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspA[i])])), left*sizeof(double), &(waveLine_Buffer_dspA[i][0]), left*sizeof(double));
+// 		}
+// 		else
+// 		{
+// 			memcpy_s(&(plotDataBuffer_dspA[i][0]), realnumber * sizeof(double), &(waveLine_Buffer_dspA[i][waveLine_RdIndex_dspA[i]]), realnumber * sizeof(double));
+// 		}
+// 		//¶Á¼ÆÊıÖµÔö¼Ó
+// 		(waveLine_RdIndex_dspA[i]) += realnumber;
+// 		//¼ÙÈç¶ÁµÄÊı¾İ¼ÆÊıÖµ³¬¹ıÁËÇúÏßbufferµÄ×Ü³¤¶È£¬»·»Øµ½¿ªÍ·
+// 		if (waveLine_RdIndex_dspA[i] >= WAVE_LINE_BUFFER_LENTH)
+// 		{
+// 			waveLine_RdIndex_dspA[i] = waveLine_RdIndex_dspA[i] - WAVE_LINE_BUFFER_LENTH;
+// 		}
+// 		if (g_dspA_wave_prm.cmd.bit.ENP == 1)
+// 		{
+// 			EnterCriticalSection(&g_cs_dspA);
+// 			//bufferÖĞÊµ¼ÊÓĞµÄÊı¾İ¸öÊı£¬Ó¦¸ÃÃ¿ÌõÇúÏß¶¼ÊÇÒ»ÑùµÄ²Å¶Ô
+// 			waveLine_WrNumSum_dspA[i] -= realnumber;
+// 			LeaveCriticalSection(&g_cs_dspA);
+// 		}
+// 		else
+// 		{
+// 			waveLine_WrNumSum_dspA[i] -= realnumber;
+// 		}
+// 
+// 	}
+// #ifdef TIME_TEST
+// 
+// 	readpointerA[pointerindexA] = waveLine_RdIndex_dspA[0];
+// 	writepointerA[pointerindexA] = waveLine_WrIndex_dspA[0];
+// 	if (readpointerA[pointerindexA] > writepointerA[pointerindexA])
+// 	{
+// 		pointerindexA = pointerindexA;
+// 	}
+// 	pointerindexA++;
+// 	if (pointerindexA >= 1000)
+// 	{
+// 		pointerindexA = 0;
+// 	}
+// 
+// #endif	
+// 	//·µ»Ø¶ÁÈ¡µÄ¸öÊı
+// 	number = realnumber;
+// 	return 0;
+// }
+// int16 CPlotWave::PW_PcGetDspBWaveData(double** data, int32& number, int16 com_type /*= GTSD_COM_TYPE_NET*/)
+// {
+// 	//ÒòÎªÃ¿ÌõÏßÖĞµÄÊı¾İ¶¼ÊÇÒ»ÑùµÄ£¬Í¬²½µÄ£¬ËùÒÔÕâÀïÖ»ÅĞ¶ÏÒ»ÌõÏßµÄ¸öÊı¼´¿É
+// 	int32 realnumber;
+// 	if (g_dspB_wave_prm.cmd.bit.ENP == 1)
+// 	{
+// 		EnterCriticalSection(&g_cs_dspB);
+// 		realnumber = waveLine_WrNumSum_dspB[0];
+// 		LeaveCriticalSection(&g_cs_dspB);
+// 	}
+// 	else
+// 	{
+// 		realnumber = waveLine_WrNumSum_dspB[0];
+// 	}
+// 
+// 	if (realnumber == 0)
+// 	{
+// 		*data = (double*)plotDataBuffer_dspB;
+// 		number = 0;
+// 		return 0;
+// 	}
+// 
+// 	(*data) = (double*)plotDataBuffer_dspB;
+// 	for (int16 i = 0; i < m_dspB_line_number; ++i)
+// 	{
+// 		int32 tmp;
+// 		int32 left;
+// 		tmp = waveLine_RdIndex_dspB[i] + realnumber;
+// 		if (tmp >= WAVE_LINE_BUFFER_LENTH)
+// 		{
+// 			left = tmp - WAVE_LINE_BUFFER_LENTH;
+// 			memcpy_s(&(plotDataBuffer_dspB[i][0]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspB[i])*sizeof(double), &(waveLine_Buffer_dspB[i][waveLine_RdIndex_dspB[i]]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspB[i])*sizeof(double));
+// 			memcpy_s((&(plotDataBuffer_dspB[i][(WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspB[i])])), left*sizeof(double), &(waveLine_Buffer_dspB[i][0]), left*sizeof(double));
+// 		}
+// 		else
+// 		{
+// 			memcpy_s(&(plotDataBuffer_dspB[i][0]), realnumber * sizeof(double), &(waveLine_Buffer_dspB[i][waveLine_RdIndex_dspB[i]]), realnumber * sizeof(double));
+// 		}
+// 		//¶Á¼ÆÊıÖµÔö¼Ó
+// 		(waveLine_RdIndex_dspB[i]) += realnumber;
+// 		//¼ÙÈç¶ÁµÄÊı¾İ¼ÆÊıÖµ³¬¹ıÁËÇúÏßbufferµÄ×Ü³¤¶È£¬»·»Øµ½¿ªÍ·
+// 		if (waveLine_RdIndex_dspB[i] >= WAVE_LINE_BUFFER_LENTH)
+// 		{
+// 			waveLine_RdIndex_dspB[i] = waveLine_RdIndex_dspB[i] - WAVE_LINE_BUFFER_LENTH;
+// 		}
+// 		if (g_dspB_wave_prm.cmd.bit.ENP == 1)
+// 		{
+// 			EnterCriticalSection(&g_cs_dspB);
+// 			//bufferÖĞÊµ¼ÊÓĞµÄÊı¾İ¸öÊı£¬Ó¦¸ÃÃ¿ÌõÇúÏß¶¼ÊÇÒ»ÑùµÄ²Å¶Ô
+// 			waveLine_WrNumSum_dspB[i] -= realnumber;
+// 			LeaveCriticalSection(&g_cs_dspB);
+// 		}
+// 		else
+// 		{
+// 			waveLine_WrNumSum_dspB[i] -= realnumber;
+// 		}
+// 
+// 	}
+// #ifdef TIME_TEST
+// 
+// 	readpointerB[pointerindexB] = (int16)waveLine_RdIndex_dspB[0];
+// 	writepointerB[pointerindexB] = (int16)waveLine_WrIndex_dspB[0];
+// 	if (readpointerB[pointerindexB] > writepointerB[pointerindexB])
+// 	{
+// 		pointerindexB = pointerindexB;
+// 	}
+// 	pointerindexB++;
+// 	if (pointerindexB >= 1000)
+// 	{
+// 		pointerindexB = 0;
+// 	}
+// 
+// #endif	
+// 	//·µ»Ø¶ÁÈ¡µÄ¸öÊı
+// 	number = realnumber;
+// 	return 0;
+// }
+
+int16 CPlotWave::PW_StartDspPlot(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//å› ä¸ºæ¯æ¡çº¿ä¸­çš„æ•°æ®éƒ½æ˜¯ä¸€æ ·çš„ï¼ŒåŒæ­¥çš„ï¼Œæ‰€ä»¥è¿™é‡Œåªåˆ¤æ–­ä¸€æ¡çº¿çš„ä¸ªæ•°å³å¯
-	int32 realnumber;
-	if (g_dspB_wave_prm.cmd.bit.ENP == 1)
+	if (dsp_number >= MAX_DSP_WAVE)
 	{
-		EnterCriticalSection(&g_cs_dspB);
-		realnumber = waveLine_WrNumSum_dspB[0];
-		LeaveCriticalSection(&g_cs_dspB);
+		return -1;
 	}
-	else
-	{
-		realnumber = waveLine_WrNumSum_dspB[0];
-	}
-
-	if (realnumber == 0)
-	{
-		*data = (double*)plotDataBuffer_dspB;
-		number = 0;
-		return 0;
-	}
-
-	(*data) = (double*)plotDataBuffer_dspB;
-	for (int16 i = 0; i < m_dspB_line_number; ++i)
-	{
-		int32 tmp;
-		int32 left;
-		tmp = waveLine_RdIndex_dspB[i] + realnumber;
-		if (tmp >= WAVE_LINE_BUFFER_LENTH)
-		{
-			left = tmp - WAVE_LINE_BUFFER_LENTH;
-			memcpy_s(&(plotDataBuffer_dspB[i][0]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspB[i])*sizeof(double), &(waveLine_Buffer_dspB[i][waveLine_RdIndex_dspB[i]]), (WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspB[i])*sizeof(double));
-			memcpy_s((&(plotDataBuffer_dspB[i][(WAVE_LINE_BUFFER_LENTH - waveLine_RdIndex_dspB[i])])), left*sizeof(double), &(waveLine_Buffer_dspB[i][0]), left*sizeof(double));
-		}
-		else
-		{
-			memcpy_s(&(plotDataBuffer_dspB[i][0]), realnumber * sizeof(double), &(waveLine_Buffer_dspB[i][waveLine_RdIndex_dspB[i]]), realnumber * sizeof(double));
-		}
-		//è¯»è®¡æ•°å€¼å¢åŠ 
-		(waveLine_RdIndex_dspB[i]) += realnumber;
-		//å‡å¦‚è¯»çš„æ•°æ®è®¡æ•°å€¼è¶…è¿‡äº†æ›²çº¿bufferçš„æ€»é•¿åº¦ï¼Œç¯å›åˆ°å¼€å¤´
-		if (waveLine_RdIndex_dspB[i] >= WAVE_LINE_BUFFER_LENTH)
-		{
-			waveLine_RdIndex_dspB[i] = waveLine_RdIndex_dspB[i] - WAVE_LINE_BUFFER_LENTH;
-		}
-		if (g_dspB_wave_prm.cmd.bit.ENP == 1)
-		{
-			EnterCriticalSection(&g_cs_dspB);
-			//bufferä¸­å®é™…æœ‰çš„æ•°æ®ä¸ªæ•°ï¼Œåº”è¯¥æ¯æ¡æ›²çº¿éƒ½æ˜¯ä¸€æ ·çš„æ‰å¯¹
-			waveLine_WrNumSum_dspB[i] -= realnumber;
-			LeaveCriticalSection(&g_cs_dspB);
-		}
-		else
-		{
-			waveLine_WrNumSum_dspB[i] -= realnumber;
-		}
-
-	}
-#ifdef TIME_TEST
-
-	readpointerB[pointerindexB] = (int16)waveLine_RdIndex_dspB[0];
-	writepointerB[pointerindexB] = (int16)waveLine_WrIndex_dspB[0];
-	if (readpointerB[pointerindexB] > writepointerB[pointerindexB])
-	{
-		pointerindexB = pointerindexB;
-	}
-	pointerindexB++;
-	if (pointerindexB >= 1000)
-	{
-		pointerindexB = 0;
-	}
-
-#endif	
-	//è¿”å›è¯»å–çš„ä¸ªæ•°
-	number = realnumber;
-	return 0;
-}
-int16 CPlotWave::PW_StartDspAPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
-{	
 	int16 rtn;
-	//æ ¹æ®waveä¸­çš„è¡¨è¿° åˆå§‹åŒ–dspAï¼Œå¹¶ä¸”ä¼šæŸç§å®šæ—¶å™¨å»è·å–dspAçš„æ•°æ®ã€‚
-	InitDspAWaveVar(wave);
+	//¸ù¾İwaveÖĞµÄ±íÊö ³õÊ¼»¯dspA£¬²¢ÇÒ»áÄ³ÖÖ¶¨Ê±Æ÷È¥»ñÈ¡dspAµÄÊı¾İ¡£
+	InitDspWaveVar(dsp_number, wave);
 	switch (com_type)
 	{
 	case GTSD_COM_TYPE_NET:
 	{
-		//è¯»ç©ºFPGAçš„fifo
-		
-		rtn = GTSD_CMD_ClearFpgaFifo(GTSD_DSP_A);
-		if (rtn != 0)
-		{
-			return -1;
-		}
+							  //¶Á¿ÕFPGAµÄfifo
+
+							  rtn = GTSD_CMD_ClearFpgaFifo(dsp_number);
+							  if (rtn != 0)
+							  {
+								  return -1;
+							  }
 
 #ifdef GETDATA_TYPE_THREAD
-		//åˆ›å»ºçº¿ç¨‹è¯»å–fpgaæ•°æ®
-		//createPlotWaveThread();
-		if (cpu_timer_openFlag == false)
-		{
-			double tPeriod = 1.0;
-			m_cpu_timer->StartCpuTimer(tPeriod);
-			m_cpu_timer->createCpuTimerThread();
-			cpu_timer_openFlag = true;
-		}
+							  //´´½¨Ïß³Ì¶ÁÈ¡fpgaÊı¾İ
+							  //createPlotWaveThread();
+							  if (cpu_timer_openFlag == false)
+							  {
+								  double tPeriod = 1.0;
+								  m_cpu_timer->StartCpuTimer(tPeriod);
+								  m_cpu_timer->createCpuTimerThread();
+								  cpu_timer_openFlag = true;
+							  }
 #else
-		m_mt_timer->Start_MutimediaTimer();
+							  m_mt_timer->Start_MutimediaTimer();
 #endif
-		break;
+							  break;
 	}
 	case GTSD_COM_TYPE_RNNET:
 	{
-		//åªåˆå§‹åŒ–ä¸€æ¬¡
-		//if (rn_noTimer_openFlag == false)
-		//{
-		m_rn_noTimer->StartNoTimer(GTSD_DSP_A);
-		//rn_noTimer_openFlag = true;
-		//}
-		break;
+								//Ö»³õÊ¼»¯Ò»´Î
+								//if (rn_noTimer_openFlag == false)
+								//{
+								m_rn_noTimer->StartNoTimer(dsp_number);
+								//rn_noTimer_openFlag = true;
+								//}
+								break;
 	}
-		
+
 	default:
 		break;
 	}
-	
-	//æ‹·è´æ›²çº¿é…ç½®åˆ°æœ¬åœ°
-	memcpy_s(&g_dspA_wave_prm, sizeof(WAVE_BUF_PRM), &wave, sizeof(WAVE_BUF_PRM));
 
-	//å°†waveå†™å…¥dspAï¼Œæ­¤æ—¶dspAå¼€å§‹äº§ç”Ÿæ•°æ®
-	rtn = GTSD_CMD_SetWaveBuf(GTSD_DSP_A, wave, com_type,stationId);
+	//¿½±´ÇúÏßÅäÖÃµ½±¾µØ
+	memcpy_s(&g_dsp_wave_prm[dsp_number], sizeof(WAVE_BUF_PRM), &wave, sizeof(WAVE_BUF_PRM));
+
+	//½«waveĞ´ÈëdspA£¬´ËÊ±dspA¿ªÊ¼²úÉúÊı¾İ
+	rtn = GTSD_CMD_SetWaveBuf(dsp_number, wave, com_type, stationId);
 	return rtn;
 }
-int16 CPlotWave::PW_StartDspBPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+// int16 CPlotWave::PW_StartDspAPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+// {	
+// 	int16 rtn;
+// 	//¸ù¾İwaveÖĞµÄ±íÊö ³õÊ¼»¯dspA£¬²¢ÇÒ»áÄ³ÖÖ¶¨Ê±Æ÷È¥»ñÈ¡dspAµÄÊı¾İ¡£
+// 	InitDspAWaveVar(wave);
+// 	switch (com_type)
+// 	{
+// 	case GTSD_COM_TYPE_NET:
+// 	{
+// 		//¶Á¿ÕFPGAµÄfifo
+// 		
+// 		rtn = GTSD_CMD_ClearFpgaFifo(GTSD_DSP_A);
+// 		if (rtn != 0)
+// 		{
+// 			return -1;
+// 		}
+// 
+// #ifdef GETDATA_TYPE_THREAD
+// 		//´´½¨Ïß³Ì¶ÁÈ¡fpgaÊı¾İ
+// 		//createPlotWaveThread();
+// 		if (cpu_timer_openFlag == false)
+// 		{
+// 			double tPeriod = 1.0;
+// 			m_cpu_timer->StartCpuTimer(tPeriod);
+// 			m_cpu_timer->createCpuTimerThread();
+// 			cpu_timer_openFlag = true;
+// 		}
+// #else
+// 		m_mt_timer->Start_MutimediaTimer();
+// #endif
+// 		break;
+// 	}
+// 	case GTSD_COM_TYPE_RNNET:
+// 	{
+// 		//Ö»³õÊ¼»¯Ò»´Î
+// 		//if (rn_noTimer_openFlag == false)
+// 		//{
+// 		m_rn_noTimer->StartNoTimer(GTSD_DSP_A);
+// 		//rn_noTimer_openFlag = true;
+// 		//}
+// 		break;
+// 	}
+// 		
+// 	default:
+// 		break;
+// 	}
+// 	
+// 	//¿½±´ÇúÏßÅäÖÃµ½±¾µØ
+// 	memcpy_s(&g_dspA_wave_prm, sizeof(WAVE_BUF_PRM), &wave, sizeof(WAVE_BUF_PRM));
+// 
+// 	//½«waveĞ´ÈëdspA£¬´ËÊ±dspA¿ªÊ¼²úÉúÊı¾İ
+// 	rtn = GTSD_CMD_SetWaveBuf(GTSD_DSP_A, wave, com_type,stationId);
+// 	return rtn;
+// }
+// int16 CPlotWave::PW_StartDspBPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+// {
+// 	//¸ù¾İwaveÖĞµÄ±íÊö ³õÊ¼»¯dspB£¬²¢ÇÒ»áÆô¶¯¶àÃ½Ìå¶¨Ê±Æ÷È¥»ñÈ¡dspBµÄÊı¾İ¡£
+// 	InitDspBWaveVar(wave);
+// 	switch (com_type)
+// 	{
+// 	case GTSD_COM_TYPE_NET:
+// 	{
+// 		//¶Á¿ÕFPGAµÄfifo
+// 		int16 rtn;
+// 		rtn = GTSD_CMD_ClearFpgaFifo(GTSD_DSP_B);
+// 		if (rtn != 0)
+// 		{
+// 			return -1;
+// 		}
+// 
+// #ifdef GETDATA_TYPE_THREAD
+// 		//´´½¨Ïß³Ì¶ÁÈ¡fpgaÊı¾İ
+// 		//createPlotWaveThread();
+// 		if (cpu_timer_openFlag == false)
+// 		{
+// 			double tPeriod = 1.0;
+// 			m_cpu_timer->StartCpuTimer(tPeriod);
+// 			m_cpu_timer->createCpuTimerThread();
+// 			cpu_timer_openFlag = true;
+// 		}
+// #else
+// 		m_mt_timer->Start_MutimediaTimer();
+// #endif
+// 		break;
+// 	}
+// 	case GTSD_COM_TYPE_RNNET:
+// 	{
+// 		//Ö»³õÊ¼»¯Ò»´Î
+// 		//if (rn_noTimer_openFlag == false)
+// 		//{
+// 		m_rn_noTimer->StartNoTimer(GTSD_DSP_B);
+// 		//	rn_noTimer_openFlag = true;
+// 		//}
+// 		break;
+// 	}
+// 
+// 	default:
+// 		break;
+// 	}
+// 
+// 	memcpy_s(&g_dspB_wave_prm, sizeof(WAVE_BUF_PRM), &wave, sizeof(WAVE_BUF_PRM));
+// 
+// 	//½«waveĞ´ÈëdspB
+// 	GTSD_CMD_SetWaveBuf(GTSD_DSP_B, wave,com_type,stationId);
+// 	return 0;
+// }
+
+int16 CPlotWave::PW_StopDspPlot(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//æ ¹æ®waveä¸­çš„è¡¨è¿° åˆå§‹åŒ–dspBï¼Œå¹¶ä¸”ä¼šå¯åŠ¨å¤šåª’ä½“å®šæ—¶å™¨å»è·å–dspBçš„æ•°æ®ã€‚
-	InitDspBWaveVar(wave);
-	switch (com_type)
+	if (dsp_number >= MAX_DSP_WAVE)
 	{
-	case GTSD_COM_TYPE_NET:
-	{
-		//è¯»ç©ºFPGAçš„fifo
-		int16 rtn;
-		rtn = GTSD_CMD_ClearFpgaFifo(GTSD_DSP_B);
-		if (rtn != 0)
-		{
-			return -1;
-		}
-
-#ifdef GETDATA_TYPE_THREAD
-		//åˆ›å»ºçº¿ç¨‹è¯»å–fpgaæ•°æ®
-		//createPlotWaveThread();
-		if (cpu_timer_openFlag == false)
-		{
-			double tPeriod = 1.0;
-			m_cpu_timer->StartCpuTimer(tPeriod);
-			m_cpu_timer->createCpuTimerThread();
-			cpu_timer_openFlag = true;
-		}
-#else
-		m_mt_timer->Start_MutimediaTimer();
-#endif
-		break;
+		return -1;
 	}
-	case GTSD_COM_TYPE_RNNET:
-	{
-		//åªåˆå§‹åŒ–ä¸€æ¬¡
-		//if (rn_noTimer_openFlag == false)
-		//{
-		m_rn_noTimer->StartNoTimer(GTSD_DSP_B);
-		//	rn_noTimer_openFlag = true;
-		//}
-		break;
-	}
-
-	default:
-		break;
-	}
-
-	memcpy_s(&g_dspB_wave_prm, sizeof(WAVE_BUF_PRM), &wave, sizeof(WAVE_BUF_PRM));
-
-	//å°†waveå†™å…¥dspB
-	GTSD_CMD_SetWaveBuf(GTSD_DSP_B, wave,com_type,stationId);
+	//¹Ø±ÕÊı¾İÍ¨µÀ
+	CloseDspWave(dsp_number, wave, com_type, stationId);
 	return 0;
 }
-int16 CPlotWave::PW_StopDspAPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
-{
-	//å…³é—­æ•°æ®é€šé“
-	CloseDspAWave(wave,com_type,stationId);
-	return 0;
-}
-int16 CPlotWave::PW_StopDspBPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
-{
-	//å…³é—­æ•°æ®é€šé“
-	CloseDspBWave(wave,com_type,stationId);
-	return 0;
-}
+
+// int16 CPlotWave::PW_StopDspAPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+// {
+// 	//¹Ø±ÕÊı¾İÍ¨µÀ
+// 	CloseDspAWave(wave,com_type,stationId);
+// 	return 0;
+// }
+// int16 CPlotWave::PW_StopDspBPlot(WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+// {
+// 	//¹Ø±ÕÊı¾İÍ¨µÀ
+// 	CloseDspBWave(wave,com_type,stationId);
+// 	return 0;
+// }

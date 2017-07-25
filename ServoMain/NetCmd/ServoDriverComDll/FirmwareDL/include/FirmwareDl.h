@@ -1,4 +1,4 @@
-Ôªø//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Firmware download 		 									//
 //	file				:	FirmwareDl.h												//
 //	Description			:	use for Firmware download									//
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 #ifndef _GTSD_FIRMWARE_DL_
 #define	_GTSD_FIRMWARE_DL_
 
@@ -32,12 +32,12 @@ public:
 	static const int32		CMD_PRET_OFF	= 3;
 	static const int32		CMD_ERASE		= 4;
 
-	//pcdebugÂÅèÁßªÂú∞ÂùÄÔºåÂü∫Âú∞ÂùÄÊòØ0
+	//pcdebug∆´“∆µÿ÷∑£¨ª˘µÿ÷∑ «0
 	static const Uint16		REMOTE_FPGA_CTL			= 0x37F;
 	static const Uint16		REMOTE_FPGA_DATA_START	= 0x300;
 	static const Uint16		REMOTE_FPGA_DATA_END	= 0x37C;
 
-	//Á≠âÁéØÁΩëÂÅèÁßªÂú∞ÂùÄ
+	//µ»ª∑Õ¯∆´“∆µÿ÷∑
 	static const Uint16		RN_REMOTE_FPGA_CTL = (0x7F*2);
 	static const Uint16		RN_REMOTE_FPGA_DATA_START = (0x00);
 	static const Uint16		RN_REMOTE_FPGA_DATA_END = (0x7C*2);
@@ -51,7 +51,7 @@ public:
 	int16 SetRemoteUpdataReadRequest(int16 com_type, Uint32 flash_addr, Uint16 iLength, int16 stationId);
 	int16 ProtectOff(int16 com_type, int16 stationId );
 	int16 ProtectOn(int16 com_type, int16 stationId);
-  int16 EraseData(int16 com_type, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress,int16 stationId );
+	int16 EraseData(int16 com_type, int16 stationId );
 	int16 GetFpgaFlashData(int16 com_type, Uint32 flash_addr, int16 *Getbuf, Uint16 iLength, int16 stationId);
 	int16 SendFpgaFlashData(int16 com_type, Uint32 flash_addr, int16 *Sendbuf, Uint16 iLength, int16 stationId);
 	int32 CheckFFNumber(short* buffer, int lenth);

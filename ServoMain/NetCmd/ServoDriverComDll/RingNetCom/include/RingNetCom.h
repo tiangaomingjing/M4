@@ -45,9 +45,18 @@ public:
 	//接收数据,采用回调函数的方式，有报文来就进入回调函数
 	//void rx_packet();
 };
+
+typedef struct station_log
+{
+	Uint16 sta_msg;			//站类型信息
+	Uint16 sta_id;			//站ID信息
+}STA_LOG;
+
+
 unsigned __stdcall RnReceiveThread(void *para);
 extern int16 parsePacket[512];
 extern int16 parsePacketCmd[512];
 extern int16 isInCallBack;
 extern int16 waveDataLenth;
+extern vector<STA_LOG> sta_log;
 #endif
