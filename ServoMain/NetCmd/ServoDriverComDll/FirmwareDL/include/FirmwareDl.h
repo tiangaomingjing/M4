@@ -51,7 +51,7 @@ public:
 	int16 SetRemoteUpdataReadRequest(int16 com_type, Uint32 flash_addr, Uint16 iLength, int16 stationId);
 	int16 ProtectOff(int16 com_type, int16 stationId );
 	int16 ProtectOn(int16 com_type, int16 stationId);
-	int16 EraseData(int16 com_type, int16 stationId );
+  int16 EraseData(int16 com_type, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress, int16 stationId);
 	int16 GetFpgaFlashData(int16 com_type, Uint32 flash_addr, int16 *Getbuf, Uint16 iLength, int16 stationId);
 	int16 SendFpgaFlashData(int16 com_type, Uint32 flash_addr, int16 *Sendbuf, Uint16 iLength, int16 stationId);
 	int32 CheckFFNumber(short* buffer, int lenth);

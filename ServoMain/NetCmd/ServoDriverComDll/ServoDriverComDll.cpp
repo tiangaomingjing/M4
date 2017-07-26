@@ -6,7 +6,7 @@
 //																						//
 //======================================================================================//
 //		programmer:		|	date:		|	Corporation:	|		copyright(C):		//
-//--------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -1430,7 +1430,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
 	}
 	if (g_firmwareDl == NULL)
 	{
-		return -1;
+    return Unlock(-1);//add by chenchao 返回时先释放信号量，给其它任务使用
 	}
 
 	if (com_type == GTSD_COM_TYPE_RNNET)  stationId = GTSD_Convert_axi(axis);
@@ -1450,7 +1450,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
 
 	if (rtn != 0)
 	{
-		return -2;
+    return Unlock(-2);
 	}
 
 	//百分比进度
