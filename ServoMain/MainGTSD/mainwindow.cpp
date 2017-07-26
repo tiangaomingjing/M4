@@ -738,6 +738,7 @@ void MainWindow::onActionResetDSPClicked()
     QMessageBox::information(0,tr("Warring"),tr("please open the com first !"));
     return ;
   }
+
 //  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring","Do you want to reset servo ?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
 //  if (rb==QMessageBox::No)
 //  {
@@ -750,6 +751,23 @@ void MainWindow::onActionResetDSPClicked()
   QTreeWidgetItem *item;
   QTreeWidgetItem*itemChild;
   bool plotIsShow=false;
+
+  //检查伺服有没有开，如果开了则提示信息并返回
+  QString msg="null";
+  for(int i=0;i<mp_userConfig->model.axisCount;i++)
+  {
+    bool ret=ServoControl::checkServoIsReady(i,comtype,mp_userConfig->com.rnStation);
+    if(ret){
+      msg.append("\n");
+      msg.append(tr("axis_%1 servo is on \n").arg(i));
+
+    }
+  }
+  if(msg!="null")
+  {
+    QMessageBox::information(0,tr("Warring"),tr("refuse to reset :%1").arg(msg));
+    return ;
+  }
 
   stopTimer();
   enableAllUi(false);
@@ -766,22 +784,10 @@ void MainWindow::onActionResetDSPClicked()
     plotIsShow=true;
     ui->dock_wave->hide();
   }
+  m_plotWave->onStopThreadSampling();
+
   ui->progressBar->show();
   ui->progressBar->setValue(5);
-
-  //检查伺服有没有开，如果开了则提示信息并返回
-  QString msg="null";
-  for(int i=0;i<mp_userConfig->model.axisCount;i++)
-  {
-    bool ret=ServoControl::checkServoIsReady(i,comtype,mp_userConfig->com.rnStation);
-    if(ret)
-      msg.append(tr("axis_%1 servo is on \n").arg(i));
-  }
-  if(msg!="null")
-  {
-    QMessageBox::information(0,tr("Warring"),tr("refuse to reset :%1").arg(msg));
-    return ;
-  }
 
   //找到dspNum dspAxis
   int dspNum;
