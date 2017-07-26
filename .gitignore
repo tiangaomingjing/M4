@@ -1,9 +1,21 @@
 build-ServoMain-Qt5_5_1Vs2013x86-Debug/
 build-ServoMain-Qt5_5_1Vs2013x86-Release/
 debug/
-release/Custom/configuser/
+release/Custom/configuser/*
 release/Custom/configlist.xml
 test-build/
+release/Bin/*.lib
+release/Bin/*.dll
+release/Bin/*.exe
+release/Bin/com/googoltech/qmlcomponents/*dll
+release/Bin/com/googoltech/qmlcomponents/*lib
+release/Bin/com/googoltech/qmlcomponents/TreeModel/*lib
+release/Bin/com/googoltech/qmlcomponents/TreeModel/*dll
+!release/Bin/QtQuick.2/*
+!release/Bin/platforms/*
+!release/Bin/QtQuick/*
+!release/Bin/QtGraphicalEffects/*
+!release/Bin/QtQml/*
 
 *.exp
 *.rar
