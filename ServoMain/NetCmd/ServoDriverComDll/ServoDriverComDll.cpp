@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////////////////
+ï»¿//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton cmd layer Define		 						//
 //	file				:	ServoDriverComDll.cpp										//
 //	Description			:	use for cmd define											//
@@ -25,7 +25,7 @@
 #include "RingNetInterface.h"
 #include "ServoDriverCom.h"
 
-//ÎªÁË»ñÈ¡Íø¿¨Á¬½ÓµÄ×´Ì¬ºÍËÙÂÊ£¬ÒòÎªµÈ»·Íø²»Ö§³Ö°ÙÕ×£¬ÏÖÔÚÖ»Ö§³ÖÇ§Õ×£¬Èç¹ûÊÇ°ÙÕ×£¬
+//ä¸ºäº†è·å–ç½‘å¡è¿æ¥çš„çŠ¶æ€å’Œé€Ÿç‡ï¼Œå› ä¸ºç­‰ç¯ç½‘ä¸æ”¯æŒç™¾å…†ï¼Œç°åœ¨åªæ”¯æŒåƒå…†ï¼Œå¦‚æœæ˜¯ç™¾å…†ï¼Œ
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
@@ -64,12 +64,12 @@ int16 GTSD_Convert_axi(int16& axis)
 	return (station_id>>8) & 0xFF;
 };
 //////////////////////////////////////////////////////////////////////////
-//¶àÏß³Ì±£»¤
+//å¤šçº¿ç¨‹ä¿æŠ¤
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type)
 {
 	int16 progress;
 	void* ptr = ptrv;
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 0;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 	////////////////////////if use the ring net way//////////////////////////////////////////////////
@@ -226,7 +226,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Open(void(*tpfUpdataProgressPt)(void*, int1
 			return RTN_MALLOC_FAIL;
 		}
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 5;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1173,15 +1173,15 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	{
 		return -1;
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 0;
 	(*tpfUpdataProgressPt)(ptr,&progress);
 
-	//¸´Î»±äÁ¿
+	//å¤ä½å˜é‡
 	g_hex->ResetVar();
 
 	int16 rtn;
-	//¹ØÖĞ¶Ï
+	//å…³ä¸­æ–­
 	rtn = GTSD_CMD_InterruptSwitch(axis, 0, com_type, stationId);
 	if (rtn!=0)
 	{
@@ -1193,12 +1193,12 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	{
 		return -2;
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 10;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
-	//¼ÆËãĞèÒª²Á³ö¶àÉÙ¿éblock,ÏÈ½«16bitÊı¾İ¸öÊı×ª»¯Îªbit³¤¶È
-	//flash 2M byte 4kbyte Îª1¸öblock 
+	//è®¡ç®—éœ€è¦æ“¦å‡ºå¤šå°‘å—block,å…ˆå°†16bitæ•°æ®ä¸ªæ•°è½¬åŒ–ä¸ºbité•¿åº¦
+	//flash 2M byte 4kbyte ä¸º1ä¸ªblock 
 	byteLenth = g_hex->dataLenth * 2;
 	block = (int16)(byteLenth / 4096.0);
 	block += 1;
@@ -1208,7 +1208,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	{
 		return -3;
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 30;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1218,7 +1218,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		return -4;
 	}
 
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 50;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1229,7 +1229,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		return -5;
 	}
 
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 90;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1239,13 +1239,13 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		return -6;
 	}
 
-	//¿ªÖĞ¶Ï
+	//å¼€ä¸­æ–­
 	rtn = GTSD_CMD_InterruptSwitch(axis, 1, com_type, stationId);
 	if (rtn != 0)
 	{
 		return -7;
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 100;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1283,7 +1283,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, 
 		return -2;
 	}
 
-	//ÖáÊÇ·ñ³¬ÏŞ
+	//è½´æ˜¯å¦è¶…é™
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return -1;
@@ -1306,7 +1306,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, 
 // 	default:
 // 		break;
 // 	}
-	//ÉèÖÃÆô¶¯±êÖ¾
+	//è®¾ç½®å¯åŠ¨æ ‡å¿—
 	g_plotWave->pw_RunFlag[axis_t] = true;
 
 	return 0;
@@ -1320,7 +1320,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 // 		{
 // 			return RTN_OBJECT_UNCREATED;
 // 		}
-// 		//Í£Ö¹dspAÏòFPGAµÄFIFOÖĞĞ´Êı¾İ
+// 		//åœæ­¢dspAå‘FPGAçš„FIFOä¸­å†™æ•°æ®
 // 		wave.cmd.bit.ENP = 0;
 // 		short rtn = GTSD_CMD_SetWaveBuf(axis>>1, wave, com_type, stationId);
 // 		if (rtn)
@@ -1331,7 +1331,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 	{
 		return -2;
 	}
-	//ÖáÊÇ·ñ³¬ÏŞ
+	//è½´æ˜¯å¦è¶…é™
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return -1;
@@ -1354,7 +1354,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 // 	default:
 // 		break;
 // 	}
-	//ÉèÖÃÆô¶¯±êÖ¾Îªfalse
+	//è®¾ç½®å¯åŠ¨æ ‡å¿—ä¸ºfalse
 	g_plotWave->pw_RunFlag[axis_t] = false;
 
 	return 0;
@@ -1374,7 +1374,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_PcGetWaveData(int16& axis, double** data, i
 	{
 		return -2;
 	}
-	//ÖáÊÇ·ñ³¬ÏŞ
+	//è½´æ˜¯å¦è¶…é™
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return -1;
@@ -1406,7 +1406,7 @@ SERVODRIVERCOMDLL_API bool GTSD_CMD_CheckPlotState(int16& axis, int16 stationId 
 	{
 		return false;
 	}
-	//ÖáÊÇ·ñ³¬ÏŞ
+	//è½´æ˜¯å¦è¶…é™
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return false;
@@ -1430,19 +1430,19 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
 	}
 	if (g_firmwareDl == NULL)
 	{
-    return Unlock(-1);//add by chenchao ·µ»ØÊ±ÏÈÊÍ·ÅĞÅºÅÁ¿£¬¸øÆäËüÈÎÎñÊ¹ÓÃ
+    return Unlock(-1);//add by chenchao è¿”å›æ—¶å…ˆé‡Šæ”¾ä¿¡å·é‡ï¼Œç»™å…¶å®ƒä»»åŠ¡ä½¿ç”¨
 	}
 
 	if (com_type == GTSD_COM_TYPE_RNNET)  stationId = GTSD_Convert_axi(axis);
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 0;
 	(*tpfUpdataProgressPt)(ptr,&progress);
 
 	int16 rtn = 0;
-	//¸´Î»±äÁ¿
+	//å¤ä½å˜é‡
 	g_firmwareDl->ResetVar();
 
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 5;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1453,7 +1453,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
     return Unlock(-2);
 	}
 
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 100;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1548,7 +1548,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Hex2Ldr(wstring& HexFile, wstring& LdrFile,
 	{
 		return -1;
 	}
-	//ÕâÀïµØÖ·¹Ì¶¨£¬ÒòÎªÒ»°ã²»»á±ä¶¯£¬1000ÊÇÒòÎªÇ°ÃæÓĞ¼ÓÃÜµÄ²¿·Ö
+	//è¿™é‡Œåœ°å€å›ºå®šï¼Œå› ä¸ºä¸€èˆ¬ä¸ä¼šå˜åŠ¨ï¼Œ1000æ˜¯å› ä¸ºå‰é¢æœ‰åŠ å¯†çš„éƒ¨åˆ†
 	string addr = "10000000";
 	g_hex2ldr->hex2ldr_execute(ws2s(HexFile), ws2s(LdrFile), addr);
 	
@@ -1604,18 +1604,18 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstrin
 	{
 		return -1;
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 0;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
 	int16 rtn;
-	//´ò¿ª´®¿Ú£¬¸ù¾İ²¨ÌØÂÊ
+	//æ‰“å¼€ä¸²å£ï¼Œæ ¹æ®æ³¢ç‰¹ç‡
 	rtn = GTSD_CMD_OpenSerialPort(axis, baudRate, com_type, stationId);
 	if (rtn != 0)
 	{
 		return -1;
 	}
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 10;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1626,7 +1626,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstrin
 		return -2;
 	}
 	
-	//°Ù·Ö±È½ø¶È
+	//ç™¾åˆ†æ¯”è¿›åº¦
 	progress = 100;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1689,364 +1689,364 @@ wstring s2ws(const string& s)
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void)
 {
-	Uint32 dwSize = 0;
-	Uint32 dwRetVal = 0;
-	string tmp = "";
-	string tmpid = "";
-	Uint32 i, j;
+  Uint32 dwSize = 0;
+  Uint32 dwRetVal = 0;
+  string tmp = "";
+  string tmpid = "";
+  Uint32 i, j;
 
-	if ((NetCardName == L"")||(NetCardNum == L""))
-	{
-		return 1;
-	}
+  if ((NetCardName == L"")||(NetCardNum == L""))
+  {
+    return 1;
+  }
 
-	/* variables used for GetIfTable and GetIfEntry */
-	MIB_IFTABLE *pIfTable;
-	MIB_IFROW *pIfRow;
+  /* variables used for GetIfTable and GetIfEntry */
+  MIB_IFTABLE *pIfTable;
+  MIB_IFROW *pIfRow;
 
-	// Allocate memory for our pointers.
-	pIfTable = (MIB_IFTABLE *)MALLOC(sizeof(MIB_IFTABLE));
-	if (pIfTable == NULL) 
-	{
-		printf("Error allocating memory needed to call GetIfTable\n");
-		return 1;
-	}
-	// Make an initial call to GetIfTable to get the
-	// necessary size into dwSize
-	dwSize = sizeof(MIB_IFTABLE);
-	if (GetIfTable(pIfTable, &dwSize, FALSE) == ERROR_INSUFFICIENT_BUFFER) 
-	{
-		FREE(pIfTable);
-		pIfTable = (MIB_IFTABLE *)MALLOC(dwSize);
-		if (pIfTable == NULL) 
-		{
-			printf("Error allocating memory needed to call GetIfTable\n");
-			return 1;
-		}
-	}
-	// Make a second call to GetIfTable to get the actual
-	// data we want.
-	if ((dwRetVal = GetIfTable(pIfTable, &dwSize, FALSE)) == NO_ERROR)
-	{
-		printf("\tNum Entries: %ld\n\n", pIfTable->dwNumEntries);
-		for (i = 0; i < pIfTable->dwNumEntries; i++)
-		{
-			pIfRow = (MIB_IFROW *)& pIfTable->table[i];
-			printf("\tIndex[%d]:\t %ld\n", i, pIfRow->dwIndex);
-			printf("\tInterfaceName[%d]:\t %ws", i, pIfRow->wszName);
-			printf("\n");
-			printf("\tDescription[%d]:\t ", i);
-			for (j = 0; j < pIfRow->dwDescrLen; j++)
-				printf("%c", pIfRow->bDescr[j]);
-			printf("\n");
-			printf("\tType[%d]:\t ", i);
-			switch (pIfRow->dwType) {
-			case IF_TYPE_OTHER:
-				printf("Other\n");
-				break;
-			case IF_TYPE_ETHERNET_CSMACD:
-				printf("Ethernet\n");
-				break;
-			case IF_TYPE_ISO88025_TOKENRING:
-				printf("Token Ring\n");
-				break;
-			case IF_TYPE_PPP:
-				printf("PPP\n");
-				break;
-			case IF_TYPE_SOFTWARE_LOOPBACK:
-				printf("Software Lookback\n");
-				break;
-			case IF_TYPE_ATM:
-				printf("ATM\n");
-				break;
-			case IF_TYPE_IEEE80211:
-				printf("IEEE 802.11 Wireless\n");
-				break;
-			case IF_TYPE_TUNNEL:
-				printf("Tunnel type encapsulation\n");
-				break;
-			case IF_TYPE_IEEE1394:
-				printf("IEEE 1394 Firewire\n");
-				break;
-			default:
-				printf("Unknown type %ld\n", pIfRow->dwType);
-				break;
-			}
-			printf("\tMtu[%d]:\t\t %ld\n", i, pIfRow->dwMtu);
-			printf("\tSpeed[%d]:\t %ld\n", i, pIfRow->dwSpeed);
+  // Allocate memory for our pointers.
+  pIfTable = (MIB_IFTABLE *)MALLOC(sizeof(MIB_IFTABLE));
+  if (pIfTable == NULL)
+  {
+    printf("Error allocating memory needed to call GetIfTable\n");
+    return 1;
+  }
+  // Make an initial call to GetIfTable to get the
+  // necessary size into dwSize
+  dwSize = sizeof(MIB_IFTABLE);
+  if (GetIfTable(pIfTable, &dwSize, FALSE) == ERROR_INSUFFICIENT_BUFFER)
+  {
+    FREE(pIfTable);
+    pIfTable = (MIB_IFTABLE *)MALLOC(dwSize);
+    if (pIfTable == NULL)
+    {
+      printf("Error allocating memory needed to call GetIfTable\n");
+      return 1;
+    }
+  }
+  // Make a second call to GetIfTable to get the actual
+  // data we want.
+  if ((dwRetVal = GetIfTable(pIfTable, &dwSize, FALSE)) == NO_ERROR)
+  {
+    printf("\tNum Entries: %ld\n\n", pIfTable->dwNumEntries);
+    for (i = 0; i < pIfTable->dwNumEntries; i++)
+    {
+      pIfRow = (MIB_IFROW *)& pIfTable->table[i];
+      printf("\tIndex[%d]:\t %ld\n", i, pIfRow->dwIndex);
+      printf("\tInterfaceName[%d]:\t %ws", i, pIfRow->wszName);
+      printf("\n");
+      printf("\tDescription[%d]:\t ", i);
+      for (j = 0; j < pIfRow->dwDescrLen; j++)
+        printf("%c", pIfRow->bDescr[j]);
+      printf("\n");
+      printf("\tType[%d]:\t ", i);
+      switch (pIfRow->dwType) {
+      case IF_TYPE_OTHER:
+        printf("Other\n");
+        break;
+      case IF_TYPE_ETHERNET_CSMACD:
+        printf("Ethernet\n");
+        break;
+      case IF_TYPE_ISO88025_TOKENRING:
+        printf("Token Ring\n");
+        break;
+      case IF_TYPE_PPP:
+        printf("PPP\n");
+        break;
+      case IF_TYPE_SOFTWARE_LOOPBACK:
+        printf("Software Lookback\n");
+        break;
+      case IF_TYPE_ATM:
+        printf("ATM\n");
+        break;
+      case IF_TYPE_IEEE80211:
+        printf("IEEE 802.11 Wireless\n");
+        break;
+      case IF_TYPE_TUNNEL:
+        printf("Tunnel type encapsulation\n");
+        break;
+      case IF_TYPE_IEEE1394:
+        printf("IEEE 1394 Firewire\n");
+        break;
+      default:
+        printf("Unknown type %ld\n", pIfRow->dwType);
+        break;
+      }
+      printf("\tMtu[%d]:\t\t %ld\n", i, pIfRow->dwMtu);
+      printf("\tSpeed[%d]:\t %ld\n", i, pIfRow->dwSpeed);
 
-			//ÅĞ¶ÏÍø¿¨Ãû×ÖÊÇ·ñÒ»ÖÂ£¬Ò»ÖÂÔÙÅĞ¶ÏËÙ¶È¡£
-			tmp = ((const char*)pIfRow->bDescr);
-			tmpid = ws2s(pIfRow->wszName);
-			//ÕÒµ½À¨ºÅÎ»ÖÃ
-			int16 pos_start;
-			int16 pos_end;
-			string tmpValue;
-			string brace_start = "{";
-			string brace_end = "}";
-			pos_start = tmpid.find(brace_start.c_str());
-			pos_end = tmpid.find(brace_end.c_str());
-			//Ã»ÕÒµ½À¨ºÅ
-			if ((pos_start == -1) || (pos_end == -1))
-			{
-				return 1;
-			}
-			else
-			{
-				tmpValue = tmpid.substr(pos_start + 1, pos_end - pos_start - 1);
-			}
+      //åˆ¤æ–­ç½‘å¡åå­—æ˜¯å¦ä¸€è‡´ï¼Œä¸€è‡´å†åˆ¤æ–­é€Ÿåº¦ã€‚
+      tmp = ((const char*)pIfRow->bDescr);
+      tmpid = ws2s(pIfRow->wszName);
+      //æ‰¾åˆ°æ‹¬å·ä½ç½®
+      int16 pos_start;
+      int16 pos_end;
+      string tmpValue;
+      string brace_start = "{";
+      string brace_end = "}";
+      pos_start = tmpid.find(brace_start.c_str());
+      pos_end = tmpid.find(brace_end.c_str());
+      //æ²¡æ‰¾åˆ°æ‹¬å·
+      if ((pos_start == -1) || (pos_end == -1))
+      {
+        return 1;
+      }
+      else
+      {
+        tmpValue = tmpid.substr(pos_start + 1, pos_end - pos_start - 1);
+      }
 
-			if ((ws2s(NetCardName) == tmp) || (tmpValue == ws2s(NetCardNum)))
-			{
-				if (pIfRow->dwSpeed == 1000000000)
-				{
-					return Rt_Success;
-				}
-				else
-				{
-					return 2;
-				}
-			}
+      if ((ws2s(NetCardName) == tmp) || (tmpValue == ws2s(NetCardNum)))
+      {
+        if (pIfRow->dwSpeed == 1000000000)
+        {
+          return Rt_Success;
+        }
+        else
+        {
+          return 2;
+        }
+      }
 
-			printf("\tPhysical Addr:\t ");
-			if (pIfRow->dwPhysAddrLen == 0)
-				printf("\n");
-			for (j = 0; j < pIfRow->dwPhysAddrLen; j++) {
-				if (j == (pIfRow->dwPhysAddrLen - 1))
-					printf("%.2X\n", (int)pIfRow->bPhysAddr[j]);
-				else
-					printf("%.2X-", (int)pIfRow->bPhysAddr[j]);
-			}
-			printf("\tAdmin Status[%d]:\t %ld\n", i, pIfRow->dwAdminStatus);
-			printf("\tOper Status[%d]:\t ", i);
-			switch (pIfRow->dwOperStatus) {
-			case IF_OPER_STATUS_NON_OPERATIONAL:
-				printf("Non Operational\n");
-				break;
-			case IF_OPER_STATUS_UNREACHABLE:
-				printf("Unreachable\n");
-				break;
-			case IF_OPER_STATUS_DISCONNECTED:
-				printf("Disconnected\n");
-				break;
-			case IF_OPER_STATUS_CONNECTING:
-				printf("Connecting\n");
-				break;
-			case IF_OPER_STATUS_CONNECTED:
-				printf("Connected\n");
-				break;
-			case IF_OPER_STATUS_OPERATIONAL:
-				printf("Operational\n");
-				break;
-			default:
-				printf("Unknown status %ld\n", pIfRow->dwAdminStatus);
-				break;
-			}
-			printf("\n");
-		}
-	}
-	else 
-	{
-		printf("GetIfTable failed with error: \n", dwRetVal);
-		if (pIfTable != NULL) 
-		{
-			FREE(pIfTable);
-			pIfTable = NULL;
-		}
-		return 1;
-		// Here you can use FormatMessage to find out why 
-		// it failed.
-	}
-	if (pIfTable != NULL) 
-	{
-		FREE(pIfTable);
-		pIfTable = NULL;
-	}
-	return 3;
+      printf("\tPhysical Addr:\t ");
+      if (pIfRow->dwPhysAddrLen == 0)
+        printf("\n");
+      for (j = 0; j < pIfRow->dwPhysAddrLen; j++) {
+        if (j == (pIfRow->dwPhysAddrLen - 1))
+          printf("%.2X\n", (int)pIfRow->bPhysAddr[j]);
+        else
+          printf("%.2X-", (int)pIfRow->bPhysAddr[j]);
+      }
+      printf("\tAdmin Status[%d]:\t %ld\n", i, pIfRow->dwAdminStatus);
+      printf("\tOper Status[%d]:\t ", i);
+      switch (pIfRow->dwOperStatus) {
+      case IF_OPER_STATUS_NON_OPERATIONAL:
+        printf("Non Operational\n");
+        break;
+      case IF_OPER_STATUS_UNREACHABLE:
+        printf("Unreachable\n");
+        break;
+      case IF_OPER_STATUS_DISCONNECTED:
+        printf("Disconnected\n");
+        break;
+      case IF_OPER_STATUS_CONNECTING:
+        printf("Connecting\n");
+        break;
+      case IF_OPER_STATUS_CONNECTED:
+        printf("Connected\n");
+        break;
+      case IF_OPER_STATUS_OPERATIONAL:
+        printf("Operational\n");
+        break;
+      default:
+        printf("Unknown status %ld\n", pIfRow->dwAdminStatus);
+        break;
+      }
+      printf("\n");
+    }
+  }
+  else
+  {
+    printf("GetIfTable failed with error: \n", dwRetVal);
+    if (pIfTable != NULL)
+    {
+      FREE(pIfTable);
+      pIfTable = NULL;
+    }
+    return 1;
+    // Here you can use FormatMessage to find out why
+    // it failed.
+  }
+  if (pIfTable != NULL)
+  {
+    FREE(pIfTable);
+    pIfTable = NULL;
+  }
+  return 3;
 
-	//Uint32 dwSize = 0;
-	//Uint32 dwRetVal = 0;
-	//string tmp ="";
-	//string tmpid = "";
-	//Uint32 i, j;
+//  Uint32 dwSize = 0;
+//  Uint32 dwRetVal = 0;
+//  string tmp ="";
+//  string tmpid = "";
+//  Uint32 i, j;
 
-	////Êä³öµ÷ÊÔĞÅÏ¢µ½¿ØÖÆÌ¨
-	//AllocConsole();
+//  //è¾“å‡ºè°ƒè¯•ä¿¡æ¯åˆ°æ§åˆ¶å°
+//  AllocConsole();
 
-	//if (NetCardName == L"")
-	//{
-	//	return 1;
-	//}
+//  if (NetCardName == L"")
+//  {
+//    return 1;
+//  }
 
-	///* variables used for GetIfTable and GetIfEntry */
-	//MIB_IFTABLE *pIfTable;
-	//MIB_IFROW *pIfRow;
+//  /* variables used for GetIfTable and GetIfEntry */
+//  MIB_IFTABLE *pIfTable;
+//  MIB_IFROW *pIfRow;
 
-	//// Allocate memory for our pointers.
-	//pIfTable = (MIB_IFTABLE *)MALLOC(sizeof(MIB_IFTABLE));
-	//if (pIfTable == NULL)
-	//{
-	//	_cprintf_s("Error allocating memory needed to call GetIfTable\n");
-	//	FreeConsole();
-	//	return 1;
-	//}
-	//// Make an initial call to GetIfTable to get the
-	//// necessary size into dwSize
-	//dwSize = sizeof(MIB_IFTABLE);
-	//if (GetIfTable(pIfTable, &dwSize, FALSE) == ERROR_INSUFFICIENT_BUFFER)
-	//{
-	//	FREE(pIfTable);
-	//	pIfTable = (MIB_IFTABLE *)MALLOC(dwSize);
-	//	if (pIfTable == NULL)
-	//	{
-	//		_cprintf_s("Error allocating memory needed to call GetIfTable\n");
-	//		FreeConsole();
-	//		return 1;
-	//	}
-	//}
-	//// Make a second call to GetIfTable to get the actual
-	//// data we want.
-	//if ((dwRetVal = GetIfTable(pIfTable, &dwSize, FALSE)) == NO_ERROR)
-	//{
-	//	_cprintf_s("\tNum Entries: %ld\n\n", pIfTable->dwNumEntries);
-	//	for (i = 0; i < pIfTable->dwNumEntries; i++)
-	//	{
-	//		pIfRow = (MIB_IFROW *)& pIfTable->table[i];
-	//		_cprintf_s("\tIndex[%d]:\t %ld\n", i, pIfRow->dwIndex);
-	//		_cprintf_s("\tInterfaceName[%d]:\t %ws", i, pIfRow->wszName);
-	//		_cprintf_s("\n");
-	//		_cprintf_s("\tDescription[%d]:\t ", i);
-	//		for (j = 0; j < pIfRow->dwDescrLen; j++)
-	//			_cprintf_s("%c", pIfRow->bDescr[j]);
-	//		_cprintf_s("\n");
-	//		_cprintf_s("\tType[%d]:\t ", i);
-	//		switch (pIfRow->dwType) {
-	//		case IF_TYPE_OTHER:
-	//			_cprintf_s("Other\n");
-	//			break;
-	//		case IF_TYPE_ETHERNET_CSMACD:
-	//			_cprintf_s("Ethernet\n");
-	//			break;
-	//		case IF_TYPE_ISO88025_TOKENRING:
-	//			_cprintf_s("Token Ring\n");
-	//			break;
-	//		case IF_TYPE_PPP:
-	//			_cprintf_s("PPP\n");
-	//			break;
-	//		case IF_TYPE_SOFTWARE_LOOPBACK:
-	//			_cprintf_s("Software Lookback\n");
-	//			break;
-	//		case IF_TYPE_ATM:
-	//			_cprintf_s("ATM\n");
-	//			break;
-	//		case IF_TYPE_IEEE80211:
-	//			_cprintf_s("IEEE 802.11 Wireless\n");
-	//			break;
-	//		case IF_TYPE_TUNNEL:
-	//			_cprintf_s("Tunnel type encapsulation\n");
-	//			break;
-	//		case IF_TYPE_IEEE1394:
-	//			_cprintf_s("IEEE 1394 Firewire\n");
-	//			break;
-	//		default:
-	//			_cprintf_s("Unknown type %ld\n", pIfRow->dwType);
-	//			break;
-	//		}
-	//		_cprintf_s("\tMtu[%d]:\t\t %ld\n", i, pIfRow->dwMtu);
-	//		_cprintf_s("\tSpeed[%d]:\t %ld\n", i, pIfRow->dwSpeed);
+//  // Allocate memory for our pointers.
+//  pIfTable = (MIB_IFTABLE *)MALLOC(sizeof(MIB_IFTABLE));
+//  if (pIfTable == NULL)
+//  {
+//    _cprintf_s("Error allocating memory needed to call GetIfTable\n");
+//    FreeConsole();
+//    return 1;
+//  }
+//  // Make an initial call to GetIfTable to get the
+//  // necessary size into dwSize
+//  dwSize = sizeof(MIB_IFTABLE);
+//  if (GetIfTable(pIfTable, &dwSize, FALSE) == ERROR_INSUFFICIENT_BUFFER)
+//  {
+//    FREE(pIfTable);
+//    pIfTable = (MIB_IFTABLE *)MALLOC(dwSize);
+//    if (pIfTable == NULL)
+//    {
+//      _cprintf_s("Error allocating memory needed to call GetIfTable\n");
+//      FreeConsole();
+//      return 1;
+//    }
+//  }
+//  // Make a second call to GetIfTable to get the actual
+//  // data we want.
+//  if ((dwRetVal = GetIfTable(pIfTable, &dwSize, FALSE)) == NO_ERROR)
+//  {
+//    _cprintf_s("\tNum Entries: %ld\n\n", pIfTable->dwNumEntries);
+//    for (i = 0; i < pIfTable->dwNumEntries; i++)
+//    {
+//      pIfRow = (MIB_IFROW *)& pIfTable->table[i];
+//      _cprintf_s("\tIndex[%d]:\t %ld\n", i, pIfRow->dwIndex);
+//      _cprintf_s("\tInterfaceName[%d]:\t %ws", i, pIfRow->wszName);
+//      _cprintf_s("\n");
+//      _cprintf_s("\tDescription[%d]:\t ", i);
+//      for (j = 0; j < pIfRow->dwDescrLen; j++)
+//        _cprintf_s("%c", pIfRow->bDescr[j]);
+//      _cprintf_s("\n");
+//      _cprintf_s("\tType[%d]:\t ", i);
+//      switch (pIfRow->dwType) {
+//      case IF_TYPE_OTHER:
+//        _cprintf_s("Other\n");
+//        break;
+//      case IF_TYPE_ETHERNET_CSMACD:
+//        _cprintf_s("Ethernet\n");
+//        break;
+//      case IF_TYPE_ISO88025_TOKENRING:
+//        _cprintf_s("Token Ring\n");
+//        break;
+//      case IF_TYPE_PPP:
+//        _cprintf_s("PPP\n");
+//        break;
+//      case IF_TYPE_SOFTWARE_LOOPBACK:
+//        _cprintf_s("Software Lookback\n");
+//        break;
+//      case IF_TYPE_ATM:
+//        _cprintf_s("ATM\n");
+//        break;
+//      case IF_TYPE_IEEE80211:
+//        _cprintf_s("IEEE 802.11 Wireless\n");
+//        break;
+//      case IF_TYPE_TUNNEL:
+//        _cprintf_s("Tunnel type encapsulation\n");
+//        break;
+//      case IF_TYPE_IEEE1394:
+//        _cprintf_s("IEEE 1394 Firewire\n");
+//        break;
+//      default:
+//        _cprintf_s("Unknown type %ld\n", pIfRow->dwType);
+//        break;
+//      }
+//      _cprintf_s("\tMtu[%d]:\t\t %ld\n", i, pIfRow->dwMtu);
+//      _cprintf_s("\tSpeed[%d]:\t %ld\n", i, pIfRow->dwSpeed);
 
-	//		//ÅĞ¶ÏÍø¿¨Ãû×ÖÊÇ·ñÒ»ÖÂ£¬Ò»ÖÂÔÙÅĞ¶ÏËÙ¶È¡£
-	//		tmp = ((const char*)pIfRow->bDescr);
-	//		tmpid = ws2s(pIfRow->wszName);
-	//		//ÕÒµ½À¨ºÅÎ»ÖÃ
-	//		int16 pos_start;
-	//		int16 pos_end;
-	//		string tmpValue;
-	//		string brace_start = "{";
-	//		string brace_end = "}";
-	//		pos_start = tmpid.find(brace_start.c_str());
-	//		pos_end = tmpid.find(brace_end.c_str());
-	//		//Ã»ÕÒµ½À¨ºÅ
-	//		if ((pos_start == -1) || (pos_end == -1))
-	//		{
-	//			return 1;
-	//		}
-	//		else
-	//		{
-	//			tmpValue = tmpid.substr(pos_start + 1, pos_end - pos_start - 1);
-	//		}
+//      //åˆ¤æ–­ç½‘å¡åå­—æ˜¯å¦ä¸€è‡´ï¼Œä¸€è‡´å†åˆ¤æ–­é€Ÿåº¦ã€‚
+//      tmp = ((const char*)pIfRow->bDescr);
+//      tmpid = ws2s(pIfRow->wszName);
+//      //æ‰¾åˆ°æ‹¬å·ä½ç½®
+//      int16 pos_start;
+//      int16 pos_end;
+//      string tmpValue;
+//      string brace_start = "{";
+//      string brace_end = "}";
+//      pos_start = tmpid.find(brace_start.c_str());
+//      pos_end = tmpid.find(brace_end.c_str());
+//      //æ²¡æ‰¾åˆ°æ‹¬å·
+//      if ((pos_start == -1) || (pos_end == -1))
+//      {
+//        return 1;
+//      }
+//      else
+//      {
+//        tmpValue = tmpid.substr(pos_start + 1, pos_end - pos_start - 1);
+//      }
 
-	//		if ((ws2s(NetCardName) == tmp) || (tmpValue == ws2s(NetCardNum)))
-	//		{
-	//			if (pIfRow->dwSpeed == 1000000000)
-	//			{
-	//				FreeConsole();
-	//				return Rt_Success;
-	//			}
-	//			else
-	//			{
-	//				FreeConsole();
-	//				return 2;
-	//			}
-	//		}
+//      if ((ws2s(NetCardName) == tmp) || (tmpValue == ws2s(NetCardNum)))
+//      {
+//        if (pIfRow->dwSpeed == 1000000000)
+//        {
+//          FreeConsole();
+//          return Rt_Success;
+//        }
+//        else
+//        {
+//          FreeConsole();
+//          return 2;
+//        }
+//      }
 
-	//		_cprintf_s("\tPhysical Addr:\t ");
-	//		if (pIfRow->dwPhysAddrLen == 0)
-	//			_cprintf_s("\n");
-	//		for (j = 0; j < pIfRow->dwPhysAddrLen; j++) {
-	//			if (j == (pIfRow->dwPhysAddrLen - 1))
-	//				_cprintf_s("%.2X\n", (int)pIfRow->bPhysAddr[j]);
-	//			else
-	//				_cprintf_s("%.2X-", (int)pIfRow->bPhysAddr[j]);
-	//		}
-	//		_cprintf_s("\tAdmin Status[%d]:\t %ld\n", i, pIfRow->dwAdminStatus);
-	//		_cprintf_s("\tOper Status[%d]:\t ", i);
-	//		switch (pIfRow->dwOperStatus) {
-	//		case IF_OPER_STATUS_NON_OPERATIONAL:
-	//			_cprintf_s("Non Operational\n");
-	//			break;
-	//		case IF_OPER_STATUS_UNREACHABLE:
-	//			_cprintf_s("Unreachable\n");
-	//			break;
-	//		case IF_OPER_STATUS_DISCONNECTED:
-	//			_cprintf_s("Disconnected\n");
-	//			break;
-	//		case IF_OPER_STATUS_CONNECTING:
-	//			_cprintf_s("Connecting\n");
-	//			break;
-	//		case IF_OPER_STATUS_CONNECTED:
-	//			_cprintf_s("Connected\n");
-	//			break;
-	//		case IF_OPER_STATUS_OPERATIONAL:
-	//			_cprintf_s("Operational\n");
-	//			break;
-	//		default:
-	//			_cprintf_s("Unknown status %ld\n", pIfRow->dwAdminStatus);
-	//			break;
-	//		}
-	//		_cprintf_s("\n");
-	//	}
-	//}
-	//else
-	//{
-	//	_cprintf_s("GetIfTable failed with error: \n", dwRetVal);
-	//	if (pIfTable != NULL)
-	//	{
-	//		FREE(pIfTable);
-	//		pIfTable = NULL;
-	//	}
-	//	FreeConsole();
-	//	return 1;
-	//	// Here you can use FormatMessage to find out why 
-	//	// it failed.
-	//}
-	//if (pIfTable != NULL)
-	//{
-	//	FREE(pIfTable);
-	//	pIfTable = NULL;
-	//}
-	//FreeConsole();
-	//return 3;
+//      _cprintf_s("\tPhysical Addr:\t ");
+//      if (pIfRow->dwPhysAddrLen == 0)
+//        _cprintf_s("\n");
+//      for (j = 0; j < pIfRow->dwPhysAddrLen; j++) {
+//        if (j == (pIfRow->dwPhysAddrLen - 1))
+//          _cprintf_s("%.2X\n", (int)pIfRow->bPhysAddr[j]);
+//        else
+//          _cprintf_s("%.2X-", (int)pIfRow->bPhysAddr[j]);
+//      }
+//      _cprintf_s("\tAdmin Status[%d]:\t %ld\n", i, pIfRow->dwAdminStatus);
+//      _cprintf_s("\tOper Status[%d]:\t ", i);
+//      switch (pIfRow->dwOperStatus) {
+//      case IF_OPER_STATUS_NON_OPERATIONAL:
+//        _cprintf_s("Non Operational\n");
+//        break;
+//      case IF_OPER_STATUS_UNREACHABLE:
+//        _cprintf_s("Unreachable\n");
+//        break;
+//      case IF_OPER_STATUS_DISCONNECTED:
+//        _cprintf_s("Disconnected\n");
+//        break;
+//      case IF_OPER_STATUS_CONNECTING:
+//        _cprintf_s("Connecting\n");
+//        break;
+//      case IF_OPER_STATUS_CONNECTED:
+//        _cprintf_s("Connected\n");
+//        break;
+//      case IF_OPER_STATUS_OPERATIONAL:
+//        _cprintf_s("Operational\n");
+//        break;
+//      default:
+//        _cprintf_s("Unknown status %ld\n", pIfRow->dwAdminStatus);
+//        break;
+//      }
+//      _cprintf_s("\n");
+//    }
+//  }
+//  else
+//  {
+//    _cprintf_s("GetIfTable failed with error: \n", dwRetVal);
+//    if (pIfTable != NULL)
+//    {
+//      FREE(pIfTable);
+//      pIfTable = NULL;
+//    }
+//    FreeConsole();
+//    return 1;
+//    // Here you can use FormatMessage to find out why
+//    // it failed.
+//  }
+//  if (pIfTable != NULL)
+//  {
+//    FREE(pIfTable);
+//    pIfTable = NULL;
+//  }
+//  FreeConsole();
+//  return 3;
 }
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ScanRnTopology(int16 com_type /*= GTSD_COM_TYPE_RNNET*/, int16 stationId /*= 0xff*/)

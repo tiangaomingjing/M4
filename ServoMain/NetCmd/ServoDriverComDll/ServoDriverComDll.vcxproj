@@ -84,9 +84,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.h" />
-    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.h" />
-    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.h" />
     <ClInclude Include="AbsCom\include\AbsCom.h" />
     <ClInclude Include="Cmd\include\ST_GTSD_Cmd.h" />
     <ClInclude Include="DeviceDataBase.h" />
@@ -133,9 +130,6 @@
     <ClInclude Include="UserResp.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.c" />
-    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.c" />
-    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.c" />
     <ClCompile Include="AbsCom\src\AbsCom.cpp" />
     <ClCompile Include="Cmd\src\ST_GTSD_Cmd.cpp" />
     <ClCompile Include="DeviceDataBase.cpp" />

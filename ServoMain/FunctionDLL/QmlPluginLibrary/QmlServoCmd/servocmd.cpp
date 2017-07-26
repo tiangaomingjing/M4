@@ -847,6 +847,12 @@ bool ServoCmd::setServoTaskMode(int mode)
 {
   return GTSD_CMD_SetServoTaskMode(m_axisIndex,mode,m_comType,(int16)m_comRnStation);
 }
+qint16 ServoCmd::currentServoTaskMode()
+{
+  SERVO_MODE mode;
+  GTSD_CMD_GetServoTaskMode(m_axisIndex,&mode,m_comType,(int16)m_comRnStation);
+  return mode.usr_mode;
+}
 bool ServoCmd::checkServoIsReady()
 {
   SERVO_STATE state;
