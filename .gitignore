@@ -4,6 +4,13 @@ debug/
 release/Custom/configuser/
 release/Custom/configlist.xml
 test-build/
+release/Bin/*.lib
+release/Bin/*.dll
+!release/Bin/QtQuick.2/*
+!release/Bin/platforms/*
+!release/Bin/QtQuick/*
+!release/Bin/QtGraphicalEffects/*
+!release/Bin/QtQml/*
 
 *.exp
 *.rar
