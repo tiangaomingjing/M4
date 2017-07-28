@@ -124,7 +124,8 @@ private slots:
   void onXmlPrmToServo(int axis,int value);
 
 protected:
-  void keyPressEvent(QKeyEvent *keyEvent);
+  void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
+  void closeEvent(QCloseEvent *event)Q_DECL_OVERRIDE;
 
 private:
   void createMenus(void);
@@ -138,7 +139,7 @@ private:
   void setConfigSaveEnableStatus(AbstractFuncWidget *absWidget);
 
   void updateStartUpMessage(QString message);
-  void closeEvent(QCloseEvent *event);
+
   void enableAllUi(bool state);
   void setUbootModeUi(bool sta);
 

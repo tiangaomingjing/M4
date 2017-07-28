@@ -78,6 +78,11 @@ public:
 	word_num:		输出数据长度
 	返回：0成功，其他参看错误列表。
 	*******************************************************************************************/
+	static const int32			NET_COM_EXECUTE_FAIL = 0;							// 命令执行失败
+	static const int32			NET_COM_EXECUTE_SUCCESS = 1;							// 命令执行成功
+	static const int32			NET_COM_PARAMETER_INVALID = 2;							// 无效参数
+	static const int32			NET_COM_INSTRUCTION_INVALID = 3;							// 非法指令
+
 	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 addr, int16* pData, int16 word_num, int16 des_id);
 	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, Uint8 des_id, Uint8 des_ch);
 	int16 RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_c, Uint8 needReq = TRUE, Uint8 addr_mod = RN_ADDR_INC, Uint8 wait_level = RN_OP_WAIT_DEFAULT, Uint8 dsitance = 0xf0);
