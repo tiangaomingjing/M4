@@ -1,4 +1,4 @@
-// CmdDll.cpp : ¶¨Òå DLL Ó¦ÓÃ³ÌĞòµÄµ¼³öº¯Êı¡£
+ï»¿// CmdDll.cpp : å®šä¹‰ DLL åº”ç”¨ç¨‹åºçš„å¯¼å‡ºå‡½æ•°ã€‚
 //
 
 #include "stdafx.h"
@@ -13,12 +13,12 @@
 		int16 value;
 		int16 flag;
 	}TEST_cmd_read_number_testA;
-	//Ã¿´Î¶Áµ½µÄÊı¾İ¸öÊı
+	//æ¯æ¬¡è¯»åˆ°çš„æ•°æ®ä¸ªæ•°
 	TEST_cmd_read_number_testA cmd_read_number_testA[1000];
 	int16 cmd_read_number_test_indexA = 0;
 	int16 cmd_read_number_testB[1000];
 	int16 cmd_read_number_test_indexB = 0;
-	//¼ÇÂ¼Êı¾İ³¬³öµÄ¸öÊı
+	//è®°å½•æ•°æ®è¶…å‡ºçš„ä¸ªæ•°
 	int64 cmd_exceed_numberA = 0;
 	int64 cmd_exceed_numberB = 0;
 	int16 plotdatabuffer_test[48000];
@@ -36,12 +36,12 @@ int16 Cmd_PlotDataBuffer[10000] = { 0 };
 CAbsCom*     g_AbsCom				= NULL;
 
 
-static const int32			FPGA_MODE_RD = 0x0;							//FPGA¶Á²Ù×÷
-static const int32			FPGA_MODE_WR = 0x1;							//FPGAĞ´²Ù×÷
+static const int32			FPGA_MODE_RD = 0x0;							//FPGAè¯»æ“ä½œ
+static const int32			FPGA_MODE_WR = 0x1;							//FPGAå†™æ“ä½œ
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
-//½«ÃüÁîIDºÍÖáºÅºÏ²¢³ÉÒ»¸öshort£¬ÆäÖĞbit[0-11]ÎªÃüÁîID, bit[12 - 15]ÎªÖáºÅ
+//å°†å‘½ä»¤IDå’Œè½´å·åˆå¹¶æˆä¸€ä¸ªshortï¼Œå…¶ä¸­bit[0-11]ä¸ºå‘½ä»¤ID, bit[12 - 15]ä¸ºè½´å·
 static int16 GetCmdIDAndAxisNum(short cmdID, short motorNum)
 {
 	short ret;
@@ -50,44 +50,44 @@ static int16 GetCmdIDAndAxisNum(short cmdID, short motorNum)
 	return ret;
 }
 //////////////////////////////////////////////////////////////////////////
-//´ò¿ªÃüÁîÍ¨µÀ
+//æ‰“å¼€å‘½ä»¤é€šé“
 int16 GTSD_CMD_ST_OPEN(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress, int16 comType)
 {
 	void* ptr = ptrv;
-	//¶¨Òå¶ÔÏó
+	//å®šä¹‰å¯¹è±¡
 	if (g_AbsCom == NULL)
 	{
 		g_AbsCom = new CAbsCom;
 	}
 	else
 	{ 
-		 return Rt_Success;//Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
+		 return Rt_Success;//å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
 	}
 	if (g_AbsCom == NULL)
 	{
 		return Net_Rt_CreateObj_Err;
 	}
-	//°Ù·Ö±È½ø¶È
-	progress = 10;
+	//ç™¾åˆ†æ¯”è¿›åº¦
+  progress = 10;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
 	int16 rtn;
-	//µ÷ÓÃopenº¯Êı
+	//è°ƒç”¨openå‡½æ•°
 	rtn = g_AbsCom->GTSD_Com_Open(tpfUpdataProgressPt, ptr, progress, comType);
 	return rtn;
 }
 //////////////////////////////////////////////////////////////////////////
-//¹Ø±ÕÃüÁîÍ¨µÀ
+//å…³é—­å‘½ä»¤é€šé“
 int16 GTSD_CMD_ST_CLOSE(int16 comType)
 {
-	//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
+	//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
 	if (g_AbsCom == NULL)
 	{
 		return Rt_Success;
 	}
 
 	int16 rtn;
-	//µ÷ÓÃcloseº¯Êı
+	//è°ƒç”¨closeå‡½æ•°
 	rtn = g_AbsCom->GTSD_Com_Close(comType);
 	if (g_AbsCom != NULL)
 	{
@@ -98,8 +98,8 @@ int16 GTSD_CMD_ST_CLOSE(int16 comType)
 	return rtn;
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉÏËÅ·ş
-//²ÎÊı£ºÖáºÅ
+//ä¸Šä¼ºæœ
+//å‚æ•°ï¼šè½´å·
 int16 GTSD_CMD_ST_SetServoOn(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -107,20 +107,20 @@ int16 GTSD_CMD_ST_SetServoOn(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/,
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SERVO_EN_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = 1;												//ËÅ·şÊ¹ÄÜ							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = 1;												//ä¼ºæœä½¿èƒ½							
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -134,8 +134,8 @@ int16 GTSD_CMD_ST_SetServoOn(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/,
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÏÂËÅ·ş
-//²ÎÊı£ºÖáºÅ
+//ä¸‹ä¼ºæœ
+//å‚æ•°ï¼šè½´å·
 int16 GTSD_CMD_ST_SetServoOff(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -143,20 +143,20 @@ int16 GTSD_CMD_ST_SetServoOff(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SERVO_EN_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = 0;												//ËÅ·şoff							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = 0;												//ä¼ºæœoff							
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -170,9 +170,9 @@ int16 GTSD_CMD_ST_SetServoOff(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡ËÅ·ş×´Ì¬
-//²ÎÊı£ºÖáºÅ
-//ËÅ·ş×´Ì¬½á¹¹ÌåÖ¸Õë
+//è¯»å–ä¼ºæœçŠ¶æ€
+//å‚æ•°ï¼šè½´å·
+//ä¼ºæœçŠ¶æ€ç»“æ„ä½“æŒ‡é’ˆ
 int16 GTSD_CMD_ST_GetServoState(int16 axis, SERVO_STATE* serv, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -180,19 +180,19 @@ int16 GTSD_CMD_ST_GetServoState(int16 axis, SERVO_STATE* serv, int16 com_type /*
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SERVO_EN_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;									//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;									//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -212,9 +212,9 @@ int16 GTSD_CMD_ST_GetServoState(int16 axis, SERVO_STATE* serv, int16 com_type /*
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃËÅ·şÈÎÎñÄ£Ê½
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÄ£Ê½
+//è®¾ç½®ä¼ºæœä»»åŠ¡æ¨¡å¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šæ¨¡å¼
 int16 GTSD_CMD_ST_SetServoTaskMode(int16 axis, int16 mode, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -222,20 +222,20 @@ int16 GTSD_CMD_ST_SetServoTaskMode(int16 axis, int16 mode, int16 com_type /*= GT
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SERVO_TASK_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = mode;												//ÉèÖÃÄ£Ê½							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = mode;												//è®¾ç½®æ¨¡å¼							
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -249,9 +249,9 @@ int16 GTSD_CMD_ST_SetServoTaskMode(int16 axis, int16 mode, int16 com_type /*= GT
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡ËÅ·şÈÎÎñÄ£Ê½
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÄ£Ê½
+//è¯»å–ä¼ºæœä»»åŠ¡æ¨¡å¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šæ¨¡å¼
 int16 GTSD_CMD_ST_GetServoTaskMode(int16 axis, SERVO_MODE* mode, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -259,19 +259,19 @@ int16 GTSD_CMD_ST_GetServoTaskMode(int16 axis, SERVO_MODE* mode, int16 com_type 
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SERVO_TASK_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -290,24 +290,24 @@ int16 GTSD_CMD_ST_GetServoTaskMode(int16 axis, SERVO_MODE* mode, int16 com_type 
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃ»ìºÏÄ£Ê½
-//²ÎÊı£ºÖáºÅ
+//è®¾ç½®æ··åˆæ¨¡å¼
+//å‚æ•°ï¼šè½´å·
 int16 GTSD_CMD_ST_SetMixMode(int16 axis, int16 com_type)
 {
 	return Rt_Success;
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡»ìºÏÄ£Ê½
-//²ÎÊı£ºÖáºÅ
+//è¯»å–æ··åˆæ¨¡å¼
+//å‚æ•°ï¼šè½´å·
 int16 GTSD_CMD_ST_GetMixMode(int16 axis, int16 com_type)
 {
 	return Rt_Success;
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö16bitµÄÖµµ½´¦ÀíÆ÷
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª16bitçš„å€¼åˆ°å¤„ç†å™¨
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Write16BitByAdr(int16 axis, int16 ofst, int16 value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -319,27 +319,27 @@ int16 GTSD_CMD_ST_Write16BitByAdr(int16 axis, int16 ofst, int16 value, void* ptr
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 	int16 cmd_id	= WR_16BIT_COMM;							//cmd id		
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_WRITE);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_WRITE | (val[0] <<1));												//Ğ´ÃüÁî	
+		dspdata[1] = (GTSD_DSP_WRITE | (val[0] <<1));												//å†™å‘½ä»¤	
 	}
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = ofst;												//ÉèÖÃofst
-	dspdata[4] = value;											//ÉèÖÃvalue
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[4] = value;											//è®¾ç½®value
 
 
 	int16 dsp_comNum = 5;
@@ -354,10 +354,10 @@ int16 GTSD_CMD_ST_Write16BitByAdr(int16 axis, int16 ofst, int16 value, void* ptr
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃ´Ó´¦ÀíÆ÷¶ÁÈ¡Ò»¸ö16bitµÄÖµ
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®ä»å¤„ç†å™¨è¯»å–ä¸€ä¸ª16bitçš„å€¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Read16BitByAdr(int16 axis, int16 ofst, int16* value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -369,27 +369,27 @@ int16 GTSD_CMD_ST_Read16BitByAdr(int16 axis, int16 ofst, int16* value, void* ptr
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_16BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_READ);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//¶ÁÃüÁî	
+		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//è¯»å‘½ä»¤	
 	}
-	dspdata[2] = 0;												//·µ»ØÖµ																		
-	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[3] = ofst;												//è®¾ç½®ofst
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -404,10 +404,10 @@ int16 GTSD_CMD_ST_Read16BitByAdr(int16 axis, int16 ofst, int16* value, void* ptr
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö32bitµÄÖµµ½´¦ÀíÆ÷
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª32bitçš„å€¼åˆ°å¤„ç†å™¨
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Write32BitByAdr(int16 axis, int16 ofst, int32 value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -419,29 +419,29 @@ int16 GTSD_CMD_ST_Write32BitByAdr(int16 axis, int16 ofst, int32 value, void* ptr
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_32BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_WRITE);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//Ğ´ÃüÁî	
+		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//å†™å‘½ä»¤	
 	}
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = ofst;												//ÉèÖÃofst
-	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®é«˜16bit
 
 	int16 dsp_comNum = 6;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -455,10 +455,10 @@ int16 GTSD_CMD_ST_Write32BitByAdr(int16 axis, int16 ofst, int32 value, void* ptr
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃ´Ó´¦ÀíÆ÷¶ÁÈ¡Ò»¸ö32bitµÄÖµ
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®ä»å¤„ç†å™¨è¯»å–ä¸€ä¸ª32bitçš„å€¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Read32BitByAdr(int16 axis, int16 ofst, int32* value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -470,27 +470,27 @@ int16 GTSD_CMD_ST_Read32BitByAdr(int16 axis, int16 ofst, int32* value, void* ptr
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_32BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_READ);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//¶ÁÃüÁî	
+		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//è¯»å‘½ä»¤	
 	}
-	dspdata[2] = 0;												//·µ»ØÖµ																		
-	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[3] = ofst;												//è®¾ç½®ofst
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -500,15 +500,15 @@ int16 GTSD_CMD_ST_Read32BitByAdr(int16 axis, int16 ofst, int32* value, void* ptr
 	}
 	else
 	{
-		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
+		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
 		return Rt_Success;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö64bitµÄÖµµ½´¦ÀíÆ÷
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª64bitçš„å€¼åˆ°å¤„ç†å™¨
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Write64BitByAdr(int16 axis, int16 ofst, int64 value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -520,31 +520,31 @@ int16 GTSD_CMD_ST_Write64BitByAdr(int16 axis, int16 ofst, int64 value, void* ptr
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_64BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_WRITE);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//Ğ´ÃüÁî	
+		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//å†™å‘½ä»¤	
 	}
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = ofst;												//ÉèÖÃofst
-	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
-	dspdata[6] = ((value >> 32) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
-	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
+	dspdata[6] = ((value >> 32) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
+	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//è®¾ç½®value,å†è®¾ç½®é«˜16bit
 
 	int16 dsp_comNum = 8;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -558,10 +558,10 @@ int16 GTSD_CMD_ST_Write64BitByAdr(int16 axis, int16 ofst, int64 value, void* ptr
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃ´Ó´¦ÀíÆ÷¶ÁÈ¡Ò»¸ö64bitµÄÖµ
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®ä»å¤„ç†å™¨è¯»å–ä¸€ä¸ª64bitçš„å€¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Read64BitByAdr(int16 axis, int16 ofst, int64* value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -574,28 +574,28 @@ int16 GTSD_CMD_ST_Read64BitByAdr(int16 axis, int16 ofst, int64* value, void* ptr
 		val = (int16*)ptr;
 	}
 	
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_64BIT_COMM;									//cmd id
 
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_READ);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//¶ÁÃüÁî	
+		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//è¯»å‘½ä»¤	
 	}
-	dspdata[2] = 0;												//·µ»ØÖµ																		
-	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[3] = ofst;												//è®¾ç½®ofst
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -608,14 +608,14 @@ int16 GTSD_CMD_ST_Read64BitByAdr(int16 axis, int16 ofst, int64* value, void* ptr
 		int64 tmp, tmp1;
 		tmp = (((int64)dspdata[4]) << 32);
 		tmp1 = ((tmp << 16) & 0xffff000000000000);
-		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//¸ßÎ»ÔÚºó
+		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//é«˜ä½åœ¨å
 		return Rt_Success;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃidÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºidÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®idæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šidæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetIdRef(int16 axis, double id_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -623,26 +623,26 @@ int16 GTSD_CMD_ST_SetIdRef(int16 axis, double id_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ID_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼	
 	int32 tmp;
 	tmp = (int32)((id_ref) / 100.0*((double)(MAX_CUR_SCALE)) + 0.5);
 	if ((tmp>32767) || (tmp<-32768))
 	{
 		tmp = (int32)(0.05*((double)(MAX_CUR_SCALE)) + 0.5);
 	}
-	dspdata[3] = (int16)tmp;											//ÉèÖÃid_ref
+	dspdata[3] = (int16)tmp;											//è®¾ç½®id_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -656,9 +656,9 @@ int16 GTSD_CMD_ST_SetIdRef(int16 axis, double id_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡idÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºidÖ¸Áî²Î¿¼Öµ
+//è¯»å–idæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šidæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetIdRef(int16 axis, ID_STATE* id_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -666,19 +666,19 @@ int16 GTSD_CMD_ST_GetIdRef(int16 axis, ID_STATE* id_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ID_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -696,9 +696,9 @@ int16 GTSD_CMD_ST_GetIdRef(int16 axis, ID_STATE* id_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃiqÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºidÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®iqæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šidæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetIqRef(int16 axis, double iq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -706,26 +706,26 @@ int16 GTSD_CMD_ST_SetIqRef(int16 axis, double iq_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = IQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int32 tmp;
 	tmp = (int32)((iq_ref) / 100.0*((double)(MAX_CUR_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < -32768))
 	{
 		tmp = (int32)(0.05*((double)(MAX_CUR_SCALE)) + 0.5);
 	}
-	dspdata[3] = (int16)tmp;										//ÉèÖÃiq_ref
+	dspdata[3] = (int16)tmp;										//è®¾ç½®iq_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -739,9 +739,9 @@ int16 GTSD_CMD_ST_SetIqRef(int16 axis, double iq_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡iqÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºiqÖ¸Áî²Î¿¼Öµ
+//è¯»å–iqæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šiqæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetIqRef(int16 axis, IQ_STATE* iq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -749,19 +749,19 @@ int16 GTSD_CMD_ST_GetIqRef(int16 axis, IQ_STATE* iq_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = IQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -779,9 +779,9 @@ int16 GTSD_CMD_ST_GetIqRef(int16 axis, IQ_STATE* iq_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃËÙ¶ÈÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºËÙ¶ÈÖ¸Áî²Î¿¼Öµ±ÈÂÊ
+//è®¾ç½®é€Ÿåº¦æŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šé€Ÿåº¦æŒ‡ä»¤å‚è€ƒå€¼æ¯”ç‡
 int16 GTSD_CMD_ST_SetSpdRef(int16 axis, double spd_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -789,19 +789,19 @@ int16 GTSD_CMD_ST_SetSpdRef(int16 axis, double spd_ref, int16 com_type /*= GTSD_
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SPD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int64 tmp;
 	tmp = (int64)(spd_ref / 100.0*((double)MAX_SPD_SCALE) + 0.5);
 	if ((tmp>0x7fffffff) || (tmp<-0x7fffffff))
@@ -810,8 +810,8 @@ int16 GTSD_CMD_ST_SetSpdRef(int16 axis, double spd_ref, int16 com_type /*= GTSD_
 	}
 	int32 tmp1;
 	tmp1 = (int32)tmp;
-	dspdata[3] = (tmp1 & 0xffff);									//ÉèÖÃspd_refµÍ16Î»
-	dspdata[4] = ((tmp1 >> 16) & 0xffff);								//ÉèÖÃspd_ref¸ß16Î»
+	dspdata[3] = (tmp1 & 0xffff);									//è®¾ç½®spd_refä½16ä½
+	dspdata[4] = ((tmp1 >> 16) & 0xffff);								//è®¾ç½®spd_refé«˜16ä½
 
 	int16 dsp_comNum = 5;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -825,9 +825,9 @@ int16 GTSD_CMD_ST_SetSpdRef(int16 axis, double spd_ref, int16 com_type /*= GTSD_
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡ËÙ¶ÈÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºËÙ¶ÈÖ¸Áî²Î¿¼Öµ±ÈÂÊ
+//è¯»å–é€Ÿåº¦æŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šé€Ÿåº¦æŒ‡ä»¤å‚è€ƒå€¼æ¯”ç‡
 int16 GTSD_CMD_ST_GetSpdRef(int16 axis, SPD_STATE* spd_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -835,19 +835,19 @@ int16 GTSD_CMD_ST_GetSpdRef(int16 axis, SPD_STATE* spd_ref, int16 com_type /*= G
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SPD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -866,25 +866,25 @@ int16 GTSD_CMD_ST_GetSpdRef(int16 axis, SPD_STATE* spd_ref, int16 com_type /*= G
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÑ¹Á¦Ö¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÑ¹Á¦Ö¸Áî²Î¿¼Öµ
+//è®¾å‹åŠ›æŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šå‹åŠ›æŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetPreRef(int16 axis, int16 pre_ref, int16 com_type)
 {
 	return Rt_Success;
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡Ñ¹Á¦Ö¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÑ¹Á¦Ö¸Áî²Î¿¼Öµ
+//è¯»å–å‹åŠ›æŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šå‹åŠ›æŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetPreRef(int16 axis, int16* pre_ref, int16 com_type)
 {
 	return Rt_Success;
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃudrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºudÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®udrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šudæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetUdRef(int16 axis, double ud_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -892,26 +892,26 @@ int16 GTSD_CMD_ST_SetUdRef(int16 axis, double ud_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int32 tmp;
 	tmp = (int32)(ud_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp>16384) || (tmp<-16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//ÉèÖÃud_ref
+	dspdata[3] = (int16)tmp;											//è®¾ç½®ud_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -925,9 +925,9 @@ int16 GTSD_CMD_ST_SetUdRef(int16 axis, double ud_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡udrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºudÖ¸Áî²Î¿¼Öµ
+//è¯»å–udrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šudæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetUdRef(int16 axis, UD_STATE* ud_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -935,19 +935,19 @@ int16 GTSD_CMD_ST_GetUdRef(int16 axis, UD_STATE* ud_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -965,9 +965,9 @@ int16 GTSD_CMD_ST_GetUdRef(int16 axis, UD_STATE* ud_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃuqrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºuqÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®uqrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šuqæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetUqRef(int16 axis, double uq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -975,26 +975,26 @@ int16 GTSD_CMD_ST_SetUqRef(int16 axis, double uq_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int32 tmp;
 	tmp = (int32)(uq_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//ÉèÖÃuq_ref
+	dspdata[3] = (int16)tmp;											//è®¾ç½®uq_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1008,9 +1008,9 @@ int16 GTSD_CMD_ST_SetUqRef(int16 axis, double uq_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡uqrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºuqÖ¸Áî²Î¿¼Öµ
+//è¯»å–uqrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šuqæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetUqRef(int16 axis, UQ_STATE* uq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1018,19 +1018,19 @@ int16 GTSD_CMD_ST_GetUqRef(int16 axis, UQ_STATE* uq_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1048,9 +1048,9 @@ int16 GTSD_CMD_ST_GetUqRef(int16 axis, UQ_STATE* uq_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃuarefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºuaÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®uarefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šuaæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetUaRef(int16 axis, double ua_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1058,26 +1058,26 @@ int16 GTSD_CMD_ST_SetUaRef(int16 axis, double ua_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UA_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int32 tmp;
 	tmp = (int32)(ua_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//ÉèÖÃua_ref
+	dspdata[3] = (int16)tmp;											//è®¾ç½®ua_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1091,9 +1091,9 @@ int16 GTSD_CMD_ST_SetUaRef(int16 axis, double ua_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡uarefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºuaÖ¸Áî²Î¿¼Öµ
+//è¯»å–uarefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šuaæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetUaRef(int16 axis, UA_STATE* ua_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1101,19 +1101,19 @@ int16 GTSD_CMD_ST_GetUaRef(int16 axis, UA_STATE* ua_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UA_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1131,9 +1131,9 @@ int16 GTSD_CMD_ST_GetUaRef(int16 axis, UA_STATE* ua_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃubrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºubÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®ubrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šubæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetUbRef(int16 axis, double ub_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1141,26 +1141,26 @@ int16 GTSD_CMD_ST_SetUbRef(int16 axis, double ub_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UB_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼	
 	int32 tmp;
 	tmp = (int32)(ub_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;										//ÉèÖÃub_ref
+	dspdata[3] = (int16)tmp;										//è®¾ç½®ub_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1174,9 +1174,9 @@ int16 GTSD_CMD_ST_SetUbRef(int16 axis, double ub_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡ubrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºubÖ¸Áî²Î¿¼Öµ
+//è¯»å–ubrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šubæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetUbRef(int16 axis, UB_STATE* ub_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1184,19 +1184,19 @@ int16 GTSD_CMD_ST_GetUbRef(int16 axis, UB_STATE* ub_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UB_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1214,9 +1214,9 @@ int16 GTSD_CMD_ST_GetUbRef(int16 axis, UB_STATE* ub_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃucrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºucÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®ucrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šucæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetUcRef(int16 axis, double uc_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1224,26 +1224,26 @@ int16 GTSD_CMD_ST_SetUcRef(int16 axis, double uc_ref, int16 com_type /*= GTSD_CO
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UC_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int32 tmp;
 	tmp = (int32)(uc_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//ÉèÖÃuc_ref
+	dspdata[3] = (int16)tmp;											//è®¾ç½®uc_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1257,9 +1257,9 @@ int16 GTSD_CMD_ST_SetUcRef(int16 axis, double uc_ref, int16 com_type /*= GTSD_CO
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡ucrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºucÖ¸Áî²Î¿¼Öµ
+//è¯»å–ucrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šucæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetUcRef(int16 axis, UC_STATE* uc_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1267,19 +1267,19 @@ int16 GTSD_CMD_ST_GetUcRef(int16 axis, UC_STATE* uc_ref, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = UC_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1297,9 +1297,9 @@ int16 GTSD_CMD_ST_GetUcRef(int16 axis, UC_STATE* uc_ref, int16 com_type /*= GTSD
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃPosAdjrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºPosAdjÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®PosAdjrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šPosAdjæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetPosAdjRef(int16 axis, double PosAdj_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1307,26 +1307,26 @@ int16 GTSD_CMD_ST_SetPosAdjRef(int16 axis, double PosAdj_ref, int16 com_type /*=
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_ADJ_IREF_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int32 tmp;
 	tmp = (int32)(PosAdj_ref / 100.0*((double)MAX_CUR_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_CUR_SCALE));
 	}
-	dspdata[3] = (int16)tmp;										//ÉèÖÃPosAdj_ref
+	dspdata[3] = (int16)tmp;										//è®¾ç½®PosAdj_ref
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1340,9 +1340,9 @@ int16 GTSD_CMD_ST_SetPosAdjRef(int16 axis, double PosAdj_ref, int16 com_type /*=
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡PosAdjrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºPosAdjÖ¸Áî²Î¿¼Öµ
+//è¯»å–PosAdjrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šPosAdjæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1350,19 +1350,19 @@ int16 GTSD_CMD_ST_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_ref, int16 com
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_ADJ_IREF_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1386,9 +1386,9 @@ int16 GTSD_CMD_ST_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_ref, int16 com
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃPosrefÖ¸Áî
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºPosÖ¸Áî²Î¿¼Öµ
+//è®¾ç½®PosrefæŒ‡ä»¤
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šPosæŒ‡ä»¤å‚è€ƒå€¼
 int16 GTSD_CMD_ST_SetPosRef(int16 axis, int32 Pos_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1396,21 +1396,21 @@ int16 GTSD_CMD_ST_SetPosRef(int16 axis, int32 Pos_ref, int16 com_type /*= GTSD_C
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (Pos_ref & 0xffff);									//ÉèÖÃPos_ref µÍ16bit
-	dspdata[4] = ((Pos_ref >> 16) & 0xffff);							//ÉèÖÃPos_ref ¸ß16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (Pos_ref & 0xffff);									//è®¾ç½®Pos_ref ä½16bit
+	dspdata[4] = ((Pos_ref >> 16) & 0xffff);							//è®¾ç½®Pos_ref é«˜16bit
 
 	int16 dsp_comNum = 5;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -1425,9 +1425,9 @@ int16 GTSD_CMD_ST_SetPosRef(int16 axis, int32 Pos_ref, int16 com_type /*= GTSD_C
 }
 /*
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃFndCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºFndCurrÖµ
+//è®¾ç½®FndCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šFndCurrå€¼
 int16 GTSD_CMD_ST_SetFndCurr(int16 axis, int16 fnd, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1435,20 +1435,20 @@ int16 GTSD_CMD_ST_SetFndCurr(int16 axis, int16 fnd, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FND_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (fnd);											//ÉèÖÃfnd
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (fnd);											//è®¾ç½®fnd
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1462,9 +1462,9 @@ int16 GTSD_CMD_ST_SetFndCurr(int16 axis, int16 fnd, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡FndCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºFndCurr
+//è¯»å–FndCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šFndCurr
 int16 GTSD_CMD_ST_GetFndCurr(int16 axis, int16* fnd, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1472,19 +1472,19 @@ int16 GTSD_CMD_ST_GetFndCurr(int16 axis, int16* fnd, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FND_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1501,9 +1501,9 @@ int16 GTSD_CMD_ST_GetFndCurr(int16 axis, int16* fnd, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃFnqCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºFnqCurrÖµ
+//è®¾ç½®FnqCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šFnqCurrå€¼
 int16 GTSD_CMD_ST_SetFnqCurr(int16 axis, int16 fnq, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1511,20 +1511,20 @@ int16 GTSD_CMD_ST_SetFnqCurr(int16 axis, int16 fnq, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FNQ_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (fnq);											//ÉèÖÃfnq
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (fnq);											//è®¾ç½®fnq
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1538,9 +1538,9 @@ int16 GTSD_CMD_ST_SetFnqCurr(int16 axis, int16 fnq, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡FnqCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºFnqCurr
+//è¯»å–FnqCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šFnqCurr
 int16 GTSD_CMD_ST_GetFnqCurr(int16 axis, int16* fnq, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1548,19 +1548,19 @@ int16 GTSD_CMD_ST_GetFnqCurr(int16 axis, int16* fnq, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FNQ_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1576,9 +1576,9 @@ int16 GTSD_CMD_ST_GetFnqCurr(int16 axis, int16* fnq, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃTidCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºTidCurrÖµ
+//è®¾ç½®TidCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šTidCurrå€¼
 int16 GTSD_CMD_ST_SetTidCurr(int16 axis, int32 tid, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1586,21 +1586,21 @@ int16 GTSD_CMD_ST_SetTidCurr(int16 axis, int32 tid, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = TID_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (tid & 0xffff);										//ÉèÖÃtidµÍ16bit
-	dspdata[4] = ((tid >> 16) & 0xffff);								//ÉèÖÃtid¸ß16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (tid & 0xffff);										//è®¾ç½®tidä½16bit
+	dspdata[4] = ((tid >> 16) & 0xffff);								//è®¾ç½®tidé«˜16bit
 
 	int16 dsp_comNum = 5;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1614,9 +1614,9 @@ int16 GTSD_CMD_ST_SetTidCurr(int16 axis, int32 tid, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡TidCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºTidCurr
+//è¯»å–TidCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šTidCurr
 int16 GTSD_CMD_ST_GetTidCurr(int16 axis, int32* tid, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1624,19 +1624,19 @@ int16 GTSD_CMD_ST_GetTidCurr(int16 axis, int32* tid, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = TID_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1653,9 +1653,9 @@ int16 GTSD_CMD_ST_GetTidCurr(int16 axis, int32* tid, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃTiqCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºTiqCurrÖµ
+//è®¾ç½®TiqCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šTiqCurrå€¼
 int16 GTSD_CMD_ST_SetTiqCurr(int16 axis, int32 tiq, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1663,21 +1663,21 @@ int16 GTSD_CMD_ST_SetTiqCurr(int16 axis, int32 tiq, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = TIQ_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (tiq & 0xffff);										//ÉèÖÃtiqµÍ16bit
-	dspdata[4] = ((tiq >> 16) & 0xffff);								//ÉèÖÃtiq¸ß16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (tiq & 0xffff);										//è®¾ç½®tiqä½16bit
+	dspdata[4] = ((tiq >> 16) & 0xffff);								//è®¾ç½®tiqé«˜16bit
 
 	int16 dsp_comNum = 5;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1691,9 +1691,9 @@ int16 GTSD_CMD_ST_SetTiqCurr(int16 axis, int32 tiq, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡TiqCurr
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºTiqCurr
+//è¯»å–TiqCurr
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šTiqCurr
 int16 GTSD_CMD_ST_GetTiqCurr(int16 axis, int32* tiq, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1701,19 +1701,19 @@ int16 GTSD_CMD_ST_GetTiqCurr(int16 axis, int32* tiq, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = TIQ_CURR_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1729,9 +1729,9 @@ int16 GTSD_CMD_ST_GetTiqCurr(int16 axis, int32* tiq, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃFnvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºFnvelÖµ
+//è®¾ç½®Fnvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šFnvelå€¼
 int16 GTSD_CMD_ST_SetFnVel(int16 axis, int16 fnvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1739,20 +1739,20 @@ int16 GTSD_CMD_ST_SetFnVel(int16 axis, int16 fnvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FN_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (fnvel);											//ÉèÖÃfnvel
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (fnvel);											//è®¾ç½®fnvel
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1766,9 +1766,9 @@ int16 GTSD_CMD_ST_SetFnVel(int16 axis, int16 fnvel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡Fnvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºFnvel
+//è¯»å–Fnvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šFnvel
 int16 GTSD_CMD_ST_GetFnVel(int16 axis, int16* fnvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1776,19 +1776,19 @@ int16 GTSD_CMD_ST_GetFnVel(int16 axis, int16* fnvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FN_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1804,9 +1804,9 @@ int16 GTSD_CMD_ST_GetFnVel(int16 axis, int16* fnvel, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃTivel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºTivelÖµ
+//è®¾ç½®Tivel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šTivelå€¼
 int16 GTSD_CMD_ST_SetTiVel(int16 axis, double tivel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1814,20 +1814,20 @@ int16 GTSD_CMD_ST_SetTiVel(int16 axis, double tivel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = TI_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (int16)(((tivel)*100.0) + 0.5);							//ÉèÖÃtivel,ÏÂÃæÖµÎª0.01ms---1
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (int16)(((tivel)*100.0) + 0.5);							//è®¾ç½®tivel,ä¸‹é¢å€¼ä¸º0.01ms---1
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1841,9 +1841,9 @@ int16 GTSD_CMD_ST_SetTiVel(int16 axis, double tivel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡Tivel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºTivel
+//è¯»å–Tivel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šTivel
 int16 GTSD_CMD_ST_GetTiVel(int16 axis, double* tivel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1851,19 +1851,19 @@ int16 GTSD_CMD_ST_GetTiVel(int16 axis, double* tivel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = TI_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1879,9 +1879,9 @@ int16 GTSD_CMD_ST_GetTiVel(int16 axis, double* tivel, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃabslimvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºabslimvelÖµ
+//è®¾ç½®abslimvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šabslimvelå€¼
 int16 GTSD_CMD_ST_SetAbsLimVel(int16 axis, int16 abslimvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1889,26 +1889,26 @@ int16 GTSD_CMD_ST_SetAbsLimVel(int16 axis, int16 abslimvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ABS_LIM_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int16 tmp;
 	tmp = (int16)(abslimvel / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp>32767) || (tmp<0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;										//ÉèÖÃabslimvel
+	dspdata[3] = tmp;										//è®¾ç½®abslimvel
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -1922,9 +1922,9 @@ int16 GTSD_CMD_ST_SetAbsLimVel(int16 axis, int16 abslimvel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡abslimvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºabslimvel
+//è¯»å–abslimvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šabslimvel
 int16 GTSD_CMD_ST_GetAbsLimVel(int16 axis, int16* abslimvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1932,19 +1932,19 @@ int16 GTSD_CMD_ST_GetAbsLimVel(int16 axis, int16* abslimvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ABS_LIM_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -1960,9 +1960,9 @@ int16 GTSD_CMD_ST_GetAbsLimVel(int16 axis, int16* abslimvel, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃposlimvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºposlimvelÖµ
+//è®¾ç½®poslimvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šposlimvelå€¼
 int16 GTSD_CMD_ST_SetPosLimVel(int16 axis, int16 poslimvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1970,26 +1970,26 @@ int16 GTSD_CMD_ST_SetPosLimVel(int16 axis, int16 poslimvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_LIM_VEL_WR_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int16 tmp;
 	tmp = (int16)(poslimvel / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃposlimvel
+	dspdata[3] = tmp;												//è®¾ç½®poslimvel
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -2003,9 +2003,9 @@ int16 GTSD_CMD_ST_SetPosLimVel(int16 axis, int16 poslimvel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡poslimvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºposlimvel
+//è¯»å–poslimvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šposlimvel
 int16 GTSD_CMD_ST_GetPosLimVel(int16 axis, int16* poslimvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2013,19 +2013,19 @@ int16 GTSD_CMD_ST_GetPosLimVel(int16 axis, int16* poslimvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_LIM_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2040,9 +2040,9 @@ int16 GTSD_CMD_ST_GetPosLimVel(int16 axis, int16* poslimvel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃneglimvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºneglimvelÖµ
+//è®¾ç½®neglimvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šneglimvelå€¼
 int16 GTSD_CMD_ST_SetNegLimVel(int16 axis, int16 neglimvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2050,26 +2050,26 @@ int16 GTSD_CMD_ST_SetNegLimVel(int16 axis, int16 neglimvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = NEG_LIM_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼	
 	int16 tmp;
 	tmp = (int16)(neglimvel / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃneglimvel
+	dspdata[3] = tmp;												//è®¾ç½®neglimvel
 
 
 	int16 dsp_comNum = 4;
@@ -2084,9 +2084,9 @@ int16 GTSD_CMD_ST_SetNegLimVel(int16 axis, int16 neglimvel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡neglimvel
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºneglimvel
+//è¯»å–neglimvel
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šneglimvel
 int16 GTSD_CMD_ST_GetNegLimVel(int16 axis, int16* neglimvel, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2094,19 +2094,19 @@ int16 GTSD_CMD_ST_GetNegLimVel(int16 axis, int16* neglimvel, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = NEG_LIM_VEL_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2121,9 +2121,9 @@ int16 GTSD_CMD_ST_GetNegLimVel(int16 axis, int16* neglimvel, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃfnpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºfnposÖµ
+//è®¾ç½®fnpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šfnposå€¼
 int16 GTSD_CMD_ST_SetFnPos(int16 axis, double fnpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2131,20 +2131,20 @@ int16 GTSD_CMD_ST_SetFnPos(int16 axis, double fnpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FN_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (int16)((fnpos)*10.0 + 0.5);											//ÉèÖÃfnpos
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (int16)((fnpos)*10.0 + 0.5);											//è®¾ç½®fnpos
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -2158,9 +2158,9 @@ int16 GTSD_CMD_ST_SetFnPos(int16 axis, double fnpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡fnpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºfnpos
+//è¯»å–fnpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šfnpos
 int16 GTSD_CMD_ST_GetFnPos(int16 axis, double* fnpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2168,19 +2168,19 @@ int16 GTSD_CMD_ST_GetFnPos(int16 axis, double* fnpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = FN_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2196,9 +2196,9 @@ int16 GTSD_CMD_ST_GetFnPos(int16 axis, double* fnpos, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃabslimpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºabslimposÖµ
+//è®¾ç½®abslimpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šabslimposå€¼
 int16 GTSD_CMD_ST_SetAbsLimPos(int16 axis, int16 abslimpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2206,26 +2206,26 @@ int16 GTSD_CMD_ST_SetAbsLimPos(int16 axis, int16 abslimpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ABS_LIM_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int16 tmp;
 	tmp = (int16)(abslimpos / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃabslimpos
+	dspdata[3] = tmp;												//è®¾ç½®abslimpos
 
 
 	int16 dsp_comNum = 4;
@@ -2240,9 +2240,9 @@ int16 GTSD_CMD_ST_SetAbsLimPos(int16 axis, int16 abslimpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡abslimpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºabslimpos
+//è¯»å–abslimpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šabslimpos
 int16 GTSD_CMD_ST_GetAbsLimPos(int16 axis, int16* abslimpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2250,19 +2250,19 @@ int16 GTSD_CMD_ST_GetAbsLimPos(int16 axis, int16* abslimpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ABS_LIM_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2278,9 +2278,9 @@ int16 GTSD_CMD_ST_GetAbsLimPos(int16 axis, int16* abslimpos, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃposlimpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºposlimposÖµ
+//è®¾ç½®poslimpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šposlimposå€¼
 int16 GTSD_CMD_ST_SetPosLimPos(int16 axis, int16 poslimpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2288,26 +2288,26 @@ int16 GTSD_CMD_ST_SetPosLimPos(int16 axis, int16 poslimpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_LIM_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼	
 	int16 tmp;
 	tmp = (int16)(poslimpos / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃposlimpos
+	dspdata[3] = tmp;												//è®¾ç½®poslimpos
 
 
 	int16 dsp_comNum = 4;
@@ -2322,9 +2322,9 @@ int16 GTSD_CMD_ST_SetPosLimPos(int16 axis, int16 poslimpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡poslimpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºposlimpos
+//è¯»å–poslimpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šposlimpos
 int16 GTSD_CMD_ST_GetPosLimPos(int16 axis, int16* poslimpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2332,19 +2332,19 @@ int16 GTSD_CMD_ST_GetPosLimPos(int16 axis, int16* poslimpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = POS_LIM_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2360,9 +2360,9 @@ int16 GTSD_CMD_ST_GetPosLimPos(int16 axis, int16* poslimpos, int16 com_type)
 }
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃneglimpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºneglimposÖµ
+//è®¾ç½®neglimpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šneglimposå€¼
 int16 GTSD_CMD_ST_SetNegLimPos(int16 axis, int16 neglimpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2370,26 +2370,26 @@ int16 GTSD_CMD_ST_SetNegLimPos(int16 axis, int16 neglimpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = NEG_LIM_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼	
 	int16 tmp;
 	tmp = (int16)(neglimpos / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃneglimpos
+	dspdata[3] = tmp;												//è®¾ç½®neglimpos
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -2403,9 +2403,9 @@ int16 GTSD_CMD_ST_SetNegLimPos(int16 axis, int16 neglimpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡neglimpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºneglimpos	
+//è¯»å–neglimpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šneglimpos	
 int16 GTSD_CMD_ST_GetNegLimPos(int16 axis, int16* neglimpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2413,19 +2413,19 @@ int16 GTSD_CMD_ST_GetNegLimPos(int16 axis, int16* neglimpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = NEG_LIM_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2442,9 +2442,9 @@ int16 GTSD_CMD_ST_GetNegLimPos(int16 axis, int16* neglimpos, int16 com_type)
 
 
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃkgaffdpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºkgaffdposÖµ
+//è®¾ç½®kgaffdpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼škgaffdposå€¼
 int16 GTSD_CMD_ST_SetKgaFfdPos(int16 axis, int16 kgaffdpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2452,26 +2452,26 @@ int16 GTSD_CMD_ST_SetKgaFfdPos(int16 axis, int16 kgaffdpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = KGA_FF_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int16 tmp;
 	tmp = (int16)(kgaffdpos / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃkgaffdpos
+	dspdata[3] = tmp;												//è®¾ç½®kgaffdpos
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -2485,9 +2485,9 @@ int16 GTSD_CMD_ST_SetKgaFfdPos(int16 axis, int16 kgaffdpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡kgaffdpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºkgaffdpos	
+//è¯»å–kgaffdpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼škgaffdpos	
 int16 GTSD_CMD_ST_GetKgaFfdPos(int16 axis, int16* kgaffdpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2495,19 +2495,19 @@ int16 GTSD_CMD_ST_GetKgaFfdPos(int16 axis, int16* kgaffdpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = KGA_FF_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2522,9 +2522,9 @@ int16 GTSD_CMD_ST_GetKgaFfdPos(int16 axis, int16* kgaffdpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃkgvffdpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºkgvffdposÖµ
+//è®¾ç½®kgvffdpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼škgvffdposå€¼
 int16 GTSD_CMD_ST_SetKgvFfdPos(int16 axis, int16 kgvffdpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2532,26 +2532,26 @@ int16 GTSD_CMD_ST_SetKgvFfdPos(int16 axis, int16 kgvffdpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = KGV_FF_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼
 	int16 tmp;
 	tmp = (int16)(kgvffdpos / 100.0*((double)(OUTPUT_LIMIT_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < 0))
 	{
 		tmp = (int16)(OUTPUT_LIMIT_SCALE);
 	}
-	dspdata[3] = tmp;												//ÉèÖÃkgvffdpos
+	dspdata[3] = tmp;												//è®¾ç½®kgvffdpos
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum);
@@ -2565,9 +2565,9 @@ int16 GTSD_CMD_ST_SetKgvFfdPos(int16 axis, int16 kgvffdpos, int16 com_type)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡kgvffdpos
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºkgvffdpos	
+//è¯»å–kgvffdpos
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼škgvffdpos	
 int16 GTSD_CMD_ST_GetKgvFfdPos(int16 axis, int16* kgvffdpos, int16 com_type)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -2575,19 +2575,19 @@ int16 GTSD_CMD_ST_GetKgvFfdPos(int16 axis, int16* kgvffdpos, int16 com_type)
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = KGV_FF_POS_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum);
@@ -2603,10 +2603,10 @@ int16 GTSD_CMD_ST_GetKgvFfdPos(int16 axis, int16* kgvffdpos, int16 com_type)
 }
 */
 //////////////////////////////////////////////////////////////////////////
-//Í¨¹ıµØÖ·ÉèÖÃ16bitµÄfpga
+//é€šè¿‡åœ°å€è®¾ç½®16bitçš„fpga
 int16 GTSD_CMD_ST_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
+	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
 	int16 base_addr;
 	int16 comAddr;
 	int16 comNum;
@@ -2647,7 +2647,7 @@ int16 GTSD_CMD_ST_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 val
 			{
 				return Net_Rt_param_Err;
 			}
-			comAddr = base_addr + (com_addr); //ÒòÎª¶ÔÓÚµÈ»·ÍøÀ´Ëµ£¬0x8000ÊÇbyteµØÖ·£¬ÊäÈëµÄÒ²ÊÇbyteµØÖ·£¬×îºóĞèÒªµÄÒ²ÊÇbyteµØÖ·
+			comAddr = base_addr + (com_addr); //å› ä¸ºå¯¹äºç­‰ç¯ç½‘æ¥è¯´ï¼Œ0x8000æ˜¯byteåœ°å€ï¼Œè¾“å…¥çš„ä¹Ÿæ˜¯byteåœ°å€ï¼Œæœ€åéœ€è¦çš„ä¹Ÿæ˜¯byteåœ°å€
 		}
 		else if (((com_addr >= FPGA_RN_CTL_START_OFST) && (com_addr <= FPGA_RN_CTL_END_OFST))
 			|| ((com_addr >= FPGA_RN_TRIG_START_OFST) && (com_addr <= FPGA_RN_TRIG_END_OFST))
@@ -2658,7 +2658,7 @@ int16 GTSD_CMD_ST_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 val
 			|| ((com_addr >= FPGA_RN_USER_START_OFST) && (com_addr <= FPGA_RN_USER_END_OFST))
 			|| ((com_addr >= FPGA_RN_APP_START_OFST) && (com_addr <= FPGA_RN_APP_END_OFST)))
 		{
-			//¹«ÓÃµÄdspnumber ¿ÉÒÔ¶¼Ğ´Îª0£¬ÒòÎªÃ»ÓĞÓÃµ½£¬Êµ¼ÊÉÏ´«ÈëµÄÆ«ÒÆÒÑ¾­ÊÇ¾ø¶ÔµØÖ·ÁË¡£
+			//å…¬ç”¨çš„dspnumber å¯ä»¥éƒ½å†™ä¸º0ï¼Œå› ä¸ºæ²¡æœ‰ç”¨åˆ°ï¼Œå®é™…ä¸Šä¼ å…¥çš„åç§»å·²ç»æ˜¯ç»å¯¹åœ°å€äº†ã€‚
 			comAddr = (com_addr);
 		}
 		comNum = 1;
@@ -2676,10 +2676,10 @@ int16 GTSD_CMD_ST_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 val
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//Í¨¹ıµØÖ·¶ÁÈ¡16bitµÄfpga
+//é€šè¿‡åœ°å€è¯»å–16bitçš„fpga
 int16 GTSD_CMD_ST_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pvalue, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
+	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
 	int16 base_addr;
 	int16 comAddr;
 	int16 comNum;
@@ -2720,7 +2720,7 @@ int16 GTSD_CMD_ST_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pv
 			{
 				return Net_Rt_param_Err;
 			}
-			comAddr = base_addr + (com_addr); //ÒòÎª¶ÔÓÚµÈ»·ÍøÀ´Ëµ£¬0x8000ÊÇbyteµØÖ·£¬ÊäÈëµÄÒ²ÊÇbyteµØÖ·£¬×îºóĞèÒªµÄÒ²ÊÇbyteµØÖ·
+			comAddr = base_addr + (com_addr); //å› ä¸ºå¯¹äºç­‰ç¯ç½‘æ¥è¯´ï¼Œ0x8000æ˜¯byteåœ°å€ï¼Œè¾“å…¥çš„ä¹Ÿæ˜¯byteåœ°å€ï¼Œæœ€åéœ€è¦çš„ä¹Ÿæ˜¯byteåœ°å€
 		}
 		else if (((com_addr >= FPGA_RN_CTL_START_OFST) && (com_addr <= FPGA_RN_CTL_END_OFST))
 			|| ((com_addr >= FPGA_RN_TRIG_START_OFST) && (com_addr <= FPGA_RN_TRIG_END_OFST))
@@ -2731,7 +2731,7 @@ int16 GTSD_CMD_ST_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pv
 			|| ((com_addr >= FPGA_RN_USER_START_OFST) && (com_addr <= FPGA_RN_USER_END_OFST))
 			|| ((com_addr >= FPGA_RN_APP_START_OFST) && (com_addr <= FPGA_RN_APP_END_OFST)))
 		{
-			//¹«ÓÃµÄdspnumber ¿ÉÒÔ¶¼Ğ´Îª0£¬ÒòÎªÃ»ÓĞÓÃµ½£¬Êµ¼ÊÉÏ´«ÈëµÄÆ«ÒÆÒÑ¾­ÊÇ¾ø¶ÔµØÖ·ÁË¡£
+			//å…¬ç”¨çš„dspnumber å¯ä»¥éƒ½å†™ä¸º0ï¼Œå› ä¸ºæ²¡æœ‰ç”¨åˆ°ï¼Œå®é™…ä¸Šä¼ å…¥çš„åç§»å·²ç»æ˜¯ç»å¯¹åœ°å€äº†ã€‚
 			comAddr = (com_addr);
 		}
 		comNum = 1;
@@ -2747,10 +2747,10 @@ int16 GTSD_CMD_ST_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pv
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//Í¨¹ıµØÖ·ÉèÖÃ32bitµÄfpga
+//é€šè¿‡åœ°å€è®¾ç½®32bitçš„fpga
 int16 GTSD_CMD_ST_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
+	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
 	int16 base_addr;
 	int16 comAddr;
 	int16 comNum;
@@ -2791,7 +2791,7 @@ int16 GTSD_CMD_ST_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 val
 			{
 				return Net_Rt_param_Err;
 			}
-			comAddr = base_addr + (com_addr); //ÒòÎª¶ÔÓÚµÈ»·ÍøÀ´Ëµ£¬0x8000ÊÇbyteµØÖ·£¬ÊäÈëµÄÒ²ÊÇbyteµØÖ·£¬×îºóĞèÒªµÄÒ²ÊÇbyteµØÖ·
+			comAddr = base_addr + (com_addr); //å› ä¸ºå¯¹äºç­‰ç¯ç½‘æ¥è¯´ï¼Œ0x8000æ˜¯byteåœ°å€ï¼Œè¾“å…¥çš„ä¹Ÿæ˜¯byteåœ°å€ï¼Œæœ€åéœ€è¦çš„ä¹Ÿæ˜¯byteåœ°å€
 		}
 		else if (((com_addr >= FPGA_RN_CTL_START_OFST) && (com_addr <= FPGA_RN_CTL_END_OFST))
 			|| ((com_addr >= FPGA_RN_TRIG_START_OFST) && (com_addr <= FPGA_RN_TRIG_END_OFST))
@@ -2802,7 +2802,7 @@ int16 GTSD_CMD_ST_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 val
 			|| ((com_addr >= FPGA_RN_USER_START_OFST) && (com_addr <= FPGA_RN_USER_END_OFST))
 			|| ((com_addr >= FPGA_RN_APP_START_OFST) && (com_addr <= FPGA_RN_APP_END_OFST)))
 		{
-			//¹«ÓÃµÄdspnumber ¿ÉÒÔ¶¼Ğ´Îª0£¬ÒòÎªÃ»ÓĞÓÃµ½£¬Êµ¼ÊÉÏ´«ÈëµÄÆ«ÒÆÒÑ¾­ÊÇ¾ø¶ÔµØÖ·ÁË¡£
+			//å…¬ç”¨çš„dspnumber å¯ä»¥éƒ½å†™ä¸º0ï¼Œå› ä¸ºæ²¡æœ‰ç”¨åˆ°ï¼Œå®é™…ä¸Šä¼ å…¥çš„åç§»å·²ç»æ˜¯ç»å¯¹åœ°å€äº†ã€‚
 			comAddr = (com_addr);
 		}
 		comNum = 2;
@@ -2845,10 +2845,10 @@ int16 GTSD_CMD_ST_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 val
 // 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//Í¨¹ıµØÖ·¶ÁÈ¡32bitµÄfpga
+//é€šè¿‡åœ°å€è¯»å–32bitçš„fpga
 int16 GTSD_CMD_ST_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pvalue, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
+	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
 	int16 base_addr;
 	int16 comAddr;
 	int16 comNum;
@@ -2889,7 +2889,7 @@ int16 GTSD_CMD_ST_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pv
 			{
 				return Net_Rt_param_Err;
 			}
-			comAddr = base_addr + (com_addr); //ÒòÎª¶ÔÓÚµÈ»·ÍøÀ´Ëµ£¬0x8000ÊÇbyteµØÖ·£¬ÊäÈëµÄÒ²ÊÇbyteµØÖ·£¬×îºóĞèÒªµÄÒ²ÊÇbyteµØÖ·
+			comAddr = base_addr + (com_addr); //å› ä¸ºå¯¹äºç­‰ç¯ç½‘æ¥è¯´ï¼Œ0x8000æ˜¯byteåœ°å€ï¼Œè¾“å…¥çš„ä¹Ÿæ˜¯byteåœ°å€ï¼Œæœ€åéœ€è¦çš„ä¹Ÿæ˜¯byteåœ°å€
 		}
 		else if (((com_addr >= FPGA_RN_CTL_START_OFST) && (com_addr <= FPGA_RN_CTL_END_OFST))
 			|| ((com_addr >= FPGA_RN_TRIG_START_OFST) && (com_addr <= FPGA_RN_TRIG_END_OFST))
@@ -2900,7 +2900,7 @@ int16 GTSD_CMD_ST_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pv
 			|| ((com_addr >= FPGA_RN_USER_START_OFST) && (com_addr <= FPGA_RN_USER_END_OFST))
 			|| ((com_addr >= FPGA_RN_APP_START_OFST) && (com_addr <= FPGA_RN_APP_END_OFST)))
 		{
-			//¹«ÓÃµÄdspnumber ¿ÉÒÔ¶¼Ğ´Îª0£¬ÒòÎªÃ»ÓĞÓÃµ½£¬Êµ¼ÊÉÏ´«ÈëµÄÆ«ÒÆÒÑ¾­ÊÇ¾ø¶ÔµØÖ·ÁË¡£
+			//å…¬ç”¨çš„dspnumber å¯ä»¥éƒ½å†™ä¸º0ï¼Œå› ä¸ºæ²¡æœ‰ç”¨åˆ°ï¼Œå®é™…ä¸Šä¼ å…¥çš„åç§»å·²ç»æ˜¯ç»å¯¹åœ°å€äº†ã€‚
 			comAddr = (com_addr);
 		}
 		comNum = 2;
@@ -2910,10 +2910,10 @@ int16 GTSD_CMD_ST_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pv
 	return rtn;
 }
 //////////////////////////////////////////////////////////////////////////
-//ÉèÖÃÇúÏßÅäÖÃ
+//è®¾ç½®æ›²çº¿é…ç½®
 int16 GTSD_CMD_ST_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 
 	if (dsp_number == GTSD_DSP_A)
 	{
@@ -2928,14 +2928,14 @@ int16 GTSD_CMD_ST_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM wave, int16 com_type
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[64] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = 0;												//ÖáºÅ¶¼ÉèÖÃÎª0¼´¿É£¬ÒòÎªÃ¿¸ödspÓĞÁ½¸öÖá£¬ÉèÖÃÄÄ¸ö¶¼Ò»Ñù
+	int16 dspdata[64] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = 0;												//è½´å·éƒ½è®¾ç½®ä¸º0å³å¯ï¼Œå› ä¸ºæ¯ä¸ªdspæœ‰ä¸¤ä¸ªè½´ï¼Œè®¾ç½®å“ªä¸ªéƒ½ä¸€æ ·
 
 	int16 cmd_id = WAVE_BUF_SET_WR_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = (wave.cmd.all);									//ÉèÖÃcontrolword
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = (wave.cmd.all);									//è®¾ç½®controlword
 	int16 j = 4;
 
 	if (wave.cmd.bit.NUM >MAX_WAVE_PLOT_NUM)
@@ -2963,10 +2963,10 @@ int16 GTSD_CMD_ST_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM wave, int16 com_type
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¶ÁÈ¡ÇúÏßÅäÖÃ
+//è¯»å–æ›²çº¿é…ç½®
 int16 GTSD_CMD_ST_GetWaveBuf(int16 dsp_number, tWaveBufCmd* ctrlword, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 
 	if (dsp_number == GTSD_DSP_A)
 	{
@@ -2981,13 +2981,13 @@ int16 GTSD_CMD_ST_GetWaveBuf(int16 dsp_number, tWaveBufCmd* ctrlword, int16 com_
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = 0;												//ÖáºÅ
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = 0;												//è½´å·
 
 	int16 cmd_id = WAVE_BUF_SET_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3002,11 +3002,11 @@ int16 GTSD_CMD_ST_GetWaveBuf(int16 dsp_number, tWaveBufCmd* ctrlword, int16 com_
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÅäÖÃ»ñÈ¡ÇúÏßÊı¾İ
+//æ ¹æ®é…ç½®è·å–æ›²çº¿æ•°æ®
 int16 GTSD_CMD_ST_GetWaveData(int16 dsp_number, int16* read_num, int16** data, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//ÏÈ¶ÁÈ¡¸öÊı
-	int16 dsp_comAddr = PLOTWAVE_DSPA_NUM_ADDR;										//µØÖ·
+	//å…ˆè¯»å–ä¸ªæ•°
+	int16 dsp_comAddr = PLOTWAVE_DSPA_NUM_ADDR;										//åœ°å€
 
 	if (dsp_number == GTSD_DSP_A)
 	{
@@ -3021,7 +3021,7 @@ int16 GTSD_CMD_ST_GetWaveData(int16 dsp_number, int16* read_num, int16** data, i
 		return Net_Rt_param_Err;
 	}
 
-	//½«Êı¾İ´«µİ³öÈ¥
+	//å°†æ•°æ®ä¼ é€’å‡ºå»
 	(*data) = Cmd_PlotDataBuffer;
 
 	int16 read_data_num = 0;
@@ -3074,7 +3074,7 @@ int16 GTSD_CMD_ST_GetWaveData(int16 dsp_number, int16* read_num, int16** data, i
 #endif
 
 
-	//ÔÙ¸ù¾İ¶ÁÈ¡µÄ¸öÊıÀ´½øĞĞ¶ÁÈ¡ÇúÏßÊı¾İ
+	//å†æ ¹æ®è¯»å–çš„ä¸ªæ•°æ¥è¿›è¡Œè¯»å–æ›²çº¿æ•°æ®
 	if (dsp_number == GTSD_DSP_A)
 	{
 		dsp_comAddr = PLOTWAVE_DSPA_DATA_ADDR;
@@ -3089,8 +3089,8 @@ int16 GTSD_CMD_ST_GetWaveData(int16 dsp_number, int16* read_num, int16** data, i
 	}
 
 	int32 Cmd_PlotDataBuffer_index = 0; //index
-	int16 Cmd_PlotDataBuffer_times = 0; //´ÎÊı
-	//¼ÙÈçfpga bufferÖĞµÄÊı¾İ³¬¹ıÉè¶¨Öµ£¬ÄÇÃ´¾Í¶ÁÈ¡Ò»´Î
+	int16 Cmd_PlotDataBuffer_times = 0; //æ¬¡æ•°
+	//å‡å¦‚fpga bufferä¸­çš„æ•°æ®è¶…è¿‡è®¾å®šå€¼ï¼Œé‚£ä¹ˆå°±è¯»å–ä¸€æ¬¡
 	if (read_data_num > (int16)PLOTWAVE_GET_DATA_MAX_ONCE)
 	{
 		while (read_data_num > (int16)PLOTWAVE_GET_DATA_MAX_ONCE)
@@ -3107,7 +3107,7 @@ int16 GTSD_CMD_ST_GetWaveData(int16 dsp_number, int16* read_num, int16** data, i
 		}
 		if (read_data_num != 0)
 		{
-			//ÔÙ¶ÁÈ¡Ò»´Î½«Ê£ÏÂµÄ¶ÁÍê
+			//å†è¯»å–ä¸€æ¬¡å°†å‰©ä¸‹çš„è¯»å®Œ
 			rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, &Cmd_PlotDataBuffer[Cmd_PlotDataBuffer_index], (int16)read_data_num, stationId);
 			if (rtn != GTSD_COM_SUCCESS)
 			{
@@ -3162,11 +3162,11 @@ int16 GTSD_CMD_ST_GetWaveData(int16 dsp_number, int16* read_num, int16** data, i
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//Çå³ıfpgaµÄFIFO
+//æ¸…é™¤fpgaçš„FIFO
 int16 GTSD_CMD_ST_ClearFpgaFifo(int16 dsp_number, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	//ÏÈ¶ÁÈ¡¸öÊı
-	int16 dsp_comAddr = PLOTWAVE_DSPA_NUM_ADDR;										//µØÖ·
+	//å…ˆè¯»å–ä¸ªæ•°
+	int16 dsp_comAddr = PLOTWAVE_DSPA_NUM_ADDR;										//åœ°å€
 
 	if (dsp_number == GTSD_DSP_A)
 	{
@@ -3188,7 +3188,7 @@ int16 GTSD_CMD_ST_ClearFpgaFifo(int16 dsp_number, int16 com_type /*= GTSD_COM_TY
 	{
 		return rtn;
 	}
-	//»ñÈ¡Êı¾İµÄµØÖ·ºÍ¸öÊıµÄµØÖ·ÊÇ²»Í¬µÄ¡£
+	//è·å–æ•°æ®çš„åœ°å€å’Œä¸ªæ•°çš„åœ°å€æ˜¯ä¸åŒçš„ã€‚
 	if (dsp_number == GTSD_DSP_A)
 	{
 		dsp_comAddr = PLOTWAVE_DSPA_DATA_ADDR;
@@ -3203,7 +3203,7 @@ int16 GTSD_CMD_ST_ClearFpgaFifo(int16 dsp_number, int16 com_type /*= GTSD_COM_TY
 	}
 	while (read_data_num >= (int16)PLOTWAVE_GET_DATA_MAX_ONCE)
 	{
-		//¶ÁÈ¡fifoÖĞµÄÊı¾İ
+		//è¯»å–fifoä¸­çš„æ•°æ®
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, Cmd_PlotDataBuffer, (int16)PLOTWAVE_GET_DATA_MAX_ONCE, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
 		{
@@ -3211,13 +3211,13 @@ int16 GTSD_CMD_ST_ClearFpgaFifo(int16 dsp_number, int16 com_type /*= GTSD_COM_TY
 		}
 		read_data_num -= (int16)PLOTWAVE_GET_DATA_MAX_ONCE;
 	}
-	//×îºó½«Ê£ÓàµÄÖµÒ»´Î¶ÁÈ¡Íê±Ï
+	//æœ€åå°†å‰©ä½™çš„å€¼ä¸€æ¬¡è¯»å–å®Œæ¯•
 	rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, Cmd_PlotDataBuffer, read_data_num, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
 	{
 		return rtn;
 	}
-	//ÔÙ¶ÁÈ¡Ò»´ÎfifoÖĞµÄÊı¾İ¸öÊı£¬Èç¹ûÎª0£¬ÄÇÃ´¾Í·µ»Ø³É¹¦
+	//å†è¯»å–ä¸€æ¬¡fifoä¸­çš„æ•°æ®ä¸ªæ•°ï¼Œå¦‚æœä¸º0ï¼Œé‚£ä¹ˆå°±è¿”å›æˆåŠŸ
 	if (dsp_number == GTSD_DSP_A)
 	{
 		dsp_comAddr = PLOTWAVE_DSPA_NUM_ADDR;
@@ -3246,10 +3246,10 @@ int16 GTSD_CMD_ST_ClearFpgaFifo(int16 dsp_number, int16 com_type /*= GTSD_COM_TY
 
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö16bitµÄÖµµ½FRAM
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª16bitçš„å€¼åˆ°FRAM
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Fram_Write16BitByAdr(int16 axis, int16 ofst, int16 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -3257,21 +3257,21 @@ int16 GTSD_CMD_ST_Fram_Write16BitByAdr(int16 axis, int16 ofst, int16 value, int1
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };												//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;											//µØÖ·
+	int16 dspdata[16] = { 0 };												//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;											//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;												//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;												//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_FRAM_16BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);						//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;										//Ğ´ÃüÁî	
-	dspdata[2] = 0;														//·µ»ØÖµ											
-	dspdata[3] = ofst;													//ÉèÖÃofst
-	dspdata[4] = value;													//ÉèÖÃvalue
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);						//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;										//å†™å‘½ä»¤	
+	dspdata[2] = 0;														//è¿”å›å€¼											
+	dspdata[3] = ofst;													//è®¾ç½®ofst
+	dspdata[4] = value;													//è®¾ç½®value
 
 	int16 dsp_comNum = 5;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3285,10 +3285,10 @@ int16 GTSD_CMD_ST_Fram_Write16BitByAdr(int16 axis, int16 ofst, int16 value, int1
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃ´ÓFRAM¶ÁÈ¡Ò»¸ö16bitµÄÖµ
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®ä»FRAMè¯»å–ä¸€ä¸ª16bitçš„å€¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Fram_Read16BitByAdr(int16 axis, int16 ofst, int16* value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -3296,20 +3296,20 @@ int16 GTSD_CMD_ST_Fram_Read16BitByAdr(int16 axis, int16 ofst, int16* value, int1
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_FRAM_16BIT_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;									//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
-	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;									//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[3] = ofst;												//è®¾ç½®ofst
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3324,10 +3324,10 @@ int16 GTSD_CMD_ST_Fram_Read16BitByAdr(int16 axis, int16 ofst, int16* value, int1
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö32bitµÄÖµµ½FRAM
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª32bitçš„å€¼åˆ°FRAM
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Fram_Write32BitByAdr(int16 axis, int16 ofst, int32 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -3335,22 +3335,22 @@ int16 GTSD_CMD_ST_Fram_Write32BitByAdr(int16 axis, int16 ofst, int32 value, int1
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_FRAM_32BIT_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = ofst;												//ÉèÖÃofst
-	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®é«˜16bit
 
 	int16 dsp_comNum = 6;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3364,10 +3364,10 @@ int16 GTSD_CMD_ST_Fram_Write32BitByAdr(int16 axis, int16 ofst, int32 value, int1
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃ´ÓFRAM¶ÁÈ¡Ò»¸ö32bitµÄÖµ
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®ä»FRAMè¯»å–ä¸€ä¸ª32bitçš„å€¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Fram_Read32BitByAdr(int16 axis, int16 ofst, int32* value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -3375,20 +3375,20 @@ int16 GTSD_CMD_ST_Fram_Read32BitByAdr(int16 axis, int16 ofst, int32* value, int1
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_FRAM_32BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
-	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[3] = ofst;												//è®¾ç½®ofst
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3398,15 +3398,15 @@ int16 GTSD_CMD_ST_Fram_Read32BitByAdr(int16 axis, int16 ofst, int32* value, int1
 	}
 	else
 	{
-		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
+		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
 		return Rt_Success;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö64bitµÄÖµµ½FRAM
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª64bitçš„å€¼åˆ°FRAM
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Fram_Write64BitByAdr(int16 axis, int16 ofst, int64 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -3414,24 +3414,24 @@ int16 GTSD_CMD_ST_Fram_Write64BitByAdr(int16 axis, int16 ofst, int64 value, int1
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_FRAM_64BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
-	dspdata[3] = ofst;												//ÉèÖÃofst
-	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
-	dspdata[6] = ((value >> 32) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
-	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
+	dspdata[6] = ((value >> 32) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
+	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//è®¾ç½®value,å†è®¾ç½®é«˜16bit
 
 	int16 dsp_comNum = 8;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3445,10 +3445,10 @@ int16 GTSD_CMD_ST_Fram_Write64BitByAdr(int16 axis, int16 ofst, int64 value, int1
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//¸ù¾İÆ«ÖÃ´ÓFRAM¶ÁÈ¡Ò»¸ö64bitµÄÖµ
-//²ÎÊı£ºÖáºÅ
-//²ÎÊı£ºÆ«ÖÃ
-//²ÎÊı£ºÖµ
+//æ ¹æ®åç½®ä»FRAMè¯»å–ä¸€ä¸ª64bitçš„å€¼
+//å‚æ•°ï¼šè½´å·
+//å‚æ•°ï¼šåç½®
+//å‚æ•°ï¼šå€¼
 int16 GTSD_CMD_ST_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -3456,20 +3456,20 @@ int16 GTSD_CMD_ST_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value, int1
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_FRAM_64BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
-	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[3] = ofst;												//è®¾ç½®ofst
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3482,7 +3482,7 @@ int16 GTSD_CMD_ST_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value, int1
 		int64 tmp, tmp1;
 		tmp = (((int64)dspdata[4]) << 32);
 		tmp1 = ((tmp << 16) & 0xffff000000000000);
-		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//¸ßÎ»ÔÚºó
+		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//é«˜ä½åœ¨å
 		return Rt_Success;
 	}
 }
@@ -3494,19 +3494,19 @@ int16 GTSD_CMD_ST_FlashWrite(int16 axis, INTEL_HEX_FRAME* packet, int16 com_type
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[100] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[100] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_SPI_FLASH_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼											
 	dspdata[3] = packet->lenth;											
 	dspdata[4] = ((packet->addr >> 16) & 0xffff);
 	dspdata[5] = (packet->addr & 0xffff);						
@@ -3536,19 +3536,19 @@ int16 GTSD_CMD_ST_FlashRead(int16 axis, INTEL_HEX_FRAME* packet_w, INTEL_HEX_FRA
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[200] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[200] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = WR_SPI_FLASH_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 	dspdata[3] = packet_w->lenth;												
 	dspdata[4] = ((packet_w->addr >> 16) & 0xffff);
 	dspdata[5] = (packet_w->addr & 0xffff);
@@ -3578,20 +3578,20 @@ int16 GTSD_CMD_ST_FlashErase(int16 axis, int16 blockNum, int16 com_type /*= GTSD
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = SPI_ERASE_FLASH_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;													//·µ»ØÖµ	
-	dspdata[3] = blockNum;											//ĞèÒª²Á³öµÄblock number
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;													//è¿”å›å€¼	
+	dspdata[3] = blockNum;											//éœ€è¦æ“¦å‡ºçš„block number
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3612,20 +3612,20 @@ int16 GTSD_CMD_ST_InterruptSwitch(int16 axis, int16 int_switch, int16 com_type /
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = INTERRUPT_SWITCH_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;													//·µ»ØÖµ											
-	dspdata[3] = int_switch;											//ÖĞ¶Ï¿ª¹Ø							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;													//è¿”å›å€¼											
+	dspdata[3] = int_switch;											//ä¸­æ–­å¼€å…³							
 
 	int16 dsp_comNum = 4;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3661,18 +3661,18 @@ int16 GTSD_CMD_ST_ProcessorGeneralFunc(int16 axis, GENERALFUNCTION* gefunc, int1
 	{
 		return Net_Rt_param_Err;
 	}
-	int16 Axis			 = axis;														//ÖáºÅ
-	int16 dsp_comAddr	 = DSPA_COMADDR;												//µØÖ·
+	int16 Axis			 = axis;														//è½´å·
+	int16 dsp_comAddr	 = DSPA_COMADDR;												//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr		 = (int16)(DSPB_COMADDR);
-		Axis			 = Axis % 2;													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis			 = Axis % 2;													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
-	gefunc->data[0]		 = GetCmdIDAndAxisNum(gefunc->cmd, Axis);						//ºÏ²¢ÖáºÅºÍÃüÁîid
-	gefunc->data[1]		 = gefunc->mode;												//ÃüÁîÄ£Ê½	Ğ´£º0 ¶Á1
-	gefunc->data[2]		 = 0;															//·µ»ØÖµ	
+	gefunc->data[0]		 = GetCmdIDAndAxisNum(gefunc->cmd, Axis);						//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	gefunc->data[1]		 = gefunc->mode;												//å‘½ä»¤æ¨¡å¼	å†™ï¼š0 è¯»1
+	gefunc->data[2]		 = 0;															//è¿”å›å€¼	
 
-	int16 dsp_comNum     = gefunc->dataLenth;											//Êı¾İ³¤¶ÈÊÇ°üº¬»ØÀ´µÄ×Ü³¤¶È
+	int16 dsp_comNum     = gefunc->dataLenth;											//æ•°æ®é•¿åº¦æ˜¯åŒ…å«å›æ¥çš„æ€»é•¿åº¦
 
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, (1 - gefunc->mode), dsp_comAddr, gefunc->data, dsp_comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
@@ -3690,19 +3690,19 @@ int16 GTSD_CMD_ST_ResetSystem(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = RESET_SYSTEM_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;													//·µ»ØÖµ											
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;													//è¿”å›å€¼											
 
 	int16 dsp_comNum = 3;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3725,22 +3725,22 @@ int16 GTSD_CMD_ST_CheckResetFinish(int16 axis, bool& flag_finish, int16 com_type
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = CHECK_RESET_FINISH_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 	int32 value1, value2;
 	int16 dsp_comNum = 15;
-	//¶ÁÈ¡µÚÒ»´Î
+	//è¯»å–ç¬¬ä¸€æ¬¡
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
 	{
@@ -3748,12 +3748,12 @@ int16 GTSD_CMD_ST_CheckResetFinish(int16 axis, bool& flag_finish, int16 com_type
 	}
 	else
 	{
-		value1 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
+		value1 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
 	}
 	Sleep(1);
-	//¶ÁÈ¡µÚ¶ş´Î
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	//è¯»å–ç¬¬äºŒæ¬¡
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
 	dspdata[2] = 0;
 	rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
@@ -3762,7 +3762,7 @@ int16 GTSD_CMD_ST_CheckResetFinish(int16 axis, bool& flag_finish, int16 com_type
 	}
 	else
 	{
-		value2 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
+		value2 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
 	}
 
 	if ((value2>value1) &&(value1!=0)&&(value2!=0))
@@ -3783,19 +3783,19 @@ int16 GTSD_CMD_ST_ReadProcessorVersion(int16 axis, Uint16& ver, int16 com_type /
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;												//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;												//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = RD_PROCESSOR_VER_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 15;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3816,7 +3816,7 @@ int16 GTSD_CMD_ST_ReadFirmwareVersion(int16 axis, Uint16& ver, int16 com_type /*
 	{
 		return Net_Rt_param_Err;
 	}
-	int16 Axis = axis;												//ÖáºÅ
+	int16 Axis = axis;												//è½´å·
 	int16 dsp_number = GTSD_DSP_A;	
 	int16 com_addr = (int16)FPGA_VERSION;
 	if (Axis > 1)
@@ -3841,19 +3841,19 @@ int16 GTSD_CMD_ST_ClrAlarm(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, i
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;										//µØÖ·
+	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;										//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = ALARM_CLEAR_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
-	dspdata[2] = 0;													//·µ»ØÖµ											
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
+	dspdata[2] = 0;													//è¿”å›å€¼											
 
 	int16 dsp_comNum = 3;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -3935,19 +3935,19 @@ int16 GTSD_CMD_ST_ReadLogAlarmCode(int16 axis, Uint32* alarmCode, Uint16& lenth,
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[64] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;									//µØÖ·
+	int16 dspdata[64] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;									//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = RD_ALARM_LOG_CODE_COM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	Uint16 cur_index = 0;
 	Uint16 bit32lenth = 0;
@@ -3959,18 +3959,18 @@ int16 GTSD_CMD_ST_ReadLogAlarmCode(int16 axis, Uint32* alarmCode, Uint16& lenth,
 	}
 	else
 	{
-		//µÚÒ»¸öÊı¾İÊÇµ±Ç°µÄindex
+		//ç¬¬ä¸€ä¸ªæ•°æ®æ˜¯å½“å‰çš„index
 		cur_index = dspdata[0];
-		//¼ÙÈç¶Áµ½µÄ±¨¾¯indexÊÇ-1£¬ÄÇÃ´¾ÍËµÃ÷»¹Ã»ÓĞ±¨¾¯£¬Õı³£µÄÊ±ºò»á½«ËûÃÇ³õÊ¼»¯Îª0
+		//å‡å¦‚è¯»åˆ°çš„æŠ¥è­¦indexæ˜¯-1ï¼Œé‚£ä¹ˆå°±è¯´æ˜è¿˜æ²¡æœ‰æŠ¥è­¦ï¼Œæ­£å¸¸çš„æ—¶å€™ä¼šå°†ä»–ä»¬åˆå§‹åŒ–ä¸º0
 		if (((int16)cur_index) <0)
 		{
 			cur_index = 0;
 		}
 
-		//µÚ¶ş¸öÊı¾İÊÇ32bitÊı¾İµÄ³¤¶È
+		//ç¬¬äºŒä¸ªæ•°æ®æ˜¯32bitæ•°æ®çš„é•¿åº¦
 		bit32lenth = dspdata[1];
 
-		//¸ù¾İµ±Ç°indexºÍ×ÜµÄÊı¾İ³¤¶È½øĞĞÅÅĞò£¬½«×î½üµÄ±¨¾¯ÅÅÔÚ×îÇ°Ãæ¡£
+		//æ ¹æ®å½“å‰indexå’Œæ€»çš„æ•°æ®é•¿åº¦è¿›è¡Œæ’åºï¼Œå°†æœ€è¿‘çš„æŠ¥è­¦æ’åœ¨æœ€å‰é¢ã€‚
 		for (int16 i = 0; i < lenth; ++i)
 		{
 			alarmCode[i] = (((dspdata[(2 + 2 * cur_index)] << 16) & 0xffff0000) | (dspdata[(2 + 2 * cur_index + 1)]&0x0000ffff));
@@ -3992,19 +3992,19 @@ int16 GTSD_CMD_ST_ReadLogAlarmTimes(int16 axis, Uint16* alarmTimes, Uint16& lent
 		return Net_Rt_param_Err;
 	}
 
-	int16 dspdata[64] = { 0 };											//Í¨ĞÅÊı×é
-	int16 Axis = axis;													//ÖáºÅ
-	int16 dsp_comAddr = DSPA_COMADDR;									//µØÖ·
+	int16 dspdata[64] = { 0 };											//é€šä¿¡æ•°ç»„
+	int16 Axis = axis;													//è½´å·
+	int16 dsp_comAddr = DSPA_COMADDR;									//åœ°å€
 	if (Axis > 1)
 	{
 		dsp_comAddr = (int16)(DSPB_COMADDR);
-		Axis = Axis % 2;											//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
+		Axis = Axis % 2;											//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
 	}
 
 	int16 cmd_id = RD_ALARM_LOG_TIMES_COM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//ºÏ²¢ÖáºÅºÍÃüÁîid
-	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
-	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	dspdata[2] = 0;												//è¿”å›å€¼																		
 
 	int16 dsp_comNum = 40;
 	int rtn = g_AbsCom->GTSD_Com_Processor_handler(com_type, GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, stationId);
@@ -4024,7 +4024,7 @@ int16 GTSD_CMD_ST_ReadLogAlarmTimes(int16 axis, Uint16* alarmTimes, Uint16& lent
 
 int16 GTSD_CMD_ST_ScanRnTopology(int16 com_type /*= GTSD_COM_TYPE_RNNET*/, int16 stationId /*= 0xff*/)
 {
-	//´ÓµØÖ·Áã¿ªÊ¼¶ÁÈ¡16¸öshort
+	//ä»åœ°å€é›¶å¼€å§‹è¯»å–16ä¸ªshort
 	int16 mode		= FPGA_MODE_RD;
 	int16 addr		= 0x0000;				
 	int16 data[64]	= { 0 };

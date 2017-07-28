@@ -1,4 +1,4 @@
-//////////////////////////////////////////////////////////////////////////////////////////
+ï»¿//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	eeprom operate interface		 							//
 //	file				:	eepromOpt.cpp												//
 //	Description			:	use for operate eeprom 										//
@@ -9,7 +9,7 @@
 //--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2017/04/01	|	googoltech		|		2017 - 2020			//
 //--------------------------------------------------------------------------------------//
-//////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include "eepromOpt.h"
 #include "ST_GTSD_Cmd.h"
@@ -34,7 +34,7 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 	{
 		return Net_Rt_param_Err;
 	}
-	int16 Axis = axis;													//ÖáºÅ
+	int16 Axis = axis;													//è½´å·
 	int16 com_addr  = FPGA_EEPROM_STATUS;								// EEPROM STATE
 	int16 com_addr1 = FPGA_EEPROM_READ_ADDR;							// EEPROM READ ADDR 
 	int16 com_addr2 = FPGA_EEPROM_READ_DAT;								// EEPROM READ DAT
@@ -55,7 +55,7 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 		base_addr = (int16)FPGA_EEPROM_RNNET_BASEADDR;
 	}
 
-	//¼ÆËãÊµ¼ÊµÄµØÖ·
+	//è®¡ç®—å®é™…çš„åœ°å€
 	int16 comAddr;
 	int16 comAddr1;
 	int16 comAddr2;
@@ -64,8 +64,8 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 
 	if (com_type == GTSD_COM_TYPE_NET)
 	{
-		//shortµØÖ·
-		//¼ÆËãÊµ¼ÊµÄµØÖ·
+		//shortåœ°å€
+		//è®¡ç®—å®é™…çš„åœ°å€
 		comAddr  = base_addr + (com_addr >> 1);
 		comAddr1 = base_addr + (com_addr1 >> 1);
 		comAddr2 = base_addr + (com_addr2 >> 1);
@@ -74,8 +74,8 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 	}
 	else if (com_type == GTSD_COM_TYPE_RNNET)
 	{
-		//byteµØÖ·
-		//¼ÆËãÊµ¼ÊµÄµØÖ·
+		//byteåœ°å€
+		//è®¡ç®—å®é™…çš„åœ°å€
 		comAddr = base_addr + (com_addr);
 		comAddr1 = base_addr + (com_addr1);
 		comAddr2 = base_addr + (com_addr2);
@@ -92,7 +92,7 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 	for (int16 i = 0; i < length;++i)
 	{
 		//----------------------------------------------------------------------------
-		//Ğ´Èë¶ÁµØÖ·
+		//å†™å…¥è¯»åœ°å€
 		readAddr = (int16)(addr+i);
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr1, &readAddr, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
@@ -100,7 +100,7 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 			return false;
 		}
 		//----------------------------------------------------------------------------
-		//Ê¹ÄÜ¶ÁÈ¡£¬Ğ´¿ØÖÆ¼Ä´æÆ÷
+		//ä½¿èƒ½è¯»å–ï¼Œå†™æ§åˆ¶å¯„å­˜å™¨
 		int16 ctl = 0x0011;
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr3, &ctl, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
@@ -108,7 +108,7 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 			return false;
 		}
 		//----------------------------------------------------------------------------
-		//¶ÁÈ¡×´Ì¬¼Ä´æÆ÷
+		//è¯»å–çŠ¶æ€å¯„å­˜å™¨
 		cnt = 0;
 		status = 0;
 		do 
@@ -126,7 +126,7 @@ bool eepromOpt::read(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 com
 			return false;
 		}
 		Sleep(15);
-		//¶ÁÈ¡·µ»ØµÄÊı¾İ,ÔİÊ±¶ÁÈ¡Á½´ÎÒÔÉÏ¿ÉÒÔ¶Áµ½¡£ºóĞøĞŞ¸ÄºóÔÙ¸ü¸ÄÎª¶ÁÈ¡Ò»´Î¡£¶ÁÈ¡×´Ì¬Ò²ÊÇÒ»ÑùµÄ¡£
+		//è¯»å–è¿”å›çš„æ•°æ®,æš‚æ—¶è¯»å–ä¸¤æ¬¡ä»¥ä¸Šå¯ä»¥è¯»åˆ°ã€‚åç»­ä¿®æ”¹åå†æ›´æ”¹ä¸ºè¯»å–ä¸€æ¬¡ã€‚è¯»å–çŠ¶æ€ä¹Ÿæ˜¯ä¸€æ ·çš„ã€‚
 		for (int16 j = 0; j < 3;++j)
 		{
 			rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr2, &dat, comNum, stationId);
@@ -149,7 +149,7 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 	{
 		return Net_Rt_param_Err;
 	}
-	int16 Axis = axis;													//ÖáºÅ
+	int16 Axis = axis;													//è½´å·
 	int16 com_addr = FPGA_EEPROM_STATUS;								// EEPROM STATE
 	int16 com_addr1 = FPGA_EEPROM_WRITE_ADDR;							// EEPROM WRITE ADDR 
 	int16 com_addr2 = FPGA_EEPROM_WRITE_DAT;							// EEPROM WRITE DAT
@@ -170,7 +170,7 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 		base_addr = (int16)FPGA_EEPROM_RNNET_BASEADDR;
 	}
 
-	//¼ÆËãÊµ¼ÊµÄµØÖ·
+	//è®¡ç®—å®é™…çš„åœ°å€
 	int16 comAddr;
 	int16 comAddr1;
 	int16 comAddr2;
@@ -179,8 +179,8 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 
 	if (com_type == GTSD_COM_TYPE_NET)
 	{
-		//shortµØÖ·
-		//¼ÆËãÊµ¼ÊµÄµØÖ·
+		//shortåœ°å€
+		//è®¡ç®—å®é™…çš„åœ°å€
 		comAddr = base_addr + (com_addr >> 1);
 		comAddr1 = base_addr + (com_addr1 >> 1);
 		comAddr2 = base_addr + (com_addr2 >> 1);
@@ -189,8 +189,8 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 	}
 	else if (com_type == GTSD_COM_TYPE_RNNET)
 	{
-		//byteµØÖ·
-		//¼ÆËãÊµ¼ÊµÄµØÖ·
+		//byteåœ°å€
+		//è®¡ç®—å®é™…çš„åœ°å€
 		comAddr = base_addr + (com_addr);
 		comAddr1 = base_addr + (com_addr1);
 		comAddr2 = base_addr + (com_addr2);
@@ -207,7 +207,7 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 	for (int16 i = 0; i < length; ++i)
 	{
 		//----------------------------------------------------------------------------
-		//Ğ´ÈëĞ´µØÖ·
+		//å†™å…¥å†™åœ°å€
 		writeAddr = (int16)(addr + i);
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr1, &writeAddr, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
@@ -215,7 +215,7 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 			return false;
 		}
 		//----------------------------------------------------------------------------
-		//Ğ´ÈëÊı¾İ
+		//å†™å…¥æ•°æ®
 		dat = buf[i];
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr2, &dat, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
@@ -223,7 +223,7 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 			return false;
 		}
 		//----------------------------------------------------------------------------
-		//Ê¹ÄÜĞ´Èë£¬Ğ´¿ØÖÆ¼Ä´æÆ÷
+		//ä½¿èƒ½å†™å…¥ï¼Œå†™æ§åˆ¶å¯„å­˜å™¨
 		int16 ctl = 0x0010;
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr3, &ctl, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
@@ -231,7 +231,7 @@ bool eepromOpt::write(int16 axis, Uint32 addr, int8 *buf, int32 length, int16 co
 			return false;
 		}
 		//----------------------------------------------------------------------------
-		//¶ÁÈ¡×´Ì¬¼Ä´æÆ÷
+		//è¯»å–çŠ¶æ€å¯„å­˜å™¨
 		cnt = 0;
 		status = 0;
 		do
@@ -273,28 +273,28 @@ bool eepromOpt::erase(int16 axis, int16 com_type, int16 stationId)
 		base_addr = (int16)FPGA_EEPROM_RNNET_BASEADDR;
 	}
 
-	//¼ÆËãÊµ¼ÊµÄµØÖ·
+	//è®¡ç®—å®é™…çš„åœ°å€
 	int16 comAddr;
 	int16 comNum;
 
 	if (com_type == GTSD_COM_TYPE_NET)
 	{
-		//shortµØÖ·
-		//¼ÆËãÊµ¼ÊµÄµØÖ·
+		//shortåœ°å€
+		//è®¡ç®—å®é™…çš„åœ°å€
 		comAddr = base_addr + (com_addr >> 1);
 		comNum = 1;
 	}
 	else if (com_type == GTSD_COM_TYPE_RNNET)
 	{
-		//byteµØÖ·
-		//¼ÆËãÊµ¼ÊµÄµØÖ·
+		//byteåœ°å€
+		//è®¡ç®—å®é™…çš„åœ°å€
 		comAddr = base_addr + (com_addr);
 		comNum = 1;
 	}
 	int16 rtn;
 
 	//----------------------------------------------------------------------------
-	//Ğ´Èë¿ØÖÆµØÖ·
+	//å†™å…¥æ§åˆ¶åœ°å€
 	int16 ctl = 0x0030;
 	
 	rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &ctl, comNum, stationId);
