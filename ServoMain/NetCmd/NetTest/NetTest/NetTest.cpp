@@ -19,7 +19,11 @@ int _tmain(int argc, _TCHAR* argv[])
 #if TEST_UBOOT
 	std::wstring ldrPath = L"D:/Smart/ServoMaster/git-project/servo-4/release/Resource/Uboot/ServoUboot.ldr";
 	std::string key = "a5e4b8a4d71d04d2f89d8318fec19283";
-	GTSD_CMD_ProcessorUartBootHandler(0, ldrPath, 115200, 1, key, updateProgress, NULL, 1, 1);
+	for (int i = 0; i < 3;i=i+2)
+	{
+		ret=GTSD_CMD_ProcessorUartBootHandler(i, ldrPath, 115200, 1, key, updateProgress, NULL, 1, 1);
+		cout << "ret=" << ret;
+	}
 #endif
 
 	while (true)

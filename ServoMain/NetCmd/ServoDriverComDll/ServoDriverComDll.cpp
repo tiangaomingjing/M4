@@ -60,7 +60,19 @@ int16 GTSD_Convert_axi(int16& axis)
 {
 	int16 station_id = g_RnServoCom->ConvertAxiToStationId(axis);
 //	int16 station_id = 0xF0;// (axis >> 1) + 1;
-	axis = (axis & 0x1) + ((station_id & 0xFF)<<1);
+	switch (station_id & 0xFF)
+	{
+	case RN_DSP_CH_ID: axis = (axis & 0x1);
+		break;
+	case RN_PCI_CH_ID: axis = (axis & 0x1) + 2;
+		break;
+	case RN_EXT_CH_ID: axis = (axis & 0x1) + 4;
+		break;
+	default:
+		axis = 0;
+		station_id = 0xF200;
+		break;
+	} 
 	return (station_id>>8) & 0xFF;
 };
 //////////////////////////////////////////////////////////////////////////
