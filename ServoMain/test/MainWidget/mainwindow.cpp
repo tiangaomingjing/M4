@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include <QDateTime>
 #include <QTextStream>
+#include <QLineEdit>
+#include <QLabel>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -21,6 +23,15 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     m_datas.append(dat);
   }
+
+  QLineEdit *nameEdit  = new QLineEdit(this);
+  QLabel    *nameLabel = new QLabel("&Name:", this);
+  nameLabel->setBuddy(nameEdit);
+  QLineEdit *phoneEdit  = new QLineEdit(this);
+  QLabel    *phoneLabel = new QLabel("&Phone:", this);
+  phoneLabel->setBuddy(phoneEdit);
+  ui->verticalLayout->addWidget(nameEdit);
+  ui->verticalLayout->addWidget(phoneEdit);
 
 }
 
