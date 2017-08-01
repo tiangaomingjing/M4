@@ -6,6 +6,7 @@
 #include <iostream>
 using namespace std;
 void updateProgress(void *arg, int16 *value);
+
 #define TEST_UBOOT 1
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -26,6 +27,15 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 #endif
 
+	//int aa = 100;
+	int comType = 1;
+	//ret = GTSD_CMD_Open(updateProgress, (void *)&aa, comType);
+	//cout << "ret=" << ret;
+	//GTSD_CMD_Close(comType);
+
+	short netCarMsg = GTSD_CMD_GetNetCardMsg();
+	Uint16 version;
+	ret=GTSD_CMD_ReadProcessorVersion(0, version, comType, 0);
 	while (true)
 	{
 
