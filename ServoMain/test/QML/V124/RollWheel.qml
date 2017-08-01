@@ -8,7 +8,7 @@ Rectangle {
 //    border.color: "black"
 //    radius: height*0.1
     id: root;
-    property int curValue: 10;
+    property int curValue: 5;
     property int  __viewItemCount: 5;
     ColumnLayout{
         anchors.fill: parent;
@@ -55,7 +55,7 @@ Rectangle {
             Keys.onLeftPressed: decrementCurrentIndex();
             Keys.onRightPressed: incrementCurrentIndex();
             Component.onCompleted: {
-                pathView.currentIndex=1;
+                pathView.currentIndex=0;
             }
         }
     }

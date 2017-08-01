@@ -16,10 +16,12 @@ Rectangle {
     width: 1000;
     height: 600;
     property double posAdjValue: 10;//寻相偏移角度
-    property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮，用于查伺服是否完成
+    property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮
+    property bool searchFinish: false;
     property var errorCode: 0x0000;
     property int cmdSrcDefault: 1;
     property int currentTaskMode: 0;
+    property bool motorIsRunning: false;
     function updateUiFromServo(){
         console.log("driveEncoder -> onItemValueChanged")
     //            listView.setCurrentIndex(Number(factory.dataTree.textTopLevel(0,1))-1);
@@ -49,6 +51,7 @@ Rectangle {
         else{
             if(m_timer.running===true)
                 m_timer.stop();
+            m_btnSavePhase.enabled=false;
         }
 //        m_encoderComboBox.replot();
         console.log("downCanvasArrow.onActiveNow");
@@ -574,21 +577,23 @@ Rectangle {
             height: 50;
             RowLayout{
                 anchors.fill: parent;
-                spacing: 30;
+                spacing: 10;
                 CheckBox {
                     id:m_saveCheckBox;
                     text: qsTr("是否保存")
-                    checked: false
+                    checked: false;
+                    visible: false;
                 }
                 Button{
                     id:m_btnStartTest;
                     height: 40;
+                    Layout.fillWidth: true;
                     property bool barVisible: false;
                     property int barValue: 0;
             //        text:"开 始 寻 相";
                     style: ButtonStyle {
                         background: Rectangle {
-                            implicitWidth: 150
+                            implicitWidth: 100
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
@@ -623,6 +628,35 @@ Rectangle {
                         label: Text{
                             text:qsTr("开 始 寻 相");
                             color: control.hovered?"steelblue":"black";
+                            horizontalAlignment: Text.AlignHCenter;
+                            verticalAlignment: Text.AlignVCenter;
+                        }
+                    }
+                }
+                Button{
+                    id:m_btnSavePhase;
+                    height: 40;
+                    enabled: root.searchFinish;
+                    visible: !root.motorIsRunning;
+                    property bool barVisible: false;
+                    property int barValue: 0;
+                    Layout.fillWidth: true;
+
+                    style: ButtonStyle {
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 40
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 10
+                            gradient: Gradient {
+                                GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
+                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                            }
+                        }
+                        label: Text{
+                            text:qsTr("保 存 相 位");
+                            color: control.enabled?control.hovered?"steelblue":"black":"gray";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
                         }
@@ -774,6 +808,7 @@ Rectangle {
 
                     break;
                 case servoState.CheckFinish:
+                    root.motorIsRunning=true;
                     m_btnStartTest.barValue+=10;
                     if(m_btnStartTest.barValue>=100){
                         m_btnStartTest.barValue=0;
@@ -782,8 +817,8 @@ Rectangle {
                     adjFlag=m_cmd.readCommand("gSevDrv.sev_obj.mfj.pos_adj_flag");
                     if(adjFlag!=="NULL")
                         ret=parseInt(adjFlag);
-                    flagFinish=Boolean(ret);
-                    if(flagFinish){
+                    root.searchFinish=Boolean(ret);
+                    if(root.searchFinish){
                         checkCount=0;
                         var msg=qsTr("---寻相完成---")
                         if(m_saveCheckBox.checked){
@@ -793,6 +828,7 @@ Rectangle {
                             msg=qsTr("---寻相完成，并保存相位---");
                         }
                         m_btnStartTest.barValue=100;
+                        m_btnSavePhase.enabled=true;
                         currentState=servoState.Quit;
                         root.showMessage(msg);
                     }
@@ -804,13 +840,14 @@ Rectangle {
                     break;
                 case servoState.Quit:
                     console.log("servoState.Quit");
-                    root.btnSearchIsClicked=false;
                     checkCount=0;
+                    root.btnSearchIsClicked=false;
                     m_btnStartTest.barVisible=false;
                     //还原伺服原来的状态
                     m_cmd.setServoOn(false);
                     m_cmd.setServoTaskMode(root.currentTaskMode);
                     m_cmd.writeCommand("gSevDrv.sev_obj.pos.seq.prm.cmd_src_sel",root.cmdSrcDefault);
+                    root.motorIsRunning=false;
                     currentState=servoState.CheckServoOn;
                     break;
                 }

@@ -495,21 +495,22 @@ Rectangle {
             height: 50;
             RowLayout{
                 anchors.fill: parent;
-                spacing: 30;
-                CheckBox {
-                    id:m_saveCheckBox;
-                    text: qsTr("是否保存")
-                    checked: false
-                }
+                spacing: 10;
+//                CheckBox {
+//                    id:m_saveCheckBox;
+//                    text: qsTr("是否保存")
+//                    checked: false
+//                }
                 Button{
                     id:m_btnStartTest;
                     height: 40;
                     property bool barVisible: false;
                     property int barValue: 0;
+                    Layout.fillWidth: true;
             //        text:"开 始 寻 相";
                     style: ButtonStyle {
                         background: Rectangle {
-                            implicitWidth: 150
+                            implicitWidth: 100
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
@@ -543,6 +544,34 @@ Rectangle {
                         label: Text{
                             text:qsTr("开 始 寻 相");
                             color: control.hovered?"steelblue":"black";
+                            horizontalAlignment: Text.AlignHCenter;
+                            verticalAlignment: Text.AlignVCenter;
+                        }
+                    }
+                }
+                Button{
+                    id:m_btnSavePhase;
+                    height: 40;
+                    enabled: root.btnSearchIsClicked;
+                    property bool barVisible: false;
+                    property int barValue: 0;
+                    Layout.fillWidth: true;
+
+                    style: ButtonStyle {
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 40
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 10
+                            gradient: Gradient {
+                                GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
+                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                            }
+                        }
+                        label: Text{
+                            text:qsTr("保 存 相 位");
+                            color: control.enabled?control.hovered?"steelblue":"black":"gray";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
                         }
@@ -717,6 +746,7 @@ Rectangle {
 //            }
             m_btnStartTest.barVisible=true;
             m_btnStartTest.barValue=0;
+            root.btnSearchIsClicked=true;
         }
     }
     property var node:  {
