@@ -13,12 +13,16 @@
 #include "stdafx.h"
 #include "gdef.h"
 
-WAVE_BUF_PRM g_dspA_wave_prm;
-WAVE_BUF_PRM g_dspB_wave_prm;
+WAVE_BUF_PRM g_dsp_wave_prm[MAX_DSP_WAVE];
+
+// WAVE_BUF_PRM g_dspA_wave_prm;
+// WAVE_BUF_PRM g_dspB_wave_prm;
 
 //定义关键区，用于在不同的线程中都去操作数据个数
-CRITICAL_SECTION	g_cs_dspA;
-CRITICAL_SECTION	g_cs_dspB;
+CRITICAL_SECTION	g_cs_dsp[MAX_DSP_WAVE];
+
+// CRITICAL_SECTION	g_cs_dspA;
+// CRITICAL_SECTION	g_cs_dspB;
 
 #ifdef TIME_TEST
 //////////////////////////////////////////////////////////////////////////

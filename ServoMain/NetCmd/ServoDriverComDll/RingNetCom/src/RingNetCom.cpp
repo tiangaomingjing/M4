@@ -20,6 +20,7 @@ int16 isInCallBack = 0;
 int16 parsePacket[512] = { 0 };
 int16 parsePacketCmd[512] = { 0 };
 int16 waveDataLenth = 0;
+vector<STA_LOG> sta_log;
 //////////////////////////////////////////////////////////////////////////
 
 CRnNet::CRnNet(const int8* adapter, int32 port)

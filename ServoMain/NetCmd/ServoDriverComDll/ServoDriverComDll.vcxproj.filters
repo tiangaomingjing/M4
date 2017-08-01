@@ -97,6 +97,24 @@
     <Filter Include="socketCom\src">
       <UniqueIdentifier>{ca41442c-c476-41ac-a170-95458c942c29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="eeprom">
+      <UniqueIdentifier>{24cfbdec-26d5-4a43-8ad5-d38048d19211}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="eeprom\include">
+      <UniqueIdentifier>{87c58177-a06e-4606-aafd-dde3a9fecfed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="eeprom\src">
+      <UniqueIdentifier>{4ea90d64-6314-49c8-8f1f-cf8c5b43a265}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RingNetDriver">
+      <UniqueIdentifier>{e02e06e8-0604-47a4-8aea-cf9605e4d9b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RingNetDriver\include">
+      <UniqueIdentifier>{26f85a46-8e25-4bb0-9168-e0e124b6c4b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RingNetDriver\src">
+      <UniqueIdentifier>{eaad7198-3d01-4af0-a732-10495b083afe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -180,6 +198,69 @@
     <ClInclude Include="SocketCom\include\SocketPacket.h">
       <Filter>socketCom\include</Filter>
     </ClInclude>
+    <ClInclude Include="eeprom\include\eepromOpt.h">
+      <Filter>eeprom\include</Filter>
+    </ClInclude>
+    <ClInclude Include="NetDriver.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RingNetDriver.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="DeviceDataBase.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="StRingNetRegDef.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RnDeviceDataBase.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="StRingNetComUser.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RingNetInterface.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RnDriverWave.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RnDriverPlot.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ServoDriverComDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UserResp.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RingNetDeviceDef.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RnServoAxiMapping.h">
+      <Filter>RingNetDriver\include</Filter>
+    </ClInclude>
+    <ClInclude Include="ServoDriverCom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="RnSerialPort.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionControlComDll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MotionCtrlCom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -253,6 +334,57 @@
     </ClCompile>
     <ClCompile Include="SocketCom\src\SocketPacket.cpp">
       <Filter>socketCom\src</Filter>
+    </ClCompile>
+    <ClCompile Include="eeprom\src\eepromOpt.cpp">
+      <Filter>eeprom\src</Filter>
+    </ClCompile>
+    <ClCompile Include="NetDriver.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="RingNetDriver.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="DeviceDataBase.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="RnDeviceDataBase.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="RingNetInterface.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="RnDriverWave.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="RnDriverPlot.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="UserResp.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="RnServoAxiMapping.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="ServoDriverCom.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RnSerialPort.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionControlComDll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MotionCtrlCom.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.c">
+      <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

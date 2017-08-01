@@ -19,6 +19,7 @@ Rectangle {
     property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮，用于查伺服是否完成
     property var errorCode: 0x0000;
     property int cmdSrcDefault: 1;
+    property int currentTaskMode: 0;
     function updateUiFromServo(){
         console.log("driveEncoder -> onItemValueChanged")
     //            listView.setCurrentIndex(Number(factory.dataTree.textTopLevel(0,1))-1);
@@ -26,6 +27,21 @@ Rectangle {
 //        lineNumber.text=factory.dataTree.textTopLevel(1,1);
 
     }
+    property var taskMode:  {
+                          "TASKMODE_IDLE": 0,
+                          "TASKMODE_ADC": 1,
+                          "TASKMODE_IPA": 2,
+                          "TASKMODE_MPI": 3,
+                          "TASKMODE_COL": 4,
+                          "TASKMODE_CCL": 5,
+                          "TASKMODE_VCL": 6,
+                          "TASKMODE_VPL": 7,
+                          "TASKMODE_VSL": 8,
+                          "TASKMODE_FIX": 9,
+                          "TASKMODE_PT": 10,
+                          "TASKMODE_DB": 11,
+                          "TASKMODE_DB": 12
+                 }
     function onActiveNow(actived){
         console.log(actived);
         if(actived)
@@ -325,8 +341,8 @@ Rectangle {
     Text{
         id:m_messageShow;
         anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-        anchors.top: m_currentAxis.bottom;
-        anchors.topMargin: 30;
+        anchors.bottom: parent.bottom;
+        anchors.bottomMargin: 5;
         horizontalAlignment: Text.AlignHCenter;
         text:qsTr(" ");
         visible: false;
@@ -337,7 +353,7 @@ Rectangle {
         anchors.horizontalCenter: m_currentAxis.horizontalCenter;
         anchors.top: m_currentAxis.bottom;
         anchors.topMargin: 10;
-        width: 200;
+        width: 100;
         visible: false;
         ColumnLayout{
             anchors.fill: parent;
@@ -360,7 +376,7 @@ Rectangle {
                         implicitHeight: 40
                         border.width: control.activeFocus ? 2 : 1
                         border.color:"#888"
-                        radius: 4
+                        radius: 10
                         gradient: Gradient {
 //                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : control.hovered?"#eee":"transparent" }
 //                            GradientStop { position: 1 ; color:control.pressed ? "#aaa" : control.hovered?"#ccc":"transparent" }
@@ -369,7 +385,7 @@ Rectangle {
                         }
                     }
                     label: Text{
-                        text:qsTr("清 报 警");
+                        text:qsTr("清编码器警告");
                         color: control.hovered?"steelblue":"black";
                         horizontalAlignment: Text.AlignHCenter;
                         verticalAlignment: Text.AlignVCenter;
@@ -576,7 +592,7 @@ Rectangle {
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
-                            radius: 4
+                            radius: 10
                             gradient: Gradient {
                                 GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
                                 GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
@@ -751,8 +767,11 @@ Rectangle {
                     servoIsOn=m_cmd.checkServoIsReady();
                     if(servoIsOn)
                         currentState=servoState.CheckFinish;
-                    if((servoIsOn===false)&&(checkCount>3))
+                    if((servoIsOn===false)&&(checkCount>3)){
+                        root.showMessage(qsTr("---伺服打开失败---"));
                         currentState=servoState.Quit;
+                    }
+
                     break;
                 case servoState.CheckFinish:
                     m_btnStartTest.barValue+=10;
@@ -766,14 +785,16 @@ Rectangle {
                     flagFinish=Boolean(ret);
                     if(flagFinish){
                         checkCount=0;
+                        var msg=qsTr("---寻相完成---")
                         if(m_saveCheckBox.checked){
                             factory.dataTree.setTopLevelText(2,1,strPos_ofst);
                             m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3",parseInt(strPos_ofst));
-                            root.showMessage(qsTr("寻相完成，并保存相位"));
                             console.log("save phase");
+                            msg=qsTr("---寻相完成，并保存相位---");
                         }
                         m_btnStartTest.barValue=100;
                         currentState=servoState.Quit;
+                        root.showMessage(msg);
                     }
                     else{
                         if(checkCount>30)
@@ -783,10 +804,12 @@ Rectangle {
                     break;
                 case servoState.Quit:
                     console.log("servoState.Quit");
-                    m_cmd.setServoOn(false);
                     root.btnSearchIsClicked=false;
                     checkCount=0;
                     m_btnStartTest.barVisible=false;
+                    //还原伺服原来的状态
+                    m_cmd.setServoOn(false);
+                    m_cmd.setServoTaskMode(root.currentTaskMode);
                     m_cmd.writeCommand("gSevDrv.sev_obj.pos.seq.prm.cmd_src_sel",root.cmdSrcDefault);
                     currentState=servoState.CheckServoOn;
                     break;
@@ -845,7 +868,8 @@ Rectangle {
                         ret=m_cmd.writeCommand(srcString,0);
                         console.log("ret write value:"+ret);
                     }
-                    m_cmd.setServoTaskMode(2);
+                    root.currentTaskMode=m_cmd.currentServoTaskMode();//先保存当前伺服模式
+                    m_cmd.setServoTaskMode(taskMode.TASKMODE_IPA);
                     m_cmd.setPosAdjRef(m_rollWheel.curValue);
                     m_cmd.setServoOn(true);
 

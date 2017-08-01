@@ -283,7 +283,7 @@ Rectangle {
         anchors.horizontalCenter: m_currentAxis.horizontalCenter;
         anchors.top: m_currentAxis.bottom;
         anchors.topMargin: 10;
-        width: 200;
+        width: 100;
         visible: true;
         ColumnLayout{
             anchors.fill: parent;
@@ -302,11 +302,11 @@ Rectangle {
                 height: 40;
                 style: ButtonStyle {
                     background: Rectangle {
-                        implicitWidth: 150
+                        implicitWidth: 100
                         implicitHeight: 40
                         border.width: control.activeFocus ? 2 : 1
                         border.color:"#888"
-                        radius: 4
+                        radius: 10;
                         gradient: Gradient {
 //                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : control.hovered?"#eee":"transparent" }
 //                            GradientStop { position: 1 ; color:control.pressed ? "#aaa" : control.hovered?"#ccc":"transparent" }
@@ -315,7 +315,7 @@ Rectangle {
                         }
                     }
                     label: Text{
-                        text:qsTr("清 报 警");
+                        text:qsTr("清编码器警告");
                         color: control.hovered?"steelblue":"black";
                         horizontalAlignment: Text.AlignHCenter;
                         verticalAlignment: Text.AlignVCenter;
@@ -513,7 +513,7 @@ Rectangle {
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
-                            radius: 4
+                            radius: 10
                             gradient: Gradient {
                                 GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
                                 GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
@@ -700,6 +700,7 @@ Rectangle {
 
             }
             console.log("root.node="+root.node.CDATA_SECTION_NODE);
+            m_encoderWarnningBlock.visible=true;
         }
     }
 

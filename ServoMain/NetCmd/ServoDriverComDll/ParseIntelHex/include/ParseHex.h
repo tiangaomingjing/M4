@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	parse intel hex file	 		 							//
 //	file				:	ParseHex.h													//
 //	Description			:	parse intel hex file										//
@@ -15,13 +15,13 @@
 #define __GTSD_PARSE_HEX__
 
 /*
-Intel Hexæ–‡ä»¶è§£æå™¨
+Intel HexÎÄ¼ş½âÎöÆ÷
 
-Hexæ–‡ä»¶çš„æ ¼å¼å¦‚ä¸‹ï¼š
+HexÎÄ¼şµÄ¸ñÊ½ÈçÏÂ£º
 
 RecordMark	RecordLength	LoadOffset	RecordType	Data	Checksum
 
-åœ¨Intel Hexæ–‡ä»¶ä¸­ï¼ŒRecordMarkè§„å®šä¸ºâ€œ:â€
+ÔÚIntel HexÎÄ¼şÖĞ£¬RecordMark¹æ¶¨Îª¡°:¡±
 
 */
 #include "Basetype_def.h"
@@ -42,28 +42,28 @@ public:
 	int16	WriteFlash(int16 axis, vector<INTEL_HEX_FRAME>* frame, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type, int16 stationId);
 	int16	ReadFlash(int16 axis, vector<INTEL_HEX_FRAME>* frame, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type, int16 stationId);
 	int16	WriteHexFile(string filename, vector<INTEL_HEX_FRAME>* frame);
-	int16	ParseHex(string filename);					//è§£æHexæ–‡ä»¶
-	int16	ParseRecord(int8 ch);					//è§£ææ¯ä¸€æ¡è®°å½•
-	Uint16	GetRecordLength();					//è·å–è®°å½•é•¿åº¦
-	int8	GetRecordMark();						//è·å–è®°å½•æ ‡è¯†
-	Uint32	GetLoadOffset();						//è·å–å†…å­˜è£…è½½åç§»
-	Uint16	GetRecordType();						//è·å–è®°å½•ç±»å‹
-	int16*	GetData();							//è·å–æ•°æ®
-	Uint16	GetChecksum();						//è·å–æ ¡éªŒå’Œ
-	int16	ResetVar();							//å¤ä½å˜é‡
-	vector<INTEL_HEX_FRAME> m_hex_frame_write;		//å­˜å‚¨è§£æå‡ºæ¥çš„å¸§
-	vector<INTEL_HEX_FRAME> m_hex_frame_read;	//å­˜å‚¨è¯»å–å‡ºæ¥çš„å¸§
+	int16	ParseHex(string filename);					//½âÎöHexÎÄ¼ş
+	int16	ParseRecord(int8 ch);					//½âÎöÃ¿Ò»Ìõ¼ÇÂ¼
+	Uint16	GetRecordLength();					//»ñÈ¡¼ÇÂ¼³¤¶È
+	int8	GetRecordMark();						//»ñÈ¡¼ÇÂ¼±êÊ¶
+	Uint32	GetLoadOffset();						//»ñÈ¡ÄÚ´æ×°ÔØÆ«ÒÆ
+	Uint16	GetRecordType();						//»ñÈ¡¼ÇÂ¼ÀàĞÍ
+	int16*	GetData();							//»ñÈ¡Êı¾İ
+	Uint16	GetChecksum();						//»ñÈ¡Ğ£ÑéºÍ
+	int16	ResetVar();							//¸´Î»±äÁ¿
+	vector<INTEL_HEX_FRAME> m_hex_frame_write;		//´æ´¢½âÎö³öÀ´µÄÖ¡
+	vector<INTEL_HEX_FRAME> m_hex_frame_read;	//´æ´¢¶ÁÈ¡³öÀ´µÄÖ¡
 
 private:
-	int8 m_cBuffer[MAX_BUFFER_SIZE];			//å­˜å‚¨å¾…è§£æçš„è®°å½•
-	int8 m_cRecordMark;							//è®°å½•æ ‡è¯†
-	int8 *m_nRecordLength;						//è®°å½•é•¿åº¦
-	int8 *m_pLoadOffset;						//è£…è½½åç§»
-	int8 *m_pRecordType;						//è®°å½•ç±»å‹
-	int8 *m_pData;								//æ•°æ®å­—æ®µ
-	int16 *m_pDataValid;							//æœ‰æ•ˆæ•°æ®
-	int8 *m_pChecksum;							//æ ¡éªŒå’Œ
-	bool m_bRecvStatus;							//æ¥æ”¶çŠ¶æ€æ ‡è¯†
+	int8 m_cBuffer[MAX_BUFFER_SIZE];			//´æ´¢´ı½âÎöµÄ¼ÇÂ¼
+	int8 m_cRecordMark;							//¼ÇÂ¼±êÊ¶
+	int8 *m_nRecordLength;						//¼ÇÂ¼³¤¶È
+	int8 *m_pLoadOffset;						//×°ÔØÆ«ÒÆ
+	int8 *m_pRecordType;						//¼ÇÂ¼ÀàĞÍ
+	int8 *m_pData;								//Êı¾İ×Ö¶Î
+	int16 *m_pDataValid;							//ÓĞĞ§Êı¾İ
+	int8 *m_pChecksum;							//Ğ£ÑéºÍ
+	bool m_bRecvStatus;							//½ÓÊÕ×´Ì¬±êÊ¶
 };
 extern Hex* g_hex;
 #endif

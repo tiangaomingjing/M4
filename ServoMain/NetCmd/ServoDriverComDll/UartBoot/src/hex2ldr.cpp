@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	hex2ldr		 												//
 //	file				:	hex2ldr.cpp													//
 //	Description			:	use for change format from out to ldr						//
@@ -343,7 +343,7 @@ int16 CHex2ldr::hex2ldr_execute(string hexName, string ldrName, string vtaAddr)
 {
 	fstream Hexfile;
 	fstream ldrfile;
-  //open hex file
+	//open hex file 
 	
 	Hexfile.open(hexName.c_str(), ios::in | ios::out | ios::binary);
 	if (!Hexfile)
@@ -352,7 +352,7 @@ int16 CHex2ldr::hex2ldr_execute(string hexName, string ldrName, string vtaAddr)
 	}
 
 	//open ldr file
-	//å¦‚æœæ–‡ä»¶ä¸å­˜åœ¨ï¼Œä¸èƒ½ç”¨inè¿™ç§æ¨¡å¼
+	//Èç¹ûÎÄ¼ş²»´æÔÚ£¬²»ÄÜÓÃinÕâÖÖÄ£Ê½
 	ldrfile.open(ldrName.c_str(), ios::out | ios::binary);
 	if (!ldrfile)
 	{

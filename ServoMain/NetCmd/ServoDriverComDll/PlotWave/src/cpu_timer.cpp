@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	cpu timer high resolution 		 							//
 //	file				:	cpu_timer.cpp												//
 //	Description			:	high resolution interface cpu timer 						//
@@ -32,23 +32,32 @@ CCpu_Timer::~CCpu_Timer(void)
 }
 void CCpu_Timer::StartCpuTimer(double& MstimeInterval)
 {
-  //åˆå§‹åŒ–cs
-	InitializeCriticalSection(&g_cs_dspA);
-	//åˆå§‹åŒ–cs
-	InitializeCriticalSection(&g_cs_dspB);
-	//ç½®ä½æ ‡å¿—
+	for (int dsp_id = 0; dsp_id < MAX_DSP_WAVE;dsp_id++)
+	{
+		//³õÊ¼»¯cs
+		InitializeCriticalSection(&g_cs_dsp[dsp_id]);
+	}
+// 	//³õÊ¼»¯cs
+// 	InitializeCriticalSection(&g_cs_dspA);
+// 	//³õÊ¼»¯cs
+// 	InitializeCriticalSection(&g_cs_dspB);
+	//ÖÃÎ»±êÖ¾
 	g_CpuTimerFlag	= true;
-	//è®¾ç½®æ—¶é—´
+	//ÉèÖÃÊ±¼ä
 	g_MsTime		= MstimeInterval;
 }
 void CCpu_Timer::StopCpuTimer(void)
 {
-	//æ ‡å¿—æ¸…ç©º
+	//±êÖ¾Çå¿Õ
 	g_CpuTimerFlag = false;
 	Sleep(100);
-	//åˆ é™¤å…³é”®åŒº
-	DeleteCriticalSection(&g_cs_dspA);
-	DeleteCriticalSection(&g_cs_dspB);
+	//É¾³ı¹Ø¼üÇø
+	for (int dsp_id = 0; dsp_id < MAX_DSP_WAVE; dsp_id++)
+	{
+		DeleteCriticalSection(&g_cs_dsp[dsp_id]);
+	}
+// 	DeleteCriticalSection(&g_cs_dspA);
+// 	DeleteCriticalSection(&g_cs_dspB);
 }
 void CCpu_Timer::createCpuTimerThread(void)
 {
@@ -60,36 +69,47 @@ void CCpu_Timer::createCpuTimerThread(void)
 }
 void CCpu_Timer::Cpu_GetData(void)
 {
-	if (g_dspA_wave_prm.cmd.bit.ENP || g_dspB_wave_prm.cmd.bit.ENP)
+	for (int16 i = 0; i < (int16)CPU_TIMER_READ_TIMES; ++i)
 	{
-		for (int16 i = 0; i < (int16)CPU_TIMER_READ_TIMES; ++i)
+		for (int dsp_id = 0; dsp_id < MAX_DSP_WAVE; dsp_id++)
 		{
-			//å‡å¦‚dspAç”»å›¾ä½¿èƒ½
-			if (g_dspA_wave_prm.cmd.bit.ENP)
+			if (g_dsp_wave_prm[dsp_id].cmd.bit.ENP) //¼ÙÈçdsp»­Í¼Ê¹ÄÜ
 			{
-				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_A, g_dspA_wave_prm,g_plotWave->m_comType);
-			}
-			//å‡å¦‚dspBç”»å›¾ä½¿èƒ½
-			if (g_dspB_wave_prm.cmd.bit.ENP)
-			{
-				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_B, g_dspB_wave_prm, g_plotWave->m_comType);
+				g_plotWave->ReadPlotWaveDataFromFPGA(dsp_id, g_dsp_wave_prm[dsp_id], g_plotWave->m_comType);
 			}
 		}
 	}
+
+// 	if (g_dspA_wave_prm.cmd.bit.ENP || g_dspB_wave_prm.cmd.bit.ENP)
+// 	{
+// 		for (int16 i = 0; i < (int16)CPU_TIMER_READ_TIMES; ++i)
+// 		{
+// 			//¼ÙÈçdspA»­Í¼Ê¹ÄÜ
+// 			if (g_dspA_wave_prm.cmd.bit.ENP)
+// 			{
+// 				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_A, g_dspA_wave_prm,g_plotWave->m_comType);
+// 			}
+// 			//¼ÙÈçdspB»­Í¼Ê¹ÄÜ
+// 			if (g_dspB_wave_prm.cmd.bit.ENP)
+// 			{
+// 				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_B, g_dspB_wave_prm, g_plotWave->m_comType);
+// 			}
+// 		}
+// 	}
 }
 unsigned __stdcall CpuTimerThread(void *para)
 {
-	//ä¼ é€’thisæŒ‡é’ˆåˆ°è¯¥å‡½æ•°
+	//´«µİthisÖ¸Õëµ½¸Ãº¯Êı
 	CCpu_Timer *handler = (CCpu_Timer*)para;
-	//è·å–é¢‘ç‡
+	//»ñÈ¡ÆµÂÊ
 	if (QueryPerformanceFrequency(&(handler->freq)) == NULL)
 	{
 		return -1;
 	}
-	//æ—¶é—´ä¹˜ä»¥é¢‘ç‡å¾—åˆ°è®¡æ•°ä¸ªæ•°
+	//Ê±¼ä³ËÒÔÆµÂÊµÃµ½¼ÆÊı¸öÊı
 	handler->tiCount = (int64)(handler->g_MsTime / 1000.0 * (handler->freq.QuadPart));
 	
-	//è·å–èµ·å§‹è®¡æ•°å€¼
+	//»ñÈ¡ÆğÊ¼¼ÆÊıÖµ
 	QueryPerformanceCounter(&(handler->n1));
 	do 
 	{

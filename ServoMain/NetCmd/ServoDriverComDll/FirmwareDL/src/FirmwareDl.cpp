@@ -308,23 +308,23 @@ int16 CFirmwareDL::EraseData(int16 com_type, void(*tpfUpdataProgressPt)(void*, i
   int32 num = 1000000;
   //!progress高16位置1，用来给界面提示当前正处于擦除状态
   int16 highSet;
-  highSet=(int16)(1<<15);
+  highSet = (int16)(1 << 15);
   for (int32 i = 0; i < num; i++)
   {
     iRet = CheckRemoteUpdataState(com_type, stationId, 100);
-//    Sleep(0);
-    if (iRet==0)
+    if (iRet == 0)
       break;
-    if(i%10==0)
+    if (i % 10 == 0)
     {
       progress++;
-      progress|=highSet;
+      progress |= highSet;
       if ((progress&(~highSet))>100)
         progress = highSet;
-      //std::cout << "erase num=" << i;
+//      std::cout << "erase num=" << i << "  progress=" << progress << "   progress&(~highSet)=" << (progress&(~highSet))<<std::endl;
       (*tpfUpdataProgressPt)(ptrv, &progress);
     }
   }
+
   //iRet = CheckRemoteUpdataState(com_type, stationId,100000000);
 	if(iRet!=0)
 	{
@@ -466,7 +466,7 @@ int16 CFirmwareDL::SendFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Se
 }
 int32 CFirmwareDL::CheckFFNumber(short* buffer,int lenth)
 {
-	//查找连续的0xff
+  //查找连续的0xff
 	int32 ffnum = 0;
 	for(int32 i = 0;i<lenth;i++)
 	{
@@ -487,10 +487,10 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 		return 1;
 	}
 
-  iRet = EraseData(com_type,tpfUpdataProgressPt,ptrv,progress, stationId); //清除fpga flash
+  iRet = EraseData(com_type, tpfUpdataProgressPt,ptr,progress, stationId); //清除fpga flash
 	if (iRet != 0)
 	{
-		ProtectOn(com_type, stationId);
+//		ProtectOn(com_type, stationId);
 		return 2;
 	}
 
@@ -503,7 +503,7 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
 	if (!file)
 	{
-		ProtectOn(com_type, stationId);
+//		ProtectOn(com_type, stationId);
 		return 4; //文件打开错误
 	}
 
@@ -513,8 +513,8 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 	int16 finish_flag			= 0;//是否读取完成标志
 	Uint32 flash_addr			= 0;
 	Uint32 sum_byte_lenth		= 0;
-    Uint32 index                = 0;
-    Uint32 times                = 0;//需要读取的次数
+  Uint32 index                = 0;
+  Uint32 times                = 0;//需要读取的次数
 	Uint32 times_bk				= 0; 
     while(!finish_flag)
     {
@@ -536,17 +536,16 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
         {
             finish_flag = 0;
         }
-
-        index++;
-        if (index > 1400)
-        {
-          //百分比
-          if(index%20==0)
-          {
-            progress = 13;
-            (*tpfUpdataProgressPt)(ptr, &progress);
-          }
-        }
+		index++;
+		if (index > 1400)
+		{
+      //百分比
+      if (index % 20 == 0)
+      {
+        progress = 13;
+        (*tpfUpdataProgressPt)(ptr, &progress);
+      }
+		}
     }
 	index		= 0;
     //get the times
@@ -562,7 +561,7 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
 	if (!file)
 	{
-		ProtectOn(com_type, stationId);
+//		ProtectOn(com_type, stationId);
 		return 4; //文件打开错误
 	}
   int retSend = 0;
@@ -575,22 +574,23 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 		//放在外面为了读取到全是ffff的时候还是写入一次
 		for(int i = 0;i<2;i++)
 		{
-			//将数据写入,一次写100个short
+      //将数据写入,一次写100个short
       retSend=SendFpgaFlashData(com_type,flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
-      if(retSend!=0)
-        retSend=SendFpgaFlashData(com_type,flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
-      if(retSend!=0)
+      //写不成功再尝试写多一次
+      if (retSend!=0)
+        retSend = SendFpgaFlashData(com_type, flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
+      if (retSend!=0)
       {
-        retValue=-1;
-        times=1;
+        retValue = -1;
+        times = 1;
         break;
       }
-			//地址增加
+      //地址增加
 			flash_addr += (2*(BUF_LEN>>1));
 		}
-
     index++;
-    if(index%10==0)
+   
+    if (index % 10 == 0)
     {
       progress = 15 + (int16)((((double)index) / times_bk) * 85);
       if (progress >= 100)
@@ -604,11 +604,12 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 	}
 	file.close();
 
-//	iRet = ProtectOn(com_type, stationId);//open写保护
-//	if (iRet != 0)
-//	{
-//		return 6;
-//	}
+	//屏蔽该部分，仿真器无法烧写。
+	//iRet = ProtectOn(com_type, stationId);//open写保护
+	//if (iRet != 0)
+	//{
+	//	return 6;
+	//}
   return retValue;
 }
 

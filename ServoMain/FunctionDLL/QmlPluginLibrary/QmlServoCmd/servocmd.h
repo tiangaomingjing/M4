@@ -78,6 +78,7 @@ public:
   Q_INVOKABLE QString writeCommand(const QString cmdWriteName, double value);//通用的写指令(RAM)
 //-----------------专用指令------------------------------
   Q_INVOKABLE bool setServoTaskMode(int mode);//设置伺服模式
+  Q_INVOKABLE qint16 currentServoTaskMode();
   Q_INVOKABLE int setPosAdjRef(double value);//设置寻相值
   Q_INVOKABLE int setSpeedRef(double value);
   Q_INVOKABLE bool checkServoIsReady();

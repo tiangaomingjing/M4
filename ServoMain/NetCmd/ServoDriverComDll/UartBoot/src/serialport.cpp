@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	serialport		 											//
 //	file				:	serialport.cpp												//
 //	Description			:	use for control the serial port								//
@@ -51,26 +51,26 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	if (status == true) // if port is opened already do not open port again
 		return false;
 
-  //---------------------------------------------------------------------------
-	//å®ç°æ‰“å¼€ä¸²å£çš„åŠŸèƒ½ï¼Œé€šè¿‡æ“ä½œå…·ä½“çš„FPGAåœ°å€
+	//----------------------------------------------------------------------------
+	//ÊµÏÖ´ò¿ª´®¿ÚµÄ¹¦ÄÜ£¬Í¨¹ı²Ù×÷¾ßÌåµÄFPGAµØÖ·
 	if (axis >= COM_AXIS_MAX)
 	{
 		return Net_Rt_param_Err;
 	}
-	int16 Axis			= axis;												//è½´å·
+	int16 Axis			= axis;												//ÖáºÅ
 	int16 dsp_number	= GTSD_DSP_A;
-	//æ ¹æ®è½´å·è®¡ç®—æ˜¯å“ªä¸ªdsp
+	//¸ù¾İÖáºÅ¼ÆËãÊÇÄÄ¸ödsp
 	if (Axis > 1)
 	{
 		dsp_number = (int16)(GTSD_DSP_B);
 	}
 	//----------------------------------------------------------------------------
-	int16 com_addr		= FPGA_UART_CONFIG_W;								//å†™é…ç½®åœ°å€
-	int16 com_addr1		= FPGA_UART_BAUDRATE_WR;							//è¯»å†™æ³¢ç‰¹ç‡åœ°å€
-	int16 com_addr2		= FPGA_UART_STARTEND_W;								//å†™æ‰“å¼€æ¨¡å—åœ°å€
-	int16 com_addr3		= FPGA_UART_CONFIG_R;								//è¯»å–æ˜¯å¦æ‰“å¼€çŠ¶æ€åœ°å€
+	int16 com_addr		= FPGA_UART_CONFIG_W;								//Ğ´ÅäÖÃµØÖ·
+	int16 com_addr1		= FPGA_UART_BAUDRATE_WR;							//¶ÁĞ´²¨ÌØÂÊµØÖ·
+	int16 com_addr2		= FPGA_UART_STARTEND_W;								//Ğ´´ò¿ªÄ£¿éµØÖ·
+	int16 com_addr3		= FPGA_UART_CONFIG_R;								//¶ÁÈ¡ÊÇ·ñ´ò¿ª×´Ì¬µØÖ·
 
-	//æ ¹æ®dspå·é€‰æ‹©FPGAåŸºåœ°å€
+	//¸ù¾İdspºÅÑ¡ÔñFPGA»ùµØÖ·
 	int16 base_addr;
 	if (dsp_number == GTSD_DSP_A)
 	{
@@ -107,7 +107,7 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	{
 		return Net_Rt_param_Err;
 	}
-	//è®¡ç®—å®é™…çš„åœ°å€
+	//¼ÆËãÊµ¼ÊµÄµØÖ·
 	int16 comAddr;
 	int16 comAddr1;
 	int16 comAddr2;
@@ -115,8 +115,8 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	int16 comNum;
 	if (com_type == GTSD_COM_TYPE_NET)
 	{
-		//shortåœ°å€
-		//è®¡ç®—å®é™…çš„åœ°å€
+		//shortµØÖ·
+		//¼ÆËãÊµ¼ÊµÄµØÖ·
 		comAddr = base_addr + (com_addr >> 1);
 		comAddr1 = base_addr + (com_addr1 >> 1);
 		comAddr2 = base_addr + (com_addr2 >> 1);
@@ -125,8 +125,8 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	}
 	else if (com_type == GTSD_COM_TYPE_RNNET)
 	{
-		//byteåœ°å€
-		//è®¡ç®—å®é™…çš„åœ°å€
+		//byteµØÖ·
+		//¼ÆËãÊµ¼ÊµÄµØÖ·
 		comAddr		= base_addr + (com_addr);
 		comAddr1	= base_addr + (com_addr1);
 		comAddr2	= base_addr + (com_addr2);
@@ -135,42 +135,42 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	}
 	
 	//----------------------------------------------------------------------------
-	//æ‰“å¼€æ¨¡å—
-	int16 startValue	= (int16)0xFF00; //å†™è¯¥å€¼æ‰“å¼€è¯¥æ¨¡å—
+	//´ò¿ªÄ£¿é
+	int16 startValue	= (int16)0xFF00; //Ğ´¸ÃÖµ´ò¿ª¸ÃÄ£¿é
 	int16 rtn			= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr2, &startValue, comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
 	{
 		return false;
 	}
-	//è¯»å–è¯¥å€¼éªŒè¯æ˜¯å¦å·²ç»æ‰“å¼€è¯¥æ¨¡å—
+	//¶ÁÈ¡¸ÃÖµÑéÖ¤ÊÇ·ñÒÑ¾­´ò¿ª¸ÃÄ£¿é
 	int16 startVauleRtn;
 	rtn					= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr3, &startVauleRtn, comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
 	{
 		return false;
 	}
-	//å¦‚æœbit15æ˜¯1ï¼Œè¯´æ˜å·²ç»æ‰“å¼€ï¼Œå¦åˆ™æœªæ‰“å¼€æˆåŠŸ
+	//Èç¹ûbit15ÊÇ1£¬ËµÃ÷ÒÑ¾­´ò¿ª£¬·ñÔòÎ´´ò¿ª³É¹¦
 	if ((startVauleRtn &0x8000)==0)
 	{
 		return Net_Rt_param_Err;
 	}
 	//----------------------------------------------------------------------------
-	//è®¡ç®—ä¸‹å‘çš„æ³¢ç‰¹ç‡ (baudRate unit bps),è½¬åŒ–ä¸ºns
+	//¼ÆËãÏÂ·¢µÄ²¨ÌØÂÊ (baudRate unit bps),×ª»¯Îªns
 	double BD		= (1.0 / baudRate)*1000.0*1000.0*1000.0;
 	double clk		= (1.0 / FPGA_CLOCK)*1000.0*1000.0*1000.0;
 	
-	//download çš„æ³¢ç‰¹ç‡æ˜¯BD/clk;
+	//download µÄ²¨ÌØÂÊÊÇBD/clk;
 	int16  dl_bd		= (int16)(BD / clk)-1;
 	int16  dl_bds		= dl_bd;
 	int16  dl_cfg		= (0x0700);
 
-	//é…ç½®åœæ­¢ä½ï¼Œå¥‡å¶æ ¡éªŒï¼Œä¼ è¾“ä½å®½ç­‰
+	//ÅäÖÃÍ£Ö¹Î»£¬ÆæÅ¼Ğ£Ñé£¬´«ÊäÎ»¿íµÈ
 	rtn					= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &dl_cfg, comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
 	{
 		return false;
 	}
-	//è¯»å–é…ç½®è¿›è¡ŒéªŒè¯
+	//¶ÁÈ¡ÅäÖÃ½øĞĞÑéÖ¤
 	int16 dl_cfg_rtn;
 	rtn					= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, &dl_cfg_rtn, comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
@@ -182,7 +182,7 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 		return Net_Rt_param_Err;
 	}
 	//----------------------------------------------------------------------------
-	//é…ç½®æ³¢ç‰¹ç‡
+	//ÅäÖÃ²¨ÌØÂÊ
 	rtn					= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr1, &dl_bd, comNum, stationId);
 	if (rtn != GTSD_COM_SUCCESS)
 	{
@@ -208,21 +208,21 @@ bool SerialCtl::close(int16 axis, int16 com_type, int16 stationId)
 {
 	if (status == true)
 	{
-		//å®ç°å…³é—­ä¸²å£çš„åŠŸèƒ½ï¼Œé€šè¿‡æ“ä½œå…·ä½“çš„FPGAåœ°å€
+		//ÊµÏÖ¹Ø±Õ´®¿ÚµÄ¹¦ÄÜ£¬Í¨¹ı²Ù×÷¾ßÌåµÄFPGAµØÖ·
 		if (axis >= COM_AXIS_MAX)
 		{
 			return Net_Rt_param_Err;
 		}
-		int16 Axis			= axis;												//è½´å·
+		int16 Axis			= axis;												//ÖáºÅ
 		int16 dsp_number	= GTSD_DSP_A;
-		//æ ¹æ®è½´å·è®¡ç®—æ˜¯å“ªä¸ªdsp
+		//¸ù¾İÖáºÅ¼ÆËãÊÇÄÄ¸ödsp
 		if (Axis > 1)
 		{
 			dsp_number = (int16)(GTSD_DSP_B);
 		}
-		int16 com_addr		= FPGA_UART_STARTEND_W;								//å…³é—­æ¨¡å—åœ°å€
-		int16 com_addr1		= FPGA_UART_CONFIG_R;								//æŸ¥çœ‹æ˜¯å¦æœªä½¿èƒ½
-		//æ ¹æ®dspå·é€‰æ‹©FPGAåŸºåœ°å€
+		int16 com_addr		= FPGA_UART_STARTEND_W;								//¹Ø±ÕÄ£¿éµØÖ·
+		int16 com_addr1		= FPGA_UART_CONFIG_R;								//²é¿´ÊÇ·ñÎ´Ê¹ÄÜ
+		//¸ù¾İdspºÅÑ¡ÔñFPGA»ùµØÖ·
 		int16 base_addr;
 		if (dsp_number == GTSD_DSP_A)
 		{
@@ -259,36 +259,36 @@ bool SerialCtl::close(int16 axis, int16 com_type, int16 stationId)
 		{
 			return Net_Rt_param_Err;
 		}
-		//è®¡ç®—å®é™…çš„åœ°å€
+		//¼ÆËãÊµ¼ÊµÄµØÖ·
 		int16 comAddr;
 		int16 comAddr1;
 		int16 comNum;
 		if (com_type == GTSD_COM_TYPE_NET)
 		{
-			//shortåœ°å€
-			//è®¡ç®—å®é™…çš„åœ°å€
+			//shortµØÖ·
+			//¼ÆËãÊµ¼ÊµÄµØÖ·
 			comAddr = base_addr + (com_addr >> 1);
 			comAddr1 = base_addr + (com_addr1 >> 1);
 			comNum = 1;
 		}
 		else if (com_type == GTSD_COM_TYPE_RNNET)
 		{
-			//byteåœ°å€
-			//è®¡ç®—å®é™…çš„åœ°å€
+			//byteµØÖ·
+			//¼ÆËãÊµ¼ÊµÄµØÖ·
 			comAddr = base_addr + (com_addr);
 			comAddr1 = base_addr + (com_addr1);
 			comNum = 1;
 		}
 
 		//----------------------------------------------------------------------------
-		//å…³é—­æ¨¡å—
-		int16 stopValue = 0x0000; //å†™è¯¥å€¼å…³é—­è¯¥æ¨¡å—
+		//¹Ø±ÕÄ£¿é
+		int16 stopValue = 0x0000; //Ğ´¸ÃÖµ¹Ø±Õ¸ÃÄ£¿é
 		int16 rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &stopValue, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
 		{
 			return false;
 		}
-		//è¯»å–è¯¥å€¼éªŒè¯æ˜¯å¦å·²ç»å…³é—­è¯¥æ¨¡å—
+		//¶ÁÈ¡¸ÃÖµÑéÖ¤ÊÇ·ñÒÑ¾­¹Ø±Õ¸ÃÄ£¿é
 		int16 stopValueRtn;
 		rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr1, &stopValueRtn, comNum, stationId);
 		if (rtn != GTSD_COM_SUCCESS)
@@ -308,24 +308,24 @@ bool SerialCtl::close(int16 axis, int16 com_type, int16 stationId)
 
 bool SerialCtl::read(int16 axis,Uint8 *buf, int32 length, int32 *length_read, int16 com_type, int16 stationId)
 {
-	//å®ç°è¯»ä¸²å£çš„åŠŸèƒ½ï¼Œé€šè¿‡æ“ä½œå…·ä½“çš„FPGAåœ°å€
+	//ÊµÏÖ¶Á´®¿ÚµÄ¹¦ÄÜ£¬Í¨¹ı²Ù×÷¾ßÌåµÄFPGAµØÖ·
 	if (status == true)
 	{
 		if (axis >= COM_AXIS_MAX)
 		{
 			return Net_Rt_param_Err;
 		}
-		int16 Axis			= axis;												//è½´å·
+		int16 Axis			= axis;												//ÖáºÅ
 		int16 dsp_number	= GTSD_DSP_A;
 		int16 com_addr		= FPGA_UART_RX_STATE_R;								// RX FIFO STATE
 		int16 com_addr1		= FPGA_UART_RECEIVE_FIFO_R;							// RX FIFO 
 
-		//æ ¹æ®è½´å·è®¡ç®—æ˜¯å“ªä¸ªdsp
+		//¸ù¾İÖáºÅ¼ÆËãÊÇÄÄ¸ödsp
 		if (Axis > 1)
 		{
 			dsp_number = (int16)(GTSD_DSP_B);
 		}
-		//æ ¹æ®dspå·é€‰æ‹©FPGAåŸºåœ°å€
+		//¸ù¾İdspºÅÑ¡ÔñFPGA»ùµØÖ·
 		int16 base_addr;
 		if (dsp_number == GTSD_DSP_A)
 		{
@@ -362,47 +362,47 @@ bool SerialCtl::read(int16 axis,Uint8 *buf, int32 length, int32 *length_read, in
 		{
 			return Net_Rt_param_Err;
 		}
-		//è®¡ç®—å®é™…çš„åœ°å€
+		//¼ÆËãÊµ¼ÊµÄµØÖ·
 		int16 comAddr;
 		int16 comAddr1;
 		int16 comNum;
 		if (com_type == GTSD_COM_TYPE_NET)
 		{
-			//shortåœ°å€
-			//è®¡ç®—å®é™…çš„åœ°å€
+			//shortµØÖ·
+			//¼ÆËãÊµ¼ÊµÄµØÖ·
 			comAddr = base_addr + (com_addr >> 1);
 			comAddr1 = base_addr + (com_addr1 >> 1);
 			comNum = 1;
 		}
 		else if (com_type == GTSD_COM_TYPE_RNNET)
 		{
-			//byteåœ°å€
-			//è®¡ç®—å®é™…çš„åœ°å€
+			//byteµØÖ·
+			//¼ÆËãÊµ¼ÊµÄµØÖ·
 			comAddr = base_addr + (com_addr);
 			comAddr1 = base_addr + (com_addr1);
 			comNum = 1;
 		}
 		//----------------------------------------------------------------------------
-		//æŸ¥è¯¢RXçŠ¶æ€
+		//²éÑ¯RX×´Ì¬
 		int16 stateValue = 0x0000;
 		int16 rtn;
 		//----------------------------------------------------------------------------
 		do 
 		{	
-			//æŸ¥è¯¢å½“å‰ rx fifoä¸­æœ‰å¤šå°‘æ•°æ®ã€‚
+			//²éÑ¯µ±Ç° rx fifoÖĞÓĞ¶àÉÙÊı¾İ¡£
 			rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, &stateValue, comNum, stationId);
 			if (rtn != GTSD_COM_SUCCESS)
 			{
 				return false;
 			}
-			//æŸ¥è¯¢fifoæ˜¯å¦å‘ç”Ÿè¿‡æ¥æ”¶é”™è¯¯
+			//²éÑ¯fifoÊÇ·ñ·¢Éú¹ı½ÓÊÕ´íÎó
 			if (stateValue & 0x4000)
 			{
 				return false;
 			}
 		} while ((stateValue&0x03ff)<length);
 	
-		//å¦‚æœæ¥æ”¶åˆ°è¶³å¤Ÿçš„æ•°æ®ï¼Œé‚£ä¹ˆå°±å¼€å§‹ä»fifoä¸­è¯»å–æ•°æ®
+		//Èç¹û½ÓÊÕµ½×ã¹»µÄÊı¾İ£¬ÄÇÃ´¾Í¿ªÊ¼´ÓfifoÖĞ¶ÁÈ¡Êı¾İ
 		int16 tmp;
 		int32 i;
 		for (i = 0; i < length; ++i)
@@ -412,7 +412,7 @@ bool SerialCtl::read(int16 axis,Uint8 *buf, int32 length, int32 *length_read, in
 			{
 				return false;
 			}
-			//16bitæ•°æ®è½¬åŒ–ä¸º8bitæ•°æ®ï¼Œ16bitæ•°æ®çš„é«˜8bitæ— æ•ˆã€‚
+			//16bitÊı¾İ×ª»¯Îª8bitÊı¾İ£¬16bitÊı¾İµÄ¸ß8bitÎŞĞ§¡£
 			buf[i] = (Uint8)(tmp & 0x00ff);
 		}
 		if (i == length)
@@ -431,24 +431,24 @@ bool SerialCtl::read(int16 axis,Uint8 *buf, int32 length, int32 *length_read, in
 
 bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written, int16 com_type, int16 stationId)
 {
-	//å®ç°å†™ä¸²å£çš„åŠŸèƒ½ï¼Œé€šè¿‡æ“ä½œå…·ä½“çš„FPGAåœ°å€
+	//ÊµÏÖĞ´´®¿ÚµÄ¹¦ÄÜ£¬Í¨¹ı²Ù×÷¾ßÌåµÄFPGAµØÖ·
 	if (status == true)
 	{
 		if (axis >= COM_AXIS_MAX)
 		{
 			return Net_Rt_param_Err;
 		}
-		int16 Axis			= axis;												//è½´å·
+		int16 Axis			= axis;												//ÖáºÅ
 		int16 dsp_number	= GTSD_DSP_A;
-		int16 com_addr		= FPGA_UART_RX_STATE_R;								//RTSä¿¡å·è¯»å–ï¼Œä¸º0è¡¨ç¤ºå¯ä»¥å‘é€æ•°æ®åˆ°uartï¼Œä¸º1åœæ­¢å‘é€ï¼Œè¯¥åŠŸèƒ½ç”±FPGAå¤„ç†ï¼Œè¿™é‡Œåªæ˜¯æŸ¥è¯¢è¯¥æ ‡å¿—
-		int16 com_addr1		= FPGA_UART_TX_STATE_R;								// TX FIFO çŠ¶æ€
+		int16 com_addr		= FPGA_UART_RX_STATE_R;								//RTSĞÅºÅ¶ÁÈ¡£¬Îª0±íÊ¾¿ÉÒÔ·¢ËÍÊı¾İµ½uart£¬Îª1Í£Ö¹·¢ËÍ£¬¸Ã¹¦ÄÜÓÉFPGA´¦Àí£¬ÕâÀïÖ»ÊÇ²éÑ¯¸Ã±êÖ¾
+		int16 com_addr1		= FPGA_UART_TX_STATE_R;								// TX FIFO ×´Ì¬
 		int16 com_addr2		= FPGA_UART_SEND_FIFO_W;							// tx fifo
-		//æ ¹æ®è½´å·è®¡ç®—æ˜¯å“ªä¸ªdsp
+		//¸ù¾İÖáºÅ¼ÆËãÊÇÄÄ¸ödsp
 		if (Axis > 1)
 		{
 			dsp_number = (int16)(GTSD_DSP_B);
 		}
-		//æ ¹æ®dspå·é€‰æ‹©FPGAåŸºåœ°å€
+		//¸ù¾İdspºÅÑ¡ÔñFPGA»ùµØÖ·
 		int16 base_addr;
 		if (dsp_number == GTSD_DSP_A)
 		{
@@ -485,15 +485,15 @@ bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written
 		{
 			return Net_Rt_param_Err;
 		}
-		//è®¡ç®—å®é™…çš„åœ°å€
+		//¼ÆËãÊµ¼ÊµÄµØÖ·
 		int16 comAddr;
 		int16 comAddr1;
 		int16 comAddr2;
 		int16 comNum;
 		if (com_type == GTSD_COM_TYPE_NET)
 		{
-			//shortåœ°å€
-			//è®¡ç®—å®é™…çš„åœ°å€
+			//shortµØÖ·
+			//¼ÆËãÊµ¼ÊµÄµØÖ·
 			comAddr = base_addr + (com_addr >> 1);
 			comAddr1 = base_addr + (com_addr1 >> 1);
 			comAddr2 = base_addr + (com_addr2 >> 1);
@@ -501,15 +501,15 @@ bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written
 		}
 		else if (com_type == GTSD_COM_TYPE_RNNET)
 		{
-			//byteåœ°å€
-			//è®¡ç®—å®é™…çš„åœ°å€
+			//byteµØÖ·
+			//¼ÆËãÊµ¼ÊµÄµØÖ·
 			comAddr = base_addr + (com_addr);
 			comAddr1 = base_addr + (com_addr1);
 			comAddr2 = base_addr + (com_addr2);
 			comNum = 1;
 		}
 		//----------------------------------------------------------------------------
-		//æŸ¥è¯¢RTSçŠ¶æ€
+		//²éÑ¯RTS×´Ì¬
 		int16 stateValue = 0x0000; 
 		int16 counter = 0;
 		int16 rtn;
@@ -521,14 +521,14 @@ bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written
 				return false;
 			}
 			counter++;
-		} while ((stateValue & 0x2000) && (counter<2000));//å‡å¦‚bit13æ˜¯1è¡¨ç¤ºèŠ¯ç‰‡æœªå‡†å¤‡å¥½æ¥æ”¶ï¼Œé‚£ä¹ˆå…ˆä¸è¦å‘é€æ•°æ®
+		} while ((stateValue & 0x2000) && (counter<2000));//¼ÙÈçbit13ÊÇ1±íÊ¾Ğ¾Æ¬Î´×¼±¸ºÃ½ÓÊÕ£¬ÄÇÃ´ÏÈ²»Òª·¢ËÍÊı¾İ
 
 		if (counter >=2000)
 		{
 			return false;
 		}
 		//----------------------------------------------------------------------------
-		//æŸ¥è¯¢å½“å‰å‘é€fifoä¸­æœ‰å¤šå°‘ç©ºé—´ã€‚
+		//²éÑ¯µ±Ç°·¢ËÍfifoÖĞÓĞ¶àÉÙ¿Õ¼ä¡£
 		do
 		{
 			rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr1, &stateValue, comNum, stationId);
@@ -536,32 +536,68 @@ bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written
 			{
 				return false;
 			}
-			//æŸ¥è¯¢fifoæ˜¯å¦å‘ç”Ÿè¿‡æº¢å‡º
+			//²éÑ¯fifoÊÇ·ñ·¢Éú¹ıÒç³ö
 			if (stateValue & 0x1000)
 			{
 				return false;
 			}
 		} while ((1024 - (int16)(stateValue & 0x07ff))<length);
 
-		//å¦‚æœç©ºé—´è¶³å¤Ÿï¼Œé‚£ä¹ˆå°±å¼€å§‹å‘é€æ•°æ®ã€‚å†™tx fifo
+		//Èç¹û¿Õ¼ä×ã¹»£¬ÄÇÃ´¾Í¿ªÊ¼·¢ËÍÊı¾İ¡£Ğ´tx fifo
 		int16 tmp;
 		int32 i;
-		for (i = 0; i < length;++i)
+		if (com_type == GTSD_COM_TYPE_RNNET)
 		{
-			//8bitæ•°æ®è½¬åŒ–ä¸º16bitæ•°æ®ï¼Œ16bitæ•°æ®çš„é«˜8bitæ— æ•ˆã€‚
-			tmp = (int16)(buf[i] & 0x00ff);
-			rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr2, &tmp, comNum, stationId);
-			if (rtn != GTSD_COM_SUCCESS)
+			const int MAX_NUM = 64;
+			int16 buffer[MAX_NUM];
+			int16 send_data_num = 0;
+			int16 total_send_cnt = 0;
+			while (total_send_cnt < length)
 			{
-				return false;
+				if (length - total_send_cnt > MAX_NUM)
+				{
+					send_data_num = MAX_NUM;
+				}
+				else
+				{
+					send_data_num = (int16)(length - total_send_cnt);
+				}
+				comNum = send_data_num;
+				for (i = 0; i < send_data_num; ++i)
+				{
+					buffer[i] = (int16)(buf[total_send_cnt + i]);
+				}
+				rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr2, buffer, comNum, stationId);
+				if (rtn != GTSD_COM_SUCCESS)
+				{
+					return false;
+				}
+				total_send_cnt += send_data_num;
 			}
-			//Sleep(10);
-		}
-		if (i == length)
-		{
 			*length_written = length;
+			return true;
 		}
-		return true;
+		else
+		{
+			for (i = 0; i < length; ++i)
+			{
+				//8bitÊı¾İ×ª»¯Îª16bitÊı¾İ£¬16bitÊı¾İµÄ¸ß8bitÎŞĞ§¡£
+				tmp = (int16)(buf[i] & 0x00ff);
+				rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr2, &tmp, comNum, stationId, RN_NOTNEED_REQ);
+				if (rtn != GTSD_COM_SUCCESS)
+				{
+					return false;
+				}
+				//Sleep(10);
+			}
+			if (i == length)
+			{
+				*length_written = length;
+			}
+			return true;
+		}
+
+
 	}
 	else
 	{
@@ -593,15 +629,15 @@ bool SerialCtl::downloadBootStream(int16 axis, string& inputKey, int16 cmd, stri
 bool SerialCtl::send_ldr_img(int16 axis, string& inputKey, string& filename, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress, int16 com_type, int16 stationId)
 {
 	Uint8 key[16];
-	//åˆ¤æ–­æ˜¯å¦keyå­˜åœ¨
+	//ÅĞ¶ÏÊÇ·ñkey´æÔÚ
 	if ((!inputKey.empty()) && (!parse_key(inputKey, key)))
 		return false;
 
 	unique_ptr<image> img(read_img(filename, 0, 0x80000000, 4));
 	/*
-	è®¿é—®æ™ºèƒ½æŒ‡é’ˆåŒ…å«çš„è£¸æŒ‡é’ˆåˆ™å¯ä»¥ç”¨ get() å‡½æ•°ã€‚
-	ç”±äºæ™ºèƒ½æŒ‡é’ˆæ˜¯ä¸€ä¸ªå¯¹è±¡ï¼Œæ‰€ä»¥if (my_smart_object)æ°¸è¿œä¸ºçœŸï¼Œ
-	è¦åˆ¤æ–­æ™ºèƒ½æŒ‡é’ˆçš„è£¸æŒ‡é’ˆæ˜¯å¦ä¸ºç©ºï¼Œéœ€è¦è¿™æ ·åˆ¤æ–­ï¼šif (my_smart_object.get())ã€‚
+	·ÃÎÊÖÇÄÜÖ¸Õë°üº¬µÄÂãÖ¸ÕëÔò¿ÉÒÔÓÃ get() º¯Êı¡£
+	ÓÉÓÚÖÇÄÜÖ¸ÕëÊÇÒ»¸ö¶ÔÏó£¬ËùÒÔif (my_smart_object)ÓÀÔ¶ÎªÕæ£¬
+	ÒªÅĞ¶ÏÖÇÄÜÖ¸ÕëµÄÂãÖ¸ÕëÊÇ·ñÎª¿Õ£¬ĞèÒªÕâÑùÅĞ¶Ï£ºif (my_smart_object.get())¡£
 	*/
 	if (!img.get())
 		return false;
@@ -612,7 +648,7 @@ bool SerialCtl::send_ldr_img(int16 axis, string& inputKey, string& filename, voi
 		return false;
 	}
 
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 20;
 	(*tpfUpdataProgressPt)(ptrv, &progress);
 
@@ -663,7 +699,7 @@ bool SerialCtl::send_ldr_img(int16 axis, string& inputKey, string& filename, voi
 	}
 
 	//Verified boot stream.;
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 30;
 	(*tpfUpdataProgressPt)(ptrv, &progress);
 
@@ -684,7 +720,7 @@ bool SerialCtl::send_ldr_img(int16 axis, string& inputKey, string& filename, voi
 	//	}
 	//	// Unlock command sent;
 	//}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 35;
 	(*tpfUpdataProgressPt)(ptrv, &progress);
 
@@ -740,19 +776,19 @@ int16 SerialCtl::parse_key(string& inputKey, Uint8 key[16])
 {
 	if (inputKey.length() != 32) 
 	{
-		//é•¿åº¦é”™è¯¯
+		//³¤¶È´íÎó
 		return -1;
 	}
 	for (int16 i = 0; i < 32; i++) 
 	{
 		if (!isxdigit(inputKey[i]))
 		{
-			//æ ¼å¼é”™è¯¯ï¼Œä¸æ˜¯åå…­è¿›åˆ¶æ•°æ®
+			//¸ñÊ½´íÎó£¬²»ÊÇÊ®Áù½øÖÆÊı¾İ
 			return false;
 		}
 	}
-	// ä¸ºäº†æŒ‰ç…§å¦‚ä¸‹è§„æ ¼æ’åˆ—3, 2, 1, 0, 7, 6, 5, 4, 11, 10, 9, 8, 15, 14, 13, 12.
-	// ä½¿ç”¨å¼‚æˆ–
+	// ÎªÁË°´ÕÕÈçÏÂ¹æ¸ñÅÅÁĞ3, 2, 1, 0, 7, 6, 5, 4, 11, 10, 9, 8, 15, 14, 13, 12.
+	// Ê¹ÓÃÒì»ò
 	for (int16 i = 0; i < 16; i++) 
 	{
 		int8 buf[] = { inputKey[2 * i], inputKey[2 * i + 1], 0 };
@@ -779,11 +815,11 @@ image* SerialCtl::read_img(string& filename, Uint32 range_start, Uint32 range_le
 	{
 		// Assume it's an Intel hex file.
 		/*
-		rewindï¼ŒC ç¨‹åºä¸­çš„åº“å‡½æ•°ï¼ŒåŠŸèƒ½æ˜¯å°†æ–‡ä»¶å†…éƒ¨çš„æŒ‡é’ˆé‡æ–°æŒ‡å‘ä¸€ä¸ªæµçš„å¼€å¤´ã€‚
-		å‡½æ•°å: rewind()
-		åŠŸ èƒ½: å°†æ–‡ä»¶å†…éƒ¨çš„ä½ç½®æŒ‡é’ˆé‡æ–°æŒ‡å‘ä¸€ä¸ªæµï¼ˆæ•°æ®æµ/æ–‡ä»¶ï¼‰çš„å¼€å¤´
-		æ³¨æ„ï¼šä¸æ˜¯æ–‡ä»¶æŒ‡é’ˆè€Œæ˜¯æ–‡ä»¶å†…éƒ¨çš„ä½ç½®æŒ‡é’ˆï¼Œéšç€å¯¹æ–‡ä»¶çš„è¯»å†™æ–‡ä»¶çš„ä½ç½®æŒ‡é’ˆï¼ˆæŒ‡å‘å½“å‰è¯»å†™å­—èŠ‚ï¼‰å‘åç§»åŠ¨ã€‚è€Œæ–‡ä»¶æŒ‡é’ˆæ˜¯æŒ‡å‘æ•´ä¸ªæ–‡ä»¶ï¼Œå¦‚æœä¸é‡æ–°èµ‹å€¼æ–‡ä»¶æŒ‡é’ˆä¸ä¼šæ”¹å˜ã€‚
-		rewindå‡½æ•°ä½œç”¨ç­‰åŒäº (void)fseek(stream, 0L, SEEK_SET);
+		rewind£¬C ³ÌĞòÖĞµÄ¿âº¯Êı£¬¹¦ÄÜÊÇ½«ÎÄ¼şÄÚ²¿µÄÖ¸ÕëÖØĞÂÖ¸ÏòÒ»¸öÁ÷µÄ¿ªÍ·¡£
+		º¯ÊıÃû: rewind()
+		¹¦ ÄÜ: ½«ÎÄ¼şÄÚ²¿µÄÎ»ÖÃÖ¸ÕëÖØĞÂÖ¸ÏòÒ»¸öÁ÷£¨Êı¾İÁ÷/ÎÄ¼ş£©µÄ¿ªÍ·
+		×¢Òâ£º²»ÊÇÎÄ¼şÖ¸Õë¶øÊÇÎÄ¼şÄÚ²¿µÄÎ»ÖÃÖ¸Õë£¬Ëæ×Å¶ÔÎÄ¼şµÄ¶ÁĞ´ÎÄ¼şµÄÎ»ÖÃÖ¸Õë£¨Ö¸Ïòµ±Ç°¶ÁĞ´×Ö½Ú£©ÏòºóÒÆ¶¯¡£¶øÎÄ¼şÖ¸ÕëÊÇÖ¸ÏòÕû¸öÎÄ¼ş£¬Èç¹û²»ÖØĞÂ¸³ÖµÎÄ¼şÖ¸Õë²»»á¸Ä±ä¡£
+		rewindº¯Êı×÷ÓÃµÈÍ¬ÓÚ (void)fseek(stream, 0L, SEEK_SET);
 		*/
 		rewind(file);
 		int res = IHEX_ReadFile(file, hex_read_callback, img);
@@ -878,7 +914,7 @@ int hex_read_callback(void *ctxt, const Uint8 *buf, Uint32 addr, Uint32 len)
 			img->first_chunk = new_chunk;
 		last_chunk = img->last_chunk = new_chunk;
 	}
-	//å®šä¹‰vecotrå¼•ç”¨
+	//¶¨ÒåvecotrÒıÓÃ
 	vector<Uint8>& data = last_chunk->data;
 	int32 old_size = data.size();
 	int32 new_size = g_serial->pad(addr + len - last_chunk->addr, img->alignment);

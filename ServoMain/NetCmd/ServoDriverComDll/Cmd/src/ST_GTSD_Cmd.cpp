@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "BaseReturn_def.h"
 #include "serialport.h"
+#include "eepromOpt.h"
 #include "ST_GTSD_Cmd.h"
 //////////////////////////////////////////////////////////////////////////
 #ifdef CMD_TEST
@@ -34,6 +35,9 @@ int16 Cmd_PlotDataBuffer[10000] = { 0 };
 
 CAbsCom*     g_AbsCom				= NULL;
 
+
+static const int32			FPGA_MODE_RD = 0x0;							//FPGA读操作
+static const int32			FPGA_MODE_WR = 0x1;							//FPGA写操作
 //////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////
@@ -64,8 +68,8 @@ int16 GTSD_CMD_ST_OPEN(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, in
 		return Net_Rt_CreateObj_Err;
 	}
 	//百分比进度
-	progress = 10;
-	(*tpfUpdataProgressPt)(ptr, &progress);
+  progress = 10;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
 	int16 rtn;
 	//调用open函数
@@ -2801,39 +2805,44 @@ int16 GTSD_CMD_ST_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 val
 			//公用的dspnumber 可以都写为0，因为没有用到，实际上传入的偏移已经是绝对地址了。
 			comAddr = (com_addr);
 		}
-		comNum = 1;
+		comNum = 2;
 	}
-	int32 Data = value;
-	int16 high = ((Data >> 16) & 0xffff);
-	int16 low = ((Data)& 0xffff);
+	
+	int16 rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)&value, comNum, stationId);
+	return rtn;
 
-	int16 rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &low, comNum, stationId);
-	if (rtn != GTSD_COM_SUCCESS)
-	{
-		return rtn;
-	}
-	if (com_type == GTSD_COM_TYPE_NET)
-	{
-		comAddr++;
-	}
-	else if (com_type == GTSD_COM_TYPE_RNNET)
-	{
-		comAddr += 2;
-	}
-	else
-	{
-		comAddr++;
-	}
-
-	rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &high, comNum, stationId);
-	if (rtn != GTSD_COM_SUCCESS)
-	{
-		return rtn;
-	}
-	else
-	{
-		return Rt_Success;
-	}
+// 	int32 Data = value;
+// 	int16 high = ((Data >> 16) & 0xffff);
+// 	int16 low = ((Data)& 0xffff);
+// 
+// 
+// 	int16 rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &low, comNum, stationId);
+// 	if (rtn != GTSD_COM_SUCCESS)
+// 	{
+// 		return rtn;
+// 	}
+// 	if (com_type == GTSD_COM_TYPE_NET)
+// 	{
+// 		comAddr++;
+// 	}
+// 	else if (com_type == GTSD_COM_TYPE_RNNET)
+// 	{
+// 		comAddr += 2;
+// 	}
+// 	else
+// 	{
+// 		comAddr++;
+// 	}
+// 
+// 	rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, &high, comNum, stationId);
+// 	if (rtn != GTSD_COM_SUCCESS)
+// 	{
+// 		return rtn;
+// 	}
+// 	else
+// 	{
+// 		return Rt_Success;
+// 	}
 }
 //////////////////////////////////////////////////////////////////////////
 //通过地址读取32bit的fpga
@@ -2894,38 +2903,11 @@ int16 GTSD_CMD_ST_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pv
 			//公用的dspnumber 可以都写为0，因为没有用到，实际上传入的偏移已经是绝对地址了。
 			comAddr = (com_addr);
 		}
-		comNum = 1;
+		comNum = 2;
 	}
-	int16 high;
-	int16 low;
 
-	int16 rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, &low, comNum, stationId);
-	if (rtn != GTSD_COM_SUCCESS)
-	{
-		return rtn;
-	}
-	if (com_type == GTSD_COM_TYPE_NET)
-	{
-		comAddr++;
-	}
-	else if (com_type == GTSD_COM_TYPE_RNNET)
-	{
-		comAddr += 2;
-	}
-	else
-	{
-		comAddr++;
-	}
-	rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, &high, comNum, stationId);
-	*pvalue = ((((int32)(high << 16)) & 0xffff0000) | (low & 0x0000ffff));
-	if (rtn != GTSD_COM_SUCCESS)
-	{
-		return rtn;
-	}
-	else
-	{
-		return Rt_Success;
-	}
+	int16 rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, (int16*)pvalue, comNum, stationId);
+	return rtn;
 }
 //////////////////////////////////////////////////////////////////////////
 //设置曲线配置
@@ -3524,7 +3506,7 @@ int16 GTSD_CMD_ST_FlashWrite(int16 axis, INTEL_HEX_FRAME* packet, int16 com_type
 	int16 cmd_id = WR_SPI_FLASH_COMM;									//cmd id
 	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, Axis);					//合并轴号和命令id
 	dspdata[1] = GTSD_DSP_WRITE;												//写命令	
-  dspdata[2] = 0;												//返回值
+	dspdata[2] = 0;												//返回值											
 	dspdata[3] = packet->lenth;											
 	dspdata[4] = ((packet->addr >> 16) & 0xffff);
 	dspdata[5] = (packet->addr & 0xffff);						
@@ -4038,4 +4020,72 @@ int16 GTSD_CMD_ST_ReadLogAlarmTimes(int16 axis, Uint16* alarmTimes, Uint16& lent
 		}
 		return Rt_Success;
 	}
+}
+
+int16 GTSD_CMD_ST_ScanRnTopology(int16 com_type /*= GTSD_COM_TYPE_RNNET*/, int16 stationId /*= 0xff*/)
+{
+	//从地址零开始读取16个short
+	int16 mode		= FPGA_MODE_RD;
+	int16 addr		= 0x0000;				
+	int16 data[64]	= { 0 };
+	int16 num		= 16;
+	int rtn = g_AbsCom->GTSD_Com_Firmware_handler(com_type, mode, addr, data, num, stationId);
+	if (rtn != GTSD_COM_SUCCESS)
+	{
+		return rtn;
+	}
+	return Rt_Success;
+}
+
+int16 GTSD_CMD_ST_ReadEEPROM(int16 axis, int32& ofst, int8* value, int16& num, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+{
+	bool rtn;
+	rtn = g_eeprom->read(axis, ofst, value, num, com_type, stationId);
+
+	if (rtn == true)
+	{
+		return Rt_Success;
+	}
+	else
+	{
+		return Net_Rt_eeprom_Err;
+	}
+}
+
+int16 GTSD_CMD_ST_WriteEEPROM(int16 axis, int32& ofst, int8* value, int16& num, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+{
+	bool rtn;
+	rtn = g_eeprom->write(axis, ofst, value, num, com_type, stationId);
+
+	if (rtn == true)
+	{
+		return Rt_Success;
+	}
+	else
+	{
+		return Net_Rt_eeprom_Err;
+	}
+}
+
+int16 GTSD_CMD_ST_ClearEEPROM(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+{
+	bool rtn;
+	rtn = g_eeprom->erase(axis, com_type,stationId);
+
+	if (rtn == true)
+	{
+		return Rt_Success;
+	}
+	else
+	{
+		return Net_Rt_eeprom_Err;
+	}
+}
+int16 GTSD_CMD_ST_ResetFPGA(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+{
+	return Rt_Success;
+}
+int16 GTSD_CMD_ST_ConfigEEPROM(int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
+{
+	return Rt_Success;
 }

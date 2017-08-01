@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton top level		 								//
 //	file				:	NetCommunication.cpp											//
 //	Description			:	use for pc and fpga dsp communicaiton						//
@@ -17,13 +17,13 @@
 extern wstring NetCardName;
 extern wstring NetCardNum;
 //////////////////////////////////////////////////////////////////////////
-static const int32			FPGA_MODE_RD		= 0x0;							//FPGAè¯»æ“ä½œ
-static const int32			FPGA_MODE_WR		= 0x1;							//FPGAå†™æ“ä½œ	
+static const int32			FPGA_MODE_RD		= 0x0;							//FPGA¶Á²Ù×÷
+static const int32			FPGA_MODE_WR		= 0x1;							//FPGAĞ´²Ù×÷	
 	
-const int32			MAX_DMA_NUM			= 509;							//å‘½ä»¤å‘é€æœ€å¤§é•¿åº¦(ç±»å‹ï¼šshortï¼‰
+const int32			MAX_DMA_NUM			= 509;							//ÃüÁî·¢ËÍ×î´ó³¤¶È(ÀàĞÍ£ºshort£©
 
-//åœ°å€ä¸ºdspä¸fpgaä¹‹é—´é€šä¿¡çš„fpgaåœ°å€ï¼Œä¸åŒçš„dspå¯¹åº”ä¸åŒçš„fpgaåœ°å€ã€‚
-const int32			NET_DSPA_COMADDR	= 0x0400;						//åœ°å€ä¸ºshortåœ°å€
+//µØÖ·ÎªdspÓëfpgaÖ®¼äÍ¨ĞÅµÄfpgaµØÖ·£¬²»Í¬µÄdsp¶ÔÓ¦²»Í¬µÄfpgaµØÖ·¡£
+const int32			NET_DSPA_COMADDR	= 0x0400;						//µØÖ·ÎªshortµØÖ·
 const int32			NET_DSPB_COMADDR	= 0x8400;
 
 CNetCom::CNetCom(void)
@@ -37,26 +37,26 @@ CNetCom::~CNetCom(void)
 }
 
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		è·å–æœ¬åœ°ç½‘ç»œè®¾å¤‡çš„ä¿¡æ¯åˆ—è¡¨
-devsList:	è®¾å¤‡åˆ—è¡¨å­—ç¬¦ä¸²æŒ‡é’ˆï¼Œéœ€è¦åœ¨è°ƒç”¨è¯¥å‡½æ•°æ—¶åˆ†é…ç©ºé—´ï¼Œå¹¶ç”±è°ƒç”¨è€…è´Ÿè´£é‡Šæ”¾
-btyeSizeï¼š	è®¾å¤‡åˆ—è¡¨ç©ºé—´çš„byteå¤§å°
-è¿”å›ï¼š		ä¿¡æ¯åˆ—è¡¨å­—ç¬¦ä¸²ã€‚å«æè¿°å’Œåç§°ï¼ˆç”¨$åŒºåˆ†ï¼‰ï¼Œä¸åŒè®¾å¤‡ä¿¡æ¯ç”¨"|"åŒºåˆ†ã€‚
-			å¦‚æœè¿”å›å€¼è¡¨ç¤ºç©ºé—´ä¸å¤Ÿï¼Œéœ€è¦é‡æ–°ç”³è¯·ç©ºé—´å¹¶å†æ¬¡è°ƒç”¨
+¹¦ÄÜ£º		»ñÈ¡±¾µØÍøÂçÉè±¸µÄĞÅÏ¢ÁĞ±í
+devsList:	Éè±¸ÁĞ±í×Ö·û´®Ö¸Õë£¬ĞèÒªÔÚµ÷ÓÃ¸Ãº¯ÊıÊ±·ÖÅä¿Õ¼ä£¬²¢ÓÉµ÷ÓÃÕß¸ºÔğÊÍ·Å
+btyeSize£º	Éè±¸ÁĞ±í¿Õ¼äµÄbyte´óĞ¡
+·µ»Ø£º		ĞÅÏ¢ÁĞ±í×Ö·û´®¡£º¬ÃèÊöºÍÃû³Æ£¨ÓÃ$Çø·Ö£©£¬²»Í¬Éè±¸ĞÅÏ¢ÓÃ"|"Çø·Ö¡£
+			Èç¹û·µ»ØÖµ±íÊ¾¿Õ¼ä²»¹»£¬ĞèÒªÖØĞÂÉêÇë¿Õ¼ä²¢ÔÙ´Îµ÷ÓÃ
 *******************************************************************************************/
 int16 CNetCom::NC_GetDevs(int8* devsList, int32& btyeSize)
 {
-	pcap_if_t*	alldevs;																//wpcapè®¾å¤‡åˆ—è¡¨å¯¹è±¡æŒ‡é’ˆ
+	pcap_if_t*	alldevs;																//wpcapÉè±¸ÁĞ±í¶ÔÏóÖ¸Õë
 	pcap_if_t*	devs;
-	int8		errbuf[PCAP_ERRBUF_SIZE];												//å‚æ•°
+	int8		errbuf[PCAP_ERRBUF_SIZE];												//²ÎÊı
 
-	if (pcap_findalldevs(&alldevs, errbuf) == -1)										//è·å–è®¾å¤‡ä¿¡æ¯åˆ—è¡¨
+	if (pcap_findalldevs(&alldevs, errbuf) == -1)										//»ñÈ¡Éè±¸ĞÅÏ¢ÁĞ±í
 		return Net_Rt_Not_Get_Net_DevList;
-	if (NULL == alldevs)																//æ²¡æœ‰æ‰¾åˆ°è®¾å¤‡ï¼Œè¿”å›
+	if (NULL == alldevs)																//Ã»ÓĞÕÒµ½Éè±¸£¬·µ»Ø
 		return Net_Rt_Not_Find_Net_Device;
 
-	devs = alldevs;																		//è¿”å›çš„alldevsæ˜¯ä¸€ä¸ªé“¾è¡¨ï¼Œä¿¡æ¯éƒ½å­˜å‚¨åœ¨pcap_if_tç»“æ„ä¸­
+	devs = alldevs;																		//·µ»ØµÄalldevsÊÇÒ»¸öÁ´±í£¬ĞÅÏ¢¶¼´æ´¢ÔÚpcap_if_t½á¹¹ÖĞ
 	string sztemp;
-	while (devs)																		//å¯¹ä¿¡æ¯åˆ—è¡¨çš„æè¿°å’Œåç§°ï¼ˆGUIDï¼‰è¿›è¡Œå°è£…
+	while (devs)																		//¶ÔĞÅÏ¢ÁĞ±íµÄÃèÊöºÍÃû³Æ£¨GUID£©½øĞĞ·â×°
 	{
 		sztemp += devs->description;
 		sztemp += " $ ";
@@ -65,15 +65,15 @@ int16 CNetCom::NC_GetDevs(int8* devsList, int32& btyeSize)
 		devs = devs->next;
 	}
 
-	pcap_freealldevs(alldevs);															//é‡Šæ”¾é“¾è¡¨
+	pcap_freealldevs(alldevs);															//ÊÍ·ÅÁ´±í
 
-	int32 iSize = sztemp.size();														//æ¯”è¾ƒåˆ†é…çš„ç©ºé—´æ˜¯å¦èƒ½å¤Ÿæ»¡è¶³è¦æ±‚
+	int32 iSize = sztemp.size();														//±È½Ï·ÖÅäµÄ¿Õ¼äÊÇ·ñÄÜ¹»Âú×ãÒªÇó
 	if (btyeSize < iSize)
 	{
-		return Net_Rt_Not_Enough_Space;													//åˆ†é…çš„å¤–éƒ¨ç©ºé—´ä¸å¤Ÿï¼Œéœ€è¦é‡æ–°åˆ†é…
+		return Net_Rt_Not_Enough_Space;													//·ÖÅäµÄÍâ²¿¿Õ¼ä²»¹»£¬ĞèÒªÖØĞÂ·ÖÅä
 	}
 	
-	if (iSize > 0)																		//å‡å¦‚æ‰¾åˆ°è®¾å¤‡åˆ—è¡¨ä¿¡æ¯
+	if (iSize > 0)																		//¼ÙÈçÕÒµ½Éè±¸ÁĞ±íĞÅÏ¢
 	{
 		if (NULL != devsList)
 		{
@@ -82,21 +82,21 @@ int16 CNetCom::NC_GetDevs(int8* devsList, int32& btyeSize)
 		}
 		else
 		{
-			return Net_Rt_Pointer_Invalid;												//è¾“å…¥æŒ‡é’ˆæ— æ•ˆ
+			return Net_Rt_Pointer_Invalid;												//ÊäÈëÖ¸ÕëÎŞĞ§
 		}
 	}
 	else
 	{
-		return Net_Rt_Net_DevListLenth_Err;												//è®¾å¤‡ä¿¡æ¯åˆ—è¡¨é•¿åº¦é”™è¯¯										
+		return Net_Rt_Net_DevListLenth_Err;												//Éè±¸ĞÅÏ¢ÁĞ±í³¤¶È´íÎó										
 	}
 
 	return Rt_Success;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		è·å–é€‚é…å™¨çš„æè¿°
-list:		é€‚é…å™¨çš„æè¿°ä¿¡æ¯
-nameListï¼š	é€‚é…å™¨çš„åç§°ä¿¡æ¯
-è¿”å›ï¼š		0--æˆåŠŸ
+¹¦ÄÜ£º		»ñÈ¡ÊÊÅäÆ÷µÄÃèÊö
+list:		ÊÊÅäÆ÷µÄÃèÊöĞÅÏ¢
+nameList£º	ÊÊÅäÆ÷µÄÃû³ÆĞÅÏ¢
+·µ»Ø£º		0--³É¹¦
 *******************************************************************************************/
 int16 CNetCom::NC_GetAdapterDesp(vector<wstring> &list, vector<wstring> &nameList)
 {
@@ -110,11 +110,11 @@ int16 CNetCom::NC_GetAdapterDesp(vector<wstring> &list, vector<wstring> &nameLis
 		return rtn;
 	}
 
-	//è·å–è½¬æ¢æ‰€éœ€è¦çš„ç©ºé—´
+	//»ñÈ¡×ª»»ËùĞèÒªµÄ¿Õ¼ä
 	int size = MultiByteToWideChar(CP_ACP, 0, devslist, -1, NULL, 0);
 	wchar_t *idevslist = new wchar_t[size];
 	wmemset(idevslist, 0, size);
-	//å°†å¤šå­—èŠ‚è½¬åŒ–ä¸ºå®½å­—ç¬¦
+	//½«¶à×Ö½Ú×ª»¯Îª¿í×Ö·û
 	if (!MultiByteToWideChar(CP_ACP, 0, devslist, -1, idevslist, size))
 	{
 		return Net_Rt_MBTOWC_Err;
@@ -134,12 +134,12 @@ int16 CNetCom::NC_GetAdapterDesp(vector<wstring> &list, vector<wstring> &nameLis
 
 	for (int i = 0; i < (int32)(ilistall.size());)
 	{
-		iEnd = ilist.find((L" | "), iStart);							//ä»istartä½ç½®å¼€å§‹æ‰¾å­—ç¬¦ä¸²
-		tmp = ilist.substr(iStart, iEnd - iStart);						//æå–å­å­—ç¬¦ä¸²
-		iMid = tmp.find((L" $ "), 0);									//ä»å­å­—ç¬¦ä¸²ä¸­å¼€å§‹ä½ç½®æ‰¾å­—ç¬¦ä¸²
+		iEnd = ilist.find((L" | "), iStart);							//´ÓistartÎ»ÖÃ¿ªÊ¼ÕÒ×Ö·û´®
+		tmp = ilist.substr(iStart, iEnd - iStart);						//ÌáÈ¡×Ó×Ö·û´®
+		iMid = tmp.find((L" $ "), 0);									//´Ó×Ó×Ö·û´®ÖĞ¿ªÊ¼Î»ÖÃÕÒ×Ö·û´®
 
-		sDesp = tmp.substr(0, iMid);									//ä»å­å­—ç¬¦ä¸²ä¸­æ‰¾åˆ°æè¿°
-		tmp1 = tmp.substr(iMid + 3, tmp.length() - iMid - 3);			//ä»å­å­—ç¬¦ä¸²ä¸­æ‰¾åˆ°åç§°
+		sDesp = tmp.substr(0, iMid);									//´Ó×Ó×Ö·û´®ÖĞÕÒµ½ÃèÊö
+		tmp1 = tmp.substr(iMid + 3, tmp.length() - iMid - 3);			//´Ó×Ó×Ö·û´®ÖĞÕÒµ½Ãû³Æ
 		pos1 = tmp1.find((L"{"), 0);
 		pos2 = tmp1.find((L"}"), 0);
 		sName = tmp1.substr(pos1 + 1, pos2 - pos1 - 1);
@@ -155,14 +155,14 @@ int16 CNetCom::NC_GetAdapterDesp(vector<wstring> &list, vector<wstring> &nameLis
 	return Rt_Success;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		æ‰“å¼€è®¾å¤‡
-è¾“å…¥ï¼š		adapter: è®¾å¤‡çš„åç§°ï¼ˆGUIDï¼‰
-port:		ä¿ç•™å‚æ•°
-è¿”å›ï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		´ò¿ªÉè±¸
+ÊäÈë£º		adapter: Éè±¸µÄÃû³Æ£¨GUID£©
+port:		±£Áô²ÎÊı
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CNetCom::NC_Open(const int8* adapter, int32 port)
 {
-	if (NULL != p_Net && NULL != p_Net->adhandle) //å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
+	if (NULL != p_Net && NULL != p_Net->adhandle) //Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
 		return Rt_Success;
 
 	p_Net = new CNet(adapter, port);
@@ -173,9 +173,9 @@ int16 CNetCom::NC_Open(const int8* adapter, int32 port)
 	return Net_Rt_Open_Device_Err;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼šå…³é—­è®¾å¤‡
-è¾“å…¥ï¼š   æ— 
-è¿”å›ï¼š   æ— 
+¹¦ÄÜ£º¹Ø±ÕÉè±¸
+ÊäÈë£º   ÎŞ
+·µ»Ø£º   ÎŞ
 *******************************************************************************************/
 int16 CNetCom::NC_Close()
 {
@@ -187,45 +187,45 @@ int16 CNetCom::NC_Close()
 	return Rt_Success;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		ä»æ‰«æåˆ°çš„è®¾å¤‡ä¸­æ‰¾åˆ°æœ‰å“åº”çš„è®¾å¤‡å¹¶æ‰“å¼€è¯¥è®¾å¤‡ï¼Œæ‰¾åˆ°ä¸€ä¸ªæœ‰å“åº”çš„è®¾å¤‡åå°±é€€å‡º
-è¾“å…¥ï¼š		æ— 
-è¿”å›ï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		´ÓÉ¨Ãèµ½µÄÉè±¸ÖĞÕÒµ½ÓĞÏìÓ¦µÄÉè±¸²¢´ò¿ª¸ÃÉè±¸£¬ÕÒµ½Ò»¸öÓĞÏìÓ¦µÄÉè±¸ºó¾ÍÍË³ö
+ÊäÈë£º		ÎŞ
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CNetCom::NetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress)
 {
 	NetCardName = L"";
-  NetCardNum = L"";
+	NetCardNum = L"";
 	void* ptr = ptrv;
 	int16 counter = 0;
 	int16 success_times = 0;
 	vector<wstring> adapterList;
 	vector<wstring> adpNameList;
 	NC_GetAdapterDesp(adapterList, adpNameList);
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 15;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
 	for (int32 i = 0; i < (int32)(adpNameList.size()); ++i)
 	{
-		//è·å–è½¬æ¢æ‰€éœ€çš„ç›®æ ‡ç¼“å­˜å¤§å°  
+		//»ñÈ¡×ª»»ËùĞèµÄÄ¿±ê»º´æ´óĞ¡  
 		int32 dBufSize = WideCharToMultiByte(CP_OEMCP, 0, adpNameList[i].c_str(), -1, NULL, 0, NULL, FALSE);
-		//åˆ†é…ç›®æ ‡ç¼“å­˜  
+		//·ÖÅäÄ¿±ê»º´æ  
 		int8* dBuf = new int8[dBufSize];
 		memset(dBuf, 0, dBufSize);
-		//è½¬æ¢  
+		//×ª»»  
 		int32 nRet = WideCharToMultiByte(CP_OEMCP, 0, adpNameList[i].c_str(), -1, dBuf, dBufSize, NULL, FALSE);
-		//å¤ä½æˆåŠŸæ¬¡æ•°
+		//¸´Î»³É¹¦´ÎÊı
 		success_times = 0;
-		if (Rt_Success == NC_Open(dBuf, 65536))  //æ‰“å¼€è®¾å¤‡
+		if (Rt_Success == NC_Open(dBuf, 65536))  //´ò¿ªÉè±¸
 		{
-			int16 dma_address		= NET_DSPA_COMADDR;		//FPGA åŒå£ramåœ°å€
+			int16 dma_address		= NET_DSPA_COMADDR;		//FPGA Ë«¿ÚramµØÖ·
 			int16 fulldataAry		= 0;
 			int16 sLen				= 1;
 
-			//æµ‹è¯•10æ¬¡ï¼Œå¦‚æœæˆåŠŸæ¬¡æ•°å¤§äº5æ¬¡è®¤ä¸ºè®¾å¤‡æ˜¯é€šçš„
+			//²âÊÔ10´Î£¬Èç¹û³É¹¦´ÎÊı´óÓÚ5´ÎÈÏÎªÉè±¸ÊÇÍ¨µÄ
 			for (counter = 0; counter < 10;counter++)
 			{
-				if (Rt_Success == NetCom_FPGA_ComHandler(FPGA_MODE_RD, dma_address, &fulldataAry, sLen)) //å‘é€å‘½ä»¤ä»¥ç¡®å®šæ­¤è®¾å¤‡æ˜¯å¦å¯æ¥æ”¶å“åº”
+				if (Rt_Success == NetCom_FPGA_ComHandler(FPGA_MODE_RD, dma_address, &fulldataAry, sLen)) //·¢ËÍÃüÁîÒÔÈ·¶¨´ËÉè±¸ÊÇ·ñ¿É½ÓÊÕÏìÓ¦
 				{
 					success_times++;
 				}
@@ -235,11 +235,11 @@ int16 CNetCom::NetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv
 				delete dBuf;
 				dBuf = NULL;
 				NetCardName = adapterList.at(i);
-        NetCardNum = adpNameList.at(i);
-				//ç™¾åˆ†æ¯”è¿›åº¦
+				NetCardNum = adpNameList.at(i);
+				//°Ù·Ö±È½ø¶È
 				progress = 100;
 				(*tpfUpdataProgressPt)(ptr, &progress);
-				//æ‰¾åˆ°è®¾å¤‡ï¼Œå¹¶è¿æ¥æˆåŠŸ
+				//ÕÒµ½Éè±¸£¬²¢Á¬½Ó³É¹¦
 				return Rt_Success;
 			}
 			
@@ -254,7 +254,7 @@ int16 CNetCom::NetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv
 		}
 		if (adapterList.size() > 0)
 		{
-			//ç™¾åˆ†æ¯”è¿›åº¦
+			//°Ù·Ö±È½ø¶È
 			progress = (int16)(15 + ((double)(i+1) / (double)adpNameList.size()*80.0));
 			(*tpfUpdataProgressPt)(ptr, &progress);
 		}
@@ -268,9 +268,9 @@ int16 CNetCom::NetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv
 	return Net_Rt_Not_Find_ScanDevice;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼šå…³é—­æ‰«æåˆ°çš„æœ‰å“åº”çš„è®¾å¤‡
-è¾“å…¥ï¼š   æ— 
-è¿”å›ï¼š   æ— 
+¹¦ÄÜ£º¹Ø±ÕÉ¨Ãèµ½µÄÓĞÏìÓ¦µÄÉè±¸
+ÊäÈë£º   ÎŞ
+·µ»Ø£º   ÎŞ
 *******************************************************************************************/
 int16 CNetCom::NetCom_Close()
 {
@@ -278,32 +278,32 @@ int16 CNetCom::NetCom_Close()
 	return Rt_Success;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š	è¯»å†™å®Œæˆæ ‡å¿—ä½å¤„ç†å‡½æ•°
-è¾“å…¥ï¼š
-FpgaMode:	è¯·æ±‚ç±»å‹, FPGA_MODE_RDè¡¨ç¤ºè¯» FPGA_MODE_WRè¡¨ç¤ºå†™
-cmd:		å‘½ä»¤IDå’Œè½´å·ï¼Œbit[0- 11]è¡¨ç¤ºå‘½ä»¤IDï¼Œbit[12 - 15]è¡¨ç¤ºè½´å·
-è¿”å›ï¼š		trueè¡¨ç¤ºæˆåŠŸ
+¹¦ÄÜ£º	¶ÁĞ´Íê³É±êÖ¾Î»´¦Àíº¯Êı
+ÊäÈë£º
+FpgaMode:	ÇëÇóÀàĞÍ, FPGA_MODE_RD±íÊ¾¶Á FPGA_MODE_WR±íÊ¾Ğ´
+cmd:		ÃüÁîIDºÍÖáºÅ£¬bit[0- 11]±íÊ¾ÃüÁîID£¬bit[12 - 15]±íÊ¾ÖáºÅ
+·µ»Ø£º		true±íÊ¾³É¹¦
 *******************************************************************************************/
 bool CNetCom::ReturnFlaghandler(int16 FpgaMode, int16 cmd, int16 addr)
 {
-	int16	axisNum		= (cmd & 0xf000) >> 12;												//è®¡ç®—è½´å·
-	int16	dma_addr	= (int16)(FPGA_QUERY_ADDR0);										//æ ¹æ®è½´å·æ¥åŒºåˆ†éœ€è¦æŸ¥è¯¢çš„FPGAåœ°å€æ˜¯å±äºå“ªä¸ªDSPï¼Œæ¯ä¸ªDSPå¯¹åº”ä¸¤ä¸ªè½´
+	int16	axisNum		= (cmd & 0xf000) >> 12;												//¼ÆËãÖáºÅ
+	int16	dma_addr	= (int16)(FPGA_QUERY_ADDR0);										//¸ù¾İÖáºÅÀ´Çø·ÖĞèÒª²éÑ¯µÄFPGAµØÖ·ÊÇÊôÓÚÄÄ¸öDSP£¬Ã¿¸öDSP¶ÔÓ¦Á½¸öÖá
 	if (addr == ((int16)NET_DSPB_COMADDR))
 	{
 		dma_addr		= (int16)(FPGA_QUERY_ADDR1);
 	}
-	int16	dma_num		= 0;																//è¯»æ—¶dma_numä¸º0
+	int16	dma_num		= 0;																//¶ÁÊ±dma_numÎª0
 	if (FpgaMode == FPGA_MODE_WR)
 	{
-		dma_num			= 1;																//å†™æ—¶dma_numä¸º1	
+		dma_num			= 1;																//Ğ´Ê±dma_numÎª1	
 	}
 		
 	int16	dat			= 0;
-	p_Net->fillPacket(dma_addr, &dat, dma_num, FpgaMode);									//å¡«å……æ•°æ®åŒ…æŠ¥å¤´
-	if (0 == p_Net->tx_packet())															//å‘é€è¯·æ±‚
+	p_Net->fillPacket(dma_addr, &dat, dma_num, FpgaMode);									//Ìî³äÊı¾İ°ü±¨Í·
+	if (0 == p_Net->tx_packet())															//·¢ËÍÇëÇó
 	{
 		int32 iret = -1;
-		iret = p_Net->wait_response();														//ç­‰å¾…å“åº”
+		iret = p_Net->wait_response();														//µÈ´ıÏìÓ¦
 		if (iret == 1)
 		{
 			return p_Net->decoder_return_flag(FpgaMode);
@@ -313,20 +313,20 @@ bool CNetCom::ReturnFlaghandler(int16 FpgaMode, int16 cmd, int16 addr)
 }
 
 /*******************************************************************************************
-åŠŸèƒ½ï¼šFPGAæ•°æ®é€šä¿¡äº¤äº’å‡½æ•°
-è¾“å…¥ï¼š
-mode:			1:å†™  0ï¼šè¯»
-dma_addr:		dmaåœ°å€
-pData:			è¾“å…¥æ•°æ®
-dma_num:		è¾“å…¥æ•°æ®é•¿åº¦
-è¾“å‡ºï¼špData:    è¾“å‡ºæ•°æ®
-dma_num:		è¾“å‡ºæ•°æ®é•¿åº¦
-è¿”å›ï¼š0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£ºFPGAÊı¾İÍ¨ĞÅ½»»¥º¯Êı
+ÊäÈë£º
+mode:			1:Ğ´  0£º¶Á
+dma_addr:		dmaµØÖ·
+pData:			ÊäÈëÊı¾İ
+dma_num:		ÊäÈëÊı¾İ³¤¶È
+Êä³ö£ºpData:    Êä³öÊı¾İ
+dma_num:		Êä³öÊı¾İ³¤¶È
+·µ»Ø£º0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CNetCom::NetCom_FPGA_ComHandler(int16 mode, int16 dma_addr, int16* pData, int16 dma_num)
 {
 	int16 ret = Rt_Success;
-	if ((NULL != p_Net) && (NULL != p_Net->adhandle))										//ç½‘ç»œæ˜¯å¦è¿æ¥
+	if ((NULL != p_Net) && (NULL != p_Net->adhandle))										//ÍøÂçÊÇ·ñÁ¬½Ó
 	{
 		if (p_Net->bHaveMac)
 		{
@@ -335,13 +335,13 @@ int16 CNetCom::NetCom_FPGA_ComHandler(int16 mode, int16 dma_addr, int16* pData, 
 			if (dma_num > MAX_DMA_NUM)
 				return Net_Rt_Send_Data_TooLong;
 
-			p_Net->fillPacket(dma_addr, pData, dma_num, mode);								//å¡«å……æ•°æ®åŒ…æŠ¥å¤´
-			if (0 == p_Net->tx_packet())													//å‘é€è¯·æ±‚
+			p_Net->fillPacket(dma_addr, pData, dma_num, mode);								//Ìî³äÊı¾İ°ü±¨Í·
+			if (0 == p_Net->tx_packet())													//·¢ËÍÇëÇó
 			{
-				iret = p_Net->wait_response();												//ç­‰å¾…å“åº”
+				iret = p_Net->wait_response();												//µÈ´ıÏìÓ¦
 				if (iret == 1)
 				{
-					ret = p_Net->decoder_fpga_packet(p_Net->get_tx_index(), pData, dma_num); //å¯¹è¿”å›æ•°æ®è§£åŒ…
+					ret = p_Net->decoder_fpga_packet(p_Net->get_tx_index(), pData, dma_num); //¶Ô·µ»ØÊı¾İ½â°ü
 				}
 				else
 				{
@@ -364,20 +364,20 @@ int16 CNetCom::NetCom_FPGA_ComHandler(int16 mode, int16 dma_addr, int16* pData, 
 }
 
 /*******************************************************************************************
-åŠŸèƒ½ï¼šdspæ•°æ®é€šä¿¡äº¤äº’å‡½æ•°
-è¾“å…¥ï¼š
-mode:			1:å†™  0ï¼šè¯» modeæ²¡æœ‰å…·ä½“ä½œç”¨ï¼Œå¤‡ç”¨
-dma_addr:		dmaåœ°å€
-pData:          è¾“å…¥æ•°æ®
-dma_num:		è¾“å…¥æ•°æ®é•¿åº¦
-è¾“å‡ºï¼špData:    è¾“å‡ºæ•°æ®
-dma_num:		è¾“å‡ºæ•°æ®é•¿åº¦
-è¿”å›ï¼š			0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£ºdspÊı¾İÍ¨ĞÅ½»»¥º¯Êı
+ÊäÈë£º
+mode:			1:Ğ´  0£º¶Á modeÃ»ÓĞ¾ßÌå×÷ÓÃ£¬±¸ÓÃ
+dma_addr:		dmaµØÖ·
+pData:          ÊäÈëÊı¾İ
+dma_num:		ÊäÈëÊı¾İ³¤¶È
+Êä³ö£ºpData:    Êä³öÊı¾İ
+dma_num:		Êä³öÊı¾İ³¤¶È
+·µ»Ø£º			0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CNetCom::NetCom_DSP_ComHandler(int16 mode, int16 dma_addr, int16* pData, int16 dma_num)
 {
 	int16 ret = Rt_Success;
-	if ((NULL != p_Net) && (NULL != p_Net->adhandle))										//ç½‘ç»œæ˜¯å¦è¿æ¥
+	if ((NULL != p_Net) && (NULL != p_Net->adhandle))										//ÍøÂçÊÇ·ñÁ¬½Ó
 	{
 		if (p_Net->bHaveMac)
 		{
@@ -388,16 +388,16 @@ int16 CNetCom::NetCom_DSP_ComHandler(int16 mode, int16 dma_addr, int16* pData, i
 
 			int16 cmd			= *pData;
 			bool  bFinishFlag	= false;
-			p_Net->fillPacket(dma_addr, pData, dma_num, FPGA_MODE_WR);					    //å¡«å……DSPå‘½ä»¤,é¦–å…ˆéƒ½æ˜¯å†™ä¸€ä¸ªå‘½ä»¤
+			p_Net->fillPacket(dma_addr, pData, dma_num, FPGA_MODE_WR);					    //Ìî³äDSPÃüÁî,Ê×ÏÈ¶¼ÊÇĞ´Ò»¸öÃüÁî
 
-			int32 icount = 0; //æŸ¥è¯¢è¯»å®Œæˆæ ‡å¿—ä½é‡å¤æ¬¡æ•°
+			int32 icount = 0; //²éÑ¯¶ÁÍê³É±êÖ¾Î»ÖØ¸´´ÎÊı
 			int32 lt_time = 100;
 			//////////////////////////////////////////////////////////////////////////
-			//æ ¹æ®å‘½ä»¤ä¸åŒï¼Œå»¶è¿Ÿç­‰å¾…æ—¶é—´ä¸åŒ
+			//¸ù¾İÃüÁî²»Í¬£¬ÑÓ³ÙµÈ´ıÊ±¼ä²»Í¬
 			int16 lt_cmd = cmd;
 			switch (cmd &0x0fff)
 			{
-				//å¦‚æœ‰é•¿æ—¶é—´çš„æŒ‡ä»¤å°±åœ¨æ­¤å¢åŠ 
+				//ÈçÓĞ³¤Ê±¼äµÄÖ¸Áî¾ÍÔÚ´ËÔö¼Ó
 			case 38:
 			case 39:
 				lt_time = 1000000;
@@ -407,23 +407,23 @@ int16 CNetCom::NetCom_DSP_ComHandler(int16 mode, int16 dma_addr, int16* pData, i
 			}			 
 			//////////////////////////////////////////////////////////////////////////
 
-			if (0 == p_Net->tx_packet())  //å‘é€è¯·æ±‚
+			if (0 == p_Net->tx_packet())  //·¢ËÍÇëÇó
 			{
-				iret = p_Net->wait_response();  //ç­‰å¾…å“åº”
+				iret = p_Net->wait_response();  //µÈ´ıÏìÓ¦
 				if (iret == 1)
 				{
 					while ((!bFinishFlag) && (icount < lt_time))
 					{
-						bFinishFlag = ReturnFlaghandler(FPGA_MODE_RD, cmd, dma_addr);					//æŸ¥è¯¢å‘½ä»¤å®Œæˆæ ‡å¿—ä½
+						bFinishFlag = ReturnFlaghandler(FPGA_MODE_RD, cmd, dma_addr);					//²éÑ¯ÃüÁîÍê³É±êÖ¾Î»
 						if (bFinishFlag)
 						{
-							p_Net->fillPacket(dma_addr, pData, dma_num, FPGA_MODE_RD);		//å¡«å……æ¥æ”¶æ•°æ®å‘½ä»¤çš„æ•°æ®åŒ…æŠ¥å¤´
-							if (0 == p_Net->tx_packet()) //å‘é€è¯·æ±‚
+							p_Net->fillPacket(dma_addr, pData, dma_num, FPGA_MODE_RD);		//Ìî³ä½ÓÊÕÊı¾İÃüÁîµÄÊı¾İ°ü±¨Í·
+							if (0 == p_Net->tx_packet()) //·¢ËÍÇëÇó
 							{
-								iret = p_Net->wait_response();  //ç­‰å¾…å“åº”
+								iret = p_Net->wait_response();  //µÈ´ıÏìÓ¦
 								if (iret == 1)
 								{
-									ret = p_Net->decoder_dsp_packet(p_Net->get_tx_index(), pData, dma_num);	  //å¯¹è¿”å›æ•°æ®è§£åŒ…
+									ret = p_Net->decoder_dsp_packet(p_Net->get_tx_index(), pData, dma_num);	  //¶Ô·µ»ØÊı¾İ½â°ü
 									break;
 								}
 							}
@@ -441,7 +441,7 @@ int16 CNetCom::NetCom_DSP_ComHandler(int16 mode, int16 dma_addr, int16* pData, i
 				ret = Net_Rt_Send_Err;
 
 			}
-			//æ¸…é™¤è¿”å›æ ‡å¿—
+			//Çå³ı·µ»Ø±êÖ¾
 			if (ReturnFlaghandler(FPGA_MODE_WR, cmd, dma_addr) == false)
 			{
 				ret = Net_Rt_Flag_Err;

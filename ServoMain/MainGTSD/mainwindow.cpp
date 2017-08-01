@@ -987,7 +987,7 @@ void MainWindow::onActionRestoreFactorySettingClicked()
   QString outPath=RESOURCE_FILE_PATH+"Uboot/ServoUboot.out";
   QString ldrPath=RESOURCE_FILE_PATH+"Uboot/ServoUboot.ldr";
 
-  int netId=net.netId();
+  int netId=mp_userConfig->com.id;
   qint16 netRnStation=net.rnStation();
 
   uiStatus->warningMessge->setText(tr("servo connecting......"));
@@ -1000,7 +1000,7 @@ void MainWindow::onActionRestoreFactorySettingClicked()
   error=static_cast<COM_ERROR>(GTSD_CMD_Open(updateProgessBarWhenConnectClicked,(void*)ui->progressBar,netId));
   if(error!=COM_OK)
   {
-    QMessageBox::information(0,tr("connect"),tr("FPGA comunication connect error:%1").arg(error));
+    QMessageBox::information(0,tr("connect"),tr("FPGA comunication connect error:%1\nor software configuration is wrong").arg(error));
     error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(netId)));
 //    enableAllUi(true);
     setUbootModeUi(false);
@@ -1058,6 +1058,7 @@ void MainWindow::onActionRestoreFactorySettingClicked()
         warnnigMessage=tr("Warring :Causes of exceptions maybe  1.Boot Switch 2.FPGA FirmWare 3.Boot File ");
         uiStatus->warningMessge->setText(warnnigMessage);
         ubootOk=false;
+        qDebug()<<"uboot error :"<<i;
         break;
       }
       else{
@@ -2108,16 +2109,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
   QMessageBox::StandardButton rb = QMessageBox::question(this, tr("Warring"), tr("Do you want to close?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
   if (rb == QMessageBox::Yes)
   {
-    if(m_isOpenCom)
-    {
-      if(m_timer->isActive()) m_timer->stop();
-      GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id));
-    }
-    for (int a = 0; a < 100; a++)
-    {
-      int i = 65536;
-      while (i--);
-    }
+
+//    for (int a = 0; a < 100; a++)
+//    {
+//      int i = 65536;
+//      while (i--);
+//    }
     //非激活每一个窗口
     AbstractFuncWidget *absWidget;
     for(int i=0;i<ui->stackedWidget->count();i++)
@@ -2125,6 +2122,12 @@ void MainWindow::closeEvent(QCloseEvent *event)
       absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
       absWidget->setActiveNow(false);
   //        qDebug()<<absWidget->objectName();
+    }
+
+    if(m_isOpenCom)
+    {
+      if(m_timer->isActive()) m_timer->stop();
+      GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id));
     }
     event->accept();
     deleteLater();
