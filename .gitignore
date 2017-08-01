@@ -30,3 +30,4 @@ release/Bin/com/googoltech/qmlcomponents/TreeModel/*dll
 *.tlog
 *.idb
 *.opensdf
+*.suo
