@@ -32,9 +32,13 @@ Item {
 
     function errorString(ecode){
         var alarm=ecode&__alarmOper;
-        var str="LostFlag:"+__lostFlag(ecode)+"  ";
-        str+="crcErrCounter:"+__crcErrorCounter(ecode)+" ";
-        str+="alarmcode: B["+alarm.toString(2)+"]\n";
+        var str="";
+        if(__lostFlag(ecode)>0){
+            str+=qsTr("编码器输入断线")+"\n";
+        }
+
+//        str+="crcErrCounter:"+__crcErrorCounter(ecode)+" ";
+//        str+="alarmcode: B["+alarm.toString(2)+"]\n";
         str+=_alarmErrorStr(alarm);
         return str;
     }
