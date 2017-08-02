@@ -55,6 +55,7 @@ public:
 public slots:
   void onWarningMessageChanged(QString &msg);
   void onClearWarning(void);
+  void onQmlUiShowMessage(QString msg);
 
 signals:
   void updateProgressBar(int value);//这个用于显示新建方案时的进度条

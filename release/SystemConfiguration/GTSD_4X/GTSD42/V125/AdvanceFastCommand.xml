@@ -171,6 +171,26 @@
       <property name="text">
        <string>312</string>
       </property>
+      <property name="text">
+       <string>编码器分辨率</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.rsv.prm.seq_dir</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>302</string>
+      </property>
+      <property name="text">
+       <string>电机相序</string>
+      </property>
      </item>
     </widget>
    </item>

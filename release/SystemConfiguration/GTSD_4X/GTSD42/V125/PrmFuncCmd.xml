@@ -1394,6 +1394,35 @@
         <string>39</string>
        </property>
       </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.rsv.prm.seq_dir</string>
+       </property>
+       <property name="text">
+        <string>int16</string>
+       </property>
+       <property name="text">
+        <string>Null</string>
+       </property>
+       <property name="text">
+        <string>41</string>
+       </property>
+       <property name="text">
+        <string>5</string>
+       </property>
+       <property name="text">
+        <string>4</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="text">
+        <string>40</string>
+       </property>
+      </item>
      </item>
      <item>
       <property name="text">

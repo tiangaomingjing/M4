@@ -85,13 +85,11 @@ Rectangle {
             console.log("PPPPP edit changed ....");
             //factory.dataTree.setTopLevelText(0,1,pEditText);
             factory.dataTree.setTopLevelText(3,1,pEditText);
-            factory.dataTree.setTopLevelText(2,1,pEditText);
         }
         onIEditTextChanged: {
             console.log("IIII edit changed ....");
             //factory.dataTree.setTopLevelText(1,1,iEditText);
             factory.dataTree.setTopLevelText(1,1,iEditText);
-            factory.dataTree.setTopLevelText(0,1,iEditText);
         }
     }
     SegmentArrow{

@@ -201,6 +201,10 @@ void MainWindow::onClearWarning()
   uiStatus->btn_warring->hide();
   uiStatus->warningMessge->hide();
 }
+void MainWindow::onQmlUiShowMessage(QString msg)
+{
+  ui->statusBar->showMessage(msg,2000);
+}
 
 
 void MainWindow::setConfigSaveEnableStatus(AbstractFuncWidget *absWidget)

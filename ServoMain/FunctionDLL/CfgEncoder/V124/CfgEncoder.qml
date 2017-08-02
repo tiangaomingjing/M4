@@ -46,8 +46,11 @@ Rectangle {
                  }
     function onActiveNow(actived){
         console.log(actived);
-        if(actived)
+        if(actived){
             m_timer.start();
+            if(searchFinish)
+                m_btnSavePhase.enabled=true;
+        }
         else{
             if(m_timer.running===true)
                 m_timer.stop();
@@ -57,9 +60,7 @@ Rectangle {
         console.log("downCanvasArrow.onActiveNow");
     }
     function showMessage(msg){
-        m_messageShow.text=msg;
-        m_messageShow.visible=true;
-        m_timerMSG.start();
+        driveEncoder.showMessage(msg);
     }
 
     QmlFactory{
@@ -275,14 +276,6 @@ Rectangle {
 
                }
             }
-            //提示信息
-            Text{
-                id:m_msgText;
-                Layout.fillWidth: true;
-                text:qsTr("");
-                visible: true;
-                horizontalAlignment: Text.AlignHCenter;
-            }
             //保存按钮
             Button{
                 id:m_btnSaveConfig;
@@ -305,8 +298,9 @@ Rectangle {
                 }
                 onClicked: {
                     var connected=driveEncoder.getComConnectSatus();
+                    var msg;
                     if(connected){
-                        m_msgText.text=qsTr("保存成功! 设备重启后参数生效!");
+                        msg=qsTr("保存成功! 设备重启后参数生效!");
 
                         m_encoderCfg.absEncoderItem.lineNumber=parseInt(m_lineNumberInput.text);
                         m_lineNumberInput.resetLineEditColor();
@@ -316,12 +310,12 @@ Rectangle {
                         m_cmd.writeAdvanceFlash("FPGA.prm.ABS_ENC_CFG.all",m_encoderCfg.absEncoderItem.encConfigData);
                         m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.line_num_3",m_encoderCfg.absEncoderItem.lineNumber);
                         factory.dataTree.setTopLevelText(1,1,m_lineNumberInput.text);//修改列表中的值
+
                     }
                     else{
-                        m_msgText.text=qsTr("请先连接设备!");
+                        msg=qsTr("请先连接设备!");
                     }
-                    if(m_timerMSG.running==false)
-                        m_timerMSG.start();
+                    root.showMessage(msg);
                 }
 
             }
@@ -341,15 +335,15 @@ Rectangle {
         Layout.fillWidth: true;
     }
     //信息框
-    Text{
-        id:m_messageShow;
-        anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-        anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 5;
-        horizontalAlignment: Text.AlignHCenter;
-        text:qsTr(" ");
-        visible: false;
-    }
+//    Text{
+//        id:m_messageShow;
+//        anchors.horizontalCenter: m_currentAxis.horizontalCenter;
+//        anchors.bottom: parent.bottom;
+//        anchors.bottomMargin: 5;
+//        horizontalAlignment: Text.AlignHCenter;
+//        text:qsTr(" ");
+//        visible: false;
+//    }
     ////报警框
     Item{
         id:m_encoderWarnningBlock;
@@ -367,7 +361,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter;
                 text:m_encoderCfg.absEncoderItem.errorString(root.errorCode);
                 color: "red"
-                font.pixelSize: 16;
+                font.pixelSize: 12;
             }
             Button{
                 id:m_btnClearAlarm;
@@ -454,7 +448,7 @@ Rectangle {
             }
         }
         ColumnLayout{
-            spacing: 40;
+            spacing: 20;
             Layout.fillHeight: true;
             Layout.minimumWidth: 200;
 
@@ -520,6 +514,21 @@ Rectangle {
                     Layout.minimumWidth: 60;
                 }
             }
+            RowLayout{
+                Layout.fillWidth: true;
+                Text{
+                    text:"电机相序:";
+                    Layout.minimumWidth: 80;
+                    Layout.fillWidth: true;
+                }
+                TextInput{
+                    id:pseq;
+                    text:"0";
+                    enabled: false;
+                    Layout.minimumWidth: 50;
+                    Layout.fillWidth: true;
+                }
+            }
         }
         CircularGauge {
             id: gauge_Electric;
@@ -564,7 +573,7 @@ Rectangle {
     Column{
         id:m_editInputField
         anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 30;
+        anchors.bottomMargin: 5;
         anchors.horizontalCenter: parent.horizontalCenter;
         spacing: 30;
         RollWheel{
@@ -659,6 +668,24 @@ Rectangle {
                             color: control.enabled?control.hovered?"steelblue":"black":"gray";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
+                        }
+                    }
+                    onClicked: {
+                        if(driveEncoder.getComConnectSatus()){
+                            var strPos_ofst=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3");
+                            var msg="";
+                            if(strPos_ofst!=="NULL"){
+                                factory.dataTree.setTopLevelText(2,1,strPos_ofst);
+                                m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3",parseInt(strPos_ofst));
+                                console.log("save phase");
+                                msg=qsTr("保存相位");
+                            }
+                            var strPseq=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.seq_dir");
+                            if(strPseq!=="NULL"){
+                                m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.seq_dir",parseInt(strPseq));
+                                msg+=qsTr(",电机相序");
+                            }
+                            root.showMessage(msg);
                         }
                     }
                 }
@@ -759,11 +786,11 @@ Rectangle {
         onTriggered: {
 //            console.log("current:"+m_cmd.axisIndex+"......");
             var strPos=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.pos");
-            pos.text=strPos;
+            pos.text=parseInt(strPos);
 //            console.log("pos="+strPos);
 
             var strPosIn=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.pos_in");
-            posIn.text=strPosIn;
+            posIn.text=parseInt(strPosIn);
             var precision=parseInt(m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.line_num_3"));
             if(strPosIn!=="NULL")
                 gauge.value=360*parseInt(strPosIn)/precision;
@@ -771,7 +798,7 @@ Rectangle {
 //            console.log("precision="+precision);
 
             var strPos_ofst=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3");
-            posOffset.text=strPos_ofst;
+            posOffset.text=parseInt(strPos_ofst);
 //            console.log("strPos_ofst="+strPos_ofst);
 
             var strPPN=m_cmd.readCommand("gSevDrv.sev_obj.cur.mot.PPN_1");
@@ -781,6 +808,11 @@ Rectangle {
                 gauge_Electric.value=parseInt(angleEle);
             }
 //            console.log("strPPN="+strPPN);
+            //读相序
+            var strPseq=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.seq_dir");
+            var pSeqNum=parseInt(strPseq);
+            pseq.text=pSeqNum;
+            console.log("相序"+strPseq);
 
             //关伺服逻辑
             if(root.btnSearchIsClicked){
@@ -802,7 +834,7 @@ Rectangle {
                     if(servoIsOn)
                         currentState=servoState.CheckFinish;
                     if((servoIsOn===false)&&(checkCount>3)){
-                        root.showMessage(qsTr("---伺服打开失败---"));
+                        root.showMessage(qsTr("寻相未完成，伺服打开失败"));
                         currentState=servoState.Quit;
                     }
 
@@ -817,20 +849,15 @@ Rectangle {
                     adjFlag=m_cmd.readCommand("gSevDrv.sev_obj.mfj.pos_adj_flag");
                     if(adjFlag!=="NULL")
                         ret=parseInt(adjFlag);
-                    root.searchFinish=Boolean(ret);
+                    root.searchFinish=Boolean(ret);//检查寻相标志是否置1
                     if(root.searchFinish){
                         checkCount=0;
-                        var msg=qsTr("---寻相完成---")
-                        if(m_saveCheckBox.checked){
-                            factory.dataTree.setTopLevelText(2,1,strPos_ofst);
-                            m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3",parseInt(strPos_ofst));
-                            console.log("save phase");
-                            msg=qsTr("---寻相完成，并保存相位---");
-                        }
+                        var msg=qsTr("寻相完成");
                         m_btnStartTest.barValue=100;
                         m_btnSavePhase.enabled=true;
                         currentState=servoState.Quit;
                         root.showMessage(msg);
+
                     }
                     else{
                         if(checkCount>30)
@@ -868,16 +895,6 @@ Rectangle {
         }
     }
 
-    Timer{
-        id:m_timerMSG;
-        interval: 2000;
-        repeat: false;
-        onTriggered: {
-            m_messageShow.visible=false;
-            m_msgText.text=qsTr("");
-        }
-    }
-
     Connections{
         target: m_btnStartTest;
         onClicked:{
@@ -888,9 +905,8 @@ Rectangle {
                 servoIsOn=m_cmd.checkServoIsReady();
                 //伺服开的话不允许寻相操作
                 if(servoIsOn){
-                    m_messageShow.text=qsTr("伺服正在工作中，禁止寻相");
-                    m_messageShow.visible=true;
-                    m_timerMSG.start();
+                    var msg=qsTr("伺服正在工作中，禁止寻相");
+                    root.showMessage(msg);
                 }
                 else{
                     //先读控制源，0:后台控制 1:控制器控制  如果控制源不是0，则修改控制源
