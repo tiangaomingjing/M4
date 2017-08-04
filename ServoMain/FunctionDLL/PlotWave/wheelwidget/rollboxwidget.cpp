@@ -103,7 +103,7 @@ RollBoxWidget::RollBoxWidget(int axisCount, const QStringList &strList, QWidget 
     btn=new QPushButton(tr("axis_%1").arg(i));
     btn->setObjectName(tr("axis_%1").arg(i));
     btn->setCheckable(true);
-//    btn->setMinimumSize(50,30);
+    btn->setMinimumSize(30,30);
     connect(btn,SIGNAL(clicked(bool)),this,SLOT(onBtnClicked()));
     d_ptr->m_gridLayout->addWidget(wheelWidget,0,i);
     d_ptr->m_gridLayout->addWidget(btn,1,i);
@@ -189,7 +189,7 @@ void RollBoxWidget::appendBox(void)
   btn=new QPushButton(tr("axis_%1").arg(id));
   btn->setObjectName(tr("axis_%1").arg(id));
   btn->setCheckable(true);
-  btn->setMinimumSize(50,30);
+  btn->setMinimumSize(30,30);
   connect(btn,SIGNAL(clicked(bool)),this,SLOT(onBtnClicked()));
   d_ptr->m_gridLayout->addWidget(wheelWidget,0,id);
   d_ptr->m_gridLayout->addWidget(btn,1,id);

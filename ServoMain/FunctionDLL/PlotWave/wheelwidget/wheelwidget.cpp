@@ -415,14 +415,14 @@ QSize StringWheelWidget::sizeHint() const
     // determine font size
     QFontMetrics fm(font());
 
-    return QSize( fm.width("m") * 12 + 6, fm.height() * 7 + 6 );
+    return QSize( fm.width("m") * 6 + 6, fm.height() * 7 + 6 );
 }
 
 QSize StringWheelWidget::minimumSizeHint() const
 {
     QFontMetrics fm(font());
 
-    return QSize( fm.width("m") * 11 + 6, fm.height() * 3 + 6 );
+    return QSize( fm.width("m") * 6 + 6, fm.height() * 3 + 6 );
 }
 
 void StringWheelWidget::paintItem(QPainter* painter, int index, const QRect &rect)
