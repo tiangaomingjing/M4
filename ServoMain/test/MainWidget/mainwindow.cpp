@@ -1,9 +1,13 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "../../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h"
+
 #include <QDebug>
 #include <QFileDialog>
 #include <QDateTime>
 #include <QTextStream>
+#include <QTreeWidgetItemIterator>
+#include <QTreeWidgetItem>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -76,5 +80,78 @@ void MainWindow::on_pushButton_clicked()
         fdata.close();
     }
   }
+
+}
+typedef enum{
+  COL_PRTYTREE_NAME,
+  COL_PRTYTREE_TYPE,
+  COL_PRTYTREE_MAX,
+  COL_PRTYTREE_MIN,
+  COL_PRTYTREE_UNIT,
+  COL_PRTYTREE_PARENT,
+  COL_PRTYTREE_INTRODUCTION
+}ColPrtyTreeIndex;
+void MainWindow::on_pushButton_2_clicked()
+{
+  QString fileName="D:/Smart/Xml_V125/Xml_V125/PrmPrtyTree.xml";
+  QTreeWidget *treeWidget=QtTreeManager::readTreeWidgetFromXmlFile(fileName);
+
+  QTreeWidgetItemIterator it(treeWidget);
+  QTreeWidgetItem *item;
+  QString type;
+
+  while (*it)
+  {
+    item=(*it);
+    type=item->text(COL_PRTYTREE_TYPE);
+    if(!(item->childCount()>0))
+    {
+      if(type.contains("64"))
+      {
+        if(type.indexOf("U")==0)
+        {
+          qDebug()<<item->text(COL_PRTYTREE_NAME)<<" type="<<type;
+          item->setText(COL_PRTYTREE_MAX,QString::number(18446744073709551615));
+          item->setText(COL_PRTYTREE_MIN,QString::number(0));
+        }
+        else
+        {
+          item->setText(COL_PRTYTREE_MAX,QString::number(9223372036854775807));
+          item->setText(COL_PRTYTREE_MIN,QString::number(-9223372036854775807));
+        }
+      }
+      else if(type.contains("32"))
+      {
+        if(type.indexOf("U")==0)
+        {
+          qDebug()<<item->text(COL_PRTYTREE_NAME)<<" type="<<type;
+          item->setText(COL_PRTYTREE_MAX,QString::number(4294967295));
+          item->setText(COL_PRTYTREE_MIN,QString::number(0));
+        }
+        else
+        {
+          item->setText(COL_PRTYTREE_MAX,QString::number(2147483647));
+          item->setText(COL_PRTYTREE_MIN,QString::number(-2147483647));
+        }
+      }
+      else
+      {
+        if(type.indexOf("U")==0)
+        {
+          qDebug()<<item->text(COL_PRTYTREE_NAME)<<" type="<<type;
+          item->setText(COL_PRTYTREE_MAX,QString::number(65535));
+          item->setText(COL_PRTYTREE_MIN,QString::number(0));
+        }
+        else
+        {
+          item->setText(COL_PRTYTREE_MAX,QString::number(32767));
+          item->setText(COL_PRTYTREE_MIN,QString::number(-32767));
+        }
+      }
+    }
+    it++;
+  }
+  QString savePath="D:/PrmPrtyTree.xml";
+  QtTreeManager::writeTreeWidgetToXmlFile(savePath,treeWidget);
 
 }
