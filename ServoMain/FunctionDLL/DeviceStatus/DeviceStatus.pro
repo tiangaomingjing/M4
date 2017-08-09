@@ -46,6 +46,7 @@ FORMS += \
 
 DISTFILES += \
     DeviceStatus.qml \
-    LedIndicator.qml
+    LedIndicator.qml \
+    V126/DeviceStatus.qml
 #DEFINES+=   QT_NO_DEBUG\
 #            QT_NO_DEBUG_OUTPUT

@@ -7,7 +7,7 @@ Rectangle{
     id:root;
     property int number: 0;
     property string iconPath: iconFilePath;
-    property int axisIndexNumber: axisIndex;
+    property int axisIndexNumber: axisIndex+1;
     color:"#F0F0F0";
 //    property var stateArray: ["OFF","INIT","ON"];
 //    property var idArray: ["0 IDLE","1 AOA","2 MIPA","3 MPSA","4 COLD","5 CCLD","6 VCLD","7 PSOCLD"];

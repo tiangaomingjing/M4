@@ -3888,7 +3888,7 @@ void PlotWave::setListViewAxisNum(int axisCount)
   QListWidgetItem *listItem2;
   for(int i=0;i<axisCount;i++)
   {
-    listItem=new QListWidgetItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i));
+    listItem=new QListWidgetItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i+1));
     ui->listWidget_axis->addItem(listItem);
     listItem2=listItem->clone();
     ui->listWidget_axis_tab2->addItem(listItem2);

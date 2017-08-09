@@ -59,4 +59,18 @@ DISTFILES += \
     V124/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
     V124/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
     V124/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
-    V124/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml
+    V124/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml \
+    V126/CfgEncoder.qml \
+    V126/components/CfgEncoder/CircularGaugeDarkStyle.qml \
+    V126/components/CfgEncoder/RollWheel.qml \
+    V126/components/CfgEncoder/ToolBox/AbsoluteEncoder.qml \
+    V126/components/CfgEncoder/ToolBox/IncrementalEncoder.qml \
+    V126/components/CfgEncoder/ToolBox/NoneEncoder.qml \
+    V126/components/CfgEncoder/ToolBox/ToolBox.qml \
+    V126/components/CfgEncoder/ToolBox/ToolItem.qml \
+    V126/components/CfgEncoder/EncoderItem/AbstractEncoderItem.qml \
+    V126/components/CfgEncoder/EncoderItem/DuoMoEncoderItem.qml \
+    V126/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
+    V126/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
+    V126/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
+    V126/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml

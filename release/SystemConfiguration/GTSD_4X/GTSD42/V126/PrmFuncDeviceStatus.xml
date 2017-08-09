@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>824</width>
-    <height>513</height>
+    <width>895</width>
+    <height>588</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -502,6 +502,52 @@
        </property>
        <property name="text">
         <string>UVW输出断线</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OT_MOT</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>电机过温</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.PTE</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>位置跟踪误差超限</string>
        </property>
       </item>
       <item>

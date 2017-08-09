@@ -247,7 +247,7 @@ void DialogPickCurve::initailUi()
   for(int i=0;i<axisCount;i++)
   {
     tableItem=new QTableWidgetItem;
-    tableItem->setText(tr("Axis_%1").arg(i));
+    tableItem->setText(tr("Axis_%1").arg(i+1));
 //    tableItem->setIcon(QIcon(":/user_curve_axis.png"));
     tableItem->setTextAlignment(Qt::AlignCenter);
     ui->tableWidgetAxis->setItem(0,i,tableItem);

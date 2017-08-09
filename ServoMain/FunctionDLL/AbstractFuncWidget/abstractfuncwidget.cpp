@@ -60,7 +60,8 @@ void AbstractFuncWidget::readTreeXMLFile(MainWindow *mainWindow,QString fileName
 void AbstractFuncWidget::setTreeWidgetHeaderLables()
 {
   QStringList header;
-  header<<tr("Axis_%1").arg(m_axisNumber)<<NORMAL_VALUE<<NORMAL_TYPE<<\
+  int axis=m_axisNumber+1;
+  header<<tr("Axis_%1").arg(axis)<<NORMAL_VALUE<<NORMAL_TYPE<<\
           NORMAL_UINT<<NORMAL_DOWNLIMIT<<NORMAL_UPLIMIT<<NORMAL_INTRODUCTION<<NORMAL_FRAMOFFSET;
   m_uiTree->setHeaderLabels(header);
 }

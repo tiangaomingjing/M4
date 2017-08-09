@@ -4,12 +4,12 @@ Rectangle {
     id:highlight;
     width:100;
     height: 100;
-    color:m_mouse.containsMouse?Qt.rgba(0.97,0.145,0.145,0.4):"transparent";
+    property color hoverColor: "#cbdaf1";
+    color:m_mouse.containsMouse?hoverColor:"transparent";
     border.color: m_mouse.containsMouse?"red":"transparent";
     border.width: 2;
     radius: 2;
     transformOrigin: Item.Top;
-    property Component como: null;
     MouseArea{
         id:m_mouse;
         anchors.fill: parent;

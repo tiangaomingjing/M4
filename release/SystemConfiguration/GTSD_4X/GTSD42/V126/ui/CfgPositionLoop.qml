@@ -110,7 +110,7 @@ Rectangle {
     }
     FilterBlock{
         id:m_speedLoop;
-        width: 60;
+        width: 80;
         height: 60;
         name.text: "速度控制器";
         anchors.left: arrow6.right;

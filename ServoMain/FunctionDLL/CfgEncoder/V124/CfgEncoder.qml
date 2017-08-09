@@ -323,32 +323,11 @@ Rectangle {
         Component.onCompleted: absEncoderItem=m_encoderCfg.items[0];
     }
 
-    Text{
-        text:"当前轴号："+axisIndexSrc;
-        id:m_currentAxis;
-//        text:"当前轴号："+0;
-        anchors.horizontalCenter: m_centerRowLayout.horizontalCenter;
-        anchors.top: parent.top;
-        anchors.topMargin: 30;
-        font.bold: true;
-        horizontalAlignment: Text.AlignHCenter;
-        Layout.fillWidth: true;
-    }
-    //信息框
-//    Text{
-//        id:m_messageShow;
-//        anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-//        anchors.bottom: parent.bottom;
-//        anchors.bottomMargin: 5;
-//        horizontalAlignment: Text.AlignHCenter;
-//        text:qsTr(" ");
-//        visible: false;
-//    }
     ////报警框
     Item{
         id:m_encoderWarnningBlock;
-        anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-        anchors.top: m_currentAxis.bottom;
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
         anchors.topMargin: 10;
         width: 100;
         visible: false;
@@ -407,6 +386,7 @@ Rectangle {
         anchors.fill: parent;
         anchors.margins: 0;
         spacing: 10;
+
         CircularGauge {
             id: gauge;
             implicitHeight: 400;
@@ -447,22 +427,18 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter;
             }
         }
+
         ColumnLayout{
             spacing: 20;
             Layout.fillHeight: true;
             Layout.minimumWidth: 200;
 
-//            Item{
-//                id:sapce0;
-//                Layout.minimumHeight: 20;
-//            }
-
             RowLayout{
                 Layout.fillWidth: true;
                 Text{
                     Layout.minimumWidth: 80;
-                    Layout.fillWidth: true;
                     text:"编码器输入:";
+                    Layout.fillWidth: true;
                 }
                 TextInput{
                     id:posIn;
@@ -528,8 +504,13 @@ Rectangle {
                     Layout.minimumWidth: 50;
                     Layout.fillWidth: true;
                 }
+                Text{
+                    text:" ";
+                    Layout.minimumWidth: 60;
+                }
             }
         }
+
         CircularGauge {
             id: gauge_Electric;
             implicitHeight: 400;

@@ -100,8 +100,8 @@ RollBoxWidget::RollBoxWidget(int axisCount, const QStringList &strList, QWidget 
     connect(wheelWidget,SIGNAL(dragIndex(int)),this,SLOT(onDragIndex(int)));
     wheelWidget->setItems(strList);
     wheelWidget->setMinimumHeight(50);
-    btn=new QPushButton(tr("axis_%1").arg(i));
-    btn->setObjectName(tr("axis_%1").arg(i));
+    btn=new QPushButton(tr("axis_%1").arg(i+1));
+    btn->setObjectName(tr("axis_%1").arg(i+1));
     btn->setCheckable(true);
     btn->setMinimumSize(30,30);
     connect(btn,SIGNAL(clicked(bool)),this,SLOT(onBtnClicked()));
@@ -186,8 +186,8 @@ void RollBoxWidget::appendBox(void)
   connect(wheelWidget,SIGNAL(dragIndex(int)),this,SLOT(onDragIndex(int)));
   wheelWidget->setItems(show);
   wheelWidget->setMinimumHeight(50);
-  btn=new QPushButton(tr("axis_%1").arg(id));
-  btn->setObjectName(tr("axis_%1").arg(id));
+  btn=new QPushButton(tr("axis_%1").arg(id+1));
+  btn->setObjectName(tr("axis_%1").arg(id+1));
   btn->setCheckable(true);
   btn->setMinimumSize(30,30);
   connect(btn,SIGNAL(clicked(bool)),this,SLOT(onBtnClicked()));
@@ -251,9 +251,22 @@ void RollBoxWidget::onBtnClicked()
   int axis=d_ptr->m_buttonVector.indexOf(btn);
   qDebug()<<"btn click axis="<<axis<<"count="<<d_ptr->m_buttonVector.count();
 
-  if(d_ptr->m_keyCtlIsPressed==false)
+  if(d_ptr->m_keyCtlIsPressed==false)//没有按下control键
   {
     setSingleButtonActived(btn);
+  }
+  else//按下control
+  {
+    bool hasChecked=false;
+    for(int i=0;i<d_ptr->m_buttonVector.count();i++)
+    {
+      if(i!=axis)
+        if(d_ptr->m_buttonVector.at(i)->isChecked())
+          hasChecked=true;
+    }
+    if(hasChecked==false){
+      btn->setChecked(true);
+    }
   }
   emit clickedAt(axis);
   if(btn->isChecked())

@@ -36,15 +36,6 @@ Rectangle
 //        anchors.fill: parent;
         source: "file:///"+iconPath+"blue_battery.png"
     }
-    Text
-    {
-        id:power;
-        anchors.left: servo.right;
-        anchors.leftMargin: 40;
-        anchors.bottom: servo.bottom;
-        text:"轴_"+axisIndex+" 功率";
-        font.bold: true;
-    }
     Row
     {
         id:row;

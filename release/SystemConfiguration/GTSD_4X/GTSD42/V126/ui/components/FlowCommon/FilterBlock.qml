@@ -2,7 +2,8 @@
 
 Rectangle {
     id:filterBlock;
-    color:m_mouse.containsMouse?Qt.rgba(0.97,0.145,0.145,0.5):Qt.lighter(border.color,1.2);
+    property color hoverColor: "#cbdaf1";
+    color:m_mouse.containsMouse?hoverColor:Qt.lighter(border.color,1.2);
     border.color: "#BBB9B9";
     border.width: 2;
     radius: 10;

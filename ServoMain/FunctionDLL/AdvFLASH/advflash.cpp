@@ -21,7 +21,7 @@ qDebug()<<"AdvFLASH release ->";
 void AdvFLASH::setTreeWidgetHeaderLables()
 {
   QStringList header;
-  header<<tr("FLASH_Axis_%1").arg(m_axisNumber)<<NORMAL_VALUE<<NORMAL_TYPE<<NORMAL_OFFSET\
+  header<<tr("FLASH_Axis_%1").arg(m_axisNumber+1)<<NORMAL_VALUE<<NORMAL_TYPE<<NORMAL_OFFSET\
         <<NORMAL_ISBITS<<NORMAL_BITSTART<<NORMAL_BITWIDTH\
         <<NORMAL_AXISNUM<<NORMAL_HASCHILD<<NORMAL_CHILDNUM<<NORMAL_PARENT;
   ui->treeWidget->setHeaderLabels(header);

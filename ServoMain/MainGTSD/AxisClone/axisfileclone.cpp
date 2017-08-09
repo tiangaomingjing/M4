@@ -48,7 +48,7 @@ AxisFileClone::AxisFileClone(MainWindow *mainwindow, QWidget *parent) : QWidget(
   for(int i=0;i<axisnum;i++)
   {
     axisitem=new AxisItem;
-    axisitem->button()->setText(tr("axis_src_%1").arg(i));
+    axisitem->button()->setText(tr("axis_src_%1").arg(i+1));
     axisitem->button()->setIconSize(QSize(48,48));
     axisitem->button()->setIcon(QIcon(ICON_FILE_PATH+ICON_MOTOR));
     m_axisItemSourceList.append(axisitem);
@@ -57,7 +57,7 @@ AxisFileClone::AxisFileClone(MainWindow *mainwindow, QWidget *parent) : QWidget(
     axisitem->setPos(0,i*65);
 
     axisitem=new AxisItem;
-    axisitem->button()->setText(tr("axis_dst_%1").arg(i));
+    axisitem->button()->setText(tr("axis_dst_%1").arg(i+1));
     axisitem->button()->setIconSize(QSize(48,48));
     axisitem->button()->setIcon(QIcon(ICON_FILE_PATH+ICON_MOTOR));
     m_axisItemDestinationList.append(axisitem);

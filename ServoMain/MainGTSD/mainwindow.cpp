@@ -41,7 +41,7 @@
 #define FILENAME_FLASHALL "FlashPrm_AllAxis"
 #define FILENAME_RAMALL "RamPrm_AllAxis"
 #define FILENAME_FUNCEXT "PrmFuncExtension"
-#define SDT_VERSION "1.1.1"
+#define SDT_VERSION "1.1.2"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -432,7 +432,11 @@ void MainWindow::onActionConnectClicked()
 
   m_isOpenCom=openNetCom();
   if(m_isOpenCom==false)
+  {
+    closeNetCom();
     return;
+  }
+
   //查询一下所连接的固件版本，与当前设置的版本对比
   //提示用户版本信息
   //当version=0时，说明是uboot程序
@@ -500,6 +504,7 @@ void MainWindow::onActionConnectClicked()
       //开启定时器定时检查状态及断线情况
       qDebug()<<"timer start";
       m_timer->start();
+      m_actConfigNew->setEnabled(false);//禁用新建版本
     }
 
   }
@@ -511,6 +516,7 @@ void MainWindow::onActionConnectClicked()
     //设置uboot ui mode
     enableAllUi(true);
     setUbootModeUi(true);
+    m_actConfigNew->setEnabled(false);//禁用新建版本
   }
   else{
     //当前版本号=0xffff
@@ -519,15 +525,12 @@ void MainWindow::onActionConnectClicked()
     uiStatus->btn_connect->setIcon(QIcon(ICON_FILE_PATH+ICON_STATUS_CONNECT));
     uiStatus->warningMessge->setText(tr("DSP respond error!"));
     QMessageBox::information(0,tr("connect"),tr("DSP respond error!"));
-    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-    m_actConnect->setChecked(false);
-    m_actDisConnect->setChecked(true);
+    closeNetCom();
     setComConnectStatus(false);
-    enableAllUi(true);
+    m_actConfigNew->setEnabled(true);//使能新建版本
+    return;
   }
   ui->progressBar->setVisible(false);
-  m_actConfigNew->setEnabled(false);//禁止新建版本
-  m_actConfigNew->setEnabled(false);
   m_actConfigOpen->setEnabled(false);
   m_actConfigSave->setEnabled(false);
   m_actConfigSaveAs->setEnabled(false);
@@ -1817,7 +1820,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   QString strmodel=theconfig->model.modelName;
   for(int i=0;i<theconfig->model.axisCount;i++)
   {
-    ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),strmodel+tr("_S%1").arg(i));
+    ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),strmodel+tr("_S%1").arg(i+1));
   }
   ui->progressBar->setValue(12);
   DownloadDialog::delayms(20);
@@ -2215,11 +2218,11 @@ void MainWindow::updateProgessBarWhenConnectClicked(void *arg, qint16 *value)
 bool MainWindow::openNetCom()
 {
   COM_ERROR error=COM_OK;
-  bool isOpenCom=false;
+  bool isOpenCom=true;
   ui->progressBar->setVisible(true);
   enableAllUi(false);
   error=static_cast<COM_ERROR>(GTSD_CMD_Open(updateProgessBarWhenConnectClicked,(void*)ui->progressBar,static_cast<COM_TYPE>(mp_userConfig->com.id)));
-  if(error!=COM_OK)
+  if(error!=COM_OK)//没有连上
   {
     QMap<COM_ERROR ,QString>warningMap;
     warningMap.insert(COM_ARM_OUT_TIME,tr("ARM OUT OFF TIME !"));
@@ -2232,32 +2235,26 @@ bool MainWindow::openNetCom()
     else
       eMsg=tr("FPGA error or disconnect");
     QMessageBox::information(0,tr("connect"),tr("com connect error:%1").arg(eMsg));
-    m_actConnect->setChecked(false);
-    m_actDisConnect->setChecked(true);
+//    m_actConnect->setChecked(false);
+//    m_actDisConnect->setChecked(true);
     isOpenCom=false;
-    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-    ui->progressBar->setVisible(false);
-    enableAllUi(true);
-    return isOpenCom;
   }
-  //判断是不是千兆网络，提示相关信息后返回
-  short netCarMsg=GTSD_CMD_GetNetCardMsg();
-  QMap<int ,QString>netCarInfoMap;
-  netCarInfoMap.insert(0,tr("1000M ETH"));
-  netCarInfoMap.insert(1,tr("FUNCTION ADDRESS ERROR"));
-  netCarInfoMap.insert(2,tr("NOT 1000M ETH"));
-  netCarInfoMap.insert(3,tr("NO ETH"));
-  if(netCarMsg!=0){
-    QMessageBox::information(0,tr("net error"),tr("com net error information:%1").arg(netCarInfoMap.value(netCarMsg)));
-    m_actConnect->setChecked(false);
-    m_actDisConnect->setChecked(true);
-    isOpenCom=false;
-    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-    ui->progressBar->setVisible(false);
-    enableAllUi(true);
-    return isOpenCom;
+  else
+  {
+    //判断是不是千兆网络，提示相关信息后返回 返回0，代表是千兆
+    short netCarMsg=GTSD_CMD_GetNetCardMsg();
+    QMap<int ,QString>netCarInfoMap;
+    netCarInfoMap.insert(0,tr("1000M ETH"));
+    netCarInfoMap.insert(1,tr("FUNCTION ADDRESS ERROR"));
+    netCarInfoMap.insert(2,tr("NOT 1000M ETH"));
+    netCarInfoMap.insert(3,tr("NO ETH"));
+    if(netCarMsg!=0){
+      QMessageBox::information(0,tr("net error"),tr("com net error information:%1").arg(netCarInfoMap.value(netCarMsg)));
+//      m_actConnect->setChecked(false);
+//      m_actDisConnect->setChecked(true);
+      isOpenCom=false;
+    }
   }
-  isOpenCom=true;
   return isOpenCom;
 }
 void MainWindow::closeNetCom()

@@ -1,6 +1,6 @@
 ﻿import QtQuick 2.3
 import QtQuick.Window 2.2
-import "./V124/"
+import "./V124"
 Item {
     id:rootItem;
     width: 100;

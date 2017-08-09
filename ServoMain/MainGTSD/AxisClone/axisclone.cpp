@@ -55,7 +55,7 @@ AxisClone::AxisClone(MainWindow *window, QWidget *parent) :
   QStringList stringList;
   for(int i=0;i<mp_mainWindow->getUserConfig()->model.axisCount;i++)
   {
-    stringList.append(tr("Axis_%1").arg(i));
+    stringList.append(tr("Axis_%1").arg(i+1));
   }
   ui->listWidget_src->addItems(stringList);
   ui->listWidget_dst->addItems(stringList);

@@ -4,6 +4,7 @@ Item{
     id:saturation;
     width: 100;
     height: 100;
+    property color hoverColor: "#cbdaf1";
     property alias retPenColor: pic.penColor;
     property alias retBorder: ret.border;
 
@@ -23,7 +24,7 @@ Item{
 //            height: 100;
             Layout.fillHeight: true;
             Layout.fillWidth: true;
-            color:m_mouse.containsMouse?Qt.rgba(0.97,0.145,0.145,0.5):Qt.lighter(border.color,1.2);
+            color:m_mouse.containsMouse?hoverColor:Qt.lighter(border.color,1.2);
             border.color: "#BBB9B9";
             border.width: 2;
             radius: 10;

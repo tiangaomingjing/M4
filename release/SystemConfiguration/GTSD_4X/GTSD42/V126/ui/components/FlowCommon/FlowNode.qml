@@ -5,6 +5,7 @@ Item {
     property alias aWidth: flowNode.aWidth;
     property alias penColor: flowNode.penColor;
     property alias brushColor: flowNode.brushColor;
+    property color hoverColor: "#cbdaf1";
     function replot(){
         flowNode.requestPaint();
     }
@@ -28,7 +29,7 @@ Item {
             // 设置填充
             if(isMousEnterIn){
 
-                ctx.fillStyle=Qt.rgba(0.97,0.145,0.145,0.4);
+                ctx.fillStyle=hoverColor;
             }
             else{
                 ctx.fillStyle = brushColor;

@@ -14,12 +14,13 @@ Item{
     property alias textPosition: segmentArrow.textPosition;
     property alias hasBounding: segmentArrow.hasBounding;
     property alias hasArrow: segmentArrow.hasArrow;
+    property color hoverColor: "#cbdaf1";
     width: segmentArrow.width;
     height: segmentArrow.height;
 
     function replot(){
         segmentArrow.requestPaint();
-        segmentArrow.updateInterationComponent();
+//        segmentArrow.updateInterationComponent();
     }
 
     Canvas {
@@ -149,7 +150,7 @@ Item{
         }
 
         Component.onCompleted: {
-            updateInterationComponent();
+//            updateInterationComponent();
             setCanvasSize();
             if(hasBounding){
                 boundingLoader.sourceComponent=bounding;

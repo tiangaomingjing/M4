@@ -5,5 +5,5 @@ SUBDIRS += \
     QtTreeWidgetReadWrite-test \
     console-test \
     TreeWidgetSync \
-    QML \
-    MainWidget
+    MainWidget \
+    QmlProject
