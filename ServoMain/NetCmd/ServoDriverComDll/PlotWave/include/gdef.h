@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	global var define 		 									//
 //	file				:	gdef.h														//
 //	Description			:	global var define include test var 							//
@@ -22,12 +22,17 @@
 
 #define		GETDATA_TYPE_THREAD
 //////////////////////////////////////////////////////////////////////////
+#define MAX_DSP_WAVE 4
 
-extern WAVE_BUF_PRM g_dspA_wave_prm;
-extern WAVE_BUF_PRM g_dspB_wave_prm;
+extern WAVE_BUF_PRM g_dsp_wave_prm[MAX_DSP_WAVE];
 
-extern CRITICAL_SECTION	g_cs_dspA;
-extern CRITICAL_SECTION	g_cs_dspB;
+// extern WAVE_BUF_PRM g_dspA_wave_prm;
+// extern WAVE_BUF_PRM g_dspB_wave_prm;
+
+extern CRITICAL_SECTION	g_cs_dsp[MAX_DSP_WAVE];
+
+// extern CRITICAL_SECTION	g_cs_dspA;
+// extern CRITICAL_SECTION	g_cs_dspB;
 
 #ifdef TIME_TEST
 //////////////////////////////////////////////////////////////////////////
@@ -39,7 +44,7 @@ extern double			m_fDelayTime;
 extern double			m_time[100000];
 extern int32			m_time_index;
 
-//è®¡ç®—æ—¶é—´è¶…è¿‡1msçš„æ¬¡æ•°
+//¼ÆËãÊ±¼ä³¬¹ý1msµÄ´ÎÊý
 extern int64			m_exceed_1ms_times;
 //////////////////////////////////////////////////////////////////////////
 #endif

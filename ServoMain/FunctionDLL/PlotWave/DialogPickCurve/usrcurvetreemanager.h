@@ -35,8 +35,6 @@ private:
   QList<QTreeWidget *>m_usrTreeList;
   QString m_treeFileName;
   int m_currentAxisNumber;
-
-
 };
 
 #endif // USRCURVETREEMANAGER_H

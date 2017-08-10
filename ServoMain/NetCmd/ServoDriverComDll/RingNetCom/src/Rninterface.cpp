@@ -16,6 +16,7 @@
 #include "Rninterface.h"
 extern wstring NetCardName;
 extern wstring NetCardNum;
+
 //////////////////////////////////////////////////////////////////////////
 HANDLE Com_Rcv_Event;                 //Event for RN receive 
 
@@ -214,7 +215,7 @@ int16 CRnNetInterface::NC_Close()
 int16 CRnNetInterface::RnNetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress)
 {
 	NetCardName = L"";
-  NetCardNum = L"";
+	NetCardNum = L"";
 	void* ptr = ptrv;
 	int16 counter = 0;
 	int16 success_times = 0;
@@ -264,7 +265,7 @@ int16 CRnNetInterface::RnNetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), 
 						delete dBuf;
 						dBuf = NULL;
 						NetCardName = adapterList.at(i);
-            NetCardNum = adpNameList.at(i);
+						NetCardNum = adpNameList.at(i);
 						//百分比进度
 						progress = 100;
 						(*tpfUpdataProgressPt)(ptr, &progress);
@@ -331,7 +332,7 @@ num:			输入数据长度
 num:			输出数据长度
 返回：0成功，其他参看错误列表。
 *******************************************************************************************/
-int16 CRnNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* pData, int16 num, int16 des_id)
+int16 CRnNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* pData, int16 num, int16 des_id, int16 needReq/* = TRUE*/)
 {
 	int16 ret = Rt_Success;
 	if ((NULL != p_Net) && (NULL != p_Net->adhandle))									//网络是否连接
@@ -343,7 +344,7 @@ int16 CRnNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* p
 
 		int16 des_ch = RN_FPGA_CH_ID;
 		int16 cmd;
-		int16 needReq;
+//		int16 needReq;
 		int16 com_mode		= RN_MODE_MAIL;
 		int16 IsReq			= RN_ISNOT_REQ;
 		if (FPGA_MODE_RD == mode)
@@ -354,7 +355,7 @@ int16 CRnNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* p
 		else if (FPGA_MODE_WR == mode)
 		{
 			cmd				= RN_AWR;
-			needReq			= RN_NOTNEED_REQ;
+//			needReq			= RN_NEED_REQ;//RN_NOTNEED_REQ;
 		}
 		else
 		{
@@ -362,15 +363,22 @@ int16 CRnNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* p
 			needReq			= RN_NEED_REQ;
 		}
  
+		if (needReq)
+		{
+			ResetEvent(Com_Rcv_Event);
+		}
 		p_Net->fillPacket(des_id, des_ch, pData, num, cmd, needReq, IsReq, addr, com_mode);								//填充数据包报头
 		if (0 == p_Net->tx_packet())																					//发送请求
 		{
 			if (needReq == RN_NEED_REQ)
 			{
 				//等待1s如果有信号，说明得到了返回值 
-				if (WaitForSingleObject(Com_Rcv_Event, 1000)== WAIT_OBJECT_0)
+				if (WaitForSingleObject(Com_Rcv_Event, 200)== WAIT_OBJECT_0)
 				{
-					memcpy_s(pData, num*sizeof(int16), parsePacketCmd, num*sizeof(int16));
+					if (cmd == RN_ARD || cmd == RN_LRD || cmd == RN_LMRD || cmd == RN_TCRD)
+					{
+						memcpy_s(pData, num*sizeof(int16), parsePacketCmd, num*sizeof(int16));
+					}
 				}
 				else
 				{
@@ -459,7 +467,10 @@ int16 CRnNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 addr, int16* pD
 		default:
 			break;
 		}
-
+		if (needReq)
+		{
+			ResetEvent(Com_Rcv_Event);
+		}
 		p_Net->fillPacket(des_id, des_ch, pData, num, cmd, needReq, IsReq, addr, com_mode);								//填充数据包报头
 		if (0 == p_Net->tx_packet())																				//发送请求
 		{

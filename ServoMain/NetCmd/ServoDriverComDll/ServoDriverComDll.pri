@@ -7,7 +7,13 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./ServoDriverComDll.h \
+HEADERS +=\
+    ./MotionControlComDll.h \
+    ./MotionCtrlCom.h \
+    ./RnSerialPort.h \
+    ./ServoDriverCom.h \
+    ./ServoDriverComDef.h \
+    ./ServoDriverComDll.h \
     ./stdafx.h \
     ./targetver.h \
     ./NetCom/include/BaseReturn_def.h \
@@ -32,8 +38,27 @@ HEADERS += ./ServoDriverComDll.h \
     ./RingNetCom/include/Rninterface.h \
     ./SocketCom/include/SocketCom.h \
     ./SocketCom/include/SocketInterface.h \
-    ./SocketCom/include/SocketPacket.h
-SOURCES += ./dllmain.cpp \
+    ./SocketCom/include/SocketPacket.h \
+    ./eeprom/include/eepromOpt.h \
+    ./DeviceDataBase.h \
+    ./NetDriver.h \
+    ./RingNetDeviceDef.h \
+    ./RingNetDriver.h \
+    ./RingNetInterface.h \
+    ./RnServoAxiMapping.h \
+    ./RnDeviceDataBase.h \
+    ./RnDriverPlot.h \
+    ./RnDriverWave.h \
+    ./StRingNetComUser.h \
+    ./StRingNetRegDef.h \
+    ./UserResp.h
+
+SOURCES +=\
+    ./dllmain.cpp \
+    ./MotionControlComDll.cpp \
+    ./MotionCtrlCom.cpp \
+    ./RnSerialPort.cpp \
+    ./ServoDriverCom.cpp \
     ./ServoDriverComDll.cpp \
     ./stdafx.cpp \
     ./NetCom/src/Net.cpp \
@@ -56,4 +81,15 @@ SOURCES += ./dllmain.cpp \
     ./RingNetCom/src/Rninterface.cpp \
     ./SocketCom/src/SocketCom.cpp \
     ./SocketCom/src/SocketInterface.cpp \
-    ./SocketCom/src/SocketPacket.cpp
+    ./SocketCom/src/SocketPacket.cpp \
+    ./eeprom/src/eepromOpt.cpp \
+    ./DeviceDataBase.cpp \
+    ./NetDriver.cpp \
+    ./RingNetDriver.cpp \
+    ./RingNetInterface.cpp \
+    ./RnServoAxiMapping.cpp \
+    ./RnDeviceDataBase.cpp \
+    ./RnDriverPlot.cpp \
+    ./RnDriverWave.cpp \
+    ./UserResp.cpp
+

@@ -1,4 +1,4 @@
-ï»¿// dllmain.cpp : å®šä¹‰ DLL åº”ç”¨ç¨‹åºçš„å…¥å£ç‚¹ã€‚
+// dllmain.cpp : ¶¨Òå DLL Ó¦ÓÃ³ÌĞòµÄÈë¿Úµã¡£
 #include "stdafx.h"
 
 HANDLE GTSD_Event;                 //Event for MultiThread

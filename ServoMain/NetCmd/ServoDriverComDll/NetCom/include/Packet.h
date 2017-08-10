@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton Packet Define		 							//
 //	file				:	Packet.h													//
 //	Description			:	use for pc and fpga communicaiton							//
@@ -9,40 +9,40 @@
 //--------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
-/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 #ifndef		__GTSD_PACKET__
 #define		__GTSD_PACKET__
 
 #include "Basetype_def.h"
 
 
-const int32			MAC_ADDR_BYTE_LENTH			=	6;							// MACåœ°å€çš„byteé•¿åº¦
-const int32			MAX_PACKET_LEN				=	1514;						// å‘é€å’Œæ¥æ”¶æ•°æ®bufçš„æœ€å¤§é•¿åº¦
-const int32 		MIN_PACKET_LEN				=	34;							// è¿”å›åŒ…æœ€å°é•¿åº¦é™åˆ¶
-const int32 		PACKET_HEADER_LENTH			=	21;							// åŒ…å¤´é•¿åº¦
-const int32 		MIN_SEND_PKT_LEN			=	64;							// æœ€å°çš„å‘é€åŒ…çš„é•¿åº¦ï¼Œä¸å¤Ÿçš„åé¢è¡¥é›¶
+const int32			MAC_ADDR_BYTE_LENTH			=	6;							// MACµØÖ·µÄbyte³¤¶È
+const int32			MAX_PACKET_LEN				=	1514;						// ·¢ËÍºÍ½ÓÊÕÊı¾İbufµÄ×î´ó³¤¶È
+const int32 		MIN_PACKET_LEN				=	34;							// ·µ»Ø°ü×îĞ¡³¤¶ÈÏŞÖÆ
+const int32 		PACKET_HEADER_LENTH			=	21;							// °üÍ·³¤¶È
+const int32 		MIN_SEND_PKT_LEN			=	64;							// ×îĞ¡µÄ·¢ËÍ°üµÄ³¤¶È£¬²»¹»µÄºóÃæ²¹Áã
 
-const int32 		RETURN_REQUEST_MASK			=	0x0002;						// æŸ¥è¯¢è¿”å›æ ‡å¿—çš„æ©ç 
-const int32 		FPGA_QUERY_ADDR0			=	0x0002;						// æŸ¥è¯¢FPGAæ ‡å¿—ä½ï¼Œå¦‚æœä¸º1ï¼Œåˆ™å¯ä»¥è¯»å–è¿”å›å€¼
-const int32 		FPGA_QUERY_ADDR1			=	0x8002;						// æŸ¥è¯¢FPGAæ ‡å¿—ä½ï¼Œå¦‚æœä¸º1ï¼Œåˆ™å¯ä»¥è¯»å–è¿”å›å€¼,å…¶ä¸­æœ€é«˜ä½ä¸ºäº†åŒºåˆ†æ˜¯å“ªä¸ªDSP
+const int32 		RETURN_REQUEST_MASK			=	0x0002;						// ²éÑ¯·µ»Ø±êÖ¾µÄÑÚÂë
+const int32 		FPGA_QUERY_ADDR0			=	0x0002;						// ²éÑ¯FPGA±êÖ¾Î»£¬Èç¹ûÎª1£¬Ôò¿ÉÒÔ¶ÁÈ¡·µ»ØÖµ
+const int32 		FPGA_QUERY_ADDR1			=	0x8002;						// ²éÑ¯FPGA±êÖ¾Î»£¬Èç¹ûÎª1£¬Ôò¿ÉÒÔ¶ÁÈ¡·µ»ØÖµ,ÆäÖĞ×î¸ßÎ»ÎªÁËÇø·ÖÊÇÄÄ¸öDSP
 
 
-const int32 		LENTH_INCLUDE				=	5;							// lenthåŒ…æ‹¬ä¸¤éƒ¨åˆ†ï¼Œä»indexåˆ°addrä¸€å…±æœ‰5ä¸ªbyte åŠ ä¸Šåé¢çš„dataæ˜¯dma_numå®šä¹‰çš„ dma_num*2+5 = length
-const int32 		LENTH_BEFORE				=	16;							// lenthä¹‹å‰çš„å­—èŠ‚é•¿åº¦ï¼ˆåŒ…æ‹¬lenthå­—èŠ‚ä¸€å…±æœ‰16ä¸ªbyteï¼Œå…¶ä¸­dmacå’Œsmacéƒ½åˆ†åˆ«å 8byteï¼‰
+const int32 		LENTH_INCLUDE				=	5;							// lenth°üÀ¨Á½²¿·Ö£¬´Óindexµ½addrÒ»¹²ÓĞ5¸öbyte ¼ÓÉÏºóÃæµÄdataÊÇdma_num¶¨ÒåµÄ dma_num*2+5 = length
+const int32 		LENTH_BEFORE				=	16;							// lenthÖ®Ç°µÄ×Ö½Ú³¤¶È£¨°üÀ¨lenth×Ö½ÚÒ»¹²ÓĞ16¸öbyte£¬ÆäÖĞdmacºÍsmac¶¼·Ö±ğÕ¼8byte£©
 
-const int32			PACKET_MODE_READ_FPGA		=	0;							// FPGAè¯»æ¨¡å¼
-const int32			PACKET_MODE_WRITE_FPGA		=	1;							// FPGAå†™æ¨¡å¼
+const int32			PACKET_MODE_READ_FPGA		=	0;							// FPGA¶ÁÄ£Ê½
+const int32			PACKET_MODE_WRITE_FPGA		=	1;							// FPGAĞ´Ä£Ê½
 
-const int32			LENTH_MASK					=	0x03ff;						// å› ä¸ºé•¿åº¦åˆ†åˆ«åœ¨ä¸¤ä¸ªå­—èŠ‚ä¸­ï¼Œæ‰€ä»¥è¦ç”¨maskè·å–å…¶å¯¹åº”ä½çš„å€¼
-const int32			DMA_NUMBER_MASK				=	0x01ff;						// å› ä¸ºNUMBERåˆ†åˆ«åœ¨ä¸¤ä¸ªå­—èŠ‚ä¸­ï¼Œæ‰€ä»¥è¦ç”¨maskè·å–å…¶å¯¹åº”ä½çš„å€¼
-const int32			LENTH_MASK_ZERO				=	0x1000;						// æŠŠlenthå¯¹åº”ä½ç½®é›¶
-const int32			LENTH_MASK_ONE				=	0x13ff;						// æŠŠlenthå¯¹åº”ä½ç½®1
-const int32			DMA_NUMBER_MASK_WRITE		=   0x8000;						// mask å†™æ¨¡å¼
+const int32			LENTH_MASK					=	0x03ff;						// ÒòÎª³¤¶È·Ö±ğÔÚÁ½¸ö×Ö½ÚÖĞ£¬ËùÒÔÒªÓÃmask»ñÈ¡Æä¶ÔÓ¦Î»µÄÖµ
+const int32			DMA_NUMBER_MASK				=	0x01ff;						// ÒòÎªNUMBER·Ö±ğÔÚÁ½¸ö×Ö½ÚÖĞ£¬ËùÒÔÒªÓÃmask»ñÈ¡Æä¶ÔÓ¦Î»µÄÖµ
+const int32			LENTH_MASK_ZERO				=	0x1000;						// °Ñlenth¶ÔÓ¦Î»ÖÃÁã
+const int32			LENTH_MASK_ONE				=	0x13ff;						// °Ñlenth¶ÔÓ¦Î»ÖÃ1
+const int32			DMA_NUMBER_MASK_WRITE		=   0x8000;						// mask Ğ´Ä£Ê½
 
-const int32			NET_COM_EXECUTE_FAIL		=	0;							// å‘½ä»¤æ‰§è¡Œå¤±è´¥
-const int32			NET_COM_EXECUTE_SUCCESS		=	1;							// å‘½ä»¤æ‰§è¡ŒæˆåŠŸ
-const int32			NET_COM_PARAMETER_INVALID	=	2;							// æ— æ•ˆå‚æ•°
-const int32			NET_COM_INSTRUCTION_INVALID =	3;							// éæ³•æŒ‡ä»¤
+const int32			NET_COM_EXECUTE_FAIL		=	0;							// ÃüÁîÖ´ĞĞÊ§°Ü
+const int32			NET_COM_EXECUTE_SUCCESS		=	1;							// ÃüÁîÖ´ĞĞ³É¹¦
+const int32			NET_COM_PARAMETER_INVALID	=	2;							// ÎŞĞ§²ÎÊı
+const int32			NET_COM_INSTRUCTION_INVALID =	3;							// ·Ç·¨Ö¸Áî
 
 //////////////////////////////////////////////////////////////////////////
 //DSP-FPGA-PC NET Transfer DATA format
@@ -57,14 +57,14 @@ typedef struct packetformat
 	Uint8 type0;							// used for identify device
 	Uint8 type1;							// used for identify device
 	Uint8 lengthbit7_0;						// length[7:0] 
-	Uint8 lengthbit9_8;						// {6â€™b000100, length[9:8]}
+	Uint8 lengthbit9_8;						// {6¡¯b000100, length[9:8]}
 	Uint8 index;							// index number 
 	Uint8 dma_numbit7_0;					// dma_num[7:0]
-	Uint8 dma_numbit8;						// {cmd,6â€™b0,dma_num[8]}
+	Uint8 dma_numbit8;						// {cmd,6¡¯b0,dma_num[8]}
 	Uint8 dmaAddrbit7_0;					// dma addr[7:0]
 	Uint8 dmaAddrbit15_8;					// dma addr[15:8]
 	//header format end
-	Uint8 dataSection[MAX_PACKET_LEN - PACKET_HEADER_LENTH];		// user data section æœ€å¤§åŒ…é•¿å‡å»åŒ…å¤´é•¿åº¦ 
+	Uint8 dataSection[MAX_PACKET_LEN - PACKET_HEADER_LENTH];		// user data section ×î´ó°ü³¤¼õÈ¥°üÍ·³¤¶È 
 
 	////first six data byte used for transfer the cmd  
 	//Uint8 data0_CmdIdbit7_0;				// cmd id bit7:0
@@ -88,7 +88,7 @@ protected:
 public:
 	PACKET_FORMAT*		pTx;				// send data buf
 	PACKET_FORMAT*		pRx;				// receive data buf
-	Uint8				mac[256];			// mac addr	è·å–æ‰€æœ‰çš„ç½‘å¡mac
+	Uint8				mac[256];			// mac addr	»ñÈ¡ËùÓĞµÄÍø¿¨mac
 	bool				bHaveMac;			// whether we have the local mac addr
 	Uint32				rx_length;			// receive data lenth
 	Uint32				tx_length;			// send data lenth
@@ -98,52 +98,52 @@ public:
 	Uint8 get_tx_index();
 
 	/*******************************************************************************************
-	åŠŸèƒ½ï¼š	è§£ç è¯»å†™ç»“æŸæ ‡å¿—ä½å‘½ä»¤çš„è¿”å›å€¼
-	è¾“å…¥ï¼š	æ— 
-	è¿”å›å€¼ï¼štrueè¡¨ç¤ºè¯»åˆ°æ ‡å¿—ä½,å¯ä»¥è¯»å–è¿”å›å€¼
+	¹¦ÄÜ£º	½âÂë¶ÁĞ´½áÊø±êÖ¾Î»ÃüÁîµÄ·µ»ØÖµ
+	ÊäÈë£º	ÎŞ
+	·µ»ØÖµ£ºtrue±íÊ¾¶Áµ½±êÖ¾Î»,¿ÉÒÔ¶ÁÈ¡·µ»ØÖµ
 	*******************************************************************************************/
 	bool decoder_return_flag(int16 mode);
 
 	/*******************************************************************************************
-	åŠŸèƒ½ï¼šè§£ç è¯»å†™dspå‘½ä»¤çš„è¿”å›å€¼
-	è¾“å…¥ï¼š
-	indexï¼š		å‘½ä»¤ç´¢å¼•å€¼
-	pData:		è¾“å…¥æ•°æ®
-	dam_num:	è¾“å…¥æ•°æ®é•¿åº¦
-	è¾“å‡ºï¼š
-	pData:		è¯»å–æ•°æ®
-	dam_num:	è¯»å–æ•°æ®é•¿åº¦
-	è¿”å›å€¼ï¼š  0è¡¨ç¤ºæˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨
+	¹¦ÄÜ£º½âÂë¶ÁĞ´dspÃüÁîµÄ·µ»ØÖµ
+	ÊäÈë£º
+	index£º		ÃüÁîË÷ÒıÖµ
+	pData:		ÊäÈëÊı¾İ
+	dam_num:	ÊäÈëÊı¾İ³¤¶È
+	Êä³ö£º
+	pData:		¶ÁÈ¡Êı¾İ
+	dam_num:	¶ÁÈ¡Êı¾İ³¤¶È
+	·µ»ØÖµ£º  0±íÊ¾³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í
 	*******************************************************************************************/
 	int16 decoder_dsp_packet(Uint8 index, int16* pData, int16 &dma_num);
 
 	/*******************************************************************************************
-	åŠŸèƒ½ï¼šè§£ç è¯»å†™FPGAå‘½ä»¤çš„è¿”å›å€¼
-	è¾“å…¥ï¼š
-	indexï¼š		å‘½ä»¤ç´¢å¼•å€¼
-	pData:		è¾“å…¥æ•°æ®
-	dam_num:	è¾“å…¥æ•°æ®é•¿åº¦
-	è¾“å‡ºï¼š
-	pData:		è¯»å–æ•°æ®
-	dam_num:	è¯»å–æ•°æ®é•¿åº¦
-	è¿”å›å€¼ï¼š  0è¡¨ç¤ºæˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨
+	¹¦ÄÜ£º½âÂë¶ÁĞ´FPGAÃüÁîµÄ·µ»ØÖµ
+	ÊäÈë£º
+	index£º		ÃüÁîË÷ÒıÖµ
+	pData:		ÊäÈëÊı¾İ
+	dam_num:	ÊäÈëÊı¾İ³¤¶È
+	Êä³ö£º
+	pData:		¶ÁÈ¡Êı¾İ
+	dam_num:	¶ÁÈ¡Êı¾İ³¤¶È
+	·µ»ØÖµ£º  0±íÊ¾³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í
 	*******************************************************************************************/
 	int16 decoder_fpga_packet(Uint8 index, int16* pData, int16 &dma_num);
 
 	/*******************************************************************************************
-	åŠŸèƒ½ï¼šè·å–æœ¬åœ°macåœ°å€
-	è¾“å…¥ï¼šadapterNameï¼šé€‚é…å™¨åç§°
+	¹¦ÄÜ£º»ñÈ¡±¾µØmacµØÖ·
+	ÊäÈë£ºadapterName£ºÊÊÅäÆ÷Ãû³Æ
 	*******************************************************************************************/
 	void get_local_mac(const int8* adapterName);
 
 
 	/*******************************************************************************************
-	åŠŸèƒ½ï¼šå¡«å……åŒ…ä¸­çš„æ•°æ®
-	è¾“å…¥ï¼š
-	dma_addrï¼š	è®¿é—®åœ°å€
-	pData:		è¾“å…¥æ•°æ®
-	dam_num:	è¾“å…¥æ•°æ®é•¿åº¦
-	FPGAmodeï¼š	è¯»è¿˜æ˜¯å†™
+	¹¦ÄÜ£ºÌî³ä°üÖĞµÄÊı¾İ
+	ÊäÈë£º
+	dma_addr£º	·ÃÎÊµØÖ·
+	pData:		ÊäÈëÊı¾İ
+	dam_num:	ÊäÈëÊı¾İ³¤¶È
+	FPGAmode£º	¶Á»¹ÊÇĞ´
 	*******************************************************************************************/
 	void fillPacket(int16 dma_addr, int16* pData, int16 dma_num, int16 FPGAmode);
 

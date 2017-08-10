@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	cpu timer high resolution 		 							//
 //	file				:	cpu_timer.h													//
 //	Description			:	high resolution interface cpu timer 						//
@@ -27,9 +27,9 @@ public:
 	LARGE_INTEGER	n1;
 	LARGE_INTEGER   n2;
 
-	//å®šä¹‰ä¸€ä¸ªæ ‡å¿—
+	//¶¨ÒåÒ»¸ö±êÖ¾
 	bool			g_CpuTimerFlag;
-	//å®šä¹‰è®¾ç½®çš„msæ•°
+	//¶¨ÒåÉèÖÃµÄmsÊý
 	double			g_MsTime;
 	void StartCpuTimer(double& MstimeInterval);
 	void StopCpuTimer(void);

@@ -23,6 +23,7 @@ public:
 
 signals:
   void itemValueChanged();//树的值发生改变，发送到QML UI中，让其进行更新操作
+  void showMessage(QString str);
 
 public slots:
   virtual void onWriteFuncTreetoServoRam(void);//主程序中的 config 按钮请求(FLASH RAM无关)

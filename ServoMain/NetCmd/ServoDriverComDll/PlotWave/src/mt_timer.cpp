@@ -34,10 +34,15 @@ CMtimer::~CMtimer(void)
 
 void CMtimer::Start_MutimediaTimer()
 {
-	//初始化cs
-	InitializeCriticalSection(&g_cs_dspA);
-	//初始化cs
-	InitializeCriticalSection(&g_cs_dspB);
+	for (int dsp_id = 0; dsp_id < MAX_DSP_WAVE; dsp_id++)
+	{
+		//初始化cs
+		InitializeCriticalSection(&g_cs_dsp[dsp_id]);
+	}
+// 	//初始化cs
+// 	InitializeCriticalSection(&g_cs_dspA);
+// 	//初始化cs
+// 	InitializeCriticalSection(&g_cs_dspB);
 
 #ifdef TIME_TEST
 	QueryPerformanceFrequency(&m_timeFreq);
@@ -72,9 +77,13 @@ void CMtimer::Stop_MutimediaTimer()
 	
 	Sleep(100);
 
-	//删除关键区
-	DeleteCriticalSection(&g_cs_dspA);
-	DeleteCriticalSection(&g_cs_dspB);
+	for (int dsp_id = 0; dsp_id < MAX_DSP_WAVE; dsp_id++)
+	{
+		DeleteCriticalSection(&g_cs_dsp[dsp_id]);
+	}
+// 	//删除关键区
+// 	DeleteCriticalSection(&g_cs_dspA);
+// 	DeleteCriticalSection(&g_cs_dspB);
 }
 
 /**/
@@ -83,22 +92,33 @@ void CALLBACK  MutimediaTimer(UINT wTimerID, UINT msg,DWORD dwUser, DWORD dw1, D
 #ifdef TIME_TEST
 	QueryPerformanceCounter(&m_timeStartClock);
 #endif
-	if (g_dspA_wave_prm.cmd.bit.ENP || g_dspB_wave_prm.cmd.bit.ENP)
+	for (int16 i = 0; i < (int16)MMTIMER_READ_TIMES; ++i)
 	{
-		for (int16 i = 0; i < (int16)MMTIMER_READ_TIMES; ++i)
+		for (int dsp_id = 0; dsp_id < MAX_DSP_WAVE; dsp_id++)
 		{
-			//假如dspA画图使能
-			if (g_dspA_wave_prm.cmd.bit.ENP)
+			if (g_dsp_wave_prm[dsp_id].cmd.bit.ENP) //假如dsp画图使能
 			{
-				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_A, g_dspA_wave_prm, g_plotWave->m_comType);
-			}
-			//假如dspB画图使能
-			if (g_dspB_wave_prm.cmd.bit.ENP)
-			{
-				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_B, g_dspB_wave_prm, g_plotWave->m_comType);
+				g_plotWave->ReadPlotWaveDataFromFPGA(dsp_id, g_dsp_wave_prm[dsp_id], g_plotWave->m_comType);
 			}
 		}
-	}
+
+	}	
+// 	if (g_dspA_wave_prm.cmd.bit.ENP || g_dspB_wave_prm.cmd.bit.ENP)
+// 	{
+// 		for (int16 i = 0; i < (int16)MMTIMER_READ_TIMES; ++i)
+// 		{
+// 			//假如dspA画图使能
+// 			if (g_dspA_wave_prm.cmd.bit.ENP)
+// 			{
+// 				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_A, g_dspA_wave_prm, g_plotWave->m_comType);
+// 			}
+// 			//假如dspB画图使能
+// 			if (g_dspB_wave_prm.cmd.bit.ENP)
+// 			{
+// 				g_plotWave->ReadPlotWaveDataFromFPGA(GTSD_DSP_B, g_dspB_wave_prm, g_plotWave->m_comType);
+// 			}
+// 		}
+// 	}
 	
 #ifdef TIME_TEST
 	QueryPerformanceCounter(&m_timeNowClock);

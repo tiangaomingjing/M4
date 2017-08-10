@@ -20,3 +20,14 @@ release/Bin/com/googoltech/qmlcomponents/TreeModel/*dll
 *.exp
 *.rar
 *.pro.user
+*.exe
+#vs output
+*.sdf
+*.ilk
+*.pdb
+*.obj
+*.log
+*.tlog
+*.idb
+*.opensdf
+*.suo

@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton TX RX DEFINE		 							//
 //	file				:	Net.cpp														//
 //	Description			:	use for pc and fpga communicaiton							//
@@ -39,7 +39,7 @@ int32 CNet::init_net(const int8* adapter, int32 port)
 	pcap_if_t*	devs;
 	char		errbuf[PCAP_ERRBUF_SIZE];
 	
-	//èŽ·å–è®¾å¤‡åˆ—è¡¨
+	//»ñÈ¡Éè±¸ÁÐ±í
 	if (pcap_findalldevs(&alldevs, errbuf) == -1)
 		return Net_Rt_Not_Get_Net_DevList;
 	
@@ -50,7 +50,7 @@ int32 CNet::init_net(const int8* adapter, int32 port)
 	string strAdapterName;
 	while (devs)
 	{
-		//åˆ¤æ–­å­—ç¬¦ä¸²2æ˜¯ä¸æ˜¯1çš„å­ä¸²
+		//ÅÐ¶Ï×Ö·û´®2ÊÇ²»ÊÇ1µÄ×Ó´®
 		if (strstr(devs->name, adapter) != NULL)
 		{
 			m_adapterName = devs->name;
@@ -72,7 +72,7 @@ int32 CNet::init_net(const int8* adapter, int32 port)
 									errbuf			// error buffer
 									)) == NULL)
 	{
-		//é‡Šæ”¾è®¾å¤‡
+		//ÊÍ·ÅÉè±¸
 		pcap_freealldevs(alldevs);
 		return Net_Rt_Open_Device_Err;
 	}
@@ -138,7 +138,7 @@ int32 CNet::wait_response()
 		{
 			iCount++;
 		}
-    else if (nret == 1)//return 1 get data success
+		else if (nret == 1)
 		{
 			//QueryPerformanceCounter(&g_Time3);
 			if (NULL != header)

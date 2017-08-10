@@ -50,7 +50,7 @@ public:
 	dma_num:		输出数据长度
 	返回：0成功，其他参看错误列表。
 	*******************************************************************************************/
-	int16 RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* pData, int16 num, int16 des_id);
+	int16 RnNetCom_FPGA_ComHandler(int16 mode, int16 addr, int16* pData, int16 num, int16 des_id, int16 needReq = RN_NEED_REQ);
 
 	/*******************************************************************************************
 	功能：dsp数据通信交互函数

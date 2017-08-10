@@ -166,14 +166,6 @@ PlotWave::PlotWave(QWidget *parnet):
   connect(ui->checkBox_vclCircleSwitch,SIGNAL(clicked(bool)),this,SLOT(onCheckBoxVelocityClicked(bool)));
   connect(ui->btn_motionRun,SIGNAL(clicked(bool)),this,SLOT(onBtnMotionRunClicked(bool)));
 
-
-  //fft相关功能
-//  connect(ui->tableWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(onTableWidgetCustomContextMenuRequested(QPoint)));
-//  connect(m_actFFTSignal,SIGNAL(triggered(bool)),this,SLOT(onContextActionClicked()));
-//  connect(m_actFFTSystemInPut,SIGNAL(triggered(bool)),this,SLOT(onContextActionClicked()));
-//  connect(m_actFFTSystemOutPut,SIGNAL(triggered(bool)),this,SLOT(onContextActionClicked()));
-//  connect(ui->btn_fftOK,SIGNAL(clicked(bool)),this,SLOT(onBtnFFTApplyClicked()));
-//  connect(ui->btn_fftExit,SIGNAL(clicked(bool)),this,SLOT(onBtnFFTCancelClicked()));
 }
 PlotWave::~PlotWave()
 {
@@ -3401,7 +3393,7 @@ void PlotWave::setTableRowPrm(int row, PlotTablePrm tablePrm)
       str=QString::number(tablePrm.bytes);
       break;
     case COL_PRM_TABLE_AXISNUM:
-      str=QString::number(tablePrm.axisNum);
+      str=QString::number(tablePrm.axisNum+1);
       break;
     case COL_PRM_TABLE_OFFSET:
       str=QString::number(tablePrm.offsetAddr);
@@ -3888,7 +3880,7 @@ void PlotWave::setListViewAxisNum(int axisCount)
   QListWidgetItem *listItem2;
   for(int i=0;i<axisCount;i++)
   {
-    listItem=new QListWidgetItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i));
+    listItem=new QListWidgetItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i+1));
     ui->listWidget_axis->addItem(listItem);
     listItem2=listItem->clone();
     ui->listWidget_axis_tab2->addItem(listItem2);
@@ -4106,14 +4098,14 @@ void PlotWave::updateOffsetAddrWhenAxisNumberChanged(int axisIndex, int row)
     ui->tableWidget->item(row,COL_PRM_TABLE_OFFSET)->setText(offset);
     break;
   }
-  ui->tableWidget->item(row,COL_PRM_TABLE_AXISNUM)->setText(QString::number(axisIndex));
+  ui->tableWidget->item(row,COL_PRM_TABLE_AXISNUM)->setText(QString::number(axisIndex+1));
 }
 void PlotWave::addTableMenuAction(quint16 axisCount)
 {
   QAction *act;
   for(int i=0;i<axisCount;i++)
   {
-    act=new QAction(tr("Axis_%1").arg(i),m_popuMenuTable);
+    act=new QAction(tr("Axis_%1").arg(i+1),m_popuMenuTable);
     act->setData(i);
     connect(act,SIGNAL(triggered(bool)),this,SLOT(onTablePopuMenuClicked()));
     m_popuMenuTable->addAction(act);

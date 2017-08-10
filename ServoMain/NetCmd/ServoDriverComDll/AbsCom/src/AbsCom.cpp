@@ -14,12 +14,15 @@
 #include "BaseReturn_def.h"
 #include "ServoDriverComDll.h"
 #include "AbsCom.h"
+#include "RnDriverPlot.h"
 
+extern CRnDriverPlot* g_RnDrivePlot;
 CAbsCom::CAbsCom(void)
 {
 	m_pNetCom		= NULL;
 	m_pRnNetCom		= NULL;
 	m_pSocketCom	= NULL;
+	m_pRingNetCom	= NULL;
 	com_flag		= 0;
 }
 
@@ -41,6 +44,12 @@ CAbsCom::~CAbsCom(void)
 		delete m_pSocketCom;
 		m_pSocketCom = NULL;
 	}
+	if (NULL != m_pRingNetCom)
+	{
+		delete m_pRingNetCom;
+		m_pRingNetCom = NULL;
+	}
+
 }
 /*******************************************************************************************
 功能：		打开通信设备
@@ -78,12 +87,13 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 	case GTSD_COM_TYPE_RNNET:
 		if (NULL != m_pRnNetCom) //如果设备已经打开，直接返回
 			return Rt_Success;
-
-		m_pRnNetCom = new CRnNetInterface;//定义对象
+		//m_pRnNetCom = new CRnNetInterface;//定义对象
+		m_pRnNetCom = new CRingNetInterface;// CRnNetInterface;//定义对象
 		if (m_pRnNetCom == NULL)
 		{
 			return RN_Net_Rt_CreateObj_Err;
 		}
+		m_pRnNetCom->m_pUserHandleRespFunctionDriver = g_RnDrivePlot;
 		if (GTSD_COM_SUCCESS == m_pRnNetCom->RnNetCom_Open(tpfUpdataProgressPt, ptr, progress))
 		{
 			com_flag = 1;
@@ -119,12 +129,31 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 		break;
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
+	case GTSD_COM_TYPE_RINGNET:
+		if (NULL != m_pRingNetCom) //如果设备已经打开，直接返回
+			return Rt_Success;
+
+		m_pRingNetCom = new CRingNetInterface;//定义对象
+		if (m_pRingNetCom == NULL)
+		{
+			return RN_Net_Rt_CreateObj_Err;
+		}
+		if (GTSD_COM_SUCCESS == m_pRingNetCom->RnNetCom_Open(tpfUpdataProgressPt, ptr, progress))
+		{
+			com_flag = 1;
+			rtn = GTSD_COM_SUCCESS;
+		}
+		else
+		{
+			com_flag = 0;
+			rtn = GTSD_COM_OPEN_ERR;
+		}
 	default:
 		break;
 	}
 	return rtn;
 }
-/*******************************************************************************************
+/******************************************************************************************
 功能：		关闭通信设备
 输入：
 comType:	通信设备的类型，0：裸机网口 1：TCP/IP协议网口 2：usb转串口 3:虚拟设备
@@ -205,6 +234,28 @@ int16  CAbsCom::GTSD_Com_Close(int16 comType)
 		break;
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
+	case GTSD_COM_TYPE_RINGNET:
+		//假如已经关闭了就直接退出
+		if (m_pRingNetCom == NULL)
+		{
+			return Rt_Success;
+		}
+		if (GTSD_COM_SUCCESS == m_pRingNetCom->RnNetCom_Close())
+		{
+			com_flag = 0;
+			rtn = GTSD_COM_SUCCESS;
+		}
+		else
+		{
+			com_flag = 1;
+			rtn = GTSD_COM_CLOSE_ERR;
+		}
+		if (NULL != m_pRingNetCom)
+		{
+			delete m_pRingNetCom;
+			m_pRingNetCom = NULL;
+		}
+		break;
 	default:
 		break;
 	}
@@ -225,7 +276,7 @@ pData:		输出数据
 comNum:		输出数据长度
 返回：		0成功，其他参看错误列表。
 *******************************************************************************************/
-int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 comAddr, int16* pData, int16 comNum, int16 stationId)
+int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 comAddr, int16* pData, int16 comNum, int16 stationId, int16 needReq /*= RN_NEED_REQ*/)
 {
 	int16 rtn;
 	switch (comType)
@@ -244,7 +295,7 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 		{
 			return Rt_Success;
 		}
-		rtn = m_pRnNetCom->RnNetCom_FPGA_ComHandler(comMode, comAddr, pData, comNum, stationId);
+		rtn = m_pRnNetCom->RnNetCom_FPGA_ComHandler(comMode, comAddr, pData, comNum, stationId, needReq);
 		break;
 	case GTSD_COM_TYPE_TCPIP:
 		//假如已经关闭了就直接退出
@@ -258,6 +309,14 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 		break;
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
+	case GTSD_COM_TYPE_RINGNET:
+		//假如已经关闭了就直接退出
+		if (m_pRingNetCom == NULL)
+		{
+			return Rt_Success;
+		}
+		rtn = m_pRingNetCom->RnNetCom_FPGA_ComHandler(comMode, comAddr, pData, comNum, stationId, needReq);
+		break;
 	default:
 		break;
 	}
@@ -267,7 +326,7 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 功能：		处理器（DSP/ARM）数据通信交互函数
 输入：
 comType:	通信设备的类型，0：裸机网口 1：TCP/IP协议网口 2：usb转串口 3:虚拟设备
-comMode:	1:写  0:读
+comMode:	1:写  0：读
 comAddr:	通信地址
 pData:		输入数据
 comNum:		输入数据长度
@@ -308,6 +367,14 @@ int16 CAbsCom::GTSD_Com_Processor_handler(int16 comType, int16 comMode, int16 co
 	case GTSD_COM_TYPE_USB2UART:
 		break;
 	case GTSD_COM_TYPE_VIRTUAL:
+		break;
+	case GTSD_COM_TYPE_RINGNET:
+		//假如已经关闭了就直接退出
+		if (m_pRingNetCom == NULL)
+		{
+			return Rt_Success;
+		}
+		rtn = m_pRingNetCom->RnNetCom_DSP_ComHandler(comMode, comAddr, pData, comNum, stationId);
 		break;
 	default:
 		break;

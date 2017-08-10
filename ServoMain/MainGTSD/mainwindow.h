@@ -55,6 +55,7 @@ public:
 public slots:
   void onWarningMessageChanged(QString &msg);
   void onClearWarning(void);
+  void onQmlUiShowMessage(QString msg);
 
 signals:
   void updateProgressBar(int value);//这个用于显示新建方案时的进度条
@@ -124,7 +125,8 @@ private slots:
   void onXmlPrmToServo(int axis,int value);
 
 protected:
-  void keyPressEvent(QKeyEvent *keyEvent);
+  void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
+  void closeEvent(QCloseEvent *event)Q_DECL_OVERRIDE;
 
 private:
   void createMenus(void);
@@ -138,7 +140,7 @@ private:
   void setConfigSaveEnableStatus(AbstractFuncWidget *absWidget);
 
   void updateStartUpMessage(QString message);
-  void closeEvent(QCloseEvent *event);
+
   void enableAllUi(bool state);
   void setUbootModeUi(bool sta);
 

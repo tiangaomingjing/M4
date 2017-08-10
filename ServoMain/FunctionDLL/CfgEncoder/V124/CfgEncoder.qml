@@ -16,9 +16,12 @@ Rectangle {
     width: 1000;
     height: 600;
     property double posAdjValue: 10;//寻相偏移角度
-    property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮，用于查伺服是否完成
+    property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮
+    property bool searchFinish: false;
     property var errorCode: 0x0000;
     property int cmdSrcDefault: 1;
+    property int currentTaskMode: 0;
+    property bool motorIsRunning: false;
     function updateUiFromServo(){
         console.log("driveEncoder -> onItemValueChanged")
     //            listView.setCurrentIndex(Number(factory.dataTree.textTopLevel(0,1))-1);
@@ -26,21 +29,38 @@ Rectangle {
 //        lineNumber.text=factory.dataTree.textTopLevel(1,1);
 
     }
+    property var taskMode:  {
+                          "TASKMODE_IDLE": 0,
+                          "TASKMODE_ADC": 1,
+                          "TASKMODE_IPA": 2,
+                          "TASKMODE_MPI": 3,
+                          "TASKMODE_COL": 4,
+                          "TASKMODE_CCL": 5,
+                          "TASKMODE_VCL": 6,
+                          "TASKMODE_VPL": 7,
+                          "TASKMODE_VSL": 8,
+                          "TASKMODE_FIX": 9,
+                          "TASKMODE_PT": 10,
+                          "TASKMODE_DB": 11,
+                          "TASKMODE_DB": 12
+                 }
     function onActiveNow(actived){
         console.log(actived);
-        if(actived)
+        if(actived){
             m_timer.start();
+            if(searchFinish)
+                m_btnSavePhase.enabled=true;
+        }
         else{
             if(m_timer.running===true)
                 m_timer.stop();
+            m_btnSavePhase.enabled=false;
         }
 //        m_encoderComboBox.replot();
         console.log("downCanvasArrow.onActiveNow");
     }
     function showMessage(msg){
-        m_messageShow.text=msg;
-        m_messageShow.visible=true;
-        m_timerMSG.start();
+        driveEncoder.showMessage(msg);
     }
 
     QmlFactory{
@@ -256,14 +276,6 @@ Rectangle {
 
                }
             }
-            //提示信息
-            Text{
-                id:m_msgText;
-                Layout.fillWidth: true;
-                text:qsTr("");
-                visible: true;
-                horizontalAlignment: Text.AlignHCenter;
-            }
             //保存按钮
             Button{
                 id:m_btnSaveConfig;
@@ -286,8 +298,9 @@ Rectangle {
                 }
                 onClicked: {
                     var connected=driveEncoder.getComConnectSatus();
+                    var msg;
                     if(connected){
-                        m_msgText.text=qsTr("保存成功! 设备重启后参数生效!");
+                        msg=qsTr("保存成功! 设备重启后参数生效!");
 
                         m_encoderCfg.absEncoderItem.lineNumber=parseInt(m_lineNumberInput.text);
                         m_lineNumberInput.resetLineEditColor();
@@ -297,12 +310,12 @@ Rectangle {
                         m_cmd.writeAdvanceFlash("FPGA.prm.ABS_ENC_CFG.all",m_encoderCfg.absEncoderItem.encConfigData);
                         m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.line_num_3",m_encoderCfg.absEncoderItem.lineNumber);
                         factory.dataTree.setTopLevelText(1,1,m_lineNumberInput.text);//修改列表中的值
+
                     }
                     else{
-                        m_msgText.text=qsTr("请先连接设备!");
+                        msg=qsTr("请先连接设备!");
                     }
-                    if(m_timerMSG.running==false)
-                        m_timerMSG.start();
+                    root.showMessage(msg);
                 }
 
             }
@@ -310,34 +323,13 @@ Rectangle {
         Component.onCompleted: absEncoderItem=m_encoderCfg.items[0];
     }
 
-    Text{
-        text:"当前轴号："+axisIndexSrc;
-        id:m_currentAxis;
-//        text:"当前轴号："+0;
-        anchors.horizontalCenter: m_centerRowLayout.horizontalCenter;
-        anchors.top: parent.top;
-        anchors.topMargin: 30;
-        font.bold: true;
-        horizontalAlignment: Text.AlignHCenter;
-        Layout.fillWidth: true;
-    }
-    //信息框
-    Text{
-        id:m_messageShow;
-        anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-        anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 10;
-        horizontalAlignment: Text.AlignHCenter;
-        text:qsTr(" ");
-        visible: false;
-    }
     ////报警框
     Item{
         id:m_encoderWarnningBlock;
-        anchors.horizontalCenter: m_currentAxis.horizontalCenter;
-        anchors.top: m_currentAxis.bottom;
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
         anchors.topMargin: 10;
-        width: 200;
+        width: 100;
         visible: false;
         ColumnLayout{
             anchors.fill: parent;
@@ -348,7 +340,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter;
                 text:m_encoderCfg.absEncoderItem.errorString(root.errorCode);
                 color: "red"
-                font.pixelSize: 16;
+                font.pixelSize: 12;
             }
             Button{
                 id:m_btnClearAlarm;
@@ -360,7 +352,7 @@ Rectangle {
                         implicitHeight: 40
                         border.width: control.activeFocus ? 2 : 1
                         border.color:"#888"
-                        radius: 4
+                        radius: 10
                         gradient: Gradient {
 //                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : control.hovered?"#eee":"transparent" }
 //                            GradientStop { position: 1 ; color:control.pressed ? "#aaa" : control.hovered?"#ccc":"transparent" }
@@ -369,7 +361,7 @@ Rectangle {
                         }
                     }
                     label: Text{
-                        text:qsTr("清 报 警");
+                        text:qsTr("清编码器警告");
                         color: control.hovered?"steelblue":"black";
                         horizontalAlignment: Text.AlignHCenter;
                         verticalAlignment: Text.AlignVCenter;
@@ -394,6 +386,7 @@ Rectangle {
         anchors.fill: parent;
         anchors.margins: 0;
         spacing: 10;
+
         CircularGauge {
             id: gauge;
             implicitHeight: 400;
@@ -434,22 +427,18 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter;
             }
         }
+
         ColumnLayout{
-            spacing: 40;
+            spacing: 20;
             Layout.fillHeight: true;
             Layout.minimumWidth: 200;
-
-//            Item{
-//                id:sapce0;
-//                Layout.minimumHeight: 20;
-//            }
 
             RowLayout{
                 Layout.fillWidth: true;
                 Text{
                     Layout.minimumWidth: 80;
-                    Layout.fillWidth: true;
                     text:"编码器输入:";
+                    Layout.fillWidth: true;
                 }
                 TextInput{
                     id:posIn;
@@ -501,7 +490,27 @@ Rectangle {
                     Layout.minimumWidth: 60;
                 }
             }
+            RowLayout{
+                Layout.fillWidth: true;
+                Text{
+                    text:"电机相序:";
+                    Layout.minimumWidth: 80;
+                    Layout.fillWidth: true;
+                }
+                TextInput{
+                    id:pseq;
+                    text:"0";
+                    enabled: false;
+                    Layout.minimumWidth: 50;
+                    Layout.fillWidth: true;
+                }
+                Text{
+                    text:" ";
+                    Layout.minimumWidth: 60;
+                }
+            }
         }
+
         CircularGauge {
             id: gauge_Electric;
             implicitHeight: 400;
@@ -545,7 +554,7 @@ Rectangle {
     Column{
         id:m_editInputField
         anchors.bottom: parent.bottom;
-        anchors.bottomMargin: 30;
+        anchors.bottomMargin: 5;
         anchors.horizontalCenter: parent.horizontalCenter;
         spacing: 30;
         RollWheel{
@@ -558,25 +567,27 @@ Rectangle {
             height: 50;
             RowLayout{
                 anchors.fill: parent;
-                spacing: 30;
+                spacing: 10;
                 CheckBox {
                     id:m_saveCheckBox;
                     text: qsTr("是否保存")
-                    checked: false
+                    checked: false;
+                    visible: false;
                 }
                 Button{
                     id:m_btnStartTest;
                     height: 40;
+                    Layout.fillWidth: true;
                     property bool barVisible: false;
                     property int barValue: 0;
             //        text:"开 始 寻 相";
                     style: ButtonStyle {
                         background: Rectangle {
-                            implicitWidth: 150
+                            implicitWidth: 100
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
-                            radius: 4
+                            radius: 10
                             gradient: Gradient {
                                 GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
                                 GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
@@ -609,6 +620,53 @@ Rectangle {
                             color: control.hovered?"steelblue":"black";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
+                        }
+                    }
+                }
+                Button{
+                    id:m_btnSavePhase;
+                    height: 40;
+                    enabled: root.searchFinish;
+                    visible: !root.motorIsRunning;
+                    property bool barVisible: false;
+                    property int barValue: 0;
+                    Layout.fillWidth: true;
+
+                    style: ButtonStyle {
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 40
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 10
+                            gradient: Gradient {
+                                GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
+                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+                            }
+                        }
+                        label: Text{
+                            text:qsTr("保 存 相 位");
+                            color: control.enabled?control.hovered?"steelblue":"black":"gray";
+                            horizontalAlignment: Text.AlignHCenter;
+                            verticalAlignment: Text.AlignVCenter;
+                        }
+                    }
+                    onClicked: {
+                        if(driveEncoder.getComConnectSatus()){
+                            var strPos_ofst=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3");
+                            var msg="";
+                            if(strPos_ofst!=="NULL"){
+                                factory.dataTree.setTopLevelText(2,1,strPos_ofst);
+                                m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3",parseInt(strPos_ofst));
+                                console.log("save phase");
+                                msg=qsTr("保存相位");
+                            }
+                            var strPseq=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.seq_dir");
+                            if(strPseq!=="NULL"){
+                                m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.seq_dir",parseInt(strPseq));
+                                msg+=qsTr(",电机相序");
+                            }
+                            root.showMessage(msg);
                         }
                     }
                 }
@@ -709,11 +767,11 @@ Rectangle {
         onTriggered: {
 //            console.log("current:"+m_cmd.axisIndex+"......");
             var strPos=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.pos");
-            pos.text=strPos;
+            pos.text=parseInt(strPos);
 //            console.log("pos="+strPos);
 
             var strPosIn=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.pos_in");
-            posIn.text=strPosIn;
+            posIn.text=parseInt(strPosIn);
             var precision=parseInt(m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.line_num_3"));
             if(strPosIn!=="NULL")
                 gauge.value=360*parseInt(strPosIn)/precision;
@@ -721,7 +779,7 @@ Rectangle {
 //            console.log("precision="+precision);
 
             var strPos_ofst=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3");
-            posOffset.text=strPos_ofst;
+            posOffset.text=parseInt(strPos_ofst);
 //            console.log("strPos_ofst="+strPos_ofst);
 
             var strPPN=m_cmd.readCommand("gSevDrv.sev_obj.cur.mot.PPN_1");
@@ -731,6 +789,11 @@ Rectangle {
                 gauge_Electric.value=parseInt(angleEle);
             }
 //            console.log("strPPN="+strPPN);
+            //读相序
+            var strPseq=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.seq_dir");
+            var pSeqNum=parseInt(strPseq);
+            pseq.text=pSeqNum;
+            console.log("相序"+strPseq);
 
             //关伺服逻辑
             if(root.btnSearchIsClicked){
@@ -751,10 +814,14 @@ Rectangle {
                     servoIsOn=m_cmd.checkServoIsReady();
                     if(servoIsOn)
                         currentState=servoState.CheckFinish;
-                    if((servoIsOn===false)&&(checkCount>3))
+                    if((servoIsOn===false)&&(checkCount>3)){
+                        root.showMessage(qsTr("寻相未完成，伺服打开失败"));
                         currentState=servoState.Quit;
+                    }
+
                     break;
                 case servoState.CheckFinish:
+                    root.motorIsRunning=true;
                     m_btnStartTest.barValue+=10;
                     if(m_btnStartTest.barValue>=100){
                         m_btnStartTest.barValue=0;
@@ -763,17 +830,15 @@ Rectangle {
                     adjFlag=m_cmd.readCommand("gSevDrv.sev_obj.mfj.pos_adj_flag");
                     if(adjFlag!=="NULL")
                         ret=parseInt(adjFlag);
-                    flagFinish=Boolean(ret);
-                    if(flagFinish){
+                    root.searchFinish=Boolean(ret);//检查寻相标志是否置1
+                    if(root.searchFinish){
                         checkCount=0;
-                        if(m_saveCheckBox.checked){
-                            factory.dataTree.setTopLevelText(2,1,strPos_ofst);
-                            m_cmd.writeAdvanceFlash("gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3",parseInt(strPos_ofst));
-                            root.showMessage(qsTr("寻相完成，并保存相位"));
-                            console.log("save phase");
-                        }
+                        var msg=qsTr("寻相完成");
                         m_btnStartTest.barValue=100;
+                        m_btnSavePhase.enabled=true;
                         currentState=servoState.Quit;
+                        root.showMessage(msg);
+
                     }
                     else{
                         if(checkCount>30)
@@ -783,11 +848,14 @@ Rectangle {
                     break;
                 case servoState.Quit:
                     console.log("servoState.Quit");
-                    m_cmd.setServoOn(false);
-                    root.btnSearchIsClicked=false;
                     checkCount=0;
+                    root.btnSearchIsClicked=false;
                     m_btnStartTest.barVisible=false;
+                    //还原伺服原来的状态
+                    m_cmd.setServoOn(false);
+                    m_cmd.setServoTaskMode(root.currentTaskMode);
                     m_cmd.writeCommand("gSevDrv.sev_obj.pos.seq.prm.cmd_src_sel",root.cmdSrcDefault);
+                    root.motorIsRunning=false;
                     currentState=servoState.CheckServoOn;
                     break;
                 }
@@ -808,16 +876,6 @@ Rectangle {
         }
     }
 
-    Timer{
-        id:m_timerMSG;
-        interval: 2000;
-        repeat: false;
-        onTriggered: {
-            m_messageShow.visible=false;
-            m_msgText.text=qsTr("");
-        }
-    }
-
     Connections{
         target: m_btnStartTest;
         onClicked:{
@@ -828,9 +886,8 @@ Rectangle {
                 servoIsOn=m_cmd.checkServoIsReady();
                 //伺服开的话不允许寻相操作
                 if(servoIsOn){
-                    m_messageShow.text=qsTr("伺服正在工作中，禁止寻相");
-                    m_messageShow.visible=true;
-                    m_timerMSG.start();
+                    var msg=qsTr("伺服正在工作中，禁止寻相");
+                    root.showMessage(msg);
                 }
                 else{
                     //先读控制源，0:后台控制 1:控制器控制  如果控制源不是0，则修改控制源
@@ -845,7 +902,8 @@ Rectangle {
                         ret=m_cmd.writeCommand(srcString,0);
                         console.log("ret write value:"+ret);
                     }
-                    m_cmd.setServoTaskMode(2);
+                    root.currentTaskMode=m_cmd.currentServoTaskMode();//先保存当前伺服模式
+                    m_cmd.setServoTaskMode(taskMode.TASKMODE_IPA);
                     m_cmd.setPosAdjRef(m_rollWheel.curValue);
                     m_cmd.setServoOn(true);
 

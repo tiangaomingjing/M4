@@ -42,7 +42,7 @@ Rectangle
         anchors.left: servo.right;
         anchors.leftMargin: 40;
         anchors.bottom: servo.bottom;
-        text:"Axis_"+axisIndex+" Power";
+        text:"轴_"+axisIndex+" 功率";
         font.bold: true;
     }
     Row

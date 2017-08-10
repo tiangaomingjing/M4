@@ -7,9 +7,9 @@ SUBDIRS +=CfgDriverPower\
           CfgCurrentLoop \
           CfgSpeedLoop \
           CfgPositionLoop \
-          CfgLimit \
-          CfgMoveProfile \
-          CfgIO \
+#          CfgLimit \
+#          CfgMoveProfile \
+#          CfgIO \
           DeviceStatus \
           AdvRAM \
           AdvFLASH \

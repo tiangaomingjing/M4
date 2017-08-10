@@ -1,4 +1,4 @@
-ï»¿/////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	base return value define		 									//
 //	file				:	BaseReturn_def.h												//
 //	Description			:	use for Improving the portability of program				//
@@ -16,68 +16,264 @@
 #include "Basetype_def.h"
 
 
+// #define CMD_SUCCESS                     0
+// 
+// #define CMD_ERROR_READ_LEN             -2    /* ¶ÁÈ¡Êı¾İ³¤¶È´íÎó */
+// #define CMD_ERROR_READ_CHECKSUM        -3    /* ¶ÁÈ¡Êı¾İĞ£ÑéºÍ´íÎó */
+// 
+// #define CMD_ERROR_WRITE_BLOCK          -4    /* Ğ´ÈëÊı¾İ¿é´íÎó */
+// #define CMD_ERROR_READ_BLOCK           -5    /* ¶ÁÈ¡Êı¾İ¿é´íÎó */
+// 
+// #define CMD_ERROR_OPEN                 -6    /* ´ò¿ªÉè±¸´íÎó */
+// #define CMD_ERROR_CLOSE                -6    /* ¹Ø±ÕÉè±¸´íÎó */
+// #define CMD_ERROR_DSP_BUSY             -7    /* DSPÃ¦ */
+// 
+// #define CMD_LOCK_ERROR                 -8    /*¶àÏß³Ì×ÊÔ´Ã¦*/
+// 
+// #define CMD_ERROR_EXECUTE               1
+// #define CMD_ERROR_VERSION_NOT_MATCH     3
+// #define CMD_ERROR_PARAMETER             7
+// #define CMD_ERROR_UNKNOWN               8    /* ²»Ö§³ÖµÄÖ¸Áî */
 
-const int32			Rt_Success					=	0x0000;					//é€šç”¨è¿”å›æˆåŠŸ
+typedef enum
+{
+	RTN_SUCCESS = 0,
+	CMD_SUCCESS = 0,
+	CMD_ERROR_READ_LEN   =          -2,    /* ¶ÁÈ¡Êı¾İ³¤¶È´íÎó */
+	CMD_ERROR_READ_CHECKSUM =        -3,    /* ¶ÁÈ¡Êı¾İĞ£ÑéºÍ´íÎó */
+
+	CMD_ERROR_WRITE_BLOCK   =       -4,    /* Ğ´ÈëÊı¾İ¿é´íÎó */
+	CMD_ERROR_READ_BLOCK    =       -5,    /* ¶ÁÈ¡Êı¾İ¿é´íÎó */
+
+	CMD_ERROR_OPEN          =      -6,    /* ´ò¿ªÉè±¸´íÎó */
+	CMD_ERROR_CLOSE         =       -6,    /* ¹Ø±ÕÉè±¸´íÎó */
+	CMD_ERROR_DSP_BUSY      =       -7,    /* DSPÃ¦ */
+
+	CMD_LOCK_ERROR          =       -8,    /*¶àÏß³Ì×ÊÔ´Ã¦*/
+
+	CMD_ERROR_EXECUTE      =         1,
+	CMD_ERROR_VERSION_NOT_MATCH   =  3,
+	CMD_ERROR_PARAMETER        =     7,
+	CMD_ERROR_UNKNOWN        =       8 ,   /* ²»Ö§³ÖµÄÖ¸Áî */
+
+	RTN_MALLOC_FAIL = -100 , /* malloc memory fail */
+	RTN_FREE_FAIL = -101 , /* free memory or delete the object fail */
+	RTN_NULL_POINT = -102 , /* the param point input is null */
+	RTN_ERR_ORDER = -103 , /* call the function order is wrong, some msg isn't validable */
+	RTN_PCI_NULL = -104 , /* the pci address is empty, can't access the pci device*/
+	RTN_PARAM_OVERFLOW = -105 , /* the param input is too larget*/
+	RTN_LINK_FAIL = -106 , /* the two ports both link fail*/
+	RTN_IMPOSSIBLE_ERR = -107 , /* it means the system or same function work wrong*/
+	RTN_TOPOLOGY_CONFLICT = -108 , /* the id conflict*/
+	RTN_TOPOLOGY_ABNORMAL = -109 , /* scan the net abnormal*/
+	RTN_STATION_ALONE = -110 , /* the device no id, it means the device id is 0xF0 */
+	RTN_WAIT_OBJECT_OVERTIME = -111 , /* multi thread wait for object overtime */
+	RTN_ACCESS_OVERFLOW = -112 , /* data[i];  i is larger than the define */
+	RTN_NO_STATION = -113 , /* the station accessed not existent */
+	RTN_OBJECT_UNCREATED = -114 , /* the object not created yet*/
+	 RTN_PARAM_ERR = -115 , /* the param input is wrong*/
+		// RTN_NO_PDU_CFG                    -116, /*No Pdu Cfg*/
+	RTN_PCI_FPGA_ERR = -117 , /*PCI op err or FPGA op err*/
+	RTN_CHECK_RW_ERR = -118	, /*data write to reg, then rd out, and check err */
+	RTN_REMOTE_UNEABLE	= -119 , /*the device which will be ctrl by net can't be ctrl by net function*/ 
+
+	RTN_NET_REQ_DATA_NUM_ZERO	=	-120 , /*mail op or pdu op req data num can't be 0*/
+	RTN_WAIT_NET_OBJECT_OVERTIME =	-121 , /* net op multi thread wait for object overtime */
+	RTN_WAIT_NET_RESP_OVERTIME	=	-122 , /* Can't wait for resp */
+	RTN_WAIT_NET_RESP_ERR			=	-123 , /*wait mailbox op err*/
+	RTN_INITIAL_ERR				=	-124 , /*initial the device err*/
+	RTN_PC_NO_READY				=	-125 , /*find the station'pc isn't work*/ 
+	RTN_STATION_NO_EXIST	=		-126, 
+	RTN_MASTER_FUNCTION	=			-127 , /* this funciton only used by master */
+
+	RTN_NOT_ALL_RETURN		=			-128 , /* the GT_RN_PtProcessData funciton fail return */
+	RTN_REQUSET_MAIL_BUS_OVERTIME =	-150 , /*Requset Mail Bus Err*/
+	RTN_INSTRCTION_ERR		=					-151 , /*instrctions err*/
+	RTN_MAIL_RESP_REQ_ERR	=				-152 , /*RN_MailRespReq  err*/
+	RTN_CTRL_SRC_ERR		=						-153 , /* the controlled source  is error */
+	RTN_PACKET_ERR			=						-154 , /*packet is error*/
+	RTN_STATION_ID_ERR		=					-155 , /*the device id is not in the right rang*/
+	RTN_WAIT_NET_PDU_RESP_OVERTIME = - 156 , /*net pdu op wait overtime*/
+
+	RTN_IDLINK_PACKET_ERR		=		-200 , /*ilink master  decode err! packet_length is not match*/
+	RTN_IDLINK_PACKET_END_ERR	=	-201 , /* the ending of ilink packet is not 0xFF*/
+	RTN_IDLINK_TYPER_ERR		=		-202 , /* the type of ilink module is error*/
+	RTN_IDLINK_LOST_CNT 		=		-203 , /* the ilink module has lost connection*/
+	RTN_IDLINK_CTRL_SRC_ERR	=		-204 , /* the controlled source of ilink module is error */
+	RTN_IDLINK_UPDATA_ERR		=	-205 , /* the ilink module updata error*/
+	RTN_IDLINK_NUM_ERR			=	-206 , /* the ilink num larger the IDLINK_MAX_NUM(30) */
+	RTN_IDLINK_NUM_ZERO		=		-207 , /* the ilink num larger the IDLINK_MAX_NUM(30) */
+
+	RTN_NO_PACKET				=	301 , /* no valid packet */
+	RTN_RX_ERR_PDU_PACKET		=	-302 , /* ERR PDU PACKET */
+	RTN_STATE_MECHINE_ERR		=	-303, 
+	RTN_PCI_DSP_UN_FINISH		=	304,
+	RTN_SEND_ALL_FAIL			=	-305,
+	RTN_STATION_CLOSE			=	310,
+	RTN_STATION_RESP_FAIL		=	311	,	
+
+	RTN_UPDATA_MODAL_ERR		=	-330 ,/* update the modal in normal way fail*/
+
+
+	RTN_NO_MAIL_DATA =	340, /*There is no mail data*/
+	RTN_NO_PDU_DATA  =		341, /*There is no pdu data*/
+
+
+
+
+	RTN_FILE_PARAM_NUM_ERR		=	-500,
+	RTN_FILE_PARAM_LEN_ERR		=	-501,
+	RTN_FILE_MALLOC_FAIL		=	-502,
+	RTN_FILE_FREE_FAIL			=	-503,
+	RTN_FILE_PARAM_ERR			=	-504,
+	RTN_FILE_NOT_EXSITS		=	505,
+	RTN_FILE_CREATE_FAIL		=	510,
+	RTN_FILE_DELETE_FAIL		=	511,
+	RTN_FIFE_CRC_CHECK_ERR		=	-512,
+	 RTN_FIFE_FUNCTION_ID_RETURN_ERR = -600
+}ENUM_RTN_RETURN;
+
+//#define RTN_SUCCESS				0
+//
+//#define RTN_MALLOC_FAIL			-100 /* malloc memory fail */
+//#define RTN_FREE_FAIL			-101 /* free memory or delete the object fail */
+//#define RTN_NULL_POINT			-102 /* the param point input is null */ 
+//#define RTN_ERR_ORDER			-103 /* call the function order is wrong, some msg isn't validable */
+//#define RTN_PCI_NULL			-104 /* the pci address is empty, can't access the pci device*/
+//#define RTN_PARAM_OVERFLOW		-105 /* the param input is too larget*/
+//#define RTN_LINK_FAIL			-106 /* the two ports both link fail*/ 
+//#define RTN_IMPOSSIBLE_ERR		-107 /* it means the system or same function work wrong*/
+//#define RTN_TOPOLOGY_CONFLICT	-108 /* the id conflict*/
+//#define RTN_TOPOLOGY_ABNORMAL	-109 /* scan the net abnormal*/
+//#define RTN_STATION_ALONE		-110 /* the device no id, it means the device id is 0xF0 */
+//#define RTN_WAIT_OBJECT_OVERTIME	-111 /* multi thread wait for object overtime */
+//#define RTN_ACCESS_OVERFLOW			-112 /* data[i];  i is larger than the define */
+//#define RTN_NO_STATION					-113 /* the station accessed not existent */
+//#define RTN_OBJECT_UNCREATED			-114 /* the object not created yet*/
+//#define RTN_PARAM_ERR						-115 /* the param input is wrong*/
+////#define RTN_NO_PDU_CFG                    -116/*No Pdu Cfg*/
+//#define RTN_PCI_FPGA_ERR					-117 /*PCI op err or FPGA op err*/
+//#define RTN_CHECK_RW_ERR				-118	/*data write to reg, then rd out, and check err */
+//#define RTN_REMOTE_UNEABLE				-119 /*the device which will be ctrl by net can't be ctrl by net function*/ 
+//
+//#define RTN_NET_REQ_DATA_NUM_ZERO		-120 /*mail op or pdu op req data num can't be 0*/
+//#define RTN_WAIT_NET_OBJECT_OVERTIME	-121 /* net op multi thread wait for object overtime */
+//#define RTN_WAIT_NET_RESP_OVERTIME		-122 /* Can't wait for resp */
+//#define RTN_WAIT_NET_RESP_ERR				-123 /*wait mailbox op err*/
+//#define RTN_INITIAL_ERR					-124 /*initial the device err*/
+//#define RTN_PC_NO_READY					-125 /*find the station'pc isn't work*/ 
+//#define RTN_STATION_NO_EXIST			-126 
+//#define RTN_MASTER_FUNCTION				-127 /* this funciton only used by master */
+//
+//#define RTN_NOT_ALL_RETURN					-128 /* the GT_RN_PtProcessData funciton fail return */
+//#define RTN_REQUSET_MAIL_BUS_OVERTIME	-150 /*Requset Mail Bus Err*/
+//#define RTN_INSTRCTION_ERR							-151 /*instrctions err*/
+//#define RTN_MAIL_RESP_REQ_ERR					-152 /*RN_MailRespReq  err*/
+//#define RTN_CTRL_SRC_ERR								-153 /* the controlled source  is error */
+//#define RTN_PACKET_ERR									-154 /*packet is error*/
+//#define RTN_STATION_ID_ERR							-155 /*the device id is not in the right rang*/
+//#define RTN_WAIT_NET_PDU_RESP_OVERTIME - 156 /*net pdu op wait overtime*/
+//
+//#define RTN_IDLINK_PACKET_ERR				-200 /*ilink master  decode err! packet_length is not match*/
+//#define RTN_IDLINK_PACKET_END_ERR		-201 /* the ending of ilink packet is not 0xFF*/
+//#define RTN_IDLINK_TYPER_ERR				-202 /* the type of ilink module is error*/
+//#define RTN_IDLINK_LOST_CNT 				-203 /* the ilink module has lost connection*/
+//#define RTN_IDLINK_CTRL_SRC_ERR			-204 /* the controlled source of ilink module is error */
+//#define RTN_IDLINK_UPDATA_ERR			-205 /* the ilink module updata error*/
+//#define RTN_IDLINK_NUM_ERR				-206 /* the ilink num larger the IDLINK_MAX_NUM(30) */
+//#define RTN_IDLINK_NUM_ZERO				-207 /* the ilink num larger the IDLINK_MAX_NUM(30) */
+//
+//#define RTN_NO_PACKET					301 /* no valid packet */
+//#define RTN_RX_ERR_PDU_PACKET			-302 /* ERR PDU PACKET */
+//#define RTN_STATE_MECHINE_ERR			-303 
+//#define RTN_PCI_DSP_UN_FINISH			304
+//#define RTN_SEND_ALL_FAIL				-305
+//#define RTN_STATION_CLOSE				310
+//#define RTN_STATION_RESP_FAIL			311		
+//
+//#define RTN_UPDATA_MODAL_ERR			-330 /* update the modal in normal way fail*/
+//
+//
+//#define RTN_NO_MAIL_DATA	340 /*There is no mail data*/
+//#define RTN_NO_PDU_DATA		341 /*There is no pdu data*/
+//
+#define MAX_STATION_NUM 256
+#define IDLINK_NUM_MAX     30 /*Ã¿¸öÇı¿ØÒ»ÌåÉÏÄÜ´øµÄÄ£¿é×î´óÊıÄ¿*/
+//
+//
+//#define RTN_FILE_PARAM_NUM_ERR			-500
+//#define RTN_FILE_PARAM_LEN_ERR			-501
+//#define RTN_FILE_MALLOC_FAIL			-502
+//#define RTN_FILE_FREE_FAIL				-503
+//#define RTN_FILE_PARAM_ERR				-504
+//#define RTN_FILE_NOT_EXSITS				505
+//#define RTN_FILE_CREATE_FAIL			510
+//#define RTN_FILE_DELETE_FAIL			511
+//#define RTN_FIFE_CRC_CHECK_ERR			-512
+//#define RTN_FIFE_FUNCTION_ID_RETURN_ERR -600
+
+
+const int32			Rt_Success					=	0x0000;					//Í¨ÓÃ·µ»Ø³É¹¦
 
 //-------------------------------------------------------------------------------------------------
-//pcdebug åè®®ä½¿ç”¨ ç±»ä¼¼ethcatåè®®çš„è‡ªå®šä¹‰è°ƒè¯•åè®®
+//pcdebug Ğ­ÒéÊ¹ÓÃ ÀàËÆethcatĞ­ÒéµÄ×Ô¶¨Òåµ÷ÊÔĞ­Òé
 
-const int32			Net_Rt_Execute_Fail			=	0x0001;					//dspå‘½ä»¤è¿”å›æ‰§è¡Œé”™è¯¯
-const int32			Net_Rt_Execute_Success		=	0x0002;					//dspå‘½ä»¤è¿”å›æ‰§è¡ŒæˆåŠŸ
-const int32			Net_Rt_Parameter_invalid	=   0x0003;					//dspå‘½ä»¤è¿”å›å‚æ•°æ— æ•ˆ
-const int32			Net_Rt_Instruction_invalid	=	0x0004;					//dspå‘½ä»¤è¿”å›æŒ‡ä»¤æ— æ•ˆ
-const int32			Net_Rt_Other_Error			=	0x0005;					//dspå‘½ä»¤è¿”å›æŒ‡ä»¤æ— æ•ˆ
+const int32			Net_Rt_Execute_Fail			=	0x0001;					//dspÃüÁî·µ»ØÖ´ĞĞ´íÎó
+const int32			Net_Rt_Execute_Success		=	0x0002;					//dspÃüÁî·µ»ØÖ´ĞĞ³É¹¦
+const int32			Net_Rt_Parameter_invalid	=   0x0003;					//dspÃüÁî·µ»Ø²ÎÊıÎŞĞ§
+const int32			Net_Rt_Instruction_invalid	=	0x0004;					//dspÃüÁî·µ»ØÖ¸ÁîÎŞĞ§
+const int32			Net_Rt_Other_Error			=	0x0005;					//dspÃüÁî·µ»ØÖ¸ÁîÎŞĞ§
 
-const int32 		Net_Rt_Index_Unmatch		=	0x0006;					//ç´¢å¼•å€¼åŒ¹é…å¤±è´¥
-const int32 		Net_Rt_Receive_Unknow_Data	=	0x0007;					//æœªçŸ¥è¿”å›æ•°æ®
-const int32 		Net_Rt_Receive_DLenth_short =	0x0008;					//è¿”å›æ•°æ®é•¿åº¦è¿‡çŸ­
+const int32 		Net_Rt_Index_Unmatch		=	0x0006;					//Ë÷ÒıÖµÆ¥ÅäÊ§°Ü
+const int32 		Net_Rt_Receive_Unknow_Data	=	0x0007;					//Î´Öª·µ»ØÊı¾İ
+const int32 		Net_Rt_Receive_DLenth_short =	0x0008;					//·µ»ØÊı¾İ³¤¶È¹ı¶Ì
 
-const int32 		Net_Rt_Not_Find_Net_Device	=	0x0009;					//æ²¡æœ‰æ‰¾åˆ°ç½‘ç»œè®¾å¤‡
-const int32 		Net_Rt_Not_Get_Net_DevList	=	0x000A;					//æ‰¾ç½‘ç»œè®¾å¤‡åˆ—è¡¨å¤±è´¥
-const int32 		Net_Rt_Adapter_Not_Match	=	0x000B;					//è®¾å¤‡åˆ—è¡¨ä¸­çš„åç§°å’Œè®¾å¤‡ä¸åŒ¹é…
-const int32 		Net_Rt_Open_Device_Err		=	0x000C;                 //æ‰“å¼€ç½‘ç»œè®¾å¤‡é”™è¯¯
-const int32 		Net_Rt_Complie_Err			=	0x000d;					//ç¼–è¯‘é”™è¯¯
-const int32 		Net_Rt_SetFilter_Err		=	0x000e;					//è®¾ç½®æ»¤æ³¢å™¨é”™è¯¯
+const int32 		Net_Rt_Not_Find_Net_Device	=	0x0009;					//Ã»ÓĞÕÒµ½ÍøÂçÉè±¸
+const int32 		Net_Rt_Not_Get_Net_DevList	=	0x000A;					//ÕÒÍøÂçÉè±¸ÁĞ±íÊ§°Ü
+const int32 		Net_Rt_Adapter_Not_Match	=	0x000B;					//Éè±¸ÁĞ±íÖĞµÄÃû³ÆºÍÉè±¸²»Æ¥Åä
+const int32 		Net_Rt_Open_Device_Err		=	0x000C;                 //´ò¿ªÍøÂçÉè±¸´íÎó
+const int32 		Net_Rt_Complie_Err			=	0x000d;					//±àÒë´íÎó
+const int32 		Net_Rt_SetFilter_Err		=	0x000e;					//ÉèÖÃÂË²¨Æ÷´íÎó
 
-const int32 		Net_Rt_Send_Err				=	0x000f;                 //å‘½ä»¤å‘é€å¤±è´¥
-const int32 		Net_Rt_Receive_Err			=	0x0010;				    //æ¥æ”¶å‘½ä»¤å¤±è´¥
+const int32 		Net_Rt_Send_Err				=	0x000f;                 //ÃüÁî·¢ËÍÊ§°Ü
+const int32 		Net_Rt_Receive_Err			=	0x0010;				    //½ÓÊÕÃüÁîÊ§°Ü
 
-const int32			Net_Rt_Not_Enough_Space		=	0x0011;					//è¾“å…¥å‚æ•°åˆ†é…ç©ºé—´ä¸å¤Ÿ
-const int32 		Net_Rt_Net_DevListLenth_Err =	0x0012;					//ç½‘ç»œè®¾å¤‡åˆ—è¡¨é•¿åº¦é”™è¯¯
-const int32 		Net_Rt_Pointer_Invalid		=	0x0013;				    //è¾“å…¥æŒ‡é’ˆæ— æ•ˆ
-const int32 		Net_Rt_MBTOWC_Err			=	0x0014;					//å¤šå­—èŠ‚è½¬æ¢ä¸ºå®½å­—ç¬¦é”™è¯¯
-const int32 		Net_Rt_Not_Find_ScanDevice	=	0x0015;					//æ²¡æœ‰ä»æ‰«æåˆ°çš„è®¾å¤‡åˆ—è¡¨ä¸­æ‰¾åˆ°æœ‰å“åº”çš„è®¾å¤‡
-const int32 		Net_Rt_Send_Data_TooLong	=	0x0016;					//å‘é€æ•°æ®é•¿åº¦è¶…è¿‡1023ï¼ˆbytesï¼‰
-const int32 		Net_Rt_Timeout				=	0x0017;					//ç­‰å¾…è¶…æ—¶
-const int32 		Net_Rt_Mac_Err				=	0x0018;					//MACåœ°å€é”™è¯¯
-const int32 		Net_Rt_Flag_Err				=	0x0019;					//è¯»å†™å®Œæˆæ ‡å¿—ä½æœªç½®
-const int32 		Net_Rt_CreateObj_Err		=	0x001A;					//åˆ›å»ºå¯¹è±¡é”™è¯¯
+const int32			Net_Rt_Not_Enough_Space		=	0x0011;					//ÊäÈë²ÎÊı·ÖÅä¿Õ¼ä²»¹»
+const int32 		Net_Rt_Net_DevListLenth_Err =	0x0012;					//ÍøÂçÉè±¸ÁĞ±í³¤¶È´íÎó
+const int32 		Net_Rt_Pointer_Invalid		=	0x0013;				    //ÊäÈëÖ¸ÕëÎŞĞ§
+const int32 		Net_Rt_MBTOWC_Err			=	0x0014;					//¶à×Ö½Ú×ª»»Îª¿í×Ö·û´íÎó
+const int32 		Net_Rt_Not_Find_ScanDevice	=	0x0015;					//Ã»ÓĞ´ÓÉ¨Ãèµ½µÄÉè±¸ÁĞ±íÖĞÕÒµ½ÓĞÏìÓ¦µÄÉè±¸
+const int32 		Net_Rt_Send_Data_TooLong	=	0x0016;					//·¢ËÍÊı¾İ³¤¶È³¬¹ı1023£¨bytes£©
+const int32 		Net_Rt_Timeout				=	0x0017;					//µÈ´ı³¬Ê±
+const int32 		Net_Rt_Mac_Err				=	0x0018;					//MACµØÖ·´íÎó
+const int32 		Net_Rt_Flag_Err				=	0x0019;					//¶ÁĞ´Íê³É±êÖ¾Î»Î´ÖÃ
+const int32 		Net_Rt_CreateObj_Err		=	0x001A;					//´´½¨¶ÔÏó´íÎó
 
 const int32 		Net_Rt_Lock_Err				=	0x001B;					//LOCK ERR
 const int32 		Net_Rt_param_Err			=	0x001c;					//param ERR
 
 const int32			Net_Rt_SerialPort_Err		=	0x001d;					//serial port ERR   
-
+const int32			Net_Rt_eeprom_Err			=	0x001e;					//eeprom port ERR
 
 //--------------------------------------------------------------------------------------------
 
-//ç­‰ç¯ç½‘è¿”å›å®šä¹‰
+//µÈ»·Íø·µ»Ø¶¨Òå
 
-const int32 		RN_Rt_Receive_DLenth_short	= 0x0008;					//è¿”å›æ•°æ®é•¿åº¦è¿‡çŸ­
-const int32 		RN_Net_Rt_Send_Data_TooLong	= 0x0016;					//å‘é€æ•°æ®é•¿åº¦è¿‡é•¿
-const int32 		RN_Net_Rt_Send_Err			= 0x000f;					//å‘½ä»¤å‘é€å¤±è´¥
-const int32 		RN_Net_Rt_Timeout			= 0x0017;					//ç­‰å¾…è¶…æ—¶
-const int32 		RN_Net_Rt_CreateObj_Err		= 0x001A;					//åˆ›å»ºå¯¹è±¡é”™è¯¯
-const int32 		RN_Net_Rt_Complie_Err		= 0x000d;					//ç¼–è¯‘é”™è¯¯
-const int32 		RN_Net_Rt_SetFilter_Err		= 0x000e;					//è®¾ç½®æ»¤æ³¢å™¨é”™è¯¯
+const int32 		RN_Rt_Receive_DLenth_short	= 0x0008;					//·µ»ØÊı¾İ³¤¶È¹ı¶Ì
+const int32 		RN_Net_Rt_Send_Data_TooLong	= 0x0016;					//·¢ËÍÊı¾İ³¤¶È¹ı³¤
+const int32 		RN_Net_Rt_Send_Err			= 0x000f;					//ÃüÁî·¢ËÍÊ§°Ü
+const int32 		RN_Net_Rt_Timeout			= 0x0017;					//µÈ´ı³¬Ê±
+const int32 		RN_Net_Rt_CreateObj_Err		= 0x001A;					//´´½¨¶ÔÏó´íÎó
+const int32 		RN_Net_Rt_Complie_Err		= 0x000d;					//±àÒë´íÎó
+const int32 		RN_Net_Rt_SetFilter_Err		= 0x000e;					//ÉèÖÃÂË²¨Æ÷´íÎó
 
 
-//socketè¿”å›å®šä¹‰
+//socket·µ»Ø¶¨Òå
 
-const int32 		SOCKET_Rt_CreateObj_Err		= 0x001A;					//åˆ›å»ºå¯¹è±¡é”™è¯¯
-const int32 		SOCKET_Rt_Open_Device_Err	= 0x000C;					//æ‰“å¼€ç½‘ç»œè®¾å¤‡é”™è¯¯
-const int32 		SOCKET_Rt_Com_Err			= 0x001F;					//socketé€šä¿¡å‡ºé”™
-const int32 		SOCKET_Rt_Timeout			= 0x0017;					//ç­‰å¾…è¶…æ—¶
-const int32 		SOCKET_Rt_Send_Err			= 0x000f;					//å‘½ä»¤å‘é€å¤±è´¥
+const int32 		SOCKET_Rt_CreateObj_Err		= 0x001A;					//´´½¨¶ÔÏó´íÎó
+const int32 		SOCKET_Rt_Open_Device_Err	= 0x000C;					//´ò¿ªÍøÂçÉè±¸´íÎó
+const int32 		SOCKET_Rt_Com_Err			= 0x001F;					//socketÍ¨ĞÅ³ö´í
+const int32 		SOCKET_Rt_Timeout			= 0x0017;					//µÈ´ı³¬Ê±
+const int32 		SOCKET_Rt_Send_Err			= 0x000f;					//ÃüÁî·¢ËÍÊ§°Ü
 
 #endif

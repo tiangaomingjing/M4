@@ -53,13 +53,15 @@ void AbstractFuncWidget::readTreeXMLFile(MainWindow *mainWindow,QString fileName
   createUiByQml();
 
   //信号连接处理，有的子类没有与主mainwidow有信息交流，
+  connect(this,SIGNAL(showMessage(QString)),mainWindow,SLOT(onQmlUiShowMessage(QString)));
   //用virtual function做差异化处理
   connectionSignalSlotHandler();
 }
 void AbstractFuncWidget::setTreeWidgetHeaderLables()
 {
   QStringList header;
-  header<<tr("Axis_%1").arg(m_axisNumber)<<NORMAL_VALUE<<NORMAL_TYPE<<\
+  int axis=m_axisNumber+1;
+  header<<tr("Axis_%1").arg(axis)<<NORMAL_VALUE<<NORMAL_TYPE<<\
           NORMAL_UINT<<NORMAL_DOWNLIMIT<<NORMAL_UPLIMIT<<NORMAL_INTRODUCTION<<NORMAL_FRAMOFFSET;
   m_uiTree->setHeaderLabels(header);
 }
