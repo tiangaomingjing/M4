@@ -6,6 +6,7 @@ Rectangle{
     Layout.fillWidth: true;
     Layout.fillHeight: true;
     signal selectEncOwner(int owner);
+    property color selectColor: "#567DBC";
     function setCurrentIndex(idx){
         m_listCompany.currentIndex=idx;
         console.log("on current index change...."+m_listCompany.currentIndex);
@@ -19,7 +20,7 @@ Rectangle{
 
         highlight: Rectangle {
             width: parent.width;
-            color: "lightsteelblue";
+            color: selectColor;
         }
         focus: true
         currentIndex: 0;
@@ -56,7 +57,7 @@ Rectangle{
             id: wrapper;
             width: parent.width;
             height: 40;
-            color:mouseArea.containsMouse?"lightgray":wrapper.ListView.isCurrentItem?"lightsteelblue":"transparent";
+            color:wrapper.ListView.isCurrentItem?selectColor:mouseArea.containsMouse?"lightgray":"transparent";
             radius: 0;
             MouseArea{
                 id:mouseArea;
@@ -76,6 +77,8 @@ Rectangle{
                 text:name;
                 verticalAlignment: Text.AlignVCenter;
                 font.pixelSize: 12;
+                color:wrapper.ListView.isCurrentItem?"white":"black";
+                font.letterSpacing: 20;
             }
         }
     }

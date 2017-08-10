@@ -5,6 +5,8 @@ Rectangle{
     color: "white";
     Layout.fillWidth: true;
     Layout.fillHeight: true;
+    property color selectColor: "#567DBC";
+    property color hoverColor: "#cbdaf1";
     signal selectEncOwner(int owner);
     ListView {
         id:m_listCompany
@@ -14,7 +16,7 @@ Rectangle{
 
         highlight: Rectangle {
             width: parent.width;
-            color: "lightsteelblue";
+            color: selectColor;
         }
         focus: true
         onCurrentIndexChanged: {
@@ -51,7 +53,7 @@ Rectangle{
             id: wrapper;
             width: parent.width;
             height: 40;
-            color:mouseArea.containsMouse?"lightgray":wrapper.ListView.isCurrentItem?"lightsteelblue":"transparent";
+            color:wrapper.ListView.isCurrentItem?"transparent":mouseArea.containsMouse?hoverColor:"transparent";
             radius: 0;
             MouseArea{
                 id:mouseArea;
@@ -71,6 +73,8 @@ Rectangle{
                 text:name;
                 verticalAlignment: Text.AlignVCenter;
                 font.pixelSize: 12;
+                color:wrapper.ListView.isCurrentItem?"white":"black";
+                font.letterSpacing: 20;
             }
         }
     }

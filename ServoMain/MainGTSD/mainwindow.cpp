@@ -565,6 +565,7 @@ void MainWindow::onActionDisConnectClicked()
   uiStatus->btn_connect->setIcon(QIcon(ICON_FILE_PATH+ICON_STATUS_DISCONNECT));
   m_isOpenCom=false;
   uiStatus->btn_warring->hide();
+  uiStatus->warningMessge->setText(" ");
 
   m_actDisConnect->setChecked(true);
   m_actConnect->setChecked(false);
