@@ -150,6 +150,7 @@ private:
   static void updateProgessBarWhenConnectClicked(void *arg,qint16 *value);//只用于点击连接时显示进步条
   bool openNetCom(void);
   void closeNetCom(void);
+  bool MessageBoxAsk(QString &msg);
 
 
 

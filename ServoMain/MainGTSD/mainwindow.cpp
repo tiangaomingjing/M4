@@ -199,7 +199,7 @@ void MainWindow::onWarningMessageChanged(QString &msg)
 void MainWindow::onClearWarning()
 {
   uiStatus->btn_warring->hide();
-  uiStatus->warningMessge->hide();
+  uiStatus->warningMessge->setText(" ");
 }
 void MainWindow::onQmlUiShowMessage(QString msg)
 {
@@ -747,11 +747,11 @@ void MainWindow::onActionResetDSPClicked()
     return ;
   }
 
-//  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring","Do you want to reset servo ?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
-//  if (rb==QMessageBox::No)
-//  {
-//    return;
-//  }
+  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring","Do you want to reset servo ?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
+  if (rb==QMessageBox::No)
+  {
+    return;
+  }
 
   qint16 result=0;
   com_type comtype=(com_type)mp_userConfig->com.id;
@@ -982,6 +982,15 @@ void MainWindow::onActionRestoreFactorySettingClicked()
 {
 //  qDebug()<<"onActionRestoreFactorySettingClicked";
 //  enableAllUi(false);
+  if(m_isOpenCom)
+  {
+    QMessageBox::about(0,tr("information"),tr("make sure your device is in the uboot mode and disconnet the device !"));
+    return;
+  }
+
+  bool ask=MessageBoxAsk(tr("do you want to uboot?"));
+  if(ask==false)
+    return;
   setUbootModeUi(true);
   uiStatus->btn_warring->hide();
   ui->progressBar->setVisible(true);
@@ -1161,6 +1170,10 @@ void MainWindow::onActionRestoreFactorySettingClicked()
         uiStatus->warningMessge->setText(warnnigMessage);
       }
 
+    }
+    else
+    {
+      uiStatus->warningMessge->setText(tr("Uboot .out file error !Maybe you are not in the uboot or hardwares have some problems "));
     }
   }
   else
@@ -1451,7 +1464,7 @@ void MainWindow::onXmlPrmToServo(int axis, int value)
   ui->progressBar->setValue(value);
   if(value%20==0)
   {
-    ui->statusBar->showMessage(tr("axis:%1   writing xml parameters to servo....").arg(axis));
+    ui->statusBar->showMessage(tr("axis:%1   writing xml parameters to servo....").arg(axis+1));
     qApp->processEvents();
   }
   if((axis==(mp_userConfig->model.axisCount-1))&&value>90)
@@ -2266,4 +2279,14 @@ void MainWindow::closeNetCom()
   GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id));
   ui->progressBar->setVisible(false);
   enableAllUi(true);
+}
+bool MainWindow::MessageBoxAsk(QString &msg)
+{
+  bool ret=false;
+  QMessageBox::StandardButton rb = QMessageBox::question(this, tr("Warring"), msg, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
+  if (rb == QMessageBox::Yes)
+    ret=true;
+  else
+    ret=false;
+  return ret;
 }
