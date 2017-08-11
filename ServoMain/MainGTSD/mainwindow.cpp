@@ -1708,8 +1708,8 @@ void MainWindow::createToolBars(void)
   m_toolBarTool->addAction(m_actXmUpdate);
   m_toolBarTool->addAction(m_actServo2File);
   m_toolBarTool->addAction(m_actFPGAControl);
-  m_toolBarTool->addAction(m_actAxisClone);
-  m_toolBarTool->addAction(m_actAxisFileClone);
+//  m_toolBarTool->addAction(m_actAxisClone);
+//  m_toolBarTool->addAction(m_actAxisFileClone);
   m_toolBarTool->addSeparator();
   m_toolBarTool->addAction(m_actFuncConfig);
   m_toolBarTool->addAction(m_actFuncSave);
