@@ -12,14 +12,18 @@ TEMPLATE = lib
 #------------------------------------------------
 include($$PWD/../FuncCommon.pri)
 INCLUDEPATH +=../AbstractFuncWidget\
-              ../AbstractFuncWidget/QmlFactory/DeviceStatus
+              ../AbstractFuncWidget/QmlFactory/DeviceStatus\
+              ../ServoGeneralCmd
 
 CONFIG(debug, debug|release){
     TARGET = DeviceStatusd
-    LIBS +=$${FUNC_LIB_ROOT}/AbstractFuncWidgetd.lib
+    LIBS +=$${FUNC_LIB_ROOT}/AbstractFuncWidgetd.lib\
+           $${FUNC_LIB_ROOT}/ServoGeneralCmdd.lib
+
 } else{
     TARGET = DeviceStatus
-    LIBS += $${FUNC_LIB_ROOT}/AbstractFuncWidget.lib
+    LIBS += $${FUNC_LIB_ROOT}/AbstractFuncWidget.lib\
+            $${FUNC_LIB_ROOT}/ServoGeneralCmd.lib
 }
 #---------------------------------------------------
 

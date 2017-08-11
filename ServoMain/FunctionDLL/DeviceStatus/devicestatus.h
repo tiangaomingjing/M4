@@ -25,7 +25,7 @@ public:
   Q_INVOKABLE void clearAlarm(void);
 signals:
   void netError(COM_ERROR error);
-  void almError();
+  void almError(int axis ,bool alm);
   void almClearFinish();
   void timeOutToQml();//更新时间到qml界面更新
 

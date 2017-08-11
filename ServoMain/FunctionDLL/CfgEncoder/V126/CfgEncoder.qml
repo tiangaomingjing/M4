@@ -22,6 +22,10 @@ Rectangle {
     property int cmdSrcDefault: 1;
     property int currentTaskMode: 0;
     property bool motorIsRunning: false;
+    property color hoverColor: "#cbdaf1";
+    property color pressColor: "#567DBC";
+    property color frameColor: "#BBB9B9";
+    property color backgroundColor: Qt.lighter(frameColor,1.2);
     function updateUiFromServo(){
         console.log("driveEncoder -> onItemValueChanged")
     //            listView.setCurrentIndex(Number(factory.dataTree.textTopLevel(0,1))-1);
@@ -282,18 +286,20 @@ Rectangle {
                 anchors.horizontalCenter:  parent.horizontalCenter
                 Layout.fillWidth: true;
                 implicitHeight: 50;
-                text: qsTr("保存配置");
                 style: ButtonStyle {
                     background: Rectangle {
                         implicitWidth: 100
                         implicitHeight: 25
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "#888"
-                        radius: 4
-                        gradient: Gradient {
-                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                        }
+                        radius: 5
+                        color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
+                    }
+                    label: Text{
+                        text:qsTr("保存配置");
+                        horizontalAlignment: Text.AlignHCenter;
+                        verticalAlignment: Text.AlignVCenter;
+                        font.bold:control.hovered?true:false;
                     }
                 }
                 onClicked: {
@@ -352,19 +358,14 @@ Rectangle {
                         implicitHeight: 40
                         border.width: control.activeFocus ? 2 : 1
                         border.color:"#888"
-                        radius: 10
-                        gradient: Gradient {
-//                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : control.hovered?"#eee":"transparent" }
-//                            GradientStop { position: 1 ; color:control.pressed ? "#aaa" : control.hovered?"#ccc":"transparent" }
-                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                        }
+                        radius: 5
+                        color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
                     }
                     label: Text{
                         text:qsTr("清编码器警告");
-                        color: control.hovered?"steelblue":"black";
                         horizontalAlignment: Text.AlignHCenter;
                         verticalAlignment: Text.AlignVCenter;
+                        font.bold:control.hovered?true:false;
                     }
                 }
                 onClicked: {
@@ -587,11 +588,8 @@ Rectangle {
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
-                            radius: 10
-                            gradient: Gradient {
-                                GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
-                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                            }
+                            radius: 5;
+                            color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
                             ProgressBar {
                                 id:m_progressBar
                                 anchors.fill: parent;
@@ -617,9 +615,9 @@ Rectangle {
                         }
                         label: Text{
                             text:qsTr("开 始 寻 相");
-                            color: control.hovered?"steelblue":"black";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
+                            font.bold:control.hovered?true:false;
                         }
                     }
                 }
@@ -638,17 +636,15 @@ Rectangle {
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
-                            radius: 10
-                            gradient: Gradient {
-                                GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
-                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                            }
+                            radius: 5;
+                            color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
                         }
                         label: Text{
                             text:qsTr("保 存 相 位");
-                            color: control.enabled?control.hovered?"steelblue":"black":"gray";
+                            color: control.enabled?"black":"gray";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
+                            font.bold:control.hovered?true:false;
                         }
                     }
                     onClicked: {
@@ -672,88 +668,6 @@ Rectangle {
                 }
             }
         }
-
-        //编码器类型下拉选择
-/*        ComboBox{
-            id:m_encoderComboBox;
-            signal replot();
-            width: 120;
-            model:["1 绝对值","2 增量式","3 无传感"];
-            style:ComboBoxStyle{
-                dropDownButtonWidth: 20;
-                background: Rectangle{
-                    implicitHeight: 24;
-                    border.width: control.editable?0:1;
-                    border.color: (control.hovered||control.pressed)?"blue":"gray";
-                    color:(control.hovered||control.pressed)?"#e0e0e0":"#c0c0c0";
-
-                    Canvas{
-                        id:downCanvasArrow;
-                        width: 16;
-                        height:18;
-                        anchors.right: parent.right;
-                        anchors.rightMargin: 2;
-                        anchors.top: parent.top;
-                        anchors.topMargin: 1;
-                        onPaint: {
-                            var ctx=getContext("2d");
-                            ctx.save();
-                            ctx.strokeStyle="black";
-                            ctx.lineWidth=2;
-                            ctx.beginPath();
-                            ctx.moveTo(1,8);
-                            ctx.lineTo(8,16);
-                            ctx.lineTo(15,8);
-                            ctx.stroke();
-                            ctx.restore();
-                        }
-                        Component.onCompleted: {
-                            m_encoderComboBox.replot.connect(requestPaint);
-                        }
-                    }
-                }
-                label:Text{
-                    anchors.left: parent.left;
-                    anchors.leftMargin: 2;
-                    height: parent.height;
-                    verticalAlignment: Text.AlignVCenter;
-                    horizontalAlignment: Text.AlignHCenter;
-                    text:control.currentText;
-                    color:(control.hovered||control.pressed)?"blue":"gray";
-                    font.pixelSize: 12;
-                }
-            }
-            Component.onCompleted:console.log("ComboBox");
-        }*/
-
-/*        RowLayout{
-            anchors.margins: 10;
-            spacing: 10;
-            Text{text:qsTr("编码器分辨率:")}
-            TextField{
-                id:lineNumber;
-                text:qsTr("0");
-                Layout.minimumWidth: 50;
-                Layout.fillWidth: true;
-                style: TextFieldStyle{
-                    textColor: "black";
-                    background: Rectangle{
-                        radius: 6;
-                        implicitHeight: 24;
-                        implicitWidth: 100;
-                        border.color: "#333";
-                        border.width: 1;
-                    }
-                }
-                function onLinerNumberTextChanged(){
-                    lineNumber.textColor="red";
-//                    factory.dataTree.setTopLevelText(1,1,lineNumber.text);
-                }
-                Component.onCompleted: {
-                    lineNumber.textChanged.connect(onLinerNumberTextChanged);
-                }
-            }
-        }*/
     }
 
     Timer{

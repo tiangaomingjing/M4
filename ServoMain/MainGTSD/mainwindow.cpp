@@ -1351,12 +1351,32 @@ void MainWindow::onTimeOut()
   emit timeOut(axisIndex);
   axisIndex++;
   if(axisIndex>=mp_userConfig->model.axisCount)
+  {
     axisIndex=0;
+  }
 }
 
-void MainWindow::onAlmError()
+void MainWindow::onAlmError(int axis, bool alm)
 {
-  uiStatus->btn_warring->show();
+  static QVector<bool>almVector;
+  almVector.append(alm);
+
+  if(axis==mp_userConfig->model.axisCount-1)
+  {
+    bool show=false;
+    foreach (bool err, almVector) {
+      if(err)
+        show=true;
+      qDebug()<<"axis="<<axis<<" alm="<<err<<"vector count="<<almVector.count();
+    }
+    almVector.clear();
+    if(show)
+      uiStatus->btn_warring->show();
+    else
+      uiStatus->btn_warring->hide();
+  }
+  qDebug()<<"vector count="<<almVector.count();
+
 //  qDebug()<<">>>>>>>>>>>>>>>>> alm error <<<<<<<<<<<<<<<<";
 }
 void MainWindow::onAlmClearFinish()

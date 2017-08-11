@@ -4,13 +4,15 @@
 #include "servocontrol.h"
 #include "MainGTSD/mainwindow.h"
 #include "qmlregisterincludes.h"
-
-#include <QMessageBox>
-#define ALMFLAG_NAME "gSevDrv.sev_obj.cur.pro.alm_flag"
+#include "servogeneralcmd.h"
 #include "MainGTSD/mainwindow.h"
 
 #include <QQuickWidget>
 #include <QQmlContext>
+#include <QMessageBox>
+
+#define ALMFLAG_NAME "gSevDrv.sev_obj.cur.pro.alm_flag"
+#define ALM_ENCODER_CONTROL_NAME "gSevDrv.sev_obj.cur.pro.enc_info.all"
 
 //typedef enum tree_item :quint16
 //{
@@ -41,8 +43,14 @@ void DeviceStatus::clearAlarm()
     QMessageBox::information(0,tr("connect"),tr("please open com first !"));
     return;
   }
-  ServoControl::clearAlarm(m_axisNumber,(COM_TYPE)mp_mainWindow->getUserConfig()->com.id,mp_mainWindow->getUserConfig()->com.rnStation);
+  COM_TYPE comType=(COM_TYPE)mp_mainWindow->getUserConfig()->com.id;
+  int rnStation=mp_mainWindow->getUserConfig()->com.rnStation;
+//  QTreeWidget *cmdTree=mp_mainWindow->getFunctionCmdTree();
+//  ServoGeneralCmd *gCmd=new ServoGeneralCmd(cmdTree,comType,rnStation);
+//  gCmd->write(ALM_ENCODER_CONTROL_NAME,0,m_axisNumber);
+  ServoControl::clearAlarm(m_axisNumber,comType,rnStation);
   emit this->almClearFinish();
+//  delete gCmd;
   qDebug()<<"clear alarm";
 }
 
@@ -91,12 +99,17 @@ void DeviceStatus::onActionReadFuncValueFromRam()
     {
       quint16 flag=item->text(COL_FUNC_VALUE).toDouble();
 //      qDebug()<<"item text"<<item->text(COL_FUNC_NAME)<<"flag :"<<flag;
+      bool alm=false;
       if(flag==1)
       {
         //报警
-        emit almError();
+        alm=true;
 //        qDebug()<<"emit almError";
       }
+      else
+        alm=false;
+      emit almError(m_axisNumber,alm);
+
     }
     it++;
   }
@@ -174,7 +187,7 @@ void DeviceStatus::connectionSignalSlotHandler()
 {
   connect(mp_mainWindow,SIGNAL(timeOut(int)),this,SLOT(onMainWindowTimeOut(int)));
   connect(this,SIGNAL(netError(COM_ERROR)),mp_mainWindow,SLOT(onComDisconnected(COM_ERROR)));
-  connect(this,SIGNAL(almError()),mp_mainWindow,SLOT(onAlmError()));
+  connect(this,SIGNAL(almError(int,bool)),mp_mainWindow,SLOT(onAlmError(int,bool)));
   connect(this,SIGNAL(almClearFinish()),mp_mainWindow,SLOT(onAlmClearFinish()));
 }
 

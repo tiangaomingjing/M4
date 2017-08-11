@@ -17,6 +17,10 @@ Rectangle {
     property double posAdjValue: 10;//寻相偏移角度
     property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮，用于查伺服是否完成
     property var errorCode: 0x0000;
+    property color hoverColor: "#cbdaf1";
+    property color pressColor: "#567DBC";
+    property color frameColor: "#BBB9B9";
+    property color backgroundColor: Qt.lighter(frameColor,1.2);
     function updateUiFromServo(){
         console.log("driveEncoder -> onItemValueChanged")
     //            listView.setCurrentIndex(Number(factory.dataTree.textTopLevel(0,1))-1);
@@ -243,10 +247,11 @@ Rectangle {
                         border.width: control.activeFocus ? 2 : 1
                         border.color: "#888"
                         radius: 4
-                        gradient: Gradient {
-                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                        }
+                        color:control.hovered?"red":"blue";
+//                        gradient: Gradient {
+//                            GradientStop { position: 0 ; color: control.pressed ? "#ccc" : "#eee" }
+//                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
+//                        }
                     }
                 }
                 onClicked: {
@@ -307,18 +312,13 @@ Rectangle {
                         border.width: control.activeFocus ? 2 : 1
                         border.color:"#888"
                         radius: 10;
-                        gradient: Gradient {
-//                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : control.hovered?"#eee":"transparent" }
-//                            GradientStop { position: 1 ; color:control.pressed ? "#aaa" : control.hovered?"#ccc":"transparent" }
-                            GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
-                            GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                        }
+                        color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
                     }
                     label: Text{
                         text:qsTr("清编码器警告");
-                        color: control.hovered?"steelblue":"black";
                         horizontalAlignment: Text.AlignHCenter;
                         verticalAlignment: Text.AlignVCenter;
+                        font.bold:control.hovered?true:false;
                     }
                 }
             }
@@ -514,11 +514,8 @@ Rectangle {
                             implicitHeight: 40
                             border.width: control.activeFocus ? 2 : 1
                             border.color: "#888"
-                            radius: 10
-                            gradient: Gradient {
-                                GradientStop { position: 0 ; color:control.pressed ? "#ccc" : "#eee" }
-                                GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ccc" }
-                            }
+                            radius: 5;
+                            color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
                             ProgressBar {
                                 id:m_progressBar
                                 anchors.fill: parent;
@@ -543,9 +540,9 @@ Rectangle {
                         }
                         label: Text{
                             text:qsTr("开 始 寻 相");
-                            color: control.hovered?"steelblue":"black";
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
+                            font.bold:control.hovered?true:false;
                         }
                     }
                 }

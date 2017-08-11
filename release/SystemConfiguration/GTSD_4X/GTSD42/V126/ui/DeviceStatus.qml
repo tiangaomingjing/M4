@@ -29,18 +29,18 @@ Rectangle{
         }
     }
 
-    Timer{
-        id:countUp;
-        interval: 1000;
-        repeat: true;
-        triggeredOnStart: true;
-        onTriggered:{
-            root.number+=1;
-            if(root.number==65536) root.number=0;
-            console.log(root.number);
-            root.updateUiData();
-        }
-    }
+//    Timer{
+//        id:countUp;
+//        interval: 1000;
+//        repeat: true;
+//        triggeredOnStart: true;
+//        onTriggered:{
+//            root.number+=1;
+//            if(root.number==65536) root.number=0;
+//            console.log(root.number);
+//            root.updateUiData();
+//        }
+//    }
     RowLayout{
         anchors.fill: parent;
         anchors.margins: 50;
@@ -175,7 +175,7 @@ Rectangle{
             radius: 10;
             RowLayout{
                 anchors.fill: parent;
-                anchors.margins: 40;
+                anchors.margins: 20;
                 spacing: 10;
                 Item{
                     Layout.fillHeight: true;
@@ -219,13 +219,6 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
-                }
-                Item{
-                    Layout.fillHeight: true;
-                    Layout.fillWidth: true;
-                }
-                ColumnLayout{
-                    spacing: 10;
                     LedIndicator{
                         id:led_OT;
                         title: "过温";
@@ -238,6 +231,13 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
+                }
+                Item{
+                    Layout.fillHeight: true;
+                    Layout.fillWidth: true;
+                }
+                ColumnLayout{
+                    spacing: 10;
                     LedIndicator{
                         id:led_REG;
                         title: "寄存器故障";
@@ -262,14 +262,6 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
-
-                }
-                Item{
-                    Layout.fillHeight: true;
-                    Layout.fillWidth: true;
-                }
-                ColumnLayout{
-                    spacing: 10;
                     LedIndicator{
                         id:led_DIR;
                         title: "方向错误";
@@ -289,20 +281,8 @@ Rectangle{
                         Layout.fillHeight: true;
                     }
                     LedIndicator{
-                        id:led_OTMOT;
-                        title: "电机过温";
-                        iconPath: root.iconPath;
-                        Layout.fillHeight: true;
-                    }
-                    LedIndicator{
-                        id:led_PTE;
-                        title: "位置跟踪误差超限";
-                        iconPath: root.iconPath;
-                        Layout.fillHeight: true;
-                    }
-                    LedIndicator{
-                        id:led_resv;
-                        title: "保留";
+                        id:led_rsvd;
+                        title: "保留位";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -330,9 +310,6 @@ Rectangle{
         led_DIR.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,12,1)));
         led_SOC.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,13,1)));
         led_OBPH.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,14,1)));
-        led_OTMOT.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,15,1)));
-        led_PTE.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,16,1)));
-
         m_allLedFlag.ledOn=!Boolean(parseInt(factory.dataTree.textTopLevel(2,1)));
 
         m_vdc.text=factory.dataTree.textTopLevel(1,1);

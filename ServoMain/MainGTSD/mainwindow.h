@@ -111,7 +111,7 @@ private slots:
   //------时间到发射更新信号到Qml--------
   void onTimeOut();
   //有报警信息
-  void onAlmError();
+  void onAlmError(int axis,bool alm);
   void onAlmClearFinish();
 
   //-----打开配置向导-----

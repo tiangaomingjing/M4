@@ -29,18 +29,18 @@ Rectangle{
         }
     }
 
-    Timer{
-        id:countUp;
-        interval: 1000;
-        repeat: true;
-        triggeredOnStart: true;
-        onTriggered:{
-            root.number+=1;
-            if(root.number==65536) root.number=0;
-            console.log(root.number);
-            root.updateUiData();
-        }
-    }
+//    Timer{
+//        id:countUp;
+//        interval: 1000;
+//        repeat: true;
+//        triggeredOnStart: true;
+//        onTriggered:{
+//            root.number+=1;
+//            if(root.number==65536) root.number=0;
+//            console.log(root.number);
+//            root.updateUiData();
+//        }
+//    }
     RowLayout{
         anchors.fill: parent;
         anchors.margins: 50;
