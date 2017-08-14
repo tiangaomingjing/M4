@@ -1852,7 +1852,7 @@ void MainWindow::initialUi()
   this->setStyleSheet("QToolBar {\
                       background: #F0F0F0;\
                       spacing: 3px; \
-                    border:none;\
+                    border-bottom:1 solid lightgray;\
                   }");
 }
 
