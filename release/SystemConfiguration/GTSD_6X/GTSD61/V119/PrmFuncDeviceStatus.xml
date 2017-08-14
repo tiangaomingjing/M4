@@ -1,0 +1,615 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>883</width>
+    <height>432</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>memberName</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>value</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>memberType</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>unit</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>downlimit</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>uplimit</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>introduction</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>framAddr</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_chd.curr_state</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.adc.vdc</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>V</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.pro.alm_flag</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>Uint16</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.pro.alm_code.all</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>Uint32</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OC</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>过流</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OV</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>过压</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.UV</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>欠压</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.BrkPh</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>输入断线</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.ResErr</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>编码器故障</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OL</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>过载</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OT</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>过温</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.IO_err</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>IO故障</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.REG</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>寄存器故障</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.PS</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>功率模块故障</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OS</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>过速</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OPRE</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>过压力</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.DIR</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>方向错误</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.SOC</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>瞬时过流</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OBPH</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>输出断线</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.rsvd</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string>bit</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>保留</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_chd.cmd_id</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_chd.curr_id</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.pos.seq.prm.usr_mode</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Com(通信设备类型 ：与Comclassname头文件定义一致) -->
+<!-- Type(产品类型：id与程序中定义的产品枚举类型一致) -->
+<!-- Model(产品型号：axisCount表示产品轴数) -->
+<!-- Tree(产品调试窗口导航栏树形控件节点及对应动态库属性) -->
+<!-- Root(根节点属性) -->
+<!-- Child(子节点属性) -->
+<!-- 对应的classname放在执行程序同级的“classname”文件夹中 -->
+<GTSD>
+  <Com id="0" name="Ethernet"/>
+  <Com id="1" name="TCP/IP"/>
+  <Com id="2" name="USB2Uart"/>
+  <Com id="3" name="Virtual"/>
+
+  <Type id="0" name="GTSD_4X">
+    <Model name="GTSD41" axisCount ="4">
+		<FirmWare name="FirmWare_1.1.7"/>
+		<FirmWare name="FirmWare_1.1.9"/>
+	</Model>
+	<Model name="GTSD42" axisCount ="4">
+		<FirmWare name="FirmWare_1.0.0"/>
+		<FirmWare name="FirmWare_1.0.1"/>
+	</Model>
+
+    <Tree>
+      <Root name="Parameter configuration">
+        <Child name="Power" classname="CfgDriverPower" PrmFuncFile="PrmFuncPower"/>
+        <Child name="Motor" classname="CfgMotor" PrmFuncFile="PrmFuncMotor"/>
+        <Child name="Encoder" classname="CfgEncoder" PrmFuncFile="PrmFuncEncoder"/>
+        <Child name="CurrentControl" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
+        <Child name="VelocityControl" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
+        <Child name="PositionControl" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
+        <Child name="Threshold" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" />
+        <Child name="Motion" classname="CfgMoveProfile" PrmFuncFile="PrmFuncPositionloop"/>
+        <Child name="InputOutput" classname="CfgIO" PrmFuncFile="PrmFuncPositionloop"/>
+      </Root>
+      
+      <Root name="Operation monitor">
+        <Child name="DeviceState" classname="DeviceStatus" PrmFuncFile="PrmFuncDeviceStatus"/>
+      </Root>
+	  
+	  <Root name="Advanced function">
+        <Child name="RamAcess" classname="AdvRAM" PrmFuncFile="PrmRAMAxis"/>
+        <Child name="FlashAcess" classname="AdvFLASH" PrmFuncFile="PrmFlashAxis"/>
+      </Root>
+
+    </Tree>
+  </Type>
+
+  <Type id="1" name="GTSD_1X">
+    <Model name="GWT-7.5KW" axisCount ="1"> 
+		<FirmWare name="FirmWare_1.0.0"/>
+	</Model>
+    <Model name="GWT-25KW" axisCount ="1" >
+		<FirmWare name="FirmWare_1.0.0"/>
+	</Model>
+    <Model name="MGMT-7.5KW" axisCount ="1" >
+		<FirmWare name="FirmWare_1.0.0"/>
+	</Model>
+
+
+    <Tree>
+      <Root name="Parameter configuration">
+        <Child name="Motor" classname="PrmMotor"/>
+        <Child name="Driver" classname="PrmDriver"/>
+      </Root>
+
+      <Root name="LoopTest">
+        <Child name="OpenLoop" classname="LoopOpen"/>
+        <Child name="CurrentLoop" classname="LoopCurrent"/>
+        <Child name="VelocityLoop" classname="LoopVel"/>
+        <Child name="PositionLoop" classname="LoopPos"/>
+        <Child name="PressureLoop" classname="LoopPress"/>
+      </Root>
+
+      <Root name="Operation monitor">
+        <Child name="WaveCurve" classname="WatchWave"/>
+      </Root>
+    </Tree>
+  </Type>
+</GTSD>
