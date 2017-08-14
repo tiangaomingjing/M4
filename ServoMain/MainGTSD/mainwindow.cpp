@@ -1566,7 +1566,7 @@ void MainWindow::createMenus(void)
 
 void MainWindow::createActions(void)
 {
-  //---------------------------config action-------------------------------------------
+  //---------------------------config action------------------------------------------
   m_actConfigNew=new QAction(QIcon(ICON_FILE_PATH+ICON_MENU_NEW),tr("&New"),this);
   m_actConfigNew->setToolTip(tr("create a new configration file"));
   m_actConfigNew->setStatusTip(tr("create a new configration file"));
