@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>576</width>
-    <height>330</height>
+    <width>642</width>
+    <height>497</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,34 @@ QComboBox::drop-down{
 
 QComboBox::down-arrow{
 	image: url(:/image/array_down.png); 
-}</string>
+}
+
+QTreeView {
+      show-decoration-selected: 1;
+  }
+QTreeView::item {
+	border: 1px solid #d9d9d9;
+	border-left-color: transparent;
+	border-top-color: transparent;
+	height:40px;
+}
+   QTreeView::item:hover {
+      background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1);
+      border: 1px solid #bfcde4;
+height:40px;
+  }
+QTreeView::item:selected {
+	border: 1px solid #567dbc;
+	height:40px;
+}
+  QTreeView::item:selected:active{
+    background: #567DBC;
+	height:40px;
+  }
+QTreeView::item:selected:!active {
+    background: #567DBC;
+	height:40px;
+  }</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -233,6 +260,80 @@ font: 75 12pt &quot;Consolas&quot;;</string>
      <widget class="QSpinBox" name="spinBox"/>
     </item>
     <item>
+     <widget class="QTreeWidget" name="treeWidget">
+      <column>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>新建列</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>新建列</string>
+       </property>
+      </column>
+      <item>
+       <property name="text">
+        <string>a</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>a1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>a2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>a3</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>b</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>b1</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>b2</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>b3</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>c</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>新建子项目</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>新建项目</string>
+        </property>
+       </item>
+      </item>
+     </widget>
+    </item>
+    <item>
      <widget class="QToolButton" name="toolButton">
       <property name="minimumSize">
        <size>
@@ -298,20 +399,142 @@ font: 75 12pt &quot;Consolas&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>576</width>
-     <height>23</height>
+     <width>642</width>
+     <height>28</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QMenuBar {
+	spacing: 0px; /* spacing between menu bar items */
+    background-color: #F0F0F0;
+}
+
+QMenuBar::item {
+    
+    padding: 5px 10px 5px 10px;
+    background: transparent;
+	color:black;
+	min-width:50px;
+	min-height:50px;
+}
+
+QMenuBar::item:selected { /* when selected using mouse or keyboard */
+    background: #a8a8a8;
+	color:black;
+	color:white;
+	border-left:1px solid black;
+border-top:1px solid black;
+border-right:1px solid black;
+}
+
+QMenuBar::item:pressed {
+    background: #BBB9B9;
+	color:black;
+	min-width:50px;
+	min-height:50px;
+}
+
+QMenu {
+    background-color: #BBB9B9; /* sets background of the menu */
+    	border-left:1px solid black;
+border-bottom:1px solid black;
+border-right:1px solid black;
+}
+
+QMenu::item {
+    /* sets background of menu item. set this to something non-transparent
+        if you want menu color and menu item color to be different */
+    background-color: transparent;
+	padding:5px 0px 5px 0px;
+}
+
+QMenu::item:selected { /* when user selects item using mouse or keyboard */
+    background-color: #567DBC;
+	padding:5px 0px 5px 0px;
+
+}</string>
+   </property>
+   <widget class="QMenu" name="menuHello">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionDdd"/>
+    <addaction name="actionCcc"/>
+    <addaction name="separator"/>
+    <addaction name="actionCcccc"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuConfig">
+    <property name="title">
+     <string>Config</string>
+    </property>
+    <addaction name="actionFff"/>
+    <addaction name="actionCf"/>
+    <addaction name="actionAaa"/>
+    <addaction name="actionBbb"/>
+   </widget>
+   <addaction name="menuHello"/>
+   <addaction name="menuConfig"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
+   <property name="styleSheet">
+    <string notr="true">QToolBar {
+    background: #F0F0F0;
+    spacing: 3px; /* spacing between items in the tool bar */
+	border:none;
+}
+</string>
+   </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionBbb"/>
+   <addaction name="actionCcccc"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionDdd">
+   <property name="text">
+    <string>ddd</string>
+   </property>
+  </action>
+  <action name="actionCcc">
+   <property name="text">
+    <string>ccc</string>
+   </property>
+  </action>
+  <action name="actionFff">
+   <property name="text">
+    <string>fff</string>
+   </property>
+  </action>
+  <action name="actionCf">
+   <property name="text">
+    <string>cf</string>
+   </property>
+  </action>
+  <action name="actionAaa">
+   <property name="text">
+    <string>aaa</string>
+   </property>
+  </action>
+  <action name="actionBbb">
+   <property name="text">
+    <string>bbb</string>
+   </property>
+  </action>
+  <action name="actionCcccc">
+   <property name="text">
+    <string>ccccc</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

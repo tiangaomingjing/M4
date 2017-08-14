@@ -20,80 +20,80 @@ MainWindow::MainWindow(QWidget *parent) :
 {
   ui->setupUi(this);
 
-#if TEST_QTTREEWIDGET_RW
-  QTreeWidget *treeWidget;
-  treeWidget=QtTreeManager::readTreeWidgetFromXmlFile(":/watchcurvesetting.xml");
-  treeWidget->show();
-  QtTreeManager::writeTreeWidgetToXmlFile("./widget.ui",treeWidget);
+//#if TEST_QTTREEWIDGET_RW
+//  QTreeWidget *treeWidget;
+//  treeWidget=QtTreeManager::readTreeWidgetFromXmlFile(":/watchcurvesetting.xml");
+//  treeWidget->show();
+//  QtTreeManager::writeTreeWidgetToXmlFile("./widget.ui",treeWidget);
 
-  QTreeWidget *treeWidget2;
-  treeWidget2=QtTreeManager::readTreeWidgetFromXmlFile(":/FlashPrm_AllAxis.xml");
-  treeWidget2->show();
-  QtTreeManager::writeTreeWidgetToXmlFile("./flash.ui",treeWidget2);
-#endif
-  m_popMenu=new QMenu(ui->tableWidget);
+//  QTreeWidget *treeWidget2;
+//  treeWidget2=QtTreeManager::readTreeWidgetFromXmlFile(":/FlashPrm_AllAxis.xml");
+//  treeWidget2->show();
+//  QtTreeManager::writeTreeWidgetToXmlFile("./flash.ui",treeWidget2);
+//#endif
+//  m_popMenu=new QMenu(ui->tableWidget);
 
-  QMenu *menu=new QMenu(ui->toolButton);
-  for(int i=0;i<10;i++)
-  {
-    QAction *act=new QAction(tr("m_%1").arg(i),menu);
-    menu->addAction(act);
-  }
-  ui->toolButton->setMenu(menu);
-  ui->toolButton->setPopupMode(QToolButton::MenuButtonPopup);
-
-  ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
-  ui->tableWidget->setMouseTracking(true);
-  connect(ui->tableWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(onTablePopMenu(QPoint)));
-//  connect(ui->tableWidget,SIGNAL(cellEntered(int,int)),this,SLOT(onTableCellEntered(int,int)));
+//  QMenu *menu=new QMenu(ui->toolButton);
 //  for(int i=0;i<10;i++)
-//  QAction *act=new QAction("test",m_popMenu);
+//  {
+//    QAction *act=new QAction(tr("m_%1").arg(i),menu);
+//    menu->addAction(act);
+//  }
+//  ui->toolButton->setMenu(menu);
+//  ui->toolButton->setPopupMode(QToolButton::MenuButtonPopup);
 
-  uWidget=new UserActionWidget();
-  connect(uWidget,SIGNAL(actionTriggered(UactionData)),this,SLOT(onActionClicked(UactionData)));
+//  ui->tableWidget->setContextMenuPolicy(Qt::CustomContextMenu);
+//  ui->tableWidget->setMouseTracking(true);
+//  connect(ui->tableWidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(onTablePopMenu(QPoint)));
+////  connect(ui->tableWidget,SIGNAL(cellEntered(int,int)),this,SLOT(onTableCellEntered(int,int)));
+////  for(int i=0;i<10;i++)
+////  QAction *act=new QAction("test",m_popMenu);
 
-  int virtualWidth = 0;
-  int virtualHeight = 0;
-  int availableWidth = 0;
-  int availableHeight = 0;
-  int screenWidth = 0;
-  int screenHeight = 0;
+//  uWidget=new UserActionWidget();
+//  connect(uWidget,SIGNAL(actionTriggered(UactionData)),this,SLOT(onActionClicked(UactionData)));
 
-  QDesktopWidget *deskWgt = QApplication::desktop();
-  if (deskWgt) {
-      virtualWidth = deskWgt->width();
-      virtualHeight = deskWgt->height();
-      qDebug() << "virtual width:" << virtualWidth << ",height:" << virtualHeight ;
+//  int virtualWidth = 0;
+//  int virtualHeight = 0;
+//  int availableWidth = 0;
+//  int availableHeight = 0;
+//  int screenWidth = 0;
+//  int screenHeight = 0;
 
-      QRect availableRect = deskWgt->availableGeometry();
-      availableWidth = availableRect.width();
-      availableHeight = availableRect.height();
-      qDebug()<< "available width:" <<availableWidth << ",height:" << availableHeight ;
+//  QDesktopWidget *deskWgt = QApplication::desktop();
+//  if (deskWgt) {
+//      virtualWidth = deskWgt->width();
+//      virtualHeight = deskWgt->height();
+//      qDebug() << "virtual width:" << virtualWidth << ",height:" << virtualHeight ;
 
-      QRect screenRect = deskWgt->screenGeometry();
-      screenWidth = screenRect.width();
-      screenHeight = screenRect.height();
-      qDebug() << "screen width:" <<screenWidth << ",height:" << screenHeight ;
-  }
+//      QRect availableRect = deskWgt->availableGeometry();
+//      availableWidth = availableRect.width();
+//      availableHeight = availableRect.height();
+//      qDebug()<< "available width:" <<availableWidth << ",height:" << availableHeight ;
 
-  QComboBox *comboBox=new QComboBox(ui->tableWidget);
-  QStringList list;
-  list<<"a"<<"b"<<"c"<<"d";
-  comboBox->addItems(list);
+//      QRect screenRect = deskWgt->screenGeometry();
+//      screenWidth = screenRect.width();
+//      screenHeight = screenRect.height();
+//      qDebug() << "screen width:" <<screenWidth << ",height:" << screenHeight ;
+//  }
 
-  ui->tableWidget->setCellWidget(0,3,comboBox);
+//  QComboBox *comboBox=new QComboBox(ui->tableWidget);
+//  QStringList list;
+//  list<<"a"<<"b"<<"c"<<"d";
+//  comboBox->addItems(list);
 
-  CustomCurvePage *cPage=new CustomCurvePage();
-  cPage->show();
+//  ui->tableWidget->setCellWidget(0,3,comboBox);
 
-  ui->statusBar->showMessage("Hello World ",1000);
-  struct Test aa;
-  aa.map.insert(0.2,0.5);
+//  CustomCurvePage *cPage=new CustomCurvePage();
+//  cPage->show();
 
-  mtestVector.append(aa);
+//  ui->statusBar->showMessage("Hello World ",1000);
+//  struct Test aa;
+//  aa.map.insert(0.2,0.5);
 
-  mtestVector[0].map.insert(0.4,0.8);
-  qDebug()<<"length="<<mtestVector.at(0).map.size();
+//  mtestVector.append(aa);
+
+//  mtestVector[0].map.insert(0.4,0.8);
+//  qDebug()<<"length="<<mtestVector.at(0).map.size();
 }
 
 MainWindow::~MainWindow()

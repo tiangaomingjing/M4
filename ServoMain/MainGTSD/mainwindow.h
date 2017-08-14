@@ -85,6 +85,7 @@ private slots:
   void onActionViewNavigation(void);
   void onActionViewPlotCurve(void);
   void onActionViewFullScreen(void);
+  void onActionViewReset(void);
   //tool
   void onActionToolXmlUpdateClicked(void);
   void onActionFile2ServoClicked(void);
@@ -173,6 +174,7 @@ private:
   QAction *m_actNavigation;
   QAction *m_actPlotCurve;
   QAction *m_actFullScreen;
+  QAction *m_actResetView;
 
   //--------tool action--------
   QAction *m_actXmUpdate;

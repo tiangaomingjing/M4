@@ -22,12 +22,12 @@ Rectangle{
     }
     function switchUi(isHome){
         if(isHome){
-            m_motorPrmUi.x=-root.width-1000;
+            m_motorPrmUi.x=-root.width-500;
             m_motorDataBaseUi.x=0;
         }
         else{
             m_motorPrmUi.x=0;
-            m_motorDataBaseUi.x=root.width+1000;
+            m_motorDataBaseUi.x=root.width+500;
         }
     }
 
@@ -143,7 +143,7 @@ Rectangle{
 
     Item{
         id:m_motorDataBaseUi
-        x:root.width+1000;
+        x:root.width+500;
         y:0;
         width: root.width;
         height: root.height;

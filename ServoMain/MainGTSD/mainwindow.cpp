@@ -90,6 +90,7 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
 {
   m_moduleShareData.clear();
   ui->setupUi(this);
+  ui->dock_navigation->setMinimumSize(50,120);
   ui->progressBar->hide();
   RegisterFunction::registerAll();
   connect(this,SIGNAL(startUpMessage(QString,int,QColor)),screen,SLOT(showMessage(QString,int,QColor)));
@@ -607,6 +608,17 @@ void MainWindow::onActionViewFullScreen()
     m_actFullScreen->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_SMALLSCREEN));
     showFullScreen();
   }
+}
+void MainWindow::onActionViewReset()
+{
+  this->addDockWidget(Qt::LeftDockWidgetArea,ui->dock_navigation);
+  this->addDockWidget(Qt::RightDockWidgetArea,ui->dock_wave);
+  ui->dock_navigation->setFloating(false);
+  ui->dock_wave->setFloating(false);
+
+  ui->dock_navigation->show();
+  ui->dock_wave->show();
+  qDebug()<<"reset";
 }
 
 void MainWindow::onActionToolXmlUpdateClicked()
@@ -1320,8 +1332,8 @@ void MainWindow::onPlotWaveFloatingShow(bool isfloat)
   else
   {
     qDebug()<<"not floating plotwave";
-    ui->dock_wave->setFloating(true);
-    ui->dock_wave->resize(ui->dock_wave->sizeHint());
+    ui->dock_wave->setFloating(false);
+//    ui->dock_wave->resize(ui->dock_wave->sizeHint());
   }
 
 }
@@ -1616,6 +1628,12 @@ void MainWindow::createActions(void)
   m_actFullScreen->setStatusTip(tr("show or hide full view"));
   connect(m_actFullScreen,SIGNAL(triggered(bool)),this,SLOT(onActionViewFullScreen()));
 
+  m_actResetView=new QAction(tr("Rest"),this);
+  m_actResetView->setToolTip(tr("show or hide navigation tree"));
+  m_actResetView->setStatusTip(tr("show or hide navigation tree"));
+  connect(m_actResetView,SIGNAL(triggered(bool)),this,SLOT(onActionViewReset()));
+
+
   //------------------------------tool action------------------------------------
   m_actXmUpdate=new QAction(QIcon(ICON_FILE_PATH+ICON_MENU_XMLUPDATE),tr("xmlupdate"),this);
   m_actXmUpdate->setToolTip(tr("update xml file"));
@@ -1735,6 +1753,7 @@ void MainWindow::createToolBars(void)
   m_toolBarView->addAction(m_actPlotCurve);
   m_toolBarView->addSeparator();
   m_toolBarView->addAction(m_actFullScreen);
+  m_toolBarView->addAction(m_actResetView);
   //----------tool toolbar-------------------
   m_toolBarTool=addToolBar(tr("Tool"));
   m_toolBarTool->addAction(m_actFile2Servo);
@@ -1830,6 +1849,11 @@ void MainWindow::initialUi()
 //  QHBoxLayout *hLayout=new QHBoxLayout(mwidget);
 //  hLayout->addWidget(mp_flashAllTreeWidget);
 //  mwidget->show();
+  this->setStyleSheet("QToolBar {\
+                      background: #F0F0F0;\
+                      spacing: 3px; \
+                    border:none;\
+                  }");
 }
 
 void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfig)
