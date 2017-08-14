@@ -31,6 +31,7 @@
 #define ICON_MENU_SERVO2FILE "menu_servo2file.png"
 #define ICON_MENU_FULLSCREEN "menu_viewfull.png"
 #define ICON_MENU_SMALLSCREEN "menu_viewsmall.png"
+#define ICON_MENU_RESET "menu_viewreset.png"
 #define ICON_MENU_RESETSERVO "menu_reload.png"
 #define ICON_MENU_RESTORESETTING "menu_restoresetting.png"
 #define ICON_MENU_DOWNLOAD "menu_download.png"

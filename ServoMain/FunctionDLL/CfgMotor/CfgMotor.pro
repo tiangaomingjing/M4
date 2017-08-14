@@ -39,9 +39,9 @@ FORMS += \
     CfgMotor.ui
 
 DISTFILES += \
-    CfgMotor.qml \
-    components/CfgMotor/Current.qml \
-    components/CfgMotor/ForceParameter.qml \
-    components/CfgMotor/Impedance.qml \
-    components/CfgMotor/MechanicalParameter.qml \
-    components/CfgMotor/Velocity.qml
+    V126/CfgMotor.qml \
+    V126/components/CfgMotor/Current.qml \
+    V126/components/CfgMotor/ForceParameter.qml \
+    V126/components/CfgMotor/Impedance.qml \
+    V126/components/CfgMotor/MechanicalParameter.qml \
+    V126/components/CfgMotor/Velocity.qml

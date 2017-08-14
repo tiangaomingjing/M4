@@ -1534,6 +1534,7 @@ void MainWindow::createMenus(void)
   m_menuView->addAction(m_actNavigation);
   m_menuView->addAction(m_actPlotCurve);
   m_menuView->addAction(m_actFullScreen);
+  m_menuView->addAction(m_actResetView);
   //--------------tool menu-------------------
   m_menuTool=menuBar()->addMenu(tr("Tool(&T)"));
   m_menuTool->addAction(m_actXmUpdate);
@@ -1628,9 +1629,9 @@ void MainWindow::createActions(void)
   m_actFullScreen->setStatusTip(tr("show or hide full view"));
   connect(m_actFullScreen,SIGNAL(triggered(bool)),this,SLOT(onActionViewFullScreen()));
 
-  m_actResetView=new QAction(tr("Rest"),this);
-  m_actResetView->setToolTip(tr("show or hide navigation tree"));
-  m_actResetView->setStatusTip(tr("show or hide navigation tree"));
+  m_actResetView=new QAction(QIcon(ICON_FILE_PATH+ICON_MENU_RESET),tr("Reset"),this);
+  m_actResetView->setToolTip(tr("reset main view"));
+  m_actResetView->setStatusTip(tr("reset main view"));
   connect(m_actResetView,SIGNAL(triggered(bool)),this,SLOT(onActionViewReset()));
 
 
@@ -1852,7 +1853,7 @@ void MainWindow::initialUi()
   this->setStyleSheet("QToolBar {\
                       background: #F0F0F0;\
                       spacing: 3px; \
-                    border:none;\
+                    border-bottom:1 solid lightgray;\
                   }");
 }
 
