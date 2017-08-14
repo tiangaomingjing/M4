@@ -3,6 +3,7 @@ build-ServoMain-Qt5_5_1Vs2013x86-Release/
 debug/
 release/Custom/configuser/*
 release/Custom/configlist.xml
+release/Custom/watchcurvesetting.xml
 test-build/
 release/Bin/*.lib
 release/Bin/*.dll
