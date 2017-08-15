@@ -20,15 +20,16 @@ INCLUDEPATH +=$${PWD}/..\
                 $${PWD}/../FunctionDLL/CfgCurrentLoop\
                 $${PWD}/../FunctionDLL/CfgDriverPower\
                 $${PWD}/../FunctionDLL/CfgEncoder\
-                $${PWD}/../FunctionDLL/CfgIO\
-                $${PWD}/../FunctionDLL/CfgLimit\
+#                $${PWD}/../FunctionDLL/CfgIO\
+#                $${PWD}/../FunctionDLL/CfgLimit\
                 $${PWD}/../FunctionDLL/CfgMotor\
-                $${PWD}/../FunctionDLL/CfgMoveProfile\
+#                $${PWD}/../FunctionDLL/CfgMoveProfile\
                 $${PWD}/../FunctionDLL/CfgPositionLoop\
                 $${PWD}/../FunctionDLL/CfgSpeedLoop\
                 $${PWD}/../FunctionDLL/DeviceStatus\
                 $${PWD}/../FunctionDLL/PlotWave\
-                $${PWD}/../FunctionDLL/ModuleIO
+                $${PWD}/../FunctionDLL/ModuleIO\
+                $${PWD}/../FunctionDLL/PlotWaveUi
 
 
 CONFIG(debug, debug|release){
@@ -50,7 +51,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/DeviceStatusd.lib\
             $${LIB_PATH}/PlotWaved.lib\
             $${LIB_PATH}/ServoDriverComDlld.lib\
-            $${LIB_PATH}/ModuleIOd.lib
+            $${LIB_PATH}/ModuleIOd.lib\
+            $${LIB_PATH}/PlotWaveUid.lib
 
 } else{
     TARGET = SDT
@@ -71,7 +73,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/DeviceStatus.lib\
             $${LIB_PATH}/PlotWave.lib\
             $${LIB_PATH}/ServoDriverComDll.lib\
-            $${LIB_PATH}/ModuleIO.lib
+            $${LIB_PATH}/ModuleIO.lib\
+            $${LIB_PATH}/PlotWaveUi.lib
 }
 
 DESTDIR =$${OUT_ROOT}/Bin

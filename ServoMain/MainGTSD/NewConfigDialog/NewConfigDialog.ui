@@ -67,7 +67,7 @@
            <widget class="QLabel" name="label_com">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 127);
-font: 20pt &quot;Times New Roman&quot;;</string>
+font: 16pt &quot;Times New Roman&quot;;</string>
             </property>
             <property name="text">
              <string>Com:</string>
@@ -164,7 +164,7 @@ font: 20pt &quot;Times New Roman&quot;;</string>
            <widget class="QLabel" name="label_type">
             <property name="styleSheet">
              <string notr="true">color: rgb(0, 0, 127);
-font: 20pt &quot;Times New Roman&quot;;</string>
+font: 16pt &quot;Times New Roman&quot;;</string>
             </property>
             <property name="text">
              <string>Type:</string>

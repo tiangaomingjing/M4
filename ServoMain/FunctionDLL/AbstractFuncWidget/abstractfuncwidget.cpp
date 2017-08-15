@@ -301,7 +301,10 @@ void AbstractFuncWidget::onWriteFuncTreetoServoRam()
   qDebug()<<this->objectName()<<"axisnum:"<<m_axisNumber;
   emit itemValueChanged();
 }
-
+//!
+//! \brief AbstractFuncWidget::onSwitchView
+//! \param sw :true 切换到图形界面  false:列表界面
+//!
 void AbstractFuncWidget::onSwitchView(bool sw)
 {
   if(sw)

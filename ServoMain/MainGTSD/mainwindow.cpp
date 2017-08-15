@@ -23,6 +23,7 @@
 #include "./NavigationConfig/ControlName/controlname.h"
 #include "./Uboot/netconfig.h"
 #include "./Uboot/ubootdialog.h"
+#include "plotwaveui.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -60,8 +61,8 @@ enum COL_NAVIGATION_TREE_INDEX
 };
 enum GLOBAL_UI_INDEX
 {
-  GLOBAL_UI_PLOTVIEW=0,
-  GLOBAL_UI_IOMODULE,
+  GLOBAL_UI_INDEX_PLOTVIEW=0,
+  GLOBAL_UI_INDEX_IOMODULE,
 
   GLOBAL_UI_COUNT
 };
@@ -228,13 +229,22 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
    * 1 切换页面
    * 2 发送更新表格（从Ram中）信号到每一个窗口，除了高级功能
    **/
-  AbstractFuncWidget *absWidget;
+
   if(!(item->childCount()>0))//如果是叶子节点
   {
     //判断是不是Global全局节点操作:0:不是 1是
+    AbstractFuncWidget *absWidget=NULL;
+    int axisCount=mp_userConfig->model.axisCount;
     int isGlobal=0;
+
     isGlobal=item->text(COL_NAVIGATION_TREE_GLOBAL).toInt();
 //    qDebug()<<"global:"<<isGlobal;
+    for(int i=0;i<ui->stackedWidget->count();i++)
+    {
+      absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
+      absWidget->setActiveNow(false);
+    }
+
     if(isGlobal==UI_TAB_TYPE_AXIS)
     {
       int index;
@@ -247,16 +257,7 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
       //在位置环、速度环激活时重绘窗口，未激活不做处理
       //在编码器时激活时开始定时器，未激活时也就是切换到其它时就关闭更新的定时器
 
-      for(int i=0;i<ui->stackedWidget->count();i++)
-      {
-        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
-        absWidget->setActiveNow(false);
-      }
-
       absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->currentWidget());
-
-      //设置config save 状态
-      setConfigSaveEnableStatus(absWidget);
 
       absWidget->setTreeWidgetHeaderLables();//更新一下轴号的显示
       absWidget->setActiveNow(true);
@@ -267,30 +268,28 @@ void MainWindow::onTreeWidgetItemClicked(QTreeWidgetItem *item, int column)
     {
       //全局点击响应
       int globalUiIndex=0;
-      globalUiIndex=item->text(COL_NAVIGATION_TREE_CLASSNAME).toInt();
+      globalUiIndex=item->text(COL_NAVIGATION_TREE_UIINDEX).toInt();
       qDebug()<<"click item name:"<<item->text(COL_NAVIGATION_TREE_NAME);
       qDebug()<<"globalUiIndex "<<globalUiIndex;
-      int stackeIndex=ui->stackedWidget->count()-(GLOBAL_UI_COUNT-1);//因为画图没有加入来
+      int stackeIndex=axisCount*m_itemSize+globalUiIndex;
+
       switch (globalUiIndex)
       {
-      case GLOBAL_UI_PLOTVIEW:
+      case GLOBAL_UI_INDEX_PLOTVIEW:
         if(ui->dock_wave->isHidden())
           ui->dock_wave->show();
         break;
-      case GLOBAL_UI_IOMODULE:
-        for(int i=0;i<ui->stackedWidget->count();i++)
-        {
-          absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
-          absWidget->setActiveNow(false);
-        }
-        ui->stackedWidget->setCurrentIndex(stackeIndex+globalUiIndex-1);
-        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->currentWidget());
-        //设置config save 状态
-        setConfigSaveEnableStatus(absWidget);
-        absWidget->setActiveNow(true);
+      case GLOBAL_UI_INDEX_IOMODULE:
+
         break;
       }
+      absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(stackeIndex));
+      //设置config save 状态
+      absWidget->setActiveNow(true);
+      ui->stackedWidget->setCurrentIndex(stackeIndex);
     }
+    //设置config save 状态
+    setConfigSaveEnableStatus(absWidget);
   }
 }
 void MainWindow::onComboBoxAxisSelectClicked(int index)
@@ -1850,16 +1849,12 @@ void MainWindow::initialUi()
 //  QHBoxLayout *hLayout=new QHBoxLayout(mwidget);
 //  hLayout->addWidget(mp_flashAllTreeWidget);
 //  mwidget->show();
-  this->setStyleSheet("QToolBar {\
-                      background: #F0F0F0;\
-                      spacing: 3px; \
-                    border-bottom:1 solid lightgray;\
-                  }");
 }
 
 void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfig)
 {
   //界面先清0
+  int axisCount=theconfig->model.axisCount;
   ui->progressBar->show();
   ui->progressBar->setValue(10);
   QWidget *stackWidget=NULL;
@@ -1877,7 +1872,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
 
   //初始化combobox
   QString strmodel=theconfig->model.modelName;
-  for(int i=0;i<theconfig->model.axisCount;i++)
+  for(int i=0;i<axisCount;i++)
   {
     ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),strmodel+tr("_S%1").arg(i+1));
   }
@@ -1910,7 +1905,6 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   ui->progressBar->setValue(20);
   DownloadDialog::delayms(20);
 
-  int index2=0;
   QString classname;
 
 //  RegisterFunction::registerAll();
@@ -1934,11 +1928,10 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
 
   //根据名称新建类
   double valueinc=20;
-  double incStep=60/(theconfig->model.axisCount*ui->treeWidget->topLevelItemCount());
-  for(int k=0;k<theconfig->model.axisCount;k++)
+  double incStep=60/(axisCount*ui->treeWidget->topLevelItemCount());
+  for(int k=0;k<axisCount;k++)
   {
     //k代表轴号
-    int index=0;
     m_itemSize=0;
     for(int i=0;i<ui->treeWidget->topLevelItemCount();i++)
     {
@@ -1959,13 +1952,10 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
           updateStartUpMessage(fileName);
           qApp->processEvents();//给其它事件响应的机会
         }
-        ui->treeWidget->topLevelItem(i)->child(j)->setText(COL_NAVIGATION_TREE_UIINDEX,QString::number(index));
+        ui->treeWidget->topLevelItem(i)->child(j)->setText(COL_NAVIGATION_TREE_UIINDEX,QString::number(m_itemSize));
         ui->treeWidget->topLevelItem(i)->child(j)->setText(COL_NAVIGATION_TREE_GLOBAL,QString::number(UI_TAB_TYPE_AXIS));
         ui->treeWidget->topLevelItem(i)->child(j)->setIcon(COL_NAVIGATION_TREE_NAME,QIcon(ICON_FILE_PATH+ICON_CHILD));
-        index++;
         m_itemSize++;
-        index2++;
-//        qDebug()<<"child classname"<<classname<<"index  "<<index<<"index2: "<<index2;
       }
     }
   }
@@ -1987,16 +1977,19 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   itemGlobal->setIcon(0,QIcon(ICON_FILE_PATH+ICON_TREE_GLOBAL_ANALYSIS));
   QTreeWidgetItem *itemGlobalChild=new QTreeWidgetItem(itemGlobal);
   itemGlobalChild->setText(COL_NAVIGATION_TREE_NAME,tr("PlotAnalyses"));
-  itemGlobalChild->setText(COL_NAVIGATION_TREE_CLASSNAME,QString::number(GLOBAL_UI_PLOTVIEW));
+  itemGlobalChild->setText(COL_NAVIGATION_TREE_UIINDEX,QString::number(GLOBAL_UI_INDEX_PLOTVIEW));
   itemGlobalChild->setText(COL_NAVIGATION_TREE_GLOBAL,QString::number(UI_TAB_TYPE_GLOBAL));//设置是全局标志位
   itemGlobalChild->setIcon(0,QIcon(ICON_FILE_PATH+ICON_MENU_PLOTVIEW));
+  PlotWaveUi *plotWidget=new PlotWaveUi();
+  ui->stackedWidget->addWidget(plotWidget);
+
   //通用 ->IO
   itemGlobal=new QTreeWidgetItem(ui->treeWidget->invisibleRootItem());
   itemGlobal->setText(COL_NAVIGATION_TREE_NAME,tr("General"));
   itemGlobal->setIcon(0,QIcon(ICON_FILE_PATH+ICON_TREE_GLOBAL));
   itemGlobalChild=new QTreeWidgetItem(itemGlobal);
   itemGlobalChild->setText(COL_NAVIGATION_TREE_NAME,tr("IOModule"));
-  itemGlobalChild->setText(COL_NAVIGATION_TREE_CLASSNAME,QString::number(GLOBAL_UI_IOMODULE));
+  itemGlobalChild->setText(COL_NAVIGATION_TREE_UIINDEX,QString::number(GLOBAL_UI_INDEX_IOMODULE));
   itemGlobalChild->setText(COL_NAVIGATION_TREE_GLOBAL,QString::number(UI_TAB_TYPE_GLOBAL));//设置是全局标志位
   itemGlobalChild->setIcon(0,QIcon(ICON_FILE_PATH+ICON_TREE_GLOBAL_IO));
   ModuleIO *ioWidget=new ModuleIO(0);//这个已经在进来时释放空间了，所以不用释放

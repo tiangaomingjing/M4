@@ -13,6 +13,53 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">QMenuBar {
+	spacing: 2px; /* spacing between menu bar items */
+    background-color: #F0F0F0;
+}
+
+QMenuBar::item {
+    padding: 6px 10px 6px 10px;
+    background: transparent;
+	color:black;
+}
+
+QMenuBar::item:selected { /* when selected using mouse or keyboard */
+    background: #E0DDDD;
+	color:black;
+	border-left:1px solid #BBB9B9;
+	border-top:1px solid #BBB9B9;
+	border-right:1px solid #BBB9B9;
+}
+
+QMenuBar::item:pressed {
+    background: #E0DDDD;
+	color:black;
+}
+
+QMenu {
+    background-color: #E0DDDD; /* sets background of the menu */
+    border-left:1px solid #BBB9B9;
+	border-bottom:1px solid #BBB9B9;
+	border-right:1px solid #BBB9B9;
+}
+
+QMenu::item {
+    /* sets background of menu item. set this to something non-transparent
+        if you want menu color and menu item color to be different */
+    background-color: transparent;
+}
+
+QMenu::item:selected { /* when user selects item using mouse or keyboard */
+    background-color: #567DBC;
+}
+QToolBar {
+	background: #F0F0F0;
+	spacing: 3px; 
+	border-bottom:1 solid lightgray;
+}</string>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -53,8 +100,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>362</width>
-         <height>378</height>
+         <width>262</width>
+         <height>382</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -98,46 +145,7 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QMenuBar {
-	spacing: 2px; /* spacing between menu bar items */
-    background-color: #F0F0F0;
-}
-
-QMenuBar::item {
-    padding: 6px 10px 6px 10px;
-    background: transparent;
-	color:black;
-}
-
-QMenuBar::item:selected { /* when selected using mouse or keyboard */
-    background: #E0DDDD;
-	color:black;
-	border-left:1px solid #BBB9B9;
-	border-top:1px solid #BBB9B9;
-	border-right:1px solid #BBB9B9;
-}
-
-QMenuBar::item:pressed {
-    background: #E0DDDD;
-	color:black;
-}
-
-QMenu {
-    background-color: #E0DDDD; /* sets background of the menu */
-    border-left:1px solid #BBB9B9;
-	border-bottom:1px solid #BBB9B9;
-	border-right:1px solid #BBB9B9;
-}
-
-QMenu::item {
-    /* sets background of menu item. set this to something non-transparent
-        if you want menu color and menu item color to be different */
-    background-color: transparent;
-}
-
-QMenu::item:selected { /* when user selects item using mouse or keyboard */
-    background-color: #567DBC;
-}</string>
+    <string notr="true"/>
    </property>
    <property name="defaultUp">
     <bool>false</bool>
@@ -290,7 +298,7 @@ QTreeView::item:selected:!active {
          </column>
          <column>
           <property name="text">
-           <string>prm</string>
+           <string>uiIndex</string>
           </property>
          </column>
          <column>

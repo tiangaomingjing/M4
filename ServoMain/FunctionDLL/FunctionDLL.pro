@@ -16,5 +16,6 @@ SUBDIRS +=CfgDriverPower\
           PlotWave\
           QmlPluginLibrary\
           ServoGeneralCmd \
-          ModuleIO
+          ModuleIO \
+    PlotWaveUi
 

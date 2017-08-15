@@ -1,0 +1,11 @@
+﻿#ifndef PLOTWAVEUI_GLOBAL
+#define PLOTWAVEUI_GLOBAL
+#include <QtCore/qglobal.h>
+
+#if defined(PLOTWAVEUI_LIBRARY)
+#  define PLOTWAVEUISHARED_EXPORT Q_DECL_EXPORT
+#else
+#  define PLOTWAVEUISHARED_EXPORT Q_DECL_IMPORT
+#endif
+#endif // PLOTWAVEUI_GLOBAL
+
