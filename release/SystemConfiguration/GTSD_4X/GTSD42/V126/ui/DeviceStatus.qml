@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
+import QtQuick.Controls.Styles 1.4
 import "./components/DeviceStatus"
 import QtClass 1.0
 Rectangle{
@@ -8,6 +9,10 @@ Rectangle{
     property int number: 0;
     property string iconPath: iconFilePath;
     property int axisIndexNumber: axisIndex+1;
+    property color hoverColor: "#cbdaf1";
+    property color pressColor: "#567DBC";
+    property color frameColor: "#BBB9B9";
+    property color backgroundColor: Qt.lighter(frameColor,1.2);
     color:"#F0F0F0";
 //    property var stateArray: ["OFF","INIT","ON"];
 //    property var idArray: ["0 IDLE","1 AOA","2 MIPA","3 MPSA","4 COLD","5 CCLD","6 VCLD","7 PSOCLD"];
@@ -28,6 +33,10 @@ Rectangle{
             dataTree=factory.createQTreeWidgetProxy(treeSource,driverStatus);
         }
     }
+//    Item{
+//        id:factory;
+//        property var dataTree: null;
+//    }
 
     Timer{
         id:countUp;
@@ -60,7 +69,7 @@ Rectangle{
             ColumnLayout{
                 anchors.fill: parent;
                 anchors.margins: 20;
-                spacing: 10;
+                spacing: 15;
                 Item{
                     Layout.fillHeight: true;
                     Layout.fillWidth: true;
@@ -87,7 +96,23 @@ Rectangle{
                 Button{
                     id:m_clearAlarm;
                     anchors.horizontalCenter:  parent.horizontalCenter;
-                    text:"清报警"
+                    style: ButtonStyle {
+                        background: Rectangle {
+                            implicitWidth: 100
+                            implicitHeight: 50
+                            border.width: control.activeFocus ? 2 : 1
+                            border.color: "#888"
+                            radius: 5
+                            color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
+                        }
+                        label: Text{
+                            text:qsTr("清报警");
+                            horizontalAlignment: Text.AlignHCenter;
+                            verticalAlignment: Text.AlignVCenter;
+                            font.bold:control.hovered?true:false;
+                            font.letterSpacing: 10;
+                        }
+                    }
                     onClicked: {
                         console.log("clear alarm clicked...");
                         driverStatus.clearAlarm();

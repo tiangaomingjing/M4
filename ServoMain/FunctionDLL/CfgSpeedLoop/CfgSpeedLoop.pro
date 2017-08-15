@@ -38,12 +38,4 @@ FORMS += \
 
 DISTFILES += \
     CfgSpeedLoop.qml \
-    components/CfgSpeedLoop/SpeedLimit.qml \
-    components/FlowCommon/ChatDialog.qml \
-    components/FlowCommon/FilterBlock.qml \
-    components/FlowCommon/FlowNode.qml \
-    components/FlowCommon/HighlightComponent.qml \
-    components/FlowCommon/LineEditBlock.qml \
-    components/FlowCommon/PidControler.qml \
-    components/FlowCommon/Saturation.qml \
-    components/FlowCommon/SegmentArrow.qml
+    components/CfgSpeedLoop/SpeedLimit.qml
