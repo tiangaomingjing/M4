@@ -908,6 +908,7 @@ void MainWindow::onActionResetDSPClicked()
     onClearWarning();
     //更新一下画图当前状态
     m_plotWave->updateCurrentServoStatus();
+    ui->statusBar->showMessage(tr("soft reset successfully"),2000);
 
   }
   else
@@ -2003,11 +2004,11 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
 
   ui->treeWidget->resizeColumnToContents(1);
   ui->treeWidget->resizeColumnToContents(2);
-//  ui->treeWidget->setHeaderHidden(true);
-//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_CLASSNAME);
-//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_PRMFILE);
-//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_UIINDEX);
-//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_GLOBAL);
+  ui->treeWidget->setHeaderHidden(true);
+  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_CLASSNAME);
+  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_PRMFILE);
+  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_UIINDEX);
+  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_GLOBAL);
 
   ui->treeWidget->expandAll();
   ui->treeWidget->resizeColumnToContents(0);

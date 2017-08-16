@@ -12,9 +12,17 @@ UsrCurveTreeManager::UsrCurveTreeManager(QTreeWidget *srcAllTreePtr,QString &cur
   m_treeFileName(curveTemplateFileName)
 {
   m_usrTreeTemplate=QtTreeManager::readTreeWidgetFromXmlFile(curveTemplateFileName);
-  m_currentAxisNumber=mp_srcAllTree->topLevelItemCount();
-  createUsrTreeListBaseAxisSize(m_currentAxisNumber);
+  m_currentAxisSize=mp_srcAllTree->topLevelItemCount();
+  createUsrTreeListBaseAxisSize(m_currentAxisSize);
   updateUsrTreeList();
+  m_comboxIndexVector.clear();
+  for(int i=0;i<m_usrTreeTemplate->topLevelItemCount();i++)
+  {
+    int index;
+    index=m_usrTreeTemplate->topLevelItem(i)->child(ROW_PRM_INDEX_MULTIVALUE)->text(COL_CURVESETTING_INDEX_VALUE).toInt();
+    m_comboxIndexVector.append(index);
+  }
+
 }
 UsrCurveTreeManager::~UsrCurveTreeManager()
 {
@@ -31,11 +39,11 @@ UsrCurveTreeManager::~UsrCurveTreeManager()
 void UsrCurveTreeManager::setNewSrcAllTree(QTreeWidget *srcNewTree)
 {
   mp_srcAllTree = srcNewTree;
-  if(m_currentAxisNumber!=mp_srcAllTree->topLevelItemCount())//轴数变了
+  if(m_currentAxisSize!=mp_srcAllTree->topLevelItemCount())//轴数变了
   {
-    m_currentAxisNumber=mp_srcAllTree->topLevelItemCount();
+    m_currentAxisSize=mp_srcAllTree->topLevelItemCount();
     clearUsrTreeWidgetList();
-    createUsrTreeListBaseAxisSize(m_currentAxisNumber);
+    createUsrTreeListBaseAxisSize(m_currentAxisSize);
   }
   updateUsrTreeList();
 }
@@ -61,6 +69,7 @@ void UsrCurveTreeManager::addTreeCurve(QTreeWidgetItem *itemCurve)
   int total=m_usrTreeTemplate->topLevelItemCount();
   itemCurve->child(ROW_PRM_INDEX_CURVEID)->setText(COL_CURVESETTING_INDEX_VALUE,QString::number(total+1));
   m_usrTreeTemplate->addTopLevelItem(itemCurve->clone());
+  m_comboxIndexVector.append(0);
 //  m_usrTreeTemplate->show();
 
   for(int i=0;i<m_usrTreeList.count();i++)
@@ -104,12 +113,33 @@ bool UsrCurveTreeManager::removeTreeCurve(int index)
   {
     removeTreeItem(index,m_usrTreeList[i]);
   }
+  m_comboxIndexVector.removeAt(index);
   return true;
 }
 
 void UsrCurveTreeManager::saveTreeCurveTemplate(QString &fileName)
 {
+  int size=m_comboxIndexVector.count();
+  if(size==m_usrTreeTemplate->topLevelItemCount())
+  {
+    for(int i=0;i<size;i++)
+    {
+      QString str=QString::number(m_comboxIndexVector.at(i));
+      m_usrTreeTemplate->topLevelItem(i)->child(ROW_PRM_INDEX_MULTIVALUE)->setText(COL_CURVESETTING_INDEX_VALUE,str);
+    }
+  }
   QtTreeManager::writeTreeWidgetToXmlFile(fileName,m_usrTreeTemplate);
+}
+
+void UsrCurveTreeManager::setComboxIndexAt(int row,int value)
+{
+  if(row>m_comboxIndexVector.count()-1)
+    return;
+  m_comboxIndexVector[row]=value;
+}
+int UsrCurveTreeManager::comboxIndexValueAt(int index)
+{
+  return m_comboxIndexVector.at(index);
 }
 
 void UsrCurveTreeManager::clearUsrTreeWidgetList()

@@ -41,6 +41,7 @@ private slots:
   //slots customcurvepage
   void onCustomPageResizeGeometry(bool isShow);
   void onAddScriptCurve(QTreeWidgetItem *item);
+  void onComboBoxCurrentIndexChanged(int index);
 private:
   void initailUi(void);
   void addUserTableCurveRow(int i, QTreeWidgetItem *itemCurveRow);
@@ -51,6 +52,7 @@ private:
   QMenu *m_popuMenuTable;
   UsrCurveTreeManager *mp_usrCurveTreeManager;
   CustomCurvePage *m_customCurvePageUi;
+  QList<QComboBox *>m_comboBoxPtrList;
 
 };
 

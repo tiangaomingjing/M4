@@ -130,6 +130,7 @@ void DialogPickCurve::onTablePopActionClicked()
 //    }
     //清除界面对应的行
     ui->tableWidget->removeRow(index);
+    m_comboBoxPtrList.removeAt(index);
     emit deleteScriptCurveAtId(index);
   }
 }
@@ -181,6 +182,13 @@ void DialogPickCurve::onAddScriptCurve(QTreeWidgetItem *item)
   addUserTableCurveRow(curveCount, item);
 }
 
+void DialogPickCurve::onComboBoxCurrentIndexChanged(int index)
+{
+  QComboBox *box=qobject_cast<QComboBox *>(sender());
+  int row=m_comboBoxPtrList.indexOf(box);
+  mp_usrCurveTreeManager->setComboxIndexAt(row,index);
+}
+
 void DialogPickCurve::addUserTableCurveRow(int i, QTreeWidgetItem *itemCurveRow)
 {
   QTreeWidgetItem *item;
@@ -214,7 +222,10 @@ void DialogPickCurve::addUserTableCurveRow(int i, QTreeWidgetItem *itemCurveRow)
     unitFactor=item->child(j)->text(COL_CURVESETTING_INDEX_VALUE).toDouble();
     comboBox->addItem(title,unitFactor);
   }
-  ui->tableWidget->setCellWidget(i,2,comboBox);
+  comboBox->setCurrentIndex(mp_usrCurveTreeManager->comboxIndexValueAt(i));
+  m_comboBoxPtrList.append(comboBox);
+  connect(comboBox,SIGNAL(currentIndexChanged(int)),this,SLOT(onComboBoxCurrentIndexChanged(int)));
+  ui->tableWidget->setCellWidget(i,2,comboBox);//掌管了comboBox的生死，所以不用释放
 }
 
 void DialogPickCurve::initailUi()

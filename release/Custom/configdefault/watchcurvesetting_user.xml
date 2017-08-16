@@ -49,7 +49,7 @@
                                 <string>1</string>
                             </property>
                             <property name="text">
-                                <string>NULL</string>
+                                <string>脚本Id号从1开始，0表示是正常曲线</string>
                             </property>
                         </item>
                         <item>
@@ -178,10 +178,10 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>0</string>
                             </property>
                             <property name="text">
-                                <string>current unit value</string>
+                                <string>current index 这里记录的是其索引号，与用户曲线库保存意义的不一样</string>
                             </property>
                             <item>
                                 <property name="text">
@@ -486,7 +486,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>0</string>
                             </property>
                             <property name="text">
                                 <string>NULL</string>
@@ -794,7 +794,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>2</string>
                             </property>
                             <property name="text">
                                 <string>NULL</string>
@@ -1124,7 +1124,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>0</string>
                             </property>
                             <property name="text">
                                 <string>NULL</string>
@@ -1145,7 +1145,7 @@
                                     <string>rps</string>
                                 </property>
                                 <property name="text">
-                                    <string>0.01666666666666666666666666666667</string>
+                                    <string>0.0167</string>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -1156,7 +1156,7 @@
                                     <string>rad/s</string>
                                 </property>
                                 <property name="text">
-                                    <string>0.10471975511965977461542144610932</string>
+                                    <string>0.1047</string>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -1475,7 +1475,7 @@
                                     <string>rps</string>
                                 </property>
                                 <property name="text">
-                                    <string>0.01666666666666666666666666666667</string>
+                                    <string>0.0167</string>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -1486,7 +1486,7 @@
                                     <string>rad/s</string>
                                 </property>
                                 <property name="text">
-                                    <string>0.10471975511965977461542144610932</string>
+                                    <string>0.1047</string>
                                 </property>
                                 <property name="text">
                                     <string></string>
@@ -2125,7 +2125,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>0</string>
                             </property>
                             <property name="text">
                                 <string>NULL</string>
@@ -2466,7 +2466,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>0</string>
                             </property>
                             <property name="text">
                                 <string>current unit value</string>
@@ -2807,7 +2807,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>3</string>
                             </property>
                             <property name="text">
                                 <string>current unit value</string>
@@ -3148,7 +3148,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>3</string>
                             </property>
                             <property name="text">
                                 <string>current unit value</string>
@@ -3489,7 +3489,7 @@
                                 <string>MultiValue</string>
                             </property>
                             <property name="text">
-                                <string>1</string>
+                                <string>0</string>
                             </property>
                             <property name="text">
                                 <string>current unit value</string>

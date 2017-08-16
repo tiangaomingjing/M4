@@ -79,7 +79,13 @@ int main(int argc, char *argv[])
   *p=5;
   cout<<"p所指向的变成："<<*p<<endl;
   cout<<"此时i的值变成："<<i<<endl;
-  return 0;
+
+  QVector<int>vec;
+  for(int i=0;i<10;i++)
+    vec.append(i);
+  vec.removeAt(2);
+  for(int i=0;i<vec.count();i++)
+    cout<<i<<"="<<vec.at(i)<<endl;
 
 
 

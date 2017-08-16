@@ -3172,11 +3172,11 @@ bool PlotWave::readInitialFile(QString &fileName)
     m_viewSetting.curViewIndex=m_curveSettingTree->topLevelItem(ROW_CURVESETTING_INDEX_VIEWSETTING)\
                         ->child(ROW_VIEWSETTING_INDEX_CURRENT_VIEW)\
                         ->text(COL_CURVESETTING_INDEX_VALUE).toInt();
-    for(int i=0;i<m_curveSettingTree->topLevelItemCount()-1;i++)//因为第一个是视图设置的信息，所以-1
+    for(int index=ROW_CURVESETTING_INDEX_PRM_ROW;index<m_curveSettingTree->topLevelItemCount();index++)//因为第0个是视图设置的信息，所以从1开始才是曲线信息
     {
       PlotTablePrm rowPrm;
       int nR = 0, nG = 0, nB = 0;
-      int index=i+ROW_CURVESETTING_INDEX_PRM_ROW;
+//      int index=i+ROW_CURVESETTING_INDEX_PRM_ROW;
       rowPrm.curveType=(CurveType)m_curveSettingTree->topLevelItem(index)->text(COL_CURVESETTING_INDEX_VALUE).toInt();
       rowPrm.id=m_curveSettingTree->topLevelItem(index)->child(ROW_PRM_INDEX_CURVEID)->text(COL_CURVESETTING_INDEX_VALUE).toInt();
       rowPrm.isDraw=m_curveSettingTree->topLevelItem(index)->child(ROW_PRM_INDEX_ISDRAW)->text(COL_CURVESETTING_INDEX_VALUE).toInt();

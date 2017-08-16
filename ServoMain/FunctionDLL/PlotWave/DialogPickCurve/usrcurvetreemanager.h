@@ -2,6 +2,7 @@
 #define USRCURVETREEMANAGER_H
 
 #include <QObject>
+#include <QVector>
 class QTreeWidget;
 class QTreeWidgetItem;
 
@@ -18,6 +19,8 @@ public:
   void addTreeCurve(QTreeWidgetItem *itemCurve);
   bool removeTreeCurve(int index);
   void saveTreeCurveTemplate(QString &fileName);
+  void setComboxIndexAt(int row, int value);
+  int comboxIndexValueAt(int index);
 
 signals:
 
@@ -34,7 +37,8 @@ private:
   QTreeWidget *m_usrTreeTemplate;
   QList<QTreeWidget *>m_usrTreeList;
   QString m_treeFileName;
-  int m_currentAxisNumber;
+  int m_currentAxisSize;
+  QVector<int>m_comboxIndexVector;//用于保存最近选择的单位
 };
 
 #endif // USRCURVETREEMANAGER_H
