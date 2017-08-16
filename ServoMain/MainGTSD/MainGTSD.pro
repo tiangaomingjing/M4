@@ -103,7 +103,8 @@ SOURCES += main.cpp\
     Uboot/netconfig.cpp \
     Uboot/ubootdialog.cpp \
     NavigationConfig/ControlName/controlname.cpp \
-    FpgaDialogSetting/fpgadialogsettingrnnet.cpp
+    FpgaDialogSetting/fpgadialogsettingrnnet.cpp \
+    ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -131,7 +132,8 @@ HEADERS  += mainwindow.h \
     Uboot/ubootdialog.h \
     NavigationConfig/ControlName/controlname.h \
     FpgaDialogSetting/fpgadialogsettingrnnet.h \
-    FpgaDialogSetting/highlighttext.h
+    FpgaDialogSetting/highlighttext.h \
+    ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

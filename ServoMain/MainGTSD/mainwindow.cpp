@@ -24,6 +24,7 @@
 #include "./Uboot/netconfig.h"
 #include "./Uboot/ubootdialog.h"
 #include "plotwaveui.h"
+#include "QtTreeManager/qttreemanager.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -700,7 +701,8 @@ void MainWindow::onActionServo2FileClicked()
 //  hLayout->addWidget(mp_flashAllTreeWidget);
 //  mwidget->show();
   ui->progressBar->setValue(80);
-  XmlBuilder::saveFlashAllAxisTreeFile(fileNameXml,mp_flashAllTreeWidget);
+//  XmlBuilder::saveFlashAllAxisTreeFile(fileNameXml,mp_flashAllTreeWidget);
+  QtTreeManager::writeTreeWidgetToXmlFile(fileNameXml,mp_flashAllTreeWidget);
   ui->progressBar->setValue(100);
   ui->progressBar->hide();
   if(waveIsVisible)
