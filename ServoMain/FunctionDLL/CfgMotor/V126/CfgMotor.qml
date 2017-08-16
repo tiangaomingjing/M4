@@ -91,7 +91,7 @@ Rectangle{
                             anchors.bottom: parent.bottom;
                             anchors.bottomMargin: 5;
                             anchors.horizontalCenter: parent.horizontalCenter;
-                            text:qsTr("电机重新安装");
+                            text:qsTr("电机安装");
                             font.bold: motorCfgMouse.containsMouse?true:false;
                             horizontalAlignment: Text.AlignHCenter;
                             width: parent.width;

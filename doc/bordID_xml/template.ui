@@ -1,0 +1,822 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>640</width>
+    <height>514</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>value</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>description</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>型号信息</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>记录功率板检索信息</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>M系列</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <item>
+        <property name="text">
+         <string>M1</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>功率段1</string>
+         </property>
+         <item>
+          <property name="text">
+           <string/>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>功率段2</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>M2</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>功率段1</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>M4</string>
+        </property>
+        <property name="text">
+         <string>4</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>功率段1</string>
+         </property>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>M6</string>
+        </property>
+        <property name="text">
+         <string>6</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>系列1</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>SD61P006</string>
+          </property>
+          <property name="text">
+           <string>1B</string>
+          </property>
+          <property name="text">
+           <string>功率板和BOM表型号信息</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>基本信息</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>产品信息</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>型号编码</string>
+             </property>
+             <property name="text">
+              <string>2B</string>
+             </property>
+             <property name="text">
+              <string>记录功率板PCBA半成品编码，按公司8位数字编码规格</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>产品编码PN</string>
+             </property>
+             <property name="text">
+              <string>2B</string>
+             </property>
+             <property name="text">
+              <string>记录PCBA出厂时间，与型号编码一起组成15位的产品编码</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>PCBA版本</string>
+             </property>
+             <property name="text">
+              <string>1B</string>
+             </property>
+             <property name="text">
+              <string>PCBA和bom表版本信息</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>小版本</string>
+              </property>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>PCB版本</string>
+             </property>
+             <property name="text">
+              <string>1B</string>
+             </property>
+             <property name="text">
+              <string>PCB版本信息</string>
+             </property>
+            </item>
+           </item>
+           <item>
+            <property name="text">
+             <string>电气信息</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>输入电源参数</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>输入电压等级</string>
+              </property>
+              <property name="text">
+               <string>1B</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>输入相数</string>
+              </property>
+              <property name="text">
+               <string>1B</string>
+              </property>
+              <property name="text">
+               <string>单相、三相</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>输入电源频率</string>
+              </property>
+              <property name="text">
+               <string>1B</string>
+              </property>
+              <property name="text">
+               <string>50Hz</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>输入电源容量</string>
+              </property>
+              <property name="text">
+               <string>1B</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>输入电流</string>
+              </property>
+              <property name="text">
+               <string>1B</string>
+              </property>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>母线电容信息</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>母线电容型号</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>母线电容耐压值</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>母线电容容值</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>母线等效电容容量</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>母线电容个数</string>
+              </property>
+             </item>
+            </item>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>详细信息</string>
+           </property>
+           <property name="text">
+            <string>-1</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>轴数</string>
+            </property>
+            <property name="text">
+             <string>1B</string>
+            </property>
+            <property name="text">
+             <string>轴数量信息</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>轴1</string>
+             </property>
+             <property name="text">
+              <string>1B</string>
+             </property>
+             <item>
+              <property name="text">
+               <string>公共电气参数</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>风扇信息</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>风扇控制模式</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>PWM风扇或标准风扇</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>风扇反馈</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>风扇型号</string>
+                </property>
+               </item>
+              </item>
+              <item>
+               <property name="text">
+                <string>保护信息</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>缺相信号形式</string>
+                </property>
+                <property name="text">
+                 <string>1B</string>
+                </property>
+                <property name="text">
+                 <string>单相时为方波，三相输入时为L</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>继电器控制信息</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>软启继电器闭合电压</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>软启继电器断开电压</string>
+                 </property>
+                </item>
+               </item>
+               <item>
+                <property name="text">
+                 <string>母线电压保护参数设置</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>母线电压比例系数</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>母线过压保护点</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>420V</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>母线欠压保护点</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>150V</string>
+                 </property>
+                </item>
+               </item>
+               <item>
+                <property name="text">
+                 <string>制动控制参数</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>制动电阻打开电压</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>制动电阻关断电压</string>
+                 </property>
+                </item>
+               </item>
+               <item>
+                <property name="text">
+                 <string>散热器温度检测信息</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>温度传感器型号</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>温度传感器特征参数</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>25℃阻值</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>80℃阻值</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>100℃阻值</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>预留参数1</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>预留参数2</string>
+                  </property>
+                 </item>
+                </item>
+               </item>
+              </item>
+              <item>
+               <property name="text">
+                <string>制动信息</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>制动方式</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>电阻制动、超级电容储能、回馈制动</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>电阻制动信息</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>制动开通电压</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>400V</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>制动关断电压</string>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>380V</string>
+                  </property>
+                 </item>
+                </item>
+               </item>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>基本信息</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>输出功率</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>额定输出电流(RMS)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>最大输出电流2S(RMS)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>预留参数1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>预留参数2</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>预留参数3</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>预留参数4</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>预留参数5</string>
+               </property>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>模块信息</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>模块电压</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>模块电流</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>内置NTC信息</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>25℃时电阻</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>100℃时电阻</string>
+                </property>
+               </item>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>电流采样信息</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>采样方式</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>分流器采样或传感器采样</string>
+               </property>
+               <item>
+                <property name="text">
+                 <string>电流传感器</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>电流传感器类型</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                 <property name="text">
+                  <string>开环或闭环</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>开环传感器</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>传感器信息</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>传感器型号</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>传感器额定采样电路</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>传感器输出比例</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>参考电压（抬升电压）</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>采样精度</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>相位延迟</string>
+                    </property>
+                   </item>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>单板放大信息</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>电流放大系数</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>电路抬升电压参数</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>截止频率</string>
+                    </property>
+                   </item>
+                  </item>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>闭环传感器</string>
+                  </property>
+                  <item>
+                   <property name="text">
+                    <string>传感器信息</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>传感器型号</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>传感器额定采样电流</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>参考电压（抬升电压）</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>采样精度</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>相位延迟</string>
+                    </property>
+                   </item>
+                  </item>
+                  <item>
+                   <property name="text">
+                    <string>单板放大信息</string>
+                   </property>
+                   <item>
+                    <property name="text">
+                     <string>采样电阻</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>电流放大系数</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>电路抬升电压</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>截止频率</string>
+                    </property>
+                   </item>
+                  </item>
+                 </item>
+                </item>
+               </item>
+               <item>
+                <property name="text">
+                 <string>分流器采样</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>采样电阻参数</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>等效电阻</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>单个电阻阻值</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>采样电阻数量</string>
+                  </property>
+                 </item>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>单板放大参数</string>
+                 </property>
+                 <item>
+                  <property name="text">
+                   <string>放大比例参数</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>抬升电压</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>采样精度</string>
+                  </property>
+                 </item>
+                 <item>
+                  <property name="text">
+                   <string>相位延迟</string>
+                  </property>
+                 </item>
+                </item>
+               </item>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>控制参数</string>
+              </property>
+              <item>
+               <property name="text">
+                <string>最大载频kHz</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>最小占空比</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>最大占空比</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>死区时间</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>开通延迟</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>关断延迟</string>
+               </property>
+              </item>
+             </item>
+            </item>
+           </item>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>New Subitem</string>
+         </property>
+        </item>
+       </item>
+      </item>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -1,7 +1,6 @@
 ﻿import QtQuick 2.5
 import QtQuick.Layouts 1.1
 import QtQuick.Controls 1.4
-import QtQuick.Controls.Styles 1.4
 import "./components/DeviceStatus"
 import QtClass 1.0
 Rectangle{
@@ -9,10 +8,6 @@ Rectangle{
     property int number: 0;
     property string iconPath: iconFilePath;
     property int axisIndexNumber: axisIndex+1;
-    property color hoverColor: "#cbdaf1";
-    property color pressColor: "#567DBC";
-    property color frameColor: "#BBB9B9";
-    property color backgroundColor: Qt.lighter(frameColor,1.2);
     color:"#F0F0F0";
 //    property var stateArray: ["OFF","INIT","ON"];
 //    property var idArray: ["0 IDLE","1 AOA","2 MIPA","3 MPSA","4 COLD","5 CCLD","6 VCLD","7 PSOCLD"];
@@ -33,23 +28,19 @@ Rectangle{
             dataTree=factory.createQTreeWidgetProxy(treeSource,driverStatus);
         }
     }
-//    Item{
-//        id:factory;
-//        property var dataTree: null;
-//    }
 
-    Timer{
-        id:countUp;
-        interval: 1000;
-        repeat: true;
-        triggeredOnStart: true;
-        onTriggered:{
-            root.number+=1;
-            if(root.number==65536) root.number=0;
-            console.log(root.number);
-            root.updateUiData();
-        }
-    }
+//    Timer{
+//        id:countUp;
+//        interval: 1000;
+//        repeat: true;
+//        triggeredOnStart: true;
+//        onTriggered:{
+//            root.number+=1;
+//            if(root.number==65536) root.number=0;
+//            console.log(root.number);
+//            root.updateUiData();
+//        }
+//    }
     RowLayout{
         anchors.fill: parent;
         anchors.margins: 50;
@@ -69,7 +60,7 @@ Rectangle{
             ColumnLayout{
                 anchors.fill: parent;
                 anchors.margins: 20;
-                spacing: 15;
+                spacing: 10;
                 Item{
                     Layout.fillHeight: true;
                     Layout.fillWidth: true;
@@ -96,23 +87,7 @@ Rectangle{
                 Button{
                     id:m_clearAlarm;
                     anchors.horizontalCenter:  parent.horizontalCenter;
-                    style: ButtonStyle {
-                        background: Rectangle {
-                            implicitWidth: 100
-                            implicitHeight: 50
-                            border.width: control.activeFocus ? 2 : 1
-                            border.color: "#888"
-                            radius: 5
-                            color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
-                        }
-                        label: Text{
-                            anchors.centerIn: parent;
-                            text:qsTr("清 报 警");
-                            horizontalAlignment: Text.AlignHCenter;
-                            verticalAlignment: Text.AlignVCenter;
-                            font.bold:control.hovered?true:false;
-                            }
-                    }
+                    text:"清报警"
                     onClicked: {
                         console.log("clear alarm clicked...");
                         driverStatus.clearAlarm();
@@ -200,7 +175,7 @@ Rectangle{
             radius: 10;
             RowLayout{
                 anchors.fill: parent;
-                anchors.margins: 40;
+                anchors.margins: 20;
                 spacing: 10;
                 Item{
                     Layout.fillHeight: true;
@@ -244,13 +219,6 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
-                }
-                Item{
-                    Layout.fillHeight: true;
-                    Layout.fillWidth: true;
-                }
-                ColumnLayout{
-                    spacing: 10;
                     LedIndicator{
                         id:led_OT;
                         title: "过温";
@@ -263,6 +231,13 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
+                }
+                Item{
+                    Layout.fillHeight: true;
+                    Layout.fillWidth: true;
+                }
+                ColumnLayout{
+                    spacing: 10;
                     LedIndicator{
                         id:led_REG;
                         title: "寄存器故障";
@@ -287,14 +262,6 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
-
-                }
-                Item{
-                    Layout.fillHeight: true;
-                    Layout.fillWidth: true;
-                }
-                ColumnLayout{
-                    spacing: 10;
                     LedIndicator{
                         id:led_DIR;
                         title: "方向错误";
@@ -314,20 +281,8 @@ Rectangle{
                         Layout.fillHeight: true;
                     }
                     LedIndicator{
-                        id:led_OTMOT;
-                        title: "电机过温";
-                        iconPath: root.iconPath;
-                        Layout.fillHeight: true;
-                    }
-                    LedIndicator{
-                        id:led_PTE;
-                        title: "位置跟踪误差超限";
-                        iconPath: root.iconPath;
-                        Layout.fillHeight: true;
-                    }
-                    LedIndicator{
-                        id:led_resv;
-                        title: "保留";
+                        id:led_rsvd;
+                        title: "保留位";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -355,9 +310,6 @@ Rectangle{
         led_DIR.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,12,1)));
         led_SOC.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,13,1)));
         led_OBPH.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,14,1)));
-        led_OTMOT.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,15,1)));
-        led_PTE.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,16,1)));
-
         m_allLedFlag.ledOn=!Boolean(parseInt(factory.dataTree.textTopLevel(2,1)));
 
         m_vdc.text=factory.dataTree.textTopLevel(1,1);

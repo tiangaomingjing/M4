@@ -760,7 +760,7 @@ void MainWindow::onActionResetDSPClicked()
     return ;
   }
 
-  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring","Do you want to reset servo ?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
+  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring","Do you want to reset device ?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
   if (rb==QMessageBox::No)
   {
     return;
@@ -1377,10 +1377,11 @@ void MainWindow::onAlmError(int axis, bool alm)
   if(axis==mp_userConfig->model.axisCount-1)
   {
     bool show=false;
-    foreach (bool err, almVector) {
+    foreach (bool err, almVector)
+    {
       if(err)
         show=true;
-      qDebug()<<"axis="<<axis<<" alm="<<err<<"vector count="<<almVector.count();
+//      qDebug()<<"axis="<<axis<<" alm="<<err<<"vector count="<<almVector.count();
     }
     almVector.clear();
     if(show)
@@ -1388,7 +1389,7 @@ void MainWindow::onAlmError(int axis, bool alm)
     else
       uiStatus->btn_warring->hide();
   }
-  qDebug()<<"vector count="<<almVector.count();
+//  qDebug()<<"vector count="<<almVector.count();
 
 //  qDebug()<<">>>>>>>>>>>>>>>>> alm error <<<<<<<<<<<<<<<<";
 }
@@ -2002,11 +2003,11 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
 
   ui->treeWidget->resizeColumnToContents(1);
   ui->treeWidget->resizeColumnToContents(2);
-  ui->treeWidget->setHeaderHidden(true);
-  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_CLASSNAME);
-  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_PRMFILE);
-  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_UIINDEX);
-  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_GLOBAL);
+//  ui->treeWidget->setHeaderHidden(true);
+//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_CLASSNAME);
+//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_PRMFILE);
+//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_UIINDEX);
+//  ui->treeWidget->hideColumn(COL_NAVIGATION_TREE_GLOBAL);
 
   ui->treeWidget->expandAll();
   ui->treeWidget->resizeColumnToContents(0);

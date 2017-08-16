@@ -59,7 +59,7 @@
 		<Child name="电机参数" classname="CfgMotor" PrmFuncFile="PrmFuncMotor"/>
 		<Child name="编码器" classname="CfgEncoder" PrmFuncFile="PrmFuncEncoder"/>
 		<Child name="功率配置" classname="CfgDriverPower" PrmFuncFile="PrmFuncPower"/>
-        <Child name="电流/力矩控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
+        <Child name="电流控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
         <Child name="速度控制器" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
         <Child name="位置控制器" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
         <!--Child name="阈值设定" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" /-->

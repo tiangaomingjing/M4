@@ -44,13 +44,10 @@ void AdvFLASH::onItemExpanded(QTreeWidgetItem *item)
     COM_TYPE comtype=(COM_TYPE)config->com.id;
     ServoControl::updateFlashTreeWidgetByExpanded(item,m_axisNumber,comtype,config->com.rnStation);
   }
-  else
-  {
-//    QMessageBox::information(0,tr("connect"),tr("please open com first !"));
-    item->treeWidget()->resizeColumnToContents(COL_NAME);
-    item->treeWidget()->resizeColumnToContents(COL_VALUE);
-    item->treeWidget()->resizeColumnToContents(COL_TYPE);
-  }
+  item->treeWidget()->resizeColumnToContents(COL_NAME);
+  item->treeWidget()->resizeColumnToContents(COL_VALUE);
+  item->treeWidget()->resizeColumnToContents(COL_TYPE);
+  item->treeWidget()->setColumnWidth(COL_VALUE,120);
 }
 
 void AdvFLASH::onTreeItemClickedEdit(QTreeWidgetItem *item,int column)

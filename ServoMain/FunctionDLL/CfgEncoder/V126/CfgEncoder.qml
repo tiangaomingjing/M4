@@ -54,6 +54,16 @@ Rectangle {
             m_timer.start();
             if(searchFinish)
                 m_btnSavePhase.enabled=true;
+
+            var currentEncoderConfig=0x0000;
+            currentEncoderConfig=m_cmd.readAdvanceFlash("FPGA.prm.ABS_ENC_CFG.all");
+            console.log("currentConfig="+currentEncoderConfig.toString(2));
+            var index=currentEncoderConfig&0x0FFF;
+            if(index<m_encoderCfg.items.length){
+                console.log("toolbox current index="+index);
+                m_toolBox.setCurrentIndex(index)
+                m_encoderCfg.onItemClickedSlots(index);
+            }
         }
         else{
             if(m_timer.running===true)
@@ -142,7 +152,7 @@ Rectangle {
         }
     }
 
-    //-------------------设置面板-------------------------
+    //-------------------编码器设置面板-------------------------
     Rectangle{
         id:m_encoderCfg;
         width: parent.width/3;
@@ -158,7 +168,7 @@ Rectangle {
 
         function onItemClickedSlots(index){
             console.log(qsTr("item :%1 clicked").arg(index));
-            if(index==1)
+            if(index===1)
                 m_baudRateBlock.visible=true;
             else
                 m_baudRateBlock.visible=false;
@@ -707,7 +717,7 @@ Rectangle {
             var strPseq=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.seq_dir");
             var pSeqNum=parseInt(strPseq);
             pseq.text=pSeqNum;
-            console.log("相序"+strPseq);
+//            console.log("相序"+strPseq);
 
             //关伺服逻辑
             if(root.btnSearchIsClicked){

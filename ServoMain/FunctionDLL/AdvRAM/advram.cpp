@@ -88,13 +88,10 @@ void AdvRAM::onItemExpanded(QTreeWidgetItem *item)
     qDebug()<<"gAuxFunc :"<<map.value(EXTENSION_ADVCONTROLPRM_GAUXFUNC);
     ServoControl::updateRamTreeWidgetByExpanded(item,m_axisNumber,map,comtype,config->com.rnStation);
   }
-  else
-  {
-//    QMessageBox::information(0,tr("connect"),tr("please open com first !"));
-    item->treeWidget()->resizeColumnToContents(COL_NAME);
-    item->treeWidget()->resizeColumnToContents(COL_VALUE);
-    item->treeWidget()->resizeColumnToContents(COL_TYPE);
-  }
+  item->treeWidget()->resizeColumnToContents(COL_NAME);
+  item->treeWidget()->resizeColumnToContents(COL_VALUE);
+  item->treeWidget()->resizeColumnToContents(COL_TYPE);
+  item->treeWidget()->setColumnWidth(COL_VALUE,120);
 }
 
 void AdvRAM::onTreeItemClickedEdit(QTreeWidgetItem *item,int column)

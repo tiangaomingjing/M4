@@ -106,12 +106,12 @@ Rectangle{
                             color:control.pressed?pressColor:control.hovered?hoverColor:backgroundColor;
                         }
                         label: Text{
-                            text:qsTr("清报警");
+                            anchors.centerIn: parent;
+                            text:qsTr("清 报 警");
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
                             font.bold:control.hovered?true:false;
-                            font.letterSpacing: 10;
-                        }
+                            }
                     }
                     onClicked: {
                         console.log("clear alarm clicked...");

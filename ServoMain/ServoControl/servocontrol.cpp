@@ -171,9 +171,6 @@ void ServoControl::updateFlashTreeWidgetByExpanded(QTreeWidgetItem *item ,int ax
       }
     }
   }
-  item->treeWidget()->resizeColumnToContents(COL_NAME);
-  item->treeWidget()->resizeColumnToContents(COL_VALUE);
-  item->treeWidget()->resizeColumnToContents(COL_TYPE);
 
 }
 
@@ -245,9 +242,6 @@ void ServoControl::updateRamTreeWidgetByExpanded(QTreeWidgetItem *item, int axis
       }
     }
   }
-  item->treeWidget()->resizeColumnToContents(COL_NAME);
-  item->treeWidget()->resizeColumnToContents(COL_VALUE);
-  item->treeWidget()->resizeColumnToContents(COL_TYPE);
 }
 
 COM_ERROR ServoControl::updateFunctionValueFromRam(QTreeWidgetItem *item,QTreeWidget *cmdTree, int axisIndex, COM_TYPE comtype,short comStation)

@@ -1,6 +1,6 @@
 ﻿import QtQuick 2.5
 import QtQuick.Layouts 1.1
-import QtClass 1.0
+//import QtClass 1.0
 
 import "./components/CfgMotor"
 
@@ -13,28 +13,28 @@ Rectangle{
     property color pressColor: "#567DBC";
     property color frameColor: "#BBB9B9";
     property color backgroundColor: Qt.lighter(frameColor,1.2);
-    QmlFactory{
-        id:factory;
-        property QTreeWidgetProxy dataTree: null;
-        onInitialFactory:{
-            dataTree=factory.createQTreeWidgetProxy(treeSource,driveMotor);
-        }
-    }
+//    QmlFactory{
+//        id:factory;
+//        property QTreeWidgetProxy dataTree: null;
+//        onInitialFactory:{
+//            dataTree=factory.createQTreeWidgetProxy(treeSource,driveMotor);
+//        }
+//    }
     function switchUi(isHome){
         if(isHome){
-            m_motorPrmUi.x=-root.width-500;
+            m_motorPrmUi.x=-root.width-1000;
             m_motorDataBaseUi.x=0;
         }
         else{
             m_motorPrmUi.x=0;
-            m_motorDataBaseUi.x=root.width+500;
+            m_motorDataBaseUi.x=root.width+1000;
         }
     }
 
-//    Item{
-//        id:factory
-//        property var dataTree: null;
-//    }
+    Item{
+        id:factory
+        property var dataTree: null;
+    }
     Item{
         id:m_motorPrmUi
         x:0;
@@ -91,7 +91,7 @@ Rectangle{
                             anchors.bottom: parent.bottom;
                             anchors.bottomMargin: 5;
                             anchors.horizontalCenter: parent.horizontalCenter;
-                            text:qsTr("电机重新安装");
+                            text:qsTr("电机安装");
                             font.bold: motorCfgMouse.containsMouse?true:false;
                             horizontalAlignment: Text.AlignHCenter;
                             width: parent.width;
@@ -143,7 +143,7 @@ Rectangle{
 
     Item{
         id:m_motorDataBaseUi
-        x:root.width+500;
+        x:root.width+1000;
         y:0;
         width: root.width;
         height: root.height;
@@ -540,42 +540,42 @@ Rectangle{
         }
     }
 
-    Connections{
-        target: driveMotor;
-        onItemValueChanged:{
-            cur.irat_1.text=factory.dataTree.textTopLevel(0,1);
-            cur.imax_1.text=factory.dataTree.textTopLevel(1,1);
-            vel.sct_1.text=factory.dataTree.textTopLevel(2,1);
-            vel.srat_1.text=factory.dataTree.textTopLevel(3,1);
-            vel.nos_1.text=factory.dataTree.textTopLevel(4,1);
-            forprm.tqr_1.text=factory.dataTree.textTopLevel(5,1);
-            mecprm.ppn_1.text=factory.dataTree.textTopLevel(6,1);
-            forprm.vmax_1.text=factory.dataTree.textTopLevel(7,1);
-            forprm.phim_1.text=factory.dataTree.textTopLevel(8,1);
-            imp.ldm_1.text=factory.dataTree.textTopLevel(9,1);
-            imp.lqm_1.text=factory.dataTree.textTopLevel(10,1);
-            imp.rm_1.text=factory.dataTree.textTopLevel(11,1);
-            mecprm.jm_1.text=factory.dataTree.textTopLevel(12,1);
-            mecprm.jrat_1.text=factory.dataTree.textTopLevel(13,1);
-            mecprm.fm_1.text=factory.dataTree.textTopLevel(14,1);
+//    Connections{
+//        target: driveMotor;
+//        onItemValueChanged:{
+//            cur.irat_1.text=factory.dataTree.textTopLevel(0,1);
+//            cur.imax_1.text=factory.dataTree.textTopLevel(1,1);
+//            vel.sct_1.text=factory.dataTree.textTopLevel(2,1);
+//            vel.srat_1.text=factory.dataTree.textTopLevel(3,1);
+//            vel.nos_1.text=factory.dataTree.textTopLevel(4,1);
+//            forprm.tqr_1.text=factory.dataTree.textTopLevel(5,1);
+//            mecprm.ppn_1.text=factory.dataTree.textTopLevel(6,1);
+//            forprm.vmax_1.text=factory.dataTree.textTopLevel(7,1);
+//            forprm.phim_1.text=factory.dataTree.textTopLevel(8,1);
+//            imp.ldm_1.text=factory.dataTree.textTopLevel(9,1);
+//            imp.lqm_1.text=factory.dataTree.textTopLevel(10,1);
+//            imp.rm_1.text=factory.dataTree.textTopLevel(11,1);
+//            mecprm.jm_1.text=factory.dataTree.textTopLevel(12,1);
+//            mecprm.jrat_1.text=factory.dataTree.textTopLevel(13,1);
+//            mecprm.fm_1.text=factory.dataTree.textTopLevel(14,1);
 
-            cur.irat_1.textColor="black";
-            cur.imax_1.textColor="black";
-            vel.sct_1.textColor="black";
-            vel.srat_1.textColor="black";
-            vel.nos_1.textColor="black";
-            forprm.tqr_1.textColor="black";
-            mecprm.ppn_1.textColor="black";
-            forprm.vmax_1.textColor="black";
-            forprm.phim_1.textColor="black";
-            imp.ldm_1.textColor="black";
-            imp.lqm_1.textColor="black";
-            imp.rm_1.textColor="black";
-            mecprm.jm_1.textColor="black";
-            mecprm.jrat_1.textColor="black";
-            mecprm.fm_1.textColor="black";
+//            cur.irat_1.textColor="black";
+//            cur.imax_1.textColor="black";
+//            vel.sct_1.textColor="black";
+//            vel.srat_1.textColor="black";
+//            vel.nos_1.textColor="black";
+//            forprm.tqr_1.textColor="black";
+//            mecprm.ppn_1.textColor="black";
+//            forprm.vmax_1.textColor="black";
+//            forprm.phim_1.textColor="black";
+//            imp.ldm_1.textColor="black";
+//            imp.lqm_1.textColor="black";
+//            imp.rm_1.textColor="black";
+//            mecprm.jm_1.textColor="black";
+//            mecprm.jrat_1.textColor="black";
+//            mecprm.fm_1.textColor="black";
 
-        }
-    }
+//        }
+//    }
 }
 
