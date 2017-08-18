@@ -501,7 +501,7 @@ const parameters has the same name</source>
         <translation type="unfinished">移除曲线</translation>
     </message>
     <message>
-        <location filename="DialogPickCurve/dialogpickcurve.cpp" line="250"/>
+        <location filename="DialogPickCurve/dialogpickcurve.cpp" line="271"/>
         <source>Axis_%1</source>
         <translation type="unfinished">轴_%1</translation>
     </message>
@@ -613,7 +613,7 @@ const parameters has the same name</source>
     </message>
     <message>
         <location filename="PlotWave.ui" line="63"/>
-        <location filename="plotwave.cpp" line="2847"/>
+        <location filename="plotwave.cpp" line="2839"/>
         <source>View</source>
         <translation type="unfinished"></translation>
     </message>
@@ -629,31 +629,31 @@ const parameters has the same name</source>
     </message>
     <message>
         <location filename="PlotWave.ui" line="144"/>
-        <location filename="plotwave.cpp" line="2837"/>
+        <location filename="plotwave.cpp" line="2829"/>
         <source>Prev</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="171"/>
-        <location filename="plotwave.cpp" line="2836"/>
+        <location filename="plotwave.cpp" line="2828"/>
         <source>Next</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="208"/>
-        <location filename="plotwave.cpp" line="2841"/>
+        <location filename="plotwave.cpp" line="2833"/>
         <source>Tag</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="235"/>
-        <location filename="plotwave.cpp" line="2833"/>
+        <location filename="plotwave.cpp" line="2825"/>
         <source>H</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="262"/>
-        <location filename="plotwave.cpp" line="2844"/>
+        <location filename="plotwave.cpp" line="2836"/>
         <source>V</source>
         <translation type="unfinished"></translation>
     </message>
@@ -969,19 +969,19 @@ const parameters has the same name</source>
     </message>
     <message>
         <location filename="PlotWave.ui" line="2267"/>
-        <location filename="plotwave.cpp" line="2897"/>
+        <location filename="plotwave.cpp" line="2889"/>
         <source>name</source>
         <translation type="unfinished">名称</translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="2272"/>
-        <location filename="plotwave.cpp" line="2898"/>
+        <location filename="plotwave.cpp" line="2890"/>
         <source>bytes</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="2277"/>
-        <location filename="plotwave.cpp" line="2899"/>
+        <location filename="plotwave.cpp" line="2891"/>
         <source>axis</source>
         <translation type="unfinished">轴号</translation>
     </message>
@@ -992,7 +992,7 @@ const parameters has the same name</source>
     </message>
     <message>
         <location filename="PlotWave.ui" line="2287"/>
-        <location filename="plotwave.cpp" line="2901"/>
+        <location filename="plotwave.cpp" line="2893"/>
         <source>base</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1003,33 +1003,33 @@ const parameters has the same name</source>
     </message>
     <message>
         <location filename="PlotWave.ui" line="2302"/>
-        <location filename="plotwave.cpp" line="2904"/>
+        <location filename="plotwave.cpp" line="2896"/>
         <source>xoffset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="507"/>
+        <location filename="plotwave.cpp" line="499"/>
         <source>%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="522"/>
-        <location filename="plotwave.cpp" line="3386"/>
-        <location filename="plotwave.cpp" line="4177"/>
+        <location filename="plotwave.cpp" line="514"/>
+        <location filename="plotwave.cpp" line="3378"/>
+        <location filename="plotwave.cpp" line="4172"/>
         <source>off</source>
         <translation type="unfinished">关</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="528"/>
-        <location filename="plotwave.cpp" line="3380"/>
-        <location filename="plotwave.cpp" line="4172"/>
+        <location filename="plotwave.cpp" line="520"/>
+        <location filename="plotwave.cpp" line="3372"/>
+        <location filename="plotwave.cpp" line="4167"/>
         <source>on</source>
         <translation type="unfinished">开</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="602"/>
-        <location filename="plotwave.cpp" line="629"/>
-        <location filename="plotwave.cpp" line="641"/>
+        <location filename="plotwave.cpp" line="594"/>
+        <location filename="plotwave.cpp" line="621"/>
+        <location filename="plotwave.cpp" line="633"/>
         <source>Range Exception</source>
         <translation type="unfinished">越界异常</translation>
     </message>
@@ -1038,34 +1038,34 @@ const parameters has the same name</source>
         <translation type="obsolete">输入值范围超过了0～%1</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="650"/>
+        <location filename="plotwave.cpp" line="642"/>
         <source>index:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="657"/>
+        <location filename="plotwave.cpp" line="649"/>
         <source>Input Axis Number</source>
         <translation type="unfinished">输入轴号</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="658"/>
+        <location filename="plotwave.cpp" line="650"/>
         <source>Axis Number:</source>
         <translation type="unfinished">轴号:</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="661"/>
+        <location filename="plotwave.cpp" line="653"/>
         <source>inputvalue:%1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1077"/>
-        <location filename="plotwave.cpp" line="1189"/>
+        <location filename="plotwave.cpp" line="1069"/>
+        <location filename="plotwave.cpp" line="1181"/>
         <source>Warring</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1077"/>
-        <location filename="plotwave.cpp" line="1189"/>
+        <location filename="plotwave.cpp" line="1069"/>
+        <location filename="plotwave.cpp" line="1181"/>
         <source>please open the com first !</source>
         <translation type="unfinished">请先连接网络 !</translation>
     </message>
@@ -1078,36 +1078,36 @@ const parameters has the same name</source>
         <translation type="obsolete">伺服关</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1201"/>
+        <location filename="plotwave.cpp" line="1193"/>
         <source>Open File</source>
         <translation type="unfinished">打开曲线</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1201"/>
+        <location filename="plotwave.cpp" line="1193"/>
         <source>curve Files(*.src)</source>
         <translation type="unfinished">曲线文件(*.src)</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1212"/>
-        <location filename="plotwave.cpp" line="3926"/>
+        <location filename="plotwave.cpp" line="1204"/>
+        <location filename="plotwave.cpp" line="3921"/>
         <source>file error</source>
         <translation type="unfinished">文件错误</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1212"/>
-        <location filename="plotwave.cpp" line="3926"/>
+        <location filename="plotwave.cpp" line="1204"/>
+        <location filename="plotwave.cpp" line="3921"/>
         <source>can not open file :
 %1</source>
         <translation type="unfinished">打开文件失败:
 %1</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1282"/>
+        <location filename="plotwave.cpp" line="1274"/>
         <source>sampling_curve_</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1283"/>
+        <location filename="plotwave.cpp" line="1275"/>
         <source>Save curve</source>
         <translation type="unfinished">保存曲线</translation>
     </message>
@@ -1116,229 +1116,230 @@ const parameters has the same name</source>
         <translation type="obsolete">曲线文件 (*.src)</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1410"/>
-        <location filename="plotwave.cpp" line="1432"/>
-        <location filename="plotwave.cpp" line="1640"/>
-        <location filename="plotwave.cpp" line="1647"/>
-        <location filename="plotwave.cpp" line="4387"/>
+        <location filename="plotwave.cpp" line="1402"/>
+        <location filename="plotwave.cpp" line="1424"/>
+        <location filename="plotwave.cpp" line="1632"/>
+        <location filename="plotwave.cpp" line="1639"/>
+        <location filename="plotwave.cpp" line="4382"/>
         <source>information</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1410"/>
+        <location filename="plotwave.cpp" line="1402"/>
         <source>%1 is BIT</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">%1 是位控制变量，无法添加</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2999"/>
+        <location filename="plotwave.cpp" line="2991"/>
         <source>IDLE</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3000"/>
+        <location filename="plotwave.cpp" line="2992"/>
         <source>ADC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3001"/>
+        <location filename="plotwave.cpp" line="2993"/>
         <source>IPA</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3002"/>
+        <location filename="plotwave.cpp" line="2994"/>
         <source>MPI</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3003"/>
+        <location filename="plotwave.cpp" line="2995"/>
         <source>COL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3004"/>
+        <location filename="plotwave.cpp" line="2996"/>
         <source>CCL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3005"/>
+        <location filename="plotwave.cpp" line="2997"/>
         <source>VCL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3006"/>
+        <location filename="plotwave.cpp" line="2998"/>
         <source>VPL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3007"/>
+        <location filename="plotwave.cpp" line="2999"/>
         <source>VSL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3008"/>
+        <location filename="plotwave.cpp" line="3000"/>
         <source>FIX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3009"/>
+        <location filename="plotwave.cpp" line="3001"/>
         <source>PT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3010"/>
+        <location filename="plotwave.cpp" line="3002"/>
         <source>DB</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3011"/>
+        <location filename="plotwave.cpp" line="3003"/>
         <source>CSC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3096"/>
+        <location filename="plotwave.cpp" line="3088"/>
         <source>open error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3096"/>
+        <location filename="plotwave.cpp" line="3088"/>
         <source>open %1 file error </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3105"/>
-        <location filename="plotwave.cpp" line="3129"/>
+        <location filename="plotwave.cpp" line="3097"/>
+        <location filename="plotwave.cpp" line="3121"/>
         <source>load error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3105"/>
+        <location filename="plotwave.cpp" line="3097"/>
         <source>load .xml file error </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3129"/>
+        <location filename="plotwave.cpp" line="3121"/>
         <source>findChild treeWidget error! </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="4122"/>
+        <location filename="plotwave.cpp" line="4117"/>
         <source>Copy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="4387"/>
+        <location filename="plotwave.cpp" line="4382"/>
         <source>PrmExtendtion file load error !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1454"/>
+        <location filename="plotwave.cpp" line="1446"/>
         <source>Parameter</source>
         <translation type="unfinished">参数信息</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="269"/>
-        <location filename="plotwave.cpp" line="1979"/>
-        <location filename="plotwave.cpp" line="2079"/>
+        <location filename="plotwave.cpp" line="261"/>
+        <location filename="plotwave.cpp" line="1971"/>
+        <location filename="plotwave.cpp" line="2071"/>
         <source>V%1</source>
         <translation type="unfinished">V%1</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="273"/>
-        <location filename="plotwave.cpp" line="1983"/>
-        <location filename="plotwave.cpp" line="2083"/>
+        <location filename="plotwave.cpp" line="265"/>
+        <location filename="plotwave.cpp" line="1975"/>
+        <location filename="plotwave.cpp" line="2075"/>
         <source>C%1</source>
         <translation type="unfinished">C%1</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="602"/>
-        <location filename="plotwave.cpp" line="629"/>
-        <location filename="plotwave.cpp" line="641"/>
+        <location filename="plotwave.cpp" line="594"/>
+        <location filename="plotwave.cpp" line="621"/>
+        <location filename="plotwave.cpp" line="633"/>
         <source>input value is invalid </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1283"/>
+        <location filename="plotwave.cpp" line="1275"/>
         <source>curve file (*.src);;text file(*.txt)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1432"/>
+        <location filename="plotwave.cpp" line="1424"/>
         <source>The numbers of selected curves is too much </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">输入的曲线超出范围</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1454"/>
+        <location filename="plotwave.cpp" line="1446"/>
         <source>the curve :%1 has been existed</source>
         <translation type="unfinished">曲线:%1 已经存在</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1584"/>
+        <location filename="plotwave.cpp" line="1576"/>
         <source>(%1)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1640"/>
-        <location filename="plotwave.cpp" line="1647"/>
+        <location filename="plotwave.cpp" line="1632"/>
+        <location filename="plotwave.cpp" line="1639"/>
         <source>When add axis=%1 curve:%2
  The numbers of selected curve is too much</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">轴=&amp;1 曲线名称:%2
+增加曲线个数超出范围</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1721"/>
+        <location filename="plotwave.cpp" line="1713"/>
         <source>XY Coord:  X-&gt; %1 ms, Y-&gt; %2  </source>
         <translation type="unfinished">XY坐标信息: X-&gt; %1 ms, Y-&gt; %2 </translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="1764"/>
+        <location filename="plotwave.cpp" line="1756"/>
         <source>Measure Info: %1 %2</source>
         <translation type="unfinished">测量信息:%1 %2</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2263"/>
-        <location filename="plotwave.cpp" line="2300"/>
+        <location filename="plotwave.cpp" line="2255"/>
+        <location filename="plotwave.cpp" line="2292"/>
         <source>servo_ON</source>
         <translation type="unfinished">伺服开</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2265"/>
-        <location filename="plotwave.cpp" line="2302"/>
-        <location filename="plotwave.cpp" line="2849"/>
+        <location filename="plotwave.cpp" line="2257"/>
+        <location filename="plotwave.cpp" line="2294"/>
+        <location filename="plotwave.cpp" line="2841"/>
         <source>servo_OFF</source>
         <translation type="unfinished">伺服关</translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="2292"/>
-        <location filename="plotwave.cpp" line="2828"/>
+        <location filename="plotwave.cpp" line="2820"/>
         <source>add</source>
         <translation type="unfinished">增加</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2829"/>
+        <location filename="plotwave.cpp" line="2821"/>
         <source>auto</source>
         <translation type="unfinished">自适应</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2832"/>
+        <location filename="plotwave.cpp" line="2824"/>
         <source>clear</source>
         <translation type="unfinished">清除</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2838"/>
+        <location filename="plotwave.cpp" line="2830"/>
         <source>remove</source>
         <translation type="unfinished">移除</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2839"/>
+        <location filename="plotwave.cpp" line="2831"/>
         <source>reset</source>
         <translation type="unfinished">自适应视图</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2840"/>
+        <location filename="plotwave.cpp" line="2832"/>
         <source>All</source>
         <translation type="unfinished">全选</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2848"/>
+        <location filename="plotwave.cpp" line="2840"/>
         <source>Period ms</source>
         <translation type="unfinished">采样周期(ms)</translation>
     </message>
@@ -1347,42 +1348,42 @@ const parameters has the same name</source>
         <translation type="obsolete">模式:</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2896"/>
+        <location filename="plotwave.cpp" line="2888"/>
         <source>checked</source>
         <translation type="unfinished">显示</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2900"/>
+        <location filename="plotwave.cpp" line="2892"/>
         <source>offset</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2902"/>
+        <location filename="plotwave.cpp" line="2894"/>
         <source>addfactor</source>
         <translation type="unfinished">+</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2903"/>
+        <location filename="plotwave.cpp" line="2895"/>
         <source>multifactor</source>
         <translation type="unfinished">X</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2922"/>
+        <location filename="plotwave.cpp" line="2914"/>
         <source>velocity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2922"/>
+        <location filename="plotwave.cpp" line="2914"/>
         <source>current</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2922"/>
+        <location filename="plotwave.cpp" line="2914"/>
         <source>position</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2922"/>
+        <location filename="plotwave.cpp" line="2914"/>
         <source>user</source>
         <translation type="unfinished">用户</translation>
     </message>
@@ -1391,77 +1392,77 @@ const parameters has the same name</source>
         <translation type="obsolete">请选择模式......</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2972"/>
+        <location filename="plotwave.cpp" line="2964"/>
         <source>0 IDLE</source>
         <translation type="unfinished">0 空闲</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2973"/>
+        <location filename="plotwave.cpp" line="2965"/>
         <source>1 ADC</source>
         <translation type="unfinished">1 ADC校正</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2974"/>
+        <location filename="plotwave.cpp" line="2966"/>
         <source>2 Initial position Adjust</source>
         <translation type="unfinished">2 电机初始相位校正</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2975"/>
+        <location filename="plotwave.cpp" line="2967"/>
         <source>3 Motor Parameters Identification</source>
         <translation type="unfinished">3 机械模型辨识</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2976"/>
+        <location filename="plotwave.cpp" line="2968"/>
         <source>4 Current open-loop</source>
         <translation type="unfinished">4 电压开环调试</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2977"/>
+        <location filename="plotwave.cpp" line="2969"/>
         <source>5 Current close-loop</source>
         <translation type="unfinished">5 电流闭环调试</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2978"/>
+        <location filename="plotwave.cpp" line="2970"/>
         <source>6 Velocity close-loop</source>
         <translation type="unfinished">6 速度闭环调试</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2979"/>
+        <location filename="plotwave.cpp" line="2971"/>
         <source>7 Open Velocity-loop2</source>
         <translation type="unfinished">7 轮廓速度跟踪</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2980"/>
+        <location filename="plotwave.cpp" line="2972"/>
         <source>8 Close Velocity-loop2</source>
         <translation type="unfinished">8 周期同步速度跟踪</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2981"/>
+        <location filename="plotwave.cpp" line="2973"/>
         <source>9 Position Fixed</source>
         <translation type="unfinished">9 准停</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2982"/>
+        <location filename="plotwave.cpp" line="2974"/>
         <source>10 Position Follow</source>
         <translation type="unfinished">10 周期同步位置跟踪</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2983"/>
+        <location filename="plotwave.cpp" line="2975"/>
         <source>11 STOP_VCTL</source>
         <translation type="unfinished">11 规划停止</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="2984"/>
+        <location filename="plotwave.cpp" line="2976"/>
         <source>12 Circle current Follow</source>
         <translation type="unfinished">12 周期同步电流跟踪</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3039"/>
+        <location filename="plotwave.cpp" line="3031"/>
         <source>0 None</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3040"/>
+        <location filename="plotwave.cpp" line="3032"/>
         <source>1 VelocityMode</source>
         <translation type="unfinished">1 速度模式</translation>
     </message>
@@ -1470,7 +1471,7 @@ const parameters has the same name</source>
         <translation type="obsolete">2 位置模式</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3065"/>
+        <location filename="plotwave.cpp" line="3057"/>
         <source>bar%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1493,18 +1494,18 @@ read error!</source>
 读取错误 !</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3464"/>
+        <location filename="plotwave.cpp" line="3456"/>
         <source>Curve Setting</source>
         <translation type="unfinished">曲线设置</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3464"/>
+        <location filename="plotwave.cpp" line="3456"/>
         <source>default curve setting error!</source>
         <translation type="unfinished">默认曲线设置错误!</translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="1839"/>
-        <location filename="plotwave.cpp" line="3491"/>
+        <location filename="plotwave.cpp" line="3483"/>
         <source>s</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1517,13 +1518,13 @@ read error!</source>
         <translation type="obsolete">XML文件打开错误!</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3891"/>
-        <location filename="plotwave.cpp" line="4116"/>
+        <location filename="plotwave.cpp" line="3886"/>
+        <location filename="plotwave.cpp" line="4111"/>
         <source>Axis_%1</source>
-        <translation type="unfinished">轴号_%1</translation>
+        <translation type="unfinished">轴_%1</translation>
     </message>
     <message>
-        <location filename="plotwave.cpp" line="3911"/>
+        <location filename="plotwave.cpp" line="3906"/>
         <source>(axis_%1)%2</source>
         <translation type="unfinished">(轴_%1)%2</translation>
     </message>
@@ -1581,12 +1582,12 @@ read error!</source>
 <context>
     <name>ServoControl</name>
     <message>
-        <location filename="../../ServoControl/servocontrol.cpp" line="779"/>
+        <location filename="../../ServoControl/servocontrol.cpp" line="773"/>
         <source>write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ServoControl/servocontrol.cpp" line="779"/>
+        <location filename="../../ServoControl/servocontrol.cpp" line="773"/>
         <source>write error
 please check your servo&apos;s status</source>
         <translation type="unfinished"></translation>
@@ -1613,7 +1614,7 @@ please check your servo&apos;s status</source>
         <location filename="UserActionWidget/useractionwidget.cpp" line="39"/>
         <location filename="UserActionWidget/useractionwidget.cpp" line="47"/>
         <source>Axis_%1</source>
-        <translation type="unfinished">轴号_%1</translation>
+        <translation type="unfinished">轴_%1</translation>
     </message>
 </context>
 <context>

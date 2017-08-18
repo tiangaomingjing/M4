@@ -52,7 +52,6 @@ private:
   QMenu *m_popuMenuTable;
   UsrCurveTreeManager *mp_usrCurveTreeManager;
   CustomCurvePage *m_customCurvePageUi;
-  QList<QComboBox *>m_comboBoxPtrList;
 
 };
 

@@ -6,12 +6,17 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>413</width>
+    <height>425</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -29,6 +34,118 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="QComboBox" name="comboBox">
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>32</width>
+        <height>32</height>
+       </size>
+      </property>
+      <item>
+       <property name="text">
+        <string>aaaa</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>bbbb</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>ccccc</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dddd</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>eeee</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>fffff</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTreeWidget" name="treeWidget">
+      <column>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>新建列</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>新建列</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>新建列</string>
+       </property>
+      </column>
+      <item>
+       <property name="text">
+        <string>a</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>aa</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>ag</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>ddd</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>cc</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>cc</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>dd</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>gf</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>gfd</string>
+        </property>
+       </item>
+      </item>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -36,7 +153,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>413</width>
      <height>23</height>
     </rect>
    </property>

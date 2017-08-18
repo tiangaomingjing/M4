@@ -1404,7 +1404,7 @@ void PlotWave::onTreeWidgetItemDoubleClicked(QTreeWidgetItem *item, int column)
   }
 
   bytes=GlobalFunction::getBytesNumber(item->text(COL_TYPE));
-  offsetAddr=item->text(COL_ADDRESS).toShort();
+  offsetAddr=item->text(COL_ADDRESS).toUShort();
 
   QTreeWidgetItem *itemTop;
   itemTop=GlobalFunction::findTopLevelItem(item);
@@ -3851,7 +3851,10 @@ void PlotWave::clearGraphData()
     {
       int varCount=m_tablePlotPrmList[i].varCount;
       for(int j=0;j<varCount;j++)
+      {
         m_tablePlotPrmList[i].prmFactorList[j].varDatas.curveValue.clear();
+        m_tablePlotPrmList[i].prmFactorList[j].varDatas.curveKey.clear();
+      }
     }
   }
   ui->plotCurve->replot();
@@ -4260,7 +4263,7 @@ void PlotWave::changeUsrTreeBySrcTree(QList<QTreeWidget *>&usrCurveTreeList,cons
  * @brief PlotWave::drawCurveNumberIsBigger
  * @param compareNum
  * @param totalCurveNum 返回实际的曲线数量
- * @return
+ * @return 是否大于比较值
  */
 bool PlotWave::drawCurveNumberIsBigger(int compareNum,int &totalCurveNum)
 {

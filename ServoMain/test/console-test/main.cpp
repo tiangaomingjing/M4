@@ -87,6 +87,30 @@ int main(int argc, char *argv[])
   for(int i=0;i<vec.count();i++)
     cout<<i<<"="<<vec.at(i)<<endl;
 
+  cout<<"-------------------------"<<endl;
+  quint16 offsetAddr;
+  QString num="32768";
+  offsetAddr=num.toShort();
+  cout<<"32768 toShort() "<<offsetAddr<<endl;
+  offsetAddr=num.toInt();
+  cout<<"32768 toInt() "<<offsetAddr<<endl;
+  offsetAddr=num.toUShort();
+  cout<<"32768 toUShort() "<<offsetAddr<<endl;
+  num="32769";
+  offsetAddr=num.toShort();
+  cout<<num.toStdString()<<" toShort() "<<offsetAddr<<endl;
+  offsetAddr=num.toInt();
+  cout<<num.toStdString()<<" toInt() "<<offsetAddr<<endl;
+  offsetAddr=num.toUShort();
+  cout<<num.toStdString()<<" toUShort() "<<offsetAddr<<endl;
+
+  num="65530";
+  offsetAddr=num.toShort();
+  cout<<num.toStdString()<<" toShort() "<<offsetAddr<<endl;
+  offsetAddr=num.toInt();
+  cout<<num.toStdString()<<" toInt() "<<offsetAddr<<endl;
+  offsetAddr=num.toUShort();
+  cout<<num.toStdString()<<" toUShort() "<<offsetAddr<<endl;
 
 
   return a.exec();

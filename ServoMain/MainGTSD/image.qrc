@@ -8,5 +8,6 @@
         <file>image/led_green.png</file>
         <file>image/led_red.png</file>
         <file>image/servo.png</file>
+        <file>image/array_down.png</file>
     </qresource>
 </RCC>

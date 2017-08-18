@@ -59,3 +59,5 @@ FORMS    += moduleio.ui \
 
 RESOURCES += \
     images.qrc
+
+TRANSLATIONS +=app_IO_simplchinese.ts

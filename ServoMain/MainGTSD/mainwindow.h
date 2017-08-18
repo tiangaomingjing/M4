@@ -152,6 +152,7 @@ private:
   bool openNetCom(void);
   void closeNetCom(void);
   bool MessageBoxAsk(QString &msg);
+  void setWidgetStyleSheet(void);
 
 
 

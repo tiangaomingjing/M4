@@ -20,6 +20,9 @@ int main(int argc, char *argv[])
   QTranslator trans2;
   trans2.load("app_plotwave_simplchinese.qm");
   a.installTranslator(&trans2);
+  QTranslator trans3;
+  trans3.load("app_IO_simplchinese.qm");
+  a.installTranslator(&trans3);
 
   MainWindow *w=new MainWindow(splashScreen,0);
   w->show();

@@ -14,7 +14,10 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMenuBar {
+   <string notr="true">
+
+
+QMenuBar {
 	spacing: 2px; /* spacing between menu bar items */
     background-color: #F0F0F0;
 }
@@ -58,7 +61,59 @@ QToolBar {
 	background: #F0F0F0;
 	spacing: 3px; 
 	border-bottom:1 solid lightgray;
-}</string>
+}
+
+/*combobox*/
+QComboBox{
+        border-radius: 3px;
+        padding: 5px;
+        border: 1px solid gray;
+        background-color:white;
+}
+QComboBox:hover{
+        border-radius: 3px;
+        padding: 5px;
+        border: 1px solid black;
+        background-color: #cbdaf1;
+}
+QComboBox::drop-down{
+        subcontrol-origin: padding;
+        subcontrol-position: top right;
+        width: 15px; 
+        border-left-width: 1px;
+        border-left-style: solid;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        border-left-color: lightgray;
+}
+QComboBox::drop-down:hover{
+	subcontrol-origin: padding;
+	subcontrol-position: top right;
+	width: 15px; 
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+	border-left-color: black;
+}
+QComboBox::down-arrow{
+	image: url(:/image/array_down.png);
+}
+QComboBox QAbstractItemView {
+	border: 1px solid gray;
+	background-color:#E0DDDD;
+}
+QComboBox QAbstractItemView::item{
+    height:30px;
+}
+QComboBox QAbstractItemView::item:selected{
+	height:30px;
+	background-color:#567DBC;
+}
+
+
+
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -100,7 +155,7 @@ QToolBar {
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>262</width>
+         <width>253</width>
          <height>382</height>
         </rect>
        </property>
@@ -196,8 +251,8 @@ QToolBar {
   <widget class="QDockWidget" name="dock_navigation">
    <property name="minimumSize">
     <size>
-     <width>128</width>
-     <height>132</height>
+     <width>137</width>
+     <height>153</height>
     </size>
    </property>
    <attribute name="dockWidgetArea">
@@ -215,17 +270,17 @@ QToolBar {
       <number>6</number>
      </property>
      <property name="rightMargin">
-      <number>0</number>
+      <number>9</number>
      </property>
      <property name="bottomMargin">
-      <number>0</number>
+      <number>6</number>
      </property>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="rightMargin">
-          <number>9</number>
+          <number>0</number>
          </property>
          <item>
           <widget class="QPushButton" name="btn_navigation">
@@ -254,31 +309,34 @@ QToolBar {
        <item>
         <widget class="QTreeWidget" name="treeWidget">
          <property name="styleSheet">
-          <string notr="true">QTreeView {
-      show-decoration-selected: 1;
+          <string notr="true">QTreeView#treeWidget{
+	padding:2px;
+	show-decoration-selected: 1;
+	border:1px solid gray;
+	border-radius: 2px;
 }
-QTreeView::item {
+QTreeView#treeWidget::item {
 	border: 1px solid #d9d9d9;
 	border-left-color: transparent;
 	border-top-color: transparent;
 	height:30px;
 }
-QTreeView::item:hover {
+QTreeView#treeWidget::item:hover {
 	background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #e7effd, stop: 1 #cbdaf1);
 	border: 1px solid #bfcde4;
-	height:30px;
+
 }
-QTreeView::item:selected {
+QTreeView#treeWidget::item:selected{
 	border: 1px solid #567dbc;
-	height:30px;
+
 }
-QTreeView::item:selected:active{
+ QTreeView#treeWidget::item:selected:active{
 	background: #567DBC;
-	height:30px;
+
 }
-QTreeView::item:selected:!active {
+QTreeView#treeWidget::item:selected:!active {
 	background: #567DBC;
-	height:30px;
+
 }</string>
          </property>
          <column>

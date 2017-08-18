@@ -37,13 +37,14 @@
 #include <QQuickView>
 #include <QQmlContext>
 #include <QQuickItem>
-#define TEST_DEBUG 1
+#include <QStyledItemDelegate>
+#define TEST_DEBUG 0
 #define FILENAME_MODULEIO "PrmFuncIO"
 #define FILENAME_FUNCCMD "PrmFuncCmd"
 #define FILENAME_FLASHALL "FlashPrm_AllAxis"
 #define FILENAME_RAMALL "RamPrm_AllAxis"
 #define FILENAME_FUNCEXT "PrmFuncExtension"
-#define SDT_VERSION "1.1.2"
+#define SDT_VERSION "1.1.3"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -90,8 +91,8 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_quickView(NULL),
   m_userConfigProxyQml(NULL)
 {
-  m_moduleShareData.clear();
   ui->setupUi(this);
+  m_moduleShareData.clear();
   ui->dock_navigation->setMinimumSize(50,120);
   ui->progressBar->hide();
   RegisterFunction::registerAll();
@@ -129,6 +130,7 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_actConfigExit->setVisible(false);
   ui->btn_navigation->setVisible(false);
   m_actFullScreen->setVisible(false);
+  setWidgetStyleSheet();
 }
 
 MainWindow::~MainWindow()
@@ -760,7 +762,7 @@ void MainWindow::onActionResetDSPClicked()
     return ;
   }
 
-  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring","Do you want to reset device ?",QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
+  QMessageBox::StandardButton rb=QMessageBox::question(this,"Warring",tr("Do you want to reset device ?"),QMessageBox::Yes|QMessageBox::No,QMessageBox::No);
   if (rb==QMessageBox::No)
   {
     return;
@@ -1188,13 +1190,23 @@ void MainWindow::onActionRestoreFactorySettingClicked()
     else
     {
       uiStatus->warningMessge->setText(tr("Uboot .out file error !Maybe you are not in the uboot or hardwares have some problems "));
+      error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(netId)));
+      setComConnectStatus(false);
+    //  enableAllUi(true);
+      setUbootModeUi(false);
     }
   }
   else
   {
     warnnigMessage=tr("Warring : convert .out file to .ldr faild !");
     uiStatus->warningMessge->setText(warnnigMessage);
+    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(netId)));
+    setComConnectStatus(false);
+  //  enableAllUi(true);
+    setUbootModeUi(false);
   }
+  ui->progressBar->setValue(0);
+  ui->progressBar->hide();
 }
 
 void MainWindow::onActionAboutConfigClicked()
@@ -1878,7 +1890,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   QString strmodel=theconfig->model.modelName;
   for(int i=0;i<axisCount;i++)
   {
-    ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),strmodel+tr("_S%1").arg(i+1));
+    ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i+1));
   }
   ui->progressBar->setValue(12);
   DownloadDialog::delayms(20);
@@ -2331,4 +2343,9 @@ bool MainWindow::MessageBoxAsk(QString &msg)
   else
     ret=false;
   return ret;
+}
+void MainWindow::setWidgetStyleSheet()
+{
+  QStyledItemDelegate* itemDelegate = new QStyledItemDelegate(ui->combo_axis);
+  ui->combo_axis->setItemDelegate(itemDelegate);
 }

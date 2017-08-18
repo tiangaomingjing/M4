@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QTreeWidgetItemIterator>
 #include <QTreeWidgetItem>
+#include <QStyledItemDelegate>
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -25,6 +26,59 @@ MainWindow::MainWindow(QWidget *parent) :
     }
     m_datas.append(dat);
   }
+//  ui->comboBox->setFixedHeight(50);
+  QString style="\
+      QComboBox{\
+        border-radius: 3px;\
+        padding: 5px;\
+        border: 1px solid gray;\
+        background-color:white;\
+      }\
+      QComboBox:hover{\
+        border-radius: 3px;\
+        padding: 5px;\
+        border: 1px solid black;\
+        background-color: #cbdaf1;\
+      }\
+      QComboBox::drop-down{\
+        subcontrol-origin: padding;\
+        subcontrol-position: top right;\
+        width: 15px; \
+        border-left-width: 1px;\
+        border-left-style: solid;\
+        border-top-right-radius: 3px;\
+        border-bottom-right-radius: 3px;\
+        border-left-color: lightgray;\
+      }\
+      QComboBox::drop-down:hover{\
+        subcontrol-origin: padding;\
+        subcontrol-position: top right;\
+        width: 15px; \
+        border-left-width: 1px;\
+        border-left-style: solid;\
+        border-top-right-radius: 3px;\
+        border-bottom-right-radius: 3px;\
+        border-left-color: black;\
+      }\
+      QComboBox::down-arrow{\
+        image: url(:/array_down.png);\
+      }\
+      QComboBox QAbstractItemView {\
+          border: 1px solid gray;\
+          background-color:yellow;\
+      }\
+      QAbstractItemView::item{\
+      padding:5px;\
+      height:30px;\
+      }\
+      QAbstractItemView::item:selected{\
+      padding:5px;\
+      height:30px;\
+      background-color:#567DBC;\
+      }";
+      ui->comboBox->setStyleSheet(style);
+    QStyledItemDelegate* itemDelegate = new QStyledItemDelegate(ui->comboBox);
+    ui->comboBox->setItemDelegate(itemDelegate);
 
 }
 
