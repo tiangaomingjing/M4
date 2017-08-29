@@ -429,7 +429,6 @@ Item {
                 console.log(qsTr("公司表currentIndexChange"));
                 console.log("currenID:"+m_companyListModel.get(currentIndex).Id);
                 m_motorNameListTableModel.setFilter(qsTr("CompanyId=%1").arg(m_companyListModel.get(currentIndex).Id));
-
             }
             Component.onCompleted:{
                 //更新公司列表模型参数

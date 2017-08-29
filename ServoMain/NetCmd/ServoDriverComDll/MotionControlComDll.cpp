@@ -15,7 +15,7 @@
 #include "BaseReturn_def.h"
 // #include "PlotWave.h"
 // #include "ParseHex.h"
-// #include "FirmwareDl.h"
+#include "FPGAUpdate.h"
 // #include "hex2ldr.h"
 // #include "serialport.h"
 // #include "eepromOpt.h"
@@ -64,6 +64,7 @@ SERVODRIVERCOMDLL_API int16 GT_RN_Open(void(*tpfUpdataProgressPt)(void*, int16*)
 			return Unlock(rtn);
 		}
 	}
+
 	progress = 100;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 	if (g_RnMotionCom == NULL)
@@ -118,4 +119,69 @@ SERVODRIVERCOMDLL_API short GT_RN_SendPci(void* gPci, Uint8 station_id)
 		return g_RnMotionCom->SendPci((TPci*)gPci, station_id);
 	}
 	return RTN_OBJECT_UNCREATED;
+}
+
+SERVODRIVERCOMDLL_API short  RN_ComHandler(Uint8 mode, Uint8 cmd, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id,
+	Uint8 des_c, Uint8 needReq /*= TRUE*/, Uint8 addr_mod /*= 1*/, Uint8 wait_level /*= RN_OP_WAIT_DEFAULT*/, Uint8 dsitance /*= 0xf0*/)
+{
+
+	if (g_RnMotionCom)
+	{
+		return (g_RnInterface->RnNetCom(mode, cmd, byte_addr, pData, word_num, des_id, des_c, needReq, addr_mod, wait_level, dsitance));
+	}
+	return RTN_OBJECT_UNCREATED;
+}
+
+SERVODRIVERCOMDLL_API short  RN_GetCns(COMMON_NET_STATUS* pCns, Uint8 dsitance)
+{
+	if (g_RnMotionCom)
+	{
+		return (g_RnInterface->RnNetGetCns(pCns, dsitance));
+	}
+	return RTN_OBJECT_UNCREATED;
+}
+
+SERVODRIVERCOMDLL_API short RN_FpgaUpate(char* filePath, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 stationId /*= 0xf0*/)
+{
+	int16 progress;
+	void* ptr = ptrv;
+// 	g_RnInterface = new CRingNetInterface;
+// 	CComBase* pData = g_RnInterface;
+// 	pData->ComRdFpgaHandle(0, &progress, 1, 0, NULL);
+
+	if (Net_Rt_Lock_Err == TryLock())
+	{
+		return Net_Rt_Lock_Err;
+	}
+	CFPGAUpdate firmware;
+	if (g_RnInterface == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+	CComBase* pComBase = g_RnInterface;
+	firmware.m_pCom = &pComBase;
+	firmware.m_des_id = stationId;
+	//百分比进度
+	progress = 0;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	int16 rtn = 0;
+	//复位变量
+
+	//百分比进度
+	progress = 5;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	rtn = firmware.WriteFPGAFileToFlash(filePath, tpfUpdataProgressPt, ptr, progress);
+
+	if (rtn != 0)
+	{
+		return Unlock(rtn);
+	}
+
+	//百分比进度
+	progress = 100;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	return Unlock(rtn);
 }

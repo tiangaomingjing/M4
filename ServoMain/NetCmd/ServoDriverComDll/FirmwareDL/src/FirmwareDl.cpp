@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Firmware download 		 									//
 //	file				:	FirmwareDl.cpp												//
 //	Description			:	use for Firmware download									//
@@ -36,10 +36,10 @@ int16 CFirmwareDL::ResetVar()
 	return 0;
 }
 
-//è®¾ç½®å‘½ä»¤æ›´æ–°å¯åŠ¨ä½
+//ÉèÖÃÃüÁî¸üĞÂÆô¶¯Î»
 int16 CFirmwareDL::SetRemoteUpdataStartbit(int16 com_type, int16 stationId)
 {
-	int16 data		= 1; //bit0ç½®1
+	int16 data		= 1; //bit0ÖÃ1
 	int16 com_addr;
 	int16 base_addr;	
 	int16 comAddr;
@@ -66,7 +66,7 @@ int16 CFirmwareDL::SetRemoteUpdataStartbit(int16 com_type, int16 stationId)
 }
 int16 CFirmwareDL::CheckRemoteUpdataState(int16 com_type, int16 stationId,int32 delaytimes /*= DELAY_TIMES*/)
 {
-	//æ£€æŸ¥å‘½ä»¤æ˜¯å¦å®Œæˆ
+	//¼ì²éÃüÁîÊÇ·ñÍê³É
 	int16 iRet;
 	int16 data;	
 	int16 com_addr;
@@ -90,7 +90,7 @@ int16 CFirmwareDL::CheckRemoteUpdataState(int16 com_type, int16 stationId,int32 
 	
 	while (delaytimes--)
 	{
-		iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, &data, comNum, stationId);////æŸ¥è¯¢å®Œæˆæ ‡å¿—
+		iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, &data, comNum, stationId);////²éÑ¯Íê³É±êÖ¾
 		if (iRet == 0)
 		{
 			if ((data & 0x0004)) //bit2 finish
@@ -103,25 +103,25 @@ int16 CFirmwareDL::CheckRemoteUpdataState(int16 com_type, int16 stationId,int32 
 
 	if (!bSuccess)
 	{
-		return -2;
+		return RTN_UPDATE_WAIT_OVERTIME;
 	}
 
 	if (0 == iRet)
 	{
 		if (data & 0x0002) // bit1 error
 		{
-			return -3;
+			return RTN_UPDATE_FPGA_OP_ERR;
 		}
 	}
 	return iRet;
 }
 int16 CFirmwareDL::SetRemoteUpdataReadRequest(int16 com_type,Uint32 flash_addr, Uint16 iLength, int16 stationId)
 {
-	//é¦–å…ˆå†™å…¥è¯»å‘½ä»¤
+	//Ê×ÏÈĞ´Èë¶ÁÃüÁî
 	int16 iRet;
 	Uint8 data[30]			= { 0 };
 
-	//å‘½ä»¤
+	//ÃüÁî
 	data[0]					= CMD_READ;
 
 	int16 addrLo			= LOWORD(flash_addr);
@@ -130,7 +130,7 @@ int16 CFirmwareDL::SetRemoteUpdataReadRequest(int16 com_type,Uint32 flash_addr, 
 	int16 addrHi			= HIWORD(flash_addr);
 	Uint8 addrHiLo			= LOBYTE(addrHi);
 
-	//å–24bitåœ°å€
+	//È¡24bitµØÖ·
 	data[1]					= addrLoLo;
 	data[2]					= addrLoHi;
 	data[3]					= addrHiLo;
@@ -138,7 +138,7 @@ int16 CFirmwareDL::SetRemoteUpdataReadRequest(int16 com_type,Uint32 flash_addr, 
 	Uint8 lengthLo			= LOBYTE(iLength * 2);
 	Uint8 lengthHi			= HIBYTE(iLength * 2);
 
-	//é•¿åº¦
+	//³¤¶È
 	data[4]					= lengthLo;
 	data[5]					= lengthHi;
 
@@ -162,23 +162,23 @@ int16 CFirmwareDL::SetRemoteUpdataReadRequest(int16 com_type,Uint32 flash_addr, 
 	}
 	int16 comNum			= 3;
 
-	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId); //å†™å…¥è¯»å–å‘½ä»¤
+	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId); //Ğ´Èë¶ÁÈ¡ÃüÁî
 	if(iRet!=0)
 	{
-		return -1;
+		return iRet;
 	}
 
-	//è®¾ç½®å‘½ä»¤æ›´æ–°å¯åŠ¨ä½
+	//ÉèÖÃÃüÁî¸üĞÂÆô¶¯Î»
 	iRet = SetRemoteUpdataStartbit(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -2;
+		return iRet;
 	}
-	//æ£€æŸ¥å‘½ä»¤æ˜¯å¦å®Œæˆ
+	//¼ì²éÃüÁîÊÇ·ñÍê³É
 	iRet = CheckRemoteUpdataState(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -3;
+		return iRet;
 	}
 	return iRet;
 }
@@ -203,25 +203,25 @@ int16 CFirmwareDL::ProtectOff(int16 com_type, int16 stationId)
 		comAddr = base_addr + (com_addr);
 	}
 	int16 comNum			= 3;
-	data[0]					= CMD_PRET_OFF;					//å‘½ä»¤
-	data[4]					= 1;							//lenthå†™1
+	data[0]					= CMD_PRET_OFF;					//ÃüÁî
+	data[4]					= 1;							//lenthĞ´1
 
-	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId);//å†™å…¥protect off å‘½ä»¤
+	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId);//Ğ´Èëprotect off ÃüÁî
 	if(iRet!=0)
 	{
-		return -1;
+		return iRet;
 	}
 
 	iRet = SetRemoteUpdataStartbit(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -2;
+		return iRet;
 	}
 
 	iRet = CheckRemoteUpdataState(com_type, stationId,10000);
 	if(iRet!=0)
 	{
-		return -3;
+		return iRet;
 	}
 	return iRet;
 }
@@ -246,25 +246,25 @@ int16 CFirmwareDL::ProtectOn(int16 com_type, int16 stationId)
 		comAddr = base_addr + (com_addr);
 	}
 	int16 comNum		= 3;
-	data[0]				= CMD_PRET_ON;					//å‘½ä»¤
-	data[4]				= 1;							//lenthå†™1
+	data[0]				= CMD_PRET_ON;					//ÃüÁî
+	data[4]				= 1;							//lenthĞ´1
 
-	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId);//å†™å…¥protect on å‘½ä»¤
+	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId);//Ğ´Èëprotect on ÃüÁî
 	if(iRet!=0)
 	{
-		return -1;
+		return iRet;
 	}
 
 	iRet = SetRemoteUpdataStartbit(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -2;
+		return iRet;
 	}
 
 	iRet = CheckRemoteUpdataState(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -3;
+		return iRet;
 	}
 	return iRet;
 }
@@ -290,23 +290,23 @@ int16 CFirmwareDL::EraseData(int16 com_type, void(*tpfUpdataProgressPt)(void*, i
 		comAddr = base_addr + (com_addr);
 	}
 	int16 comNum		= 3;
-	data[0]				= CMD_ERASE;					//å‘½ä»¤
-	data[4]				= 1;							//lenthå†™1
+	data[0]				= CMD_ERASE;					//ÃüÁî
+	data[4]				= 1;							//lenthĞ´1
 
-	iRet				= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId); //å†™å…¥erase å‘½ä»¤
+	iRet				= g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(data), comNum, stationId); //Ğ´Èëerase ÃüÁî
 	if(iRet!=0)
 	{
-		return -1;
+		return iRet;
 	}
 
 	iRet = SetRemoteUpdataStartbit(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -2;
+		return iRet;
 	}
 
   int32 num = 1000000;
-  //!progressé«˜16ä½ç½®1ï¼Œç”¨æ¥ç»™ç•Œé¢æç¤ºå½“å‰æ­£å¤„äºæ“¦é™¤çŠ¶æ€
+  //!progress¸ß16Î»ÖÃ1£¬ÓÃÀ´¸ø½çÃæÌáÊ¾µ±Ç°Õı´¦ÓÚ²Á³ı×´Ì¬
   int16 highSet;
   highSet = (int16)(1 << 15);
   for (int32 i = 0; i < num; i++)
@@ -321,26 +321,29 @@ int16 CFirmwareDL::EraseData(int16 com_type, void(*tpfUpdataProgressPt)(void*, i
       if ((progress&(~highSet))>100)
         progress = highSet;
 //      std::cout << "erase num=" << i << "  progress=" << progress << "   progress&(~highSet)=" << (progress&(~highSet))<<std::endl;
-      (*tpfUpdataProgressPt)(ptrv, &progress);
+      if(tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptrv, &progress);
     }
   }
 
   //iRet = CheckRemoteUpdataState(com_type, stationId,100000000);
 	if(iRet!=0)
 	{
-		return -3;
+		return iRet;
 	}
 	return iRet;
 }
 int16 CFirmwareDL::GetFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Getbuf, Uint16 iLength, int16 stationId)
 {
 	int16 iRet;
-
-	//è®¾ç½®è¯»è¯·æ±‚
+	if (iLength > 120)
+	{
+		return RTN_PARAM_OVERFLOW;
+	}
+	//ÉèÖÃ¶ÁÇëÇó
 	iRet = SetRemoteUpdataReadRequest(com_type,flash_addr, iLength, stationId);
 	if (iRet != 0)
 	{
-		return -1;
+		return iRet;
 	}
 
 	int16 com_addr;
@@ -351,7 +354,7 @@ int16 CFirmwareDL::GetFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Get
 	{
 		com_addr = REMOTE_FPGA_DATA_START;
 		base_addr = FPGA_DSPA_BASEADDR;
-		comAddr = base_addr + (com_addr)+3; //åœ°å€ä¸åŒï¼Ÿ
+		comAddr = base_addr + (com_addr)+3; //µØÖ·²»Í¬£¿
 	}
 	else if (com_type == GTSD_COM_TYPE_RNNET)
 	{
@@ -359,26 +362,34 @@ int16 CFirmwareDL::GetFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Get
 		base_addr = FPGA_RN_RMT_START_OFST;
 		comAddr = base_addr + (com_addr)+6;
 	}
-	int16 comNum		= 1;
+	int16 comNum = iLength;
 
-	for (int16 i = 0; i < iLength; ++i)
+	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, Getbuf, comNum, stationId);
+	if (iRet)
 	{
-		//è¯»æ•°æ®
-		iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, (int16*)(&Getbuf[i * 2]), comNum, stationId);
-		if (0 != iRet)
-		{
-			return -1;
-		}
-		comAddr++;
+		return iRet;
 	}
+// 	for (int16 i = 0; i < iLength; ++i)
+// 	{
+// 		//¶ÁÊı¾İ
+// 		iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_READ, comAddr, (int16*)(&Getbuf[i]), comNum, stationId);
+// 		if (0 != iRet)
+// 		{
+// 			return -1;
+// 		}
+// 		comAddr+=2;
+// 	}
 	return 0;
 }
 int16 CFirmwareDL::SendFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Sendbuf, Uint16 iLength, int16 stationId)
 {
 	int16 iRet;
 	Uint8 data[300]		= {0};
-
-	//å‘½ä»¤
+	if (iLength > 120)
+	{
+		return RTN_PARAM_OVERFLOW;
+	}
+	//ÃüÁî
 	data[0]				= CMD_WRITE;
 
 	int16 addrLo		= LOWORD(flash_addr);
@@ -387,7 +398,7 @@ int16 CFirmwareDL::SendFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Se
 	int16 addrHi		= HIWORD(flash_addr);
 	Uint8 addrHiLo		= LOBYTE(addrHi);
 
-	//å–24bitåœ°å€
+	//È¡24bitµØÖ·
 	data[1]				= addrLoLo;
 	data[2]				= addrLoHi;
 	data[3]				= addrHiLo;
@@ -395,11 +406,11 @@ int16 CFirmwareDL::SendFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Se
 	Uint8 lengthLo		= LOBYTE(iLength * 2);
 	Uint8 lengthHi		= HIBYTE(iLength * 2);
 
-	//é•¿åº¦
+	//³¤¶È
 	data[4]				= lengthLo;
 	data[5]				= lengthHi;
 
-	//å°†æ•°æ®æ”¾åˆ°bufferä¸­ä»6å¼€å§‹
+	//½«Êı¾İ·Åµ½bufferÖĞ´Ó6¿ªÊ¼
 	memcpy_s(&data[6], iLength*sizeof(Uint16),Sendbuf, iLength*sizeof(Uint16));
 
 	int16 com_addr;
@@ -420,9 +431,10 @@ int16 CFirmwareDL::SendFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Se
 	}
 	int16 comNum		= 1;
 
+
 	//for (int16 i = 0; i < iLength + 3;++i)
 	//{
-	//	//å‘é‡Œé¢å‹æ•°æ®
+	//	//ÏòÀïÃæÑ¹Êı¾İ
 	//	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(&data[i*2]), comNum, stationId);
 	//	if (0 != iRet)
 	//	{
@@ -430,43 +442,43 @@ int16 CFirmwareDL::SendFpgaFlashData(int16 com_type,Uint32 flash_addr, int16 *Se
 	//	}
 	//	if (com_type == GTSD_COM_TYPE_NET)
 	//	{
-	//		//shortåœ°å€
+	//		//shortµØÖ·
 	//		comAddr++;
 	//	}
 	//	else if (com_type == GTSD_COM_TYPE_RNNET)
 	//	{
-	//		//byteåœ°å€
+	//		//byteµØÖ·
 	//		comAddr += 2;
 	//	}
 
 	//}
 
-	//æé«˜æ•ˆç‡ï¼Œä¸€æ¬¡å†™200byte+6byteåŒ…å¤´
-	//å‘é‡Œé¢å‹æ•°æ®
+	//Ìá¸ßĞ§ÂÊ£¬Ò»´ÎĞ´200byte+6byte°üÍ·
+	//ÏòÀïÃæÑ¹Êı¾İ
 	iRet = g_AbsCom->GTSD_Com_Firmware_handler(com_type, GTSD_COM_MODE_WRITE, comAddr, (int16*)(&data[0]), (iLength + 3), stationId);
 	if (0 != iRet)
 	{
-		return -1;
+		return iRet;
 	}
 	
 
 	iRet = SetRemoteUpdataStartbit(com_type, stationId);
 	if(iRet!=0)
 	{
-		return -2;
+		return iRet;
 	}
 
   iRet = CheckRemoteUpdataState(com_type, stationId,1000);
 	if(iRet!=0)
 	{
-		return -3;
+		return iRet;
 	}
 
 	return 0;
 }
 int32 CFirmwareDL::CheckFFNumber(short* buffer,int lenth)
 {
-  //æŸ¥æ‰¾è¿ç»­çš„0xff
+  //²éÕÒÁ¬ĞøµÄ0xff
 	int32 ffnum = 0;
 	for(int32 i = 0;i<lenth;i++)
 	{
@@ -480,53 +492,70 @@ int32 CFirmwareDL::CheckFFNumber(short* buffer,int lenth)
 int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress, int16 stationId)
 {
     void* ptr = ptrv;
-	int iRet;
-	iRet = ProtectOff(com_type, stationId);//å…³é—­å†™ä¿æŠ¤
+	int iRet; 
+	iRet = ProtectOff(com_type, stationId);//¹Ø±ÕĞ´±£»¤
 	if (iRet != 0)
 	{
-		return 1;
+		return iRet;
 	}
 
-  iRet = EraseData(com_type, tpfUpdataProgressPt,ptr,progress, stationId); //æ¸…é™¤fpga flash
+  iRet = EraseData(com_type, tpfUpdataProgressPt,ptr,progress, stationId); //Çå³ıfpga flash
 	if (iRet != 0)
 	{
 //		ProtectOn(com_type, stationId);
-		return 2;
+		return iRet;
 	}
 
-	//ç™¾åˆ†æ¯”è¿›åº¦
-    progress = 10;
-	(*tpfUpdataProgressPt)(ptr, &progress);
+// 	//  [8/2/2017 googol]
+// 	{
+// 		int16 tx_buffer[1000] = {0};
+// 		int16 rx_buffer[1000] = {0};
+// 		for (int i = 0; i < 1000; i++)
+// 		{
+// 			tx_buffer[i] = i;
+// 		}
+// 		iRet = SendFpgaFlashData(com_type, 10, tx_buffer, 100, 1);//the param len must less than 127
+// 		iRet = GetFpgaFlashData(com_type, 10, rx_buffer, 100, 1);
+// 		for (int i = 0; i < 1000; i++)
+// 		{
+// 			tx_buffer[i] = i;
+// 		}
+// 	}
 
-	//æ‰“å¼€æ–‡ä»¶
+	//  [8/2/2017 googol]
+	//°Ù·Ö±È½ø¶È
+    progress = 10;
+	if (tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptr, &progress);
+
+	//´ò¿ªÎÄ¼ş
 	fstream file;
 	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
 	if (!file)
 	{
 //		ProtectOn(com_type, stationId);
-		return 4; //æ–‡ä»¶æ‰“å¼€é”™è¯¯
+		return RTN_FILE_CREATE_FAIL; //ÎÄ¼ş´ò¿ª´íÎó
 	}
 
-	//é¦–å…ˆå°†æ•°æ®è¯»å‡ºæ¥
+	//Ê×ÏÈ½«Êı¾İ¶Á³öÀ´
 	int16 buffer[BUF_LEN]		= {0};
 	int16 real_read_lenth		= 0;
-	int16 finish_flag			= 0;//æ˜¯å¦è¯»å–å®Œæˆæ ‡å¿—
+	int16 finish_flag			= 0;//ÊÇ·ñ¶ÁÈ¡Íê³É±êÖ¾
 	Uint32 flash_addr			= 0;
 	Uint32 sum_byte_lenth		= 0;
-  Uint32 index                = 0;
-  Uint32 times                = 0;//éœ€è¦è¯»å–çš„æ¬¡æ•°
+    Uint32 index                = 0;
+    Uint32 times                = 0;//ĞèÒª¶ÁÈ¡µÄ´ÎÊı
 	Uint32 times_bk				= 0; 
     while(!finish_flag)
     {
-        //è¯»å–BUF_LENä¸ªæ•°æ®ï¼Œè¿”å›çœŸæ­£è¯»å–çš„æ•°æ®ï¼Œè¯¥æ¡ä»¶çš„å‰ææ˜¯åé¢çš„ffffè¶³å¤Ÿå¤š
+        //¶ÁÈ¡BUF_LEN¸öÊı¾İ£¬·µ»ØÕæÕı¶ÁÈ¡µÄÊı¾İ£¬¸ÃÌõ¼şµÄÇ°ÌáÊÇºóÃæµÄffff×ã¹»¶à
         file.read((int8*)&buffer,sizeof(Uint16)*BUF_LEN);
 
         sum_byte_lenth += 2 * BUF_LEN;
 
-        //åˆ¤æ–­å…¶ä¸­çš„æ•°æ®æ˜¯å¦æœ‰è¿ç»­çš„FF_LENä¸ª0xffff
+        //ÅĞ¶ÏÆäÖĞµÄÊı¾İÊÇ·ñÓĞÁ¬ĞøµÄFF_LEN¸ö0xffff
         int32 number = CheckFFNumber(buffer, BUF_LEN);
 
-        //å¦‚æœå…¨æ˜¯0xffé‚£ä¹ˆå°±è¯´æ˜å·²ç»è¯»å–åˆ°æœ€åçš„æ— ç”¨åŒºåŸŸäº†
+        //Èç¹ûÈ«ÊÇ0xffÄÇÃ´¾ÍËµÃ÷ÒÑ¾­¶ÁÈ¡µ½×îºóµÄÎŞÓÃÇøÓòÁË
         if(number == BUF_LEN)
         {
             finish_flag = 1;
@@ -539,11 +568,11 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 		index++;
 		if (index > 1400)
 		{
-      //ç™¾åˆ†æ¯”
+			//°Ù·Ö±È
       if (index % 20 == 0)
       {
-        progress = 13;
-        (*tpfUpdataProgressPt)(ptr, &progress);
+			progress = 13;
+			if(tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptr, &progress);
       }
 		}
     }
@@ -553,95 +582,245 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 	times_bk	= times;
 	file.close();
 
-	//ç™¾åˆ†æ¯”
+	//°Ù·Ö±È
     progress = 15;
-    (*tpfUpdataProgressPt)(ptr, &progress);
+	if (tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptr, &progress);
 
-	//æ‰“å¼€æ–‡ä»¶
+	//´ò¿ªÎÄ¼ş
 	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
 	if (!file)
 	{
 //		ProtectOn(com_type, stationId);
-		return 4; //æ–‡ä»¶æ‰“å¼€é”™è¯¯
+		return 4; //ÎÄ¼ş´ò¿ª´íÎó
 	}
-  int retSend = 0;
-  int retValue = 0;
-	while (times!=0)
+	int retSend = 0;
+	int retValue = 0;
+	while (times != 0)
 	{
-		//è¯»å–BUF_LENä¸ªæ•°æ®ï¼Œè¿”å›çœŸæ­£è¯»å–çš„æ•°æ®ï¼Œè¯¥æ¡ä»¶çš„å‰ææ˜¯åé¢çš„ffffè¶³å¤Ÿå¤š
-		file.read((int8*)&buffer,sizeof(Uint16)*BUF_LEN);
+		//¶ÁÈ¡BUF_LEN¸öÊı¾İ£¬·µ»ØÕæÕı¶ÁÈ¡µÄÊı¾İ£¬¸ÃÌõ¼şµÄÇ°ÌáÊÇºóÃæµÄffff×ã¹»¶à
+		file.read((char*)&buffer, sizeof(Uint16)*BUF_LEN);
 
-		//æ”¾åœ¨å¤–é¢ä¸ºäº†è¯»å–åˆ°å…¨æ˜¯ffffçš„æ—¶å€™è¿˜æ˜¯å†™å…¥ä¸€æ¬¡
-		for(int i = 0;i<2;i++)
+		//·ÅÔÚÍâÃæÎªÁË¶ÁÈ¡µ½È«ÊÇffffµÄÊ±ºò»¹ÊÇĞ´ÈëÒ»´Î
+		for (int i = 0; i < 2; i++)
 		{
-      //å°†æ•°æ®å†™å…¥,ä¸€æ¬¡å†™100ä¸ªshort
-      retSend=SendFpgaFlashData(com_type,flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
-      //å†™ä¸æˆåŠŸå†å°è¯•å†™å¤šä¸€æ¬¡
-      if (retSend!=0)
-        retSend = SendFpgaFlashData(com_type, flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
-      if (retSend!=0)
-      {
-        retValue = -1;
-        times = 1;
-        break;
-      }
-      //åœ°å€å¢åŠ 
-			flash_addr += (2*(BUF_LEN>>1));
+			//½«Êı¾İĞ´Èë,Ò»´ÎĞ´100¸öshort
+			retSend = SendFpgaFlashData(com_type, flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
+			//Ğ´²»³É¹¦ÔÙ³¢ÊÔĞ´¶àÒ»´Î
+			if (retSend != 0)
+				retSend = SendFpgaFlashData(com_type, flash_addr, &buffer[i*(BUF_LEN >> 1)], BUF_LEN / 2, stationId);//the param len must less than 127.
+			if (retSend != 0)
+			{
+				retValue = retSend;
+				times = 1;
+				break;
+			}
+			//µØÖ·Ôö¼Ó
+			flash_addr += (2 * (BUF_LEN >> 1));
 		}
-    index++;
-   
-    if (index % 10 == 0)
-    {
-      progress = 15 + (int16)((((double)index) / times_bk) * 85);
-      if (progress >= 100)
-      {
-        progress = 100;
-      }
-      (*tpfUpdataProgressPt)(ptr, &progress);
-    }
-        
+		index++;
+
+		if (index % 10 == 0)
+		{
+			progress = 15 + (int16)((((double)index) / times_bk) * 35);
+			if (progress >= 50)
+			{
+				progress = 50;
+			}
+			if (tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptr, &progress);
+		}
+
 		times--;
 	}
 	file.close();
+	if (retValue)
+	{
+		progress = 100;
+		if (tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptr, &progress);
+		return retValue;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	////¶ÁÊıÊı¾İ½øĞĞĞ£Ñé
+	//´ò¿ªÎÄ¼ş
+	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
+	if (!file)
+	{
+		//		ProtectOn(com_type, stationId);
+		return RTN_FILE_CREATE_FAIL; //ÎÄ¼ş´ò¿ª´íÎó
+	}
 
-	//å±è”½è¯¥éƒ¨åˆ†ï¼Œä»¿çœŸå™¨æ— æ³•çƒ§å†™ã€‚
-	//iRet = ProtectOn(com_type, stationId);//openå†™ä¿æŠ¤
+	times = times_bk;
+	flash_addr = 0;
+	index = 0;
+	while (times != 0)
+	{
+		int16 rx_buffer[BUF_LEN / 2];
+		//¶ÁÈ¡BUF_LEN¸öÊı¾İ£¬·µ»ØÕæÕı¶ÁÈ¡µÄÊı¾İ£¬¸ÃÌõ¼şµÄÇ°ÌáÊÇºóÃæµÄffff×ã¹»¶à
+		file.read((char*)buffer, sizeof(Uint16)*BUF_LEN);
+		
+		//·ÅÔÚÍâÃæÎªÁË¶ÁÈ¡µ½È«ÊÇffffµÄÊ±ºò»¹ÊÇĞ´ÈëÒ»´Î
+		for (int i = 0; i < 2; i++)
+		{
+			//½«Êı¾İĞ´Èë,Ò»´ÎĞ´100¸öshort
+			retValue = GetFpgaFlashData(com_type, flash_addr, rx_buffer, BUF_LEN / 2, stationId);//the param len must less than 127.
+			//Ğ´²»³É¹¦ÔÙ³¢ÊÔĞ´¶àÒ»´Î
+			if (retValue != 0)
+				retValue = GetFpgaFlashData(com_type, flash_addr, rx_buffer, BUF_LEN / 2, stationId);//the param len must less than 127.
+			if (retValue != 0)
+			{
+				times = 1;
+				break;
+			}
+			int check_cnt = 0;
+			for (int j = 0; j < BUF_LEN / 2;j++)
+			{
+				if (rx_buffer[j] != buffer[i*(BUF_LEN / 2) + j])
+				{
+					if (check_cnt == 0) //try read once time
+					{
+						check_cnt++;
+						retValue = GetFpgaFlashData(com_type, flash_addr, rx_buffer, BUF_LEN / 2, stationId);//the param len must less than 127.
+						if (retValue != 0)
+						{
+							break;
+						}
+						else
+						{
+							j--;
+							continue;
+						}
+					}
+					else
+					{
+						retValue = RTN_UPDATE_CAMPARE_ERR;
+						break;
+					}
+				}
+			}
+			if (retValue)
+			{
+				break;
+			}
+			//µØÖ·Ôö¼Ó
+			flash_addr += (2 * (BUF_LEN >> 1));
+		}
+		if (retValue)
+		{
+			break;
+		}
+		index++;
+
+		if (index % 10 == 0)
+		{
+			progress = 50 + (int16)((((double)index) / times_bk) * 50);
+			if (progress >= 100)
+			{
+				progress = 100;
+			}
+			if (tpfUpdataProgressPt)(*tpfUpdataProgressPt)(ptr, &progress);
+		}
+
+		times--;
+	}
+	file.close();
+	//ÆÁ±Î¸Ã²¿·Ö£¬·ÂÕæÆ÷ÎŞ·¨ÉÕĞ´¡£
+	//iRet = ProtectOn(com_type, stationId);//openĞ´±£»¤
 	//if (iRet != 0)
 	//{
 	//	return 6;
 	//}
-  return retValue;
+	return retValue;
 }
 
 int16 CFirmwareDL::ReadFPGADataToFile(int16 com_type, string FileName, Uint32 Bytelenth, int16 stationId)
 {
 	if (Bytelenth == 0)
 	{
-		return -1;
+		return RTN_PACKET_ERR;
 	}
 	Uint32 flash_addr = 0;
-	int16* buffer = new int16[Bytelenth >> 1];
-	int16* buffer_old = new int16[Bytelenth]; //å› ä¸ºå†™ä¸‹å»çš„æ¯ä¸ª16bitæ•°æ®å äº†32bit
-	
-	//æ¯æ¬¡è¯»å–100ä¸ªshort
-	for (Uint32 i = 0; i < (Bytelenth / (BUF_LEN));++i)
-	{
-		GetFpgaFlashData(com_type, flash_addr, &buffer_old[i*(BUF_LEN >> 1)], (BUF_LEN >> 1), stationId);//the param len must less than 127.
-		//åœ°å€å¢åŠ 
-		flash_addr += (2 * (BUF_LEN >> 1));
-	}
+	int16 rx_buffer[100];
+	int16 rx_buffer_tmp[100];
+	int rtn = 0;
+	Uint16 iLength;
+	const Uint16 MAX_WORD_NUM = 100;
+	int err_cnt = 0;
 
-	for (Uint32 i = 0; i < (Bytelenth >> 1);++i)
-	{
-		buffer[i] = buffer_old[i * 2];
-	}
-	//æ‰“å¼€æ–‡ä»¶
 	fstream file;
 	file.open(FileName.c_str(), ios::in | ios::out | ios::trunc | ios::binary);
-	file.write((int8*)buffer, Bytelenth);
-	file.close();
 
-	delete buffer;
-	delete buffer_old;
-	return 0;
+	while (flash_addr < Bytelenth)
+	{
+		if (Bytelenth - flash_addr > (MAX_WORD_NUM*2))
+		{
+			iLength = MAX_WORD_NUM;
+		}
+		else
+		{
+			iLength = Uint16(((Bytelenth - flash_addr) + 1) >> 1);
+		}
+		rtn = GetFpgaFlashData(com_type, flash_addr, rx_buffer, iLength, stationId);//the param len must less than 127.
+		if (rtn)
+		{
+			rtn = GetFpgaFlashData(com_type, flash_addr, rx_buffer, iLength, stationId);//the param len must less than 127.
+			if (rtn) break;
+		}
+
+		rtn = GetFpgaFlashData(com_type, flash_addr, rx_buffer_tmp, iLength, stationId);//the param len must less than 127.
+		if (rtn)
+		{
+			rtn = GetFpgaFlashData(com_type, flash_addr, rx_buffer_tmp, iLength, stationId);//the param len must less than 127.
+			if (rtn) break;
+		}
+		for (int i = 0; i < iLength;i++)
+		{
+			if (rx_buffer_tmp[i] != rx_buffer[i]) //check_err
+			{
+				err_cnt++;
+				break;
+			}
+		}
+		if (err_cnt > 1) //try read two time, and err.
+		{
+			rtn = RTN_UPDATE_CAMPARE_ERR;
+			break;
+		}
+		else //check ok
+		{
+			err_cnt = 0;
+			file.write((int8*)rx_buffer, iLength*2);
+			flash_addr = flash_addr + iLength * 2;
+		}
+	}
+
+	file.close();
+	return rtn;
+// 	if (Bytelenth == 0)
+// 	{
+// 		return -1;
+// 	}
+// 	Uint32 flash_addr = 0;
+// 	int16* buffer = new int16[Bytelenth >> 1];
+// 	int16* buffer_old = new int16[Bytelenth]; //ÒòÎªĞ´ÏÂÈ¥µÄÃ¿¸ö16bitÊı¾İÕ¼ÁË32bit
+// 	
+// 	//Ã¿´Î¶ÁÈ¡100¸öshort
+// 	for (Uint32 i = 0; i < (Bytelenth / (BUF_LEN));++i)
+// 	{
+// 		GetFpgaFlashData(com_type, flash_addr, &buffer_old[i*(BUF_LEN >> 1)], (BUF_LEN >> 1), stationId);//the param len must less than 127.
+// 		//µØÖ·Ôö¼Ó
+// 		flash_addr += (2 * (BUF_LEN >> 1));
+// 	}
+// 
+// 	for (Uint32 i = 0; i < (Bytelenth >> 1);++i)
+// 	{
+// 		buffer[i] = buffer_old[i * 2];
+// 	}
+// 	//´ò¿ªÎÄ¼ş
+// 	fstream file;
+// 	file.open(FileName.c_str(), ios::in | ios::out | ios::trunc | ios::binary);
+// 	file.write((int8*)buffer, Bytelenth);
+// 	file.close();
+// 
+// 	delete buffer;
+// 	delete buffer_old;
+// 	return 0;
 }

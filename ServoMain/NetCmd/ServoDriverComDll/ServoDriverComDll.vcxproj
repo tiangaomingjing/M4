@@ -21,6 +21,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Static</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -86,9 +87,11 @@
   <ItemGroup>
     <ClInclude Include="AbsCom\include\AbsCom.h" />
     <ClInclude Include="Cmd\include\ST_GTSD_Cmd.h" />
+    <ClInclude Include="ComBase.h" />
     <ClInclude Include="DeviceDataBase.h" />
     <ClInclude Include="eeprom\include\eepromOpt.h" />
     <ClInclude Include="FirmwareDL\include\FirmwareDl.h" />
+    <ClInclude Include="FPGAUpdate.h" />
     <ClInclude Include="MotionControlComDll.h" />
     <ClInclude Include="MotionCtrlCom.h" />
     <ClInclude Include="NetCom\include\BaseReturn_def.h" />
@@ -132,6 +135,7 @@
   <ItemGroup>
     <ClCompile Include="AbsCom\src\AbsCom.cpp" />
     <ClCompile Include="Cmd\src\ST_GTSD_Cmd.cpp" />
+    <ClCompile Include="ComBase.cpp" />
     <ClCompile Include="DeviceDataBase.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -143,6 +147,7 @@
     </ClCompile>
     <ClCompile Include="eeprom\src\eepromOpt.cpp" />
     <ClCompile Include="FirmwareDL\src\FirmwareDl.cpp" />
+    <ClCompile Include="FPGAUpdate.cpp" />
     <ClCompile Include="MotionControlComDll.cpp" />
     <ClCompile Include="MotionCtrlCom.cpp" />
     <ClCompile Include="NetCom\src\Net.cpp" />

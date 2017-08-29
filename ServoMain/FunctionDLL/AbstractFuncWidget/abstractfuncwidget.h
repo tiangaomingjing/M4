@@ -17,7 +17,7 @@ class  ABSTRACTFUNCWIDGETSHARED_EXPORT AbstractFuncWidget:public QWidget
   Q_OBJECT
 public:
   explicit  AbstractFuncWidget(QWidget *parent = 0);
-  ~AbstractFuncWidget();
+  virtual ~AbstractFuncWidget();
   virtual bool isWrite2Ram() {return false;}
   virtual bool isWrite2Flash(){return false;}
 

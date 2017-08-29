@@ -252,13 +252,10 @@
     <ClInclude Include="MotionCtrlCom.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.h">
+    <ClInclude Include="FPGAUpdate.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.h">
+    <ClInclude Include="ComBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -377,13 +374,10 @@
     <ClCompile Include="MotionCtrlCom.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\rn_com.c">
+    <ClCompile Include="FPGAUpdate.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\Comm Entry\TuningCmd.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\..\..\chen.lh\KESAI\VC_prj\dsp\rn_dsp_dll.c">
+    <ClCompile Include="ComBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

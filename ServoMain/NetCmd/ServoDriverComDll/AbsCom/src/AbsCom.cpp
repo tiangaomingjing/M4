@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Abstract Communicaiton layer Define		 							//
 //	file				:	AbsCom.CPP													//
 //	Description			:	use for pc and fpga communicaiton							//
@@ -52,11 +52,11 @@ CAbsCom::~CAbsCom(void)
 
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		æ‰“å¼€é€šä¿¡è®¾å¤‡
-è¾“å…¥ï¼š
-comType:	é€šä¿¡è®¾å¤‡çš„ç±»å‹ï¼Œ0ï¼šè£¸æœºç½‘å£ 1ï¼šTCP/IPåè®®ç½‘å£ 2ï¼šusbè½¬ä¸²å£ 3:è™šæ‹Ÿè®¾å¤‡
-è¾“å‡ºï¼š		æ— 
-è¿”å›ï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		´ò¿ªÍ¨ĞÅÉè±¸
+ÊäÈë£º
+comType:	Í¨ĞÅÉè±¸µÄÀàĞÍ£¬0£ºÂã»úÍø¿Ú 1£ºTCP/IPĞ­ÒéÍø¿Ú 2£ºusb×ª´®¿Ú 3:ĞéÄâÉè±¸
+Êä³ö£º		ÎŞ
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress, int16 comType)
 {
@@ -65,10 +65,10 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 	switch (comType)
 	{
 	case GTSD_COM_TYPE_NET:	
-		if (NULL != m_pNetCom) //å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
+		if (NULL != m_pNetCom) //Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
 			return Rt_Success;
 		
-		m_pNetCom = new CNetCom;//å®šä¹‰å¯¹è±¡
+		m_pNetCom = new CNetCom;//¶¨Òå¶ÔÏó
 		if (m_pNetCom == NULL)
 		{
 			return Net_Rt_CreateObj_Err;
@@ -85,10 +85,10 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 		}
 		break;
 	case GTSD_COM_TYPE_RNNET:
-		if (NULL != m_pRnNetCom) //å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
+		if (NULL != m_pRnNetCom) //Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
 			return Rt_Success;
-		//m_pRnNetCom = new CRnNetInterface;//å®šä¹‰å¯¹è±¡
-		m_pRnNetCom = new CRingNetInterface;// CRnNetInterface;//å®šä¹‰å¯¹è±¡
+		//m_pRnNetCom = new CRnNetInterface;//¶¨Òå¶ÔÏó
+		m_pRnNetCom = new CRingNetInterface;// CRnNetInterface;//¶¨Òå¶ÔÏó
 		if (m_pRnNetCom == NULL)
 		{
 			return RN_Net_Rt_CreateObj_Err;
@@ -106,10 +106,10 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 		}
 		break;
 	case GTSD_COM_TYPE_TCPIP:
-		if (NULL != m_pSocketCom) //å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
+		if (NULL != m_pSocketCom) //Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
 			return Rt_Success;
 
-		m_pSocketCom = new CSocketInterface;//å®šä¹‰å¯¹è±¡
+		m_pSocketCom = new CSocketInterface;//¶¨Òå¶ÔÏó
 		if (m_pSocketCom == NULL)
 		{
 			return SOCKET_Rt_CreateObj_Err;
@@ -130,10 +130,10 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
 	case GTSD_COM_TYPE_RINGNET:
-		if (NULL != m_pRingNetCom) //å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
+		if (NULL != m_pRingNetCom) //Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
 			return Rt_Success;
 
-		m_pRingNetCom = new CRingNetInterface;//å®šä¹‰å¯¹è±¡
+		m_pRingNetCom = new CRingNetInterface;//¶¨Òå¶ÔÏó
 		if (m_pRingNetCom == NULL)
 		{
 			return RN_Net_Rt_CreateObj_Err;
@@ -154,10 +154,10 @@ int16 CAbsCom::GTSD_Com_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* pt
 	return rtn;
 }
 /******************************************************************************************
-åŠŸèƒ½ï¼š		å…³é—­é€šä¿¡è®¾å¤‡
-è¾“å…¥ï¼š
-comType:	é€šä¿¡è®¾å¤‡çš„ç±»å‹ï¼Œ0ï¼šè£¸æœºç½‘å£ 1ï¼šTCP/IPåè®®ç½‘å£ 2ï¼šusbè½¬ä¸²å£ 3:è™šæ‹Ÿè®¾å¤‡
-è¿”å›ï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		¹Ø±ÕÍ¨ĞÅÉè±¸
+ÊäÈë£º
+comType:	Í¨ĞÅÉè±¸µÄÀàĞÍ£¬0£ºÂã»úÍø¿Ú 1£ºTCP/IPĞ­ÒéÍø¿Ú 2£ºusb×ª´®¿Ú 3:ĞéÄâÉè±¸
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16  CAbsCom::GTSD_Com_Close(int16 comType)
 {
@@ -165,7 +165,7 @@ int16  CAbsCom::GTSD_Com_Close(int16 comType)
 	switch (comType)
 	{
 	case GTSD_COM_TYPE_NET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pNetCom == NULL)
 		{
 			return Rt_Success;
@@ -187,7 +187,7 @@ int16  CAbsCom::GTSD_Com_Close(int16 comType)
 		}
 		break;
 	case GTSD_COM_TYPE_RNNET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pRnNetCom == NULL)
 		{
 			return Rt_Success;
@@ -209,7 +209,7 @@ int16  CAbsCom::GTSD_Com_Close(int16 comType)
 		}
 		break;
 	case GTSD_COM_TYPE_TCPIP:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pSocketCom == NULL)
 		{
 			return Rt_Success;
@@ -235,7 +235,7 @@ int16  CAbsCom::GTSD_Com_Close(int16 comType)
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
 	case GTSD_COM_TYPE_RINGNET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pRingNetCom == NULL)
 		{
 			return Rt_Success;
@@ -264,17 +264,17 @@ int16  CAbsCom::GTSD_Com_Close(int16 comType)
 }
 
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		å›ºä»¶(fpga/cpld)æ•°æ®é€šä¿¡äº¤äº’å‡½æ•°
-è¾“å…¥ï¼š
-comType:	é€šä¿¡è®¾å¤‡çš„ç±»å‹ï¼Œ0ï¼šè£¸æœºç½‘å£ 1ï¼šTCP/IPåè®®ç½‘å£ 2ï¼šusbè½¬ä¸²å£ 3:è™šæ‹Ÿè®¾å¤‡
-comMode:	1:å†™  0ï¼šè¯»
-comAddr:	é€šä¿¡åœ°å€
-pData:		è¾“å…¥æ•°æ®
-comNum:		è¾“å…¥æ•°æ®é•¿åº¦
-è¾“å‡ºï¼š
-pData:		è¾“å‡ºæ•°æ®
-comNum:		è¾“å‡ºæ•°æ®é•¿åº¦
-è¿”å›ï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		¹Ì¼ş(fpga/cpld)Êı¾İÍ¨ĞÅ½»»¥º¯Êı
+ÊäÈë£º
+comType:	Í¨ĞÅÉè±¸µÄÀàĞÍ£¬0£ºÂã»úÍø¿Ú 1£ºTCP/IPĞ­ÒéÍø¿Ú 2£ºusb×ª´®¿Ú 3:ĞéÄâÉè±¸
+comMode:	1:Ğ´  0£º¶Á
+comAddr:	Í¨ĞÅµØÖ·
+pData:		ÊäÈëÊı¾İ
+comNum:		ÊäÈëÊı¾İ³¤¶È
+Êä³ö£º
+pData:		Êä³öÊı¾İ
+comNum:		Êä³öÊı¾İ³¤¶È
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 comAddr, int16* pData, int16 comNum, int16 stationId, int16 needReq /*= RN_NEED_REQ*/)
 {
@@ -282,7 +282,7 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 	switch (comType)
 	{
 	case GTSD_COM_TYPE_NET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pNetCom == NULL)
 		{
 			return Rt_Success;
@@ -290,7 +290,7 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 		rtn = m_pNetCom->NetCom_FPGA_ComHandler(comMode, comAddr, pData, comNum);
 		break;
 	case GTSD_COM_TYPE_RNNET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pRnNetCom == NULL)
 		{
 			return Rt_Success;
@@ -298,7 +298,7 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 		rtn = m_pRnNetCom->RnNetCom_FPGA_ComHandler(comMode, comAddr, pData, comNum, stationId, needReq);
 		break;
 	case GTSD_COM_TYPE_TCPIP:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pSocketCom == NULL)
 		{
 			return Rt_Success;
@@ -310,7 +310,7 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
 	case GTSD_COM_TYPE_RINGNET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pRingNetCom == NULL)
 		{
 			return Rt_Success;
@@ -323,17 +323,17 @@ int16 CAbsCom::GTSD_Com_Firmware_handler(int16 comType, int16 comMode, int16 com
 	return rtn;
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		å¤„ç†å™¨ï¼ˆDSP/ARMï¼‰æ•°æ®é€šä¿¡äº¤äº’å‡½æ•°
-è¾“å…¥ï¼š
-comType:	é€šä¿¡è®¾å¤‡çš„ç±»å‹ï¼Œ0ï¼šè£¸æœºç½‘å£ 1ï¼šTCP/IPåè®®ç½‘å£ 2ï¼šusbè½¬ä¸²å£ 3:è™šæ‹Ÿè®¾å¤‡
-comMode:	1:å†™  0ï¼šè¯»
-comAddr:	é€šä¿¡åœ°å€
-pData:		è¾“å…¥æ•°æ®
-comNum:		è¾“å…¥æ•°æ®é•¿åº¦
-è¾“å‡ºï¼š
-pData:		è¾“å‡ºæ•°æ®
-comNum:		è¾“å‡ºæ•°æ®é•¿åº¦
-è¿”å›ï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		´¦ÀíÆ÷£¨DSP/ARM£©Êı¾İÍ¨ĞÅ½»»¥º¯Êı
+ÊäÈë£º
+comType:	Í¨ĞÅÉè±¸µÄÀàĞÍ£¬0£ºÂã»úÍø¿Ú 1£ºTCP/IPĞ­ÒéÍø¿Ú 2£ºusb×ª´®¿Ú 3:ĞéÄâÉè±¸
+comMode:	1:Ğ´  0£º¶Á
+comAddr:	Í¨ĞÅµØÖ·
+pData:		ÊäÈëÊı¾İ
+comNum:		ÊäÈëÊı¾İ³¤¶È
+Êä³ö£º
+pData:		Êä³öÊı¾İ
+comNum:		Êä³öÊı¾İ³¤¶È
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁĞ±í¡£
 *******************************************************************************************/
 int16 CAbsCom::GTSD_Com_Processor_handler(int16 comType, int16 comMode, int16 comAddr, int16* pData, int16 comNum, int16 stationId)
 {
@@ -341,7 +341,7 @@ int16 CAbsCom::GTSD_Com_Processor_handler(int16 comType, int16 comMode, int16 co
 	switch (comType)
 	{
 	case GTSD_COM_TYPE_NET:	
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pNetCom == NULL)
 		{
 			return Rt_Success;
@@ -349,7 +349,7 @@ int16 CAbsCom::GTSD_Com_Processor_handler(int16 comType, int16 comMode, int16 co
 		rtn = m_pNetCom->NetCom_DSP_ComHandler(comMode, comAddr, pData, comNum);
 		break;
 	case GTSD_COM_TYPE_RNNET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pRnNetCom == NULL)
 		{
 			return Rt_Success;
@@ -357,7 +357,7 @@ int16 CAbsCom::GTSD_Com_Processor_handler(int16 comType, int16 comMode, int16 co
 		rtn = m_pRnNetCom->RnNetCom_DSP_ComHandler(comMode, comAddr, pData, comNum,stationId);
 		break;
 	case GTSD_COM_TYPE_TCPIP:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pSocketCom == NULL)
 		{
 			return Rt_Success;
@@ -369,7 +369,7 @@ int16 CAbsCom::GTSD_Com_Processor_handler(int16 comType, int16 comMode, int16 co
 	case GTSD_COM_TYPE_VIRTUAL:
 		break;
 	case GTSD_COM_TYPE_RINGNET:
-		//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+		//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 		if (m_pRingNetCom == NULL)
 		{
 			return Rt_Success;

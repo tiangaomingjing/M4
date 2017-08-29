@@ -1,4 +1,4 @@
-ï»¿#include "stdafx.h"
+#include "stdafx.h"
 #include "ServoDriverCom.h"
 
 CServoDriverCom::CServoDriverCom()
@@ -37,7 +37,7 @@ short CServoDriverCom::Initial(CRingNetInterface* pDriver)
 			return RTN_MALLOC_FAIL;
 		}
 	}
-  m_pDriver = pDriver;
+	m_pDriver = pDriver;
 	short rtn = m_pMapping->InitialMapping(pDriver);
 	if (rtn != RTN_SUCCESS)
 	{
@@ -71,13 +71,13 @@ short CServoDriverCom::Initial(CRingNetInterface* pDriver)
 // int16 Cmd_PlotDataBuffer[10000] = { 0 };
 
 
-static const int32			FPGA_MODE_RD = 0x0;							//FPGAè¯»æ“ä½œ
-static const int32			FPGA_MODE_WR = 0x1;							//FPGAå†™æ“ä½œ
+static const int32			FPGA_MODE_RD = 0x0;							//FPGA¶Á²Ù×÷
+static const int32			FPGA_MODE_WR = 0x1;							//FPGAĞ´²Ù×÷
 //////////////////////////////////////////////////////////////////////////
 
 
 //////////////////////////////////////////////////////////////////////////
-//å°†å‘½ä»¤IDå’Œè½´å·åˆå¹¶æˆä¸€ä¸ªshortï¼Œå…¶ä¸­bit[0-11]ä¸ºå‘½ä»¤ID, bit[12 - 15]ä¸ºè½´å·
+//½«ÃüÁîIDºÍÖáºÅºÏ²¢³ÉÒ»¸öshort£¬ÆäÖĞbit[0-11]ÎªÃüÁîID, bit[12 - 15]ÎªÖáºÅ
 int16 CServoDriverCom::GetCmdIDAndAxisNum(short cmdID, short motorNum)
 {
 	short ret;
@@ -87,44 +87,44 @@ int16 CServoDriverCom::GetCmdIDAndAxisNum(short cmdID, short motorNum)
 }
 ////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
-////æ‰“å¼€å‘½ä»¤é€šé“
+////´ò¿ªÃüÁîÍ¨µÀ
 //int16 CServoDriverCom::GTSD_CMD_ST_OPEN(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress, int16 comType)
 //{
 //	void* ptr = ptrv;
-//	//å®šä¹‰å¯¹è±¡
+//	//¶¨Òå¶ÔÏó
 //	if (g_AbsCom == NULL)
 //	{
 //		g_AbsCom = new CAbsCom;
 //	}
 //	else
 //	{
-//		return RTN_SUCCESS;//å¦‚æœè®¾å¤‡å·²ç»æ‰“å¼€ï¼Œç›´æ¥è¿”å›
+//		return RTN_SUCCESS;//Èç¹ûÉè±¸ÒÑ¾­´ò¿ª£¬Ö±½Ó·µ»Ø
 //	}
 //	if (g_AbsCom == NULL)
 //	{
 //		return Net_Rt_CreateObj_Err;
 //	}
-//	//ç™¾åˆ†æ¯”è¿›åº¦
+//	//°Ù·Ö±È½ø¶È
 //	progress = 10;
 //	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 //
 //	int16 rtn;
-//	//è°ƒç”¨openå‡½æ•°
+//	//µ÷ÓÃopenº¯Êı
 //	rtn = g_AbsCom->GTSD_Com_Open(tpfUpdataProgressPt, ptr, progress, comType);
 //	return rtn;
 //}
 ////////////////////////////////////////////////////////////////////////////
-////å…³é—­å‘½ä»¤é€šé“
+////¹Ø±ÕÃüÁîÍ¨µÀ
 //int16 CServoDriverCom::GTSD_CMD_CLOSE(int16 comType)
 //{
-//	//å‡å¦‚å·²ç»å…³é—­äº†å°±ç›´æ¥é€€å‡º
+//	//¼ÙÈçÒÑ¾­¹Ø±ÕÁË¾ÍÖ±½ÓÍË³ö
 //	if (g_AbsCom == NULL)
 //	{
 //		return RTN_SUCCESS;
 //	}
 //
 //	int16 rtn;
-//	//è°ƒç”¨closeå‡½æ•°
+//	//µ÷ÓÃcloseº¯Êı
 //	rtn = g_AbsCom->GTSD_Com_Close(comType);
 //	if (g_AbsCom != NULL)
 //	{
@@ -135,8 +135,8 @@ int16 CServoDriverCom::GetCmdIDAndAxisNum(short cmdID, short motorNum)
 //	return rtn;
 //}
 //////////////////////////////////////////////////////////////////////////
-//ä¸Šä¼ºæœ
-//å‚æ•°ï¼šè½´å·
+//ÉÏËÅ·ş
+//²ÎÊı£ºÖáºÅ
 int16 CServoDriverCom::GTSD_CMD_SetServoOn(int16 axis)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -144,22 +144,22 @@ int16 CServoDriverCom::GTSD_CMD_SetServoOn(int16 axis)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis);			//è½¬æ¢è‡³ç«™å·å’Œé€šé“
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis);			//×ª»»ÖÁÕ¾ºÅºÍÍ¨µÀ
 	
 
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;						//åœ°å€
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;						//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = SERVO_EN_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = 1;												//ä¼ºæœä½¿èƒ½							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = 1;												//ËÅ·şÊ¹ÄÜ							
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -174,8 +174,8 @@ int16 CServoDriverCom::GTSD_CMD_SetServoOn(int16 axis)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//ä¸‹ä¼ºæœ
-//å‚æ•°ï¼šè½´å·
+//ÏÂËÅ·ş
+//²ÎÊı£ºÖáºÅ
 int16 CServoDriverCom::GTSD_CMD_SetServoOff(int16 axis)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -183,21 +183,21 @@ int16 CServoDriverCom::GTSD_CMD_SetServoOff(int16 axis)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}		
 
 
 	int16 cmd_id = SERVO_EN_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = 0;												//ä¼ºæœoff							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = 0;												//ËÅ·şoff							
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -211,9 +211,9 @@ int16 CServoDriverCom::GTSD_CMD_SetServoOff(int16 axis)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–ä¼ºæœçŠ¶æ€
-//å‚æ•°ï¼šè½´å·
-//ä¼ºæœçŠ¶æ€ç»“æ„ä½“æŒ‡é’ˆ
+//¶ÁÈ¡ËÅ·ş×´Ì¬
+//²ÎÊı£ºÖáºÅ
+//ËÅ·ş×´Ì¬½á¹¹ÌåÖ¸Õë
 int16 CServoDriverCom::GTSD_CMD_GetServoState(int16 axis, SERVO_STATE* serv)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -221,19 +221,19 @@ int16 CServoDriverCom::GTSD_CMD_GetServoState(int16 axis, SERVO_STATE* serv)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = SERVO_EN_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;									//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;									//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -253,9 +253,9 @@ int16 CServoDriverCom::GTSD_CMD_GetServoState(int16 axis, SERVO_STATE* serv)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®ä¼ºæœä»»åŠ¡æ¨¡å¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šæ¨¡å¼
+//ÉèÖÃËÅ·şÈÎÎñÄ£Ê½
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÄ£Ê½
 int16 CServoDriverCom::GTSD_CMD_SetServoTaskMode(int16 axis, int16 mode)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -263,20 +263,20 @@ int16 CServoDriverCom::GTSD_CMD_SetServoTaskMode(int16 axis, int16 mode)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = SERVO_TASK_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = mode;												//è®¾ç½®æ¨¡å¼							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = mode;												//ÉèÖÃÄ£Ê½							
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -290,9 +290,9 @@ int16 CServoDriverCom::GTSD_CMD_SetServoTaskMode(int16 axis, int16 mode)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–ä¼ºæœä»»åŠ¡æ¨¡å¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šæ¨¡å¼
+//¶ÁÈ¡ËÅ·şÈÎÎñÄ£Ê½
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÄ£Ê½
 int16 CServoDriverCom::GTSD_CMD_GetServoTaskMode(int16 axis, SERVO_MODE* mode)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -300,19 +300,19 @@ int16 CServoDriverCom::GTSD_CMD_GetServoTaskMode(int16 axis, SERVO_MODE* mode)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = SERVO_TASK_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -332,10 +332,10 @@ int16 CServoDriverCom::GTSD_CMD_GetServoTaskMode(int16 axis, SERVO_MODE* mode)
 }
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª16bitçš„å€¼åˆ°å¤„ç†å™¨
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö16bitµÄÖµµ½´¦ÀíÆ÷
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Write16BitByAdr(int16 axis, int16 ofst, int16 value, void* ptr)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -347,27 +347,27 @@ int16 CServoDriverCom::GTSD_CMD_Write16BitByAdr(int16 axis, int16 ofst, int16 va
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 	int16 cmd_id = WR_16BIT_COMM;							//cmd id		
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_WRITE);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//å†™å‘½ä»¤	
+		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//Ğ´ÃüÁî	
 	}
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = ofst;												//è®¾ç½®ofst
-	dspdata[4] = value;											//è®¾ç½®value
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[4] = value;											//ÉèÖÃvalue
 
 
 	int16 dsp_comNum = 5;
@@ -382,10 +382,10 @@ int16 CServoDriverCom::GTSD_CMD_Write16BitByAdr(int16 axis, int16 ofst, int16 va
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®ä»å¤„ç†å™¨è¯»å–ä¸€ä¸ª16bitçš„å€¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃ´Ó´¦ÀíÆ÷¶ÁÈ¡Ò»¸ö16bitµÄÖµ
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Read16BitByAdr(int16 axis, int16 ofst, int16* value, void* ptr)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -397,27 +397,27 @@ int16 CServoDriverCom::GTSD_CMD_Read16BitByAdr(int16 axis, int16 ofst, int16* va
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = WR_16BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_READ);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//è¯»å‘½ä»¤	
+		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//¶ÁÃüÁî	
 	}
-	dspdata[2] = 0;												//è¿”å›å€¼																		
-	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[3] = ofst;												//ÉèÖÃofst
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -432,10 +432,10 @@ int16 CServoDriverCom::GTSD_CMD_Read16BitByAdr(int16 axis, int16 ofst, int16* va
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª32bitçš„å€¼åˆ°å¤„ç†å™¨
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö32bitµÄÖµµ½´¦ÀíÆ÷
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Write32BitByAdr(int16 axis, int16 ofst, int32 value, void* ptr)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -447,29 +447,29 @@ int16 CServoDriverCom::GTSD_CMD_Write32BitByAdr(int16 axis, int16 ofst, int32 va
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = WR_32BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_WRITE);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//å†™å‘½ä»¤	
+		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//Ğ´ÃüÁî	
 	}
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = ofst;												//è®¾ç½®ofst
-	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®é«˜16bit
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
 
 	int16 dsp_comNum = 6;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -483,10 +483,10 @@ int16 CServoDriverCom::GTSD_CMD_Write32BitByAdr(int16 axis, int16 ofst, int32 va
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®ä»å¤„ç†å™¨è¯»å–ä¸€ä¸ª32bitçš„å€¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃ´Ó´¦ÀíÆ÷¶ÁÈ¡Ò»¸ö32bitµÄÖµ
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Read32BitByAdr(int16 axis, int16 ofst, int32* value, void* ptr)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -498,27 +498,27 @@ int16 CServoDriverCom::GTSD_CMD_Read32BitByAdr(int16 axis, int16 ofst, int32* va
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = WR_32BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_READ);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//è¯»å‘½ä»¤	
+		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//¶ÁÃüÁî	
 	}
-	dspdata[2] = 0;												//è¿”å›å€¼																		
-	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[3] = ofst;												//ÉèÖÃofst
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -528,15 +528,15 @@ int16 CServoDriverCom::GTSD_CMD_Read32BitByAdr(int16 axis, int16 ofst, int32* va
 	}
 	else
 	{
-		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
+		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
 		return RTN_SUCCESS;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª64bitçš„å€¼åˆ°å¤„ç†å™¨
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö64bitµÄÖµµ½´¦ÀíÆ÷
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Write64BitByAdr(int16 axis, int16 ofst, int64 value, void* ptr)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -548,31 +548,31 @@ int16 CServoDriverCom::GTSD_CMD_Write64BitByAdr(int16 axis, int16 ofst, int64 va
 	{
 		val = (int16*)ptr;
 	}
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = WR_64BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_WRITE);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//å†™å‘½ä»¤	
+		dspdata[1] = (GTSD_DSP_WRITE | (val[0] << 1));												//Ğ´ÃüÁî	
 	}
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = ofst;												//è®¾ç½®ofst
-	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
-	dspdata[6] = ((value >> 32) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
-	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//è®¾ç½®value,å†è®¾ç½®é«˜16bit
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
+	dspdata[6] = ((value >> 32) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
+	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
 
 	int16 dsp_comNum = 8;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -586,10 +586,10 @@ int16 CServoDriverCom::GTSD_CMD_Write64BitByAdr(int16 axis, int16 ofst, int64 va
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®ä»å¤„ç†å™¨è¯»å–ä¸€ä¸ª64bitçš„å€¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃ´Ó´¦ÀíÆ÷¶ÁÈ¡Ò»¸ö64bitµÄÖµ
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Read64BitByAdr(int16 axis, int16 ofst, int64* value, void* ptr)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -602,28 +602,28 @@ int16 CServoDriverCom::GTSD_CMD_Read64BitByAdr(int16 axis, int16 ofst, int64* va
 		val = (int16*)ptr;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = WR_64BIT_COMM;									//cmd id
 
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
 	if (val == NULL)
 	{
 		dspdata[1] = (GTSD_DSP_READ);
 	}
 	else
 	{
-		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//è¯»å‘½ä»¤	
+		dspdata[1] = (GTSD_DSP_READ | (val[0] << 1));												//¶ÁÃüÁî	
 	}
-	dspdata[2] = 0;												//è¿”å›å€¼																		
-	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[3] = ofst;												//ÉèÖÃofst
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -636,14 +636,14 @@ int16 CServoDriverCom::GTSD_CMD_Read64BitByAdr(int16 axis, int16 ofst, int64* va
 		int64 tmp, tmp1;
 		tmp = (((int64)dspdata[4]) << 32);
 		tmp1 = ((tmp << 16) & 0xffff000000000000);
-		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//é«˜ä½åœ¨å
+		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//¸ßÎ»ÔÚºó
 		return RTN_SUCCESS;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®idæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šidæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃidÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºidÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetIdRef(int16 axis, double id_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -651,26 +651,26 @@ int16 CServoDriverCom::GTSD_CMD_SetIdRef(int16 axis, double id_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = ID_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ	
 	int32 tmp;
 	tmp = (int32)((id_ref) / 100.0*((double)(MAX_CUR_SCALE)) + 0.5);
 	if ((tmp>32767) || (tmp<-32768))
 	{
 		tmp = (int32)(0.05*((double)(MAX_CUR_SCALE)) + 0.5);
 	}
-	dspdata[3] = (int16)tmp;											//è®¾ç½®id_ref
+	dspdata[3] = (int16)tmp;											//ÉèÖÃid_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -684,9 +684,9 @@ int16 CServoDriverCom::GTSD_CMD_SetIdRef(int16 axis, double id_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–idæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šidæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡idÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºidÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetIdRef(int16 axis, ID_STATE* id_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -694,19 +694,19 @@ int16 CServoDriverCom::GTSD_CMD_GetIdRef(int16 axis, ID_STATE* id_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = ID_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -724,9 +724,9 @@ int16 CServoDriverCom::GTSD_CMD_GetIdRef(int16 axis, ID_STATE* id_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®iqæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šidæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃiqÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºidÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetIqRef(int16 axis, double iq_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -734,26 +734,26 @@ int16 CServoDriverCom::GTSD_CMD_SetIqRef(int16 axis, double iq_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = IQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int32 tmp;
 	tmp = (int32)((iq_ref) / 100.0*((double)(MAX_CUR_SCALE)) + 0.5);
 	if ((tmp > 32767) || (tmp < -32768))
 	{
 		tmp = (int32)(0.05*((double)(MAX_CUR_SCALE)) + 0.5);
 	}
-	dspdata[3] = (int16)tmp;										//è®¾ç½®iq_ref
+	dspdata[3] = (int16)tmp;										//ÉèÖÃiq_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -767,9 +767,9 @@ int16 CServoDriverCom::GTSD_CMD_SetIqRef(int16 axis, double iq_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–iqæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šiqæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡iqÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºiqÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetIqRef(int16 axis, IQ_STATE* iq_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -777,19 +777,19 @@ int16 CServoDriverCom::GTSD_CMD_GetIqRef(int16 axis, IQ_STATE* iq_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = IQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -807,9 +807,9 @@ int16 CServoDriverCom::GTSD_CMD_GetIqRef(int16 axis, IQ_STATE* iq_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®é€Ÿåº¦æŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šé€Ÿåº¦æŒ‡ä»¤å‚è€ƒå€¼æ¯”ç‡
+//ÉèÖÃËÙ¶ÈÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºËÙ¶ÈÖ¸Áî²Î¿¼Öµ±ÈÂÊ
 int16 CServoDriverCom::GTSD_CMD_SetSpdRef(int16 axis, double spd_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -817,19 +817,19 @@ int16 CServoDriverCom::GTSD_CMD_SetSpdRef(int16 axis, double spd_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = SPD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int64 tmp;
 	tmp = (int64)(spd_ref / 100.0*((double)MAX_SPD_SCALE) + 0.5);
 	if ((tmp>0x7fffffff) || (tmp<-0x7fffffff))
@@ -838,8 +838,8 @@ int16 CServoDriverCom::GTSD_CMD_SetSpdRef(int16 axis, double spd_ref)
 	}
 	int32 tmp1;
 	tmp1 = (int32)tmp;
-	dspdata[3] = (tmp1 & 0xffff);									//è®¾ç½®spd_refä½16ä½
-	dspdata[4] = ((tmp1 >> 16) & 0xffff);								//è®¾ç½®spd_refé«˜16ä½
+	dspdata[3] = (tmp1 & 0xffff);									//ÉèÖÃspd_refµÍ16Î»
+	dspdata[4] = ((tmp1 >> 16) & 0xffff);								//ÉèÖÃspd_ref¸ß16Î»
 
 	int16 dsp_comNum = 5;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -853,9 +853,9 @@ int16 CServoDriverCom::GTSD_CMD_SetSpdRef(int16 axis, double spd_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–é€Ÿåº¦æŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šé€Ÿåº¦æŒ‡ä»¤å‚è€ƒå€¼æ¯”ç‡
+//¶ÁÈ¡ËÙ¶ÈÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºËÙ¶ÈÖ¸Áî²Î¿¼Öµ±ÈÂÊ
 int16 CServoDriverCom::GTSD_CMD_GetSpdRef(int16 axis, SPD_STATE* spd_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -863,19 +863,19 @@ int16 CServoDriverCom::GTSD_CMD_GetSpdRef(int16 axis, SPD_STATE* spd_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = SPD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -894,9 +894,9 @@ int16 CServoDriverCom::GTSD_CMD_GetSpdRef(int16 axis, SPD_STATE* spd_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®udrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šudæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃudrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºudÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetUdRef(int16 axis, double ud_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -904,26 +904,26 @@ int16 CServoDriverCom::GTSD_CMD_SetUdRef(int16 axis, double ud_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int32 tmp;
 	tmp = (int32)(ud_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp>16384) || (tmp<-16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//è®¾ç½®ud_ref
+	dspdata[3] = (int16)tmp;											//ÉèÖÃud_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -937,9 +937,9 @@ int16 CServoDriverCom::GTSD_CMD_SetUdRef(int16 axis, double ud_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–udrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šudæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡udrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºudÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetUdRef(int16 axis, UD_STATE* ud_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -947,19 +947,19 @@ int16 CServoDriverCom::GTSD_CMD_GetUdRef(int16 axis, UD_STATE* ud_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UD_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -977,9 +977,9 @@ int16 CServoDriverCom::GTSD_CMD_GetUdRef(int16 axis, UD_STATE* ud_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®uqrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šuqæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃuqrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºuqÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetUqRef(int16 axis, double uq_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -987,26 +987,26 @@ int16 CServoDriverCom::GTSD_CMD_SetUqRef(int16 axis, double uq_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int32 tmp;
 	tmp = (int32)(uq_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//è®¾ç½®uq_ref
+	dspdata[3] = (int16)tmp;											//ÉèÖÃuq_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1020,9 +1020,9 @@ int16 CServoDriverCom::GTSD_CMD_SetUqRef(int16 axis, double uq_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–uqrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šuqæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡uqrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºuqÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetUqRef(int16 axis, UQ_STATE* uq_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1030,19 +1030,19 @@ int16 CServoDriverCom::GTSD_CMD_GetUqRef(int16 axis, UQ_STATE* uq_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UQ_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1060,9 +1060,9 @@ int16 CServoDriverCom::GTSD_CMD_GetUqRef(int16 axis, UQ_STATE* uq_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®uarefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šuaæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃuarefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºuaÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetUaRef(int16 axis, double ua_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1070,26 +1070,26 @@ int16 CServoDriverCom::GTSD_CMD_SetUaRef(int16 axis, double ua_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UA_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int32 tmp;
 	tmp = (int32)(ua_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//è®¾ç½®ua_ref
+	dspdata[3] = (int16)tmp;											//ÉèÖÃua_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1103,9 +1103,9 @@ int16 CServoDriverCom::GTSD_CMD_SetUaRef(int16 axis, double ua_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–uarefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šuaæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡uarefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºuaÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetUaRef(int16 axis, UA_STATE* ua_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1113,19 +1113,19 @@ int16 CServoDriverCom::GTSD_CMD_GetUaRef(int16 axis, UA_STATE* ua_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UA_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1143,9 +1143,9 @@ int16 CServoDriverCom::GTSD_CMD_GetUaRef(int16 axis, UA_STATE* ua_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®ubrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šubæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃubrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºubÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetUbRef(int16 axis, double ub_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1153,26 +1153,26 @@ int16 CServoDriverCom::GTSD_CMD_SetUbRef(int16 axis, double ub_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UB_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼	
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ	
 	int32 tmp;
 	tmp = (int32)(ub_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;										//è®¾ç½®ub_ref
+	dspdata[3] = (int16)tmp;										//ÉèÖÃub_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1186,9 +1186,9 @@ int16 CServoDriverCom::GTSD_CMD_SetUbRef(int16 axis, double ub_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–ubrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šubæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡ubrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºubÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetUbRef(int16 axis, UB_STATE* ub_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1196,19 +1196,19 @@ int16 CServoDriverCom::GTSD_CMD_GetUbRef(int16 axis, UB_STATE* ub_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UB_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1226,9 +1226,9 @@ int16 CServoDriverCom::GTSD_CMD_GetUbRef(int16 axis, UB_STATE* ub_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®ucrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šucæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃucrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºucÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetUcRef(int16 axis, double uc_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1236,26 +1236,26 @@ int16 CServoDriverCom::GTSD_CMD_SetUcRef(int16 axis, double uc_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UC_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int32 tmp;
 	tmp = (int32)(uc_ref / 100.0*((double)MAX_VOL_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_VOL_SCALE));
 	}
-	dspdata[3] = (int16)tmp;											//è®¾ç½®uc_ref
+	dspdata[3] = (int16)tmp;											//ÉèÖÃuc_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1269,9 +1269,9 @@ int16 CServoDriverCom::GTSD_CMD_SetUcRef(int16 axis, double uc_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–ucrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šucæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡ucrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºucÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetUcRef(int16 axis, UC_STATE* uc_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1279,19 +1279,19 @@ int16 CServoDriverCom::GTSD_CMD_GetUcRef(int16 axis, UC_STATE* uc_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = UC_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1309,9 +1309,9 @@ int16 CServoDriverCom::GTSD_CMD_GetUcRef(int16 axis, UC_STATE* uc_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®PosAdjrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šPosAdjæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃPosAdjrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºPosAdjÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetPosAdjRef(int16 axis, double PosAdj_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1319,26 +1319,26 @@ int16 CServoDriverCom::GTSD_CMD_SetPosAdjRef(int16 axis, double PosAdj_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = POS_ADJ_IREF_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ
 	int32 tmp;
 	tmp = (int32)(PosAdj_ref / 100.0*((double)MAX_CUR_SCALE) + 0.5);
 	if ((tmp > 16384) || (tmp < -16384))
 	{
 		tmp = (int32)(0.05*((double)MAX_CUR_SCALE));
 	}
-	dspdata[3] = (int16)tmp;										//è®¾ç½®PosAdj_ref
+	dspdata[3] = (int16)tmp;										//ÉèÖÃPosAdj_ref
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1352,9 +1352,9 @@ int16 CServoDriverCom::GTSD_CMD_SetPosAdjRef(int16 axis, double PosAdj_ref)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–PosAdjrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šPosAdjæŒ‡ä»¤å‚è€ƒå€¼
+//¶ÁÈ¡PosAdjrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºPosAdjÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1362,19 +1362,19 @@ int16 CServoDriverCom::GTSD_CMD_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = POS_ADJ_IREF_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1398,9 +1398,9 @@ int16 CServoDriverCom::GTSD_CMD_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®PosrefæŒ‡ä»¤
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šPosæŒ‡ä»¤å‚è€ƒå€¼
+//ÉèÖÃPosrefÖ¸Áî
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºPosÖ¸Áî²Î¿¼Öµ
 int16 CServoDriverCom::GTSD_CMD_SetPosRef(int16 axis, int32 Pos_ref)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1408,21 +1408,21 @@ int16 CServoDriverCom::GTSD_CMD_SetPosRef(int16 axis, int32 Pos_ref)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = POS_REF_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = (Pos_ref & 0xffff);									//è®¾ç½®Pos_ref ä½16bit
-	dspdata[4] = ((Pos_ref >> 16) & 0xffff);							//è®¾ç½®Pos_ref é«˜16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = (Pos_ref & 0xffff);									//ÉèÖÃPos_ref µÍ16bit
+	dspdata[4] = ((Pos_ref >> 16) & 0xffff);							//ÉèÖÃPos_ref ¸ß16bit
 
 	int16 dsp_comNum = 5;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1439,12 +1439,12 @@ int16 CServoDriverCom::GTSD_CMD_SetPosRef(int16 axis, int32 Pos_ref)
 /////////////////////////////////com vs fpga/////////////////////////////////////////
 int16 CServoDriverCom::GTSD_CMD_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 value)
 {
-	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
+	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
 
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-		//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+		//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	Uint16 station_id = m_pMapping->ConvertDspToStationId(dsp_number);
@@ -1454,14 +1454,14 @@ int16 CServoDriverCom::GTSD_CMD_Set16bitFPGAByAddr(int16 dsp_number, int16 com_a
 	return m_pDriver->RnNetCom_FPGA_ComHandler(GTSD_COM_MODE_WRITE, comAddr, &value, comNum, station_id >> 8);
 }
 //////////////////////////////////////////////////////////////////////////
-//é€šè¿‡åœ°å€è¯»å–16bitçš„fpga
+//Í¨¹ıµØÖ·¶ÁÈ¡16bitµÄfpga
 int16 CServoDriverCom::GTSD_CMD_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pvalue)
 {
-	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
+	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-		//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+		//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 	Uint16 station_id = m_pMapping->ConvertDspToStationId(dsp_number);
 	int16 comAddr = m_pMapping->ConvertFpgaByteAddrByDspId(dsp_number, com_addr);
@@ -1469,14 +1469,14 @@ int16 CServoDriverCom::GTSD_CMD_Get16bitFPGAByAddr(int16 dsp_number, int16 com_a
 	return m_pDriver->RnNetCom_FPGA_ComHandler(GTSD_COM_MODE_READ, comAddr, pvalue, comNum, station_id >> 8);
 }
 //////////////////////////////////////////////////////////////////////////
-//é€šè¿‡åœ°å€è®¾ç½®32bitçš„fpga
+//Í¨¹ıµØÖ·ÉèÖÃ32bitµÄfpga
 int16 CServoDriverCom::GTSD_CMD_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 value)
 {
-	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
+	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-		//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+		//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 	Uint16 station_id = m_pMapping->ConvertDspToStationId(dsp_number);
 	int16 comAddr = m_pMapping->ConvertFpgaByteAddrByDspId(dsp_number, com_addr);
@@ -1485,14 +1485,14 @@ int16 CServoDriverCom::GTSD_CMD_Set32bitFPGAByAddr(int16 dsp_number, int16 com_a
 	return m_pDriver->RnNetCom_FPGA_ComHandler(GTSD_COM_MODE_WRITE, comAddr, (int16*)&value, comNum, station_id >> 8);
 }
 //////////////////////////////////////////////////////////////////////////
-//é€šè¿‡åœ°å€è¯»å–32bitçš„fpga
+//Í¨¹ıµØÖ·¶ÁÈ¡32bitµÄfpga
 int16 CServoDriverCom::GTSD_CMD_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pvalue)
 {
-	//è¾“å…¥æ˜¯byteåœ°å€ï¼Œpcdebugæ“ä½œéœ€è¦shortåœ°å€ï¼Œè€Œç­‰ç¯ç½‘æ“ä½œéœ€è¦byteåœ°å€ï¼Œ
+	//ÊäÈëÊÇbyteµØÖ·£¬pcdebug²Ù×÷ĞèÒªshortµØÖ·£¬¶øµÈ»·Íø²Ù×÷ĞèÒªbyteµØÖ·£¬
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-		//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+		//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 	Uint16 station_id = m_pMapping->ConvertDspToStationId(dsp_number);
 	int16 comAddr = m_pMapping->ConvertFpgaByteAddrByDspId(dsp_number, com_addr);
@@ -1500,25 +1500,25 @@ int16 CServoDriverCom::GTSD_CMD_Get32bitFPGAByAddr(int16 dsp_number, int16 com_a
 	return m_pDriver->RnNetCom_FPGA_ComHandler(GTSD_COM_MODE_READ, comAddr, (int16*)pvalue, comNum, station_id >> 8);
 }
 //////////////////////////////////////////////////////////////////////////
-//è®¾ç½®æ›²çº¿é…ç½®
+//ÉèÖÃÇúÏßÅäÖÃ
 int16 CServoDriverCom::GTSD_CMD_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM wave)
 {
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-		//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+		//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 	Uint16 station_id = m_pMapping->ConvertDspToStationId(dsp_number);
 
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;						//åœ°å€
-	int16 dspdata[64] = { 0 };											//é€šä¿¡æ•°ç»„
-	int16 Axis = 0;												//è½´å·éƒ½è®¾ç½®ä¸º0å³å¯ï¼Œå› ä¸ºæ¯ä¸ªdspæœ‰ä¸¤ä¸ªè½´ï¼Œè®¾ç½®å“ªä¸ªéƒ½ä¸€æ ·
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;						//µØÖ·
+	int16 dspdata[64] = { 0 };											//Í¨ĞÅÊı×é
+	int16 Axis = 0;												//ÖáºÅ¶¼ÉèÖÃÎª0¼´¿É£¬ÒòÎªÃ¿¸ödspÓĞÁ½¸öÖá£¬ÉèÖÃÄÄ¸ö¶¼Ò»Ñù
 
 	int16 cmd_id = WAVE_BUF_SET_WR_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, 0);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = (wave.cmd.all);									//è®¾ç½®controlword
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, 0);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = (wave.cmd.all);									//ÉèÖÃcontrolword
 	int16 j = 4;
 
 	if (wave.cmd.bit.NUM >MAX_WAVE_PLOT_NUM)
@@ -1546,24 +1546,24 @@ int16 CServoDriverCom::GTSD_CMD_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM wave)
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//è¯»å–æ›²çº¿é…ç½®
+//¶ÁÈ¡ÇúÏßÅäÖÃ
 int16 CServoDriverCom::GTSD_CMD_GetWaveBuf(int16 dsp_number, tWaveBufCmd* ctrlword)
 {
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-		//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+		//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 	Uint16 station_id = m_pMapping->ConvertDspToStationId(dsp_number);
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	int16 Axis = 0;												//è½´å·
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	int16 Axis = 0;												//ÖáºÅ
 
 	int16 cmd_id = WAVE_BUF_SET_WR_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, 0);					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, 0);					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1578,13 +1578,13 @@ int16 CServoDriverCom::GTSD_CMD_GetWaveBuf(int16 dsp_number, tWaveBufCmd* ctrlwo
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®é…ç½®è·å–æ›²çº¿æ•°æ®
+//¸ù¾İÅäÖÃ»ñÈ¡ÇúÏßÊı¾İ
 int16 CServoDriverCom::GTSD_CMD_GetWaveData(int16 dsp_number, int16* read_num, int16** data)
 {
 	return RTN_OBJECT_UNCREATED;
 }
 //////////////////////////////////////////////////////////////////////////
-//æ¸…é™¤fpgaçš„FIFO
+//Çå³ıfpgaµÄFIFO
 int16 CServoDriverCom::GTSD_CMD_ClearFpgaFifo(int16 dsp_number)
 {
 	return RTN_OBJECT_UNCREATED;
@@ -1592,10 +1592,10 @@ int16 CServoDriverCom::GTSD_CMD_ClearFpgaFifo(int16 dsp_number)
 
 /////////////////////////////////com vs dsp/////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª16bitçš„å€¼åˆ°FRAM
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö16bitµÄÖµµ½FRAM
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Fram_Write16BitByAdr(int16 axis, int16 ofst, int16 value)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1603,20 +1603,20 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Write16BitByAdr(int16 axis, int16 ofst, int
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };												//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };												//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_FRAM_16BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 						//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;										//å†™å‘½ä»¤	
-	dspdata[2] = 0;														//è¿”å›å€¼											
-	dspdata[3] = ofst;													//è®¾ç½®ofst
-	dspdata[4] = value;													//è®¾ç½®value
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 						//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;										//Ğ´ÃüÁî	
+	dspdata[2] = 0;														//·µ»ØÖµ											
+	dspdata[3] = ofst;													//ÉèÖÃofst
+	dspdata[4] = value;													//ÉèÖÃvalue
 
 	int16 dsp_comNum = 5;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1630,10 +1630,10 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Write16BitByAdr(int16 axis, int16 ofst, int
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®ä»FRAMè¯»å–ä¸€ä¸ª16bitçš„å€¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃ´ÓFRAM¶ÁÈ¡Ò»¸ö16bitµÄÖµ
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Fram_Read16BitByAdr(int16 axis, int16 ofst, int16* value)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1641,19 +1641,19 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Read16BitByAdr(int16 axis, int16 ofst, int1
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_FRAM_16BIT_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;									//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
-	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;									//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[3] = ofst;												//ÉèÖÃofst
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1668,10 +1668,10 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Read16BitByAdr(int16 axis, int16 ofst, int1
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª32bitçš„å€¼åˆ°FRAM
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö32bitµÄÖµµ½FRAM
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Fram_Write32BitByAdr(int16 axis, int16 ofst, int32 value)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1679,21 +1679,21 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Write32BitByAdr(int16 axis, int16 ofst, int
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_FRAM_32BIT_COMM;								//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = ofst;												//è®¾ç½®ofst
-	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®é«˜16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
 
 	int16 dsp_comNum = 6;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1707,10 +1707,10 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Write32BitByAdr(int16 axis, int16 ofst, int
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®ä»FRAMè¯»å–ä¸€ä¸ª32bitçš„å€¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃ´ÓFRAM¶ÁÈ¡Ò»¸ö32bitµÄÖµ
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Fram_Read32BitByAdr(int16 axis, int16 ofst, int32* value)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1718,19 +1718,19 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Read32BitByAdr(int16 axis, int16 ofst, int3
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_FRAM_32BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
-	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[3] = ofst;												//ÉèÖÃofst
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1740,15 +1740,15 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Read32BitByAdr(int16 axis, int16 ofst, int3
 	}
 	else
 	{
-		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
+		*value = (((dspdata[1]) & 0x0000ffff) | ((dspdata[2] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
 		return RTN_SUCCESS;
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®è®¾ç½®ä¸€ä¸ª64bitçš„å€¼åˆ°FRAM
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃÉèÖÃÒ»¸ö64bitµÄÖµµ½FRAM
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Fram_Write64BitByAdr(int16 axis, int16 ofst, int64 value)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1756,23 +1756,23 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Write64BitByAdr(int16 axis, int16 ofst, int
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_FRAM_64BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
-	dspdata[3] = ofst;												//è®¾ç½®ofst
-	dspdata[4] = (value & 0xffff);									//è®¾ç½®value,å…ˆè®¾ç½®ä½16bit
-	dspdata[5] = ((value >> 16) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
-	dspdata[6] = ((value >> 32) & 0xffff);							//è®¾ç½®value,å†è®¾ç½®  16bit
-	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//è®¾ç½®value,å†è®¾ç½®é«˜16bit
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
+	dspdata[3] = ofst;												//ÉèÖÃofst
+	dspdata[4] = (value & 0xffff);									//ÉèÖÃvalue,ÏÈÉèÖÃµÍ16bit
+	dspdata[5] = ((value >> 16) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
+	dspdata[6] = ((value >> 32) & 0xffff);							//ÉèÖÃvalue,ÔÙÉèÖÃ  16bit
+	dspdata[7] = (((value >> 32) >> 16) & 0xffff);					//ÉèÖÃvalue,ÔÙÉèÖÃ¸ß16bit
 
 	int16 dsp_comNum = 8;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1786,10 +1786,10 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Write64BitByAdr(int16 axis, int16 ofst, int
 	}
 }
 //////////////////////////////////////////////////////////////////////////
-//æ ¹æ®åç½®ä»FRAMè¯»å–ä¸€ä¸ª64bitçš„å€¼
-//å‚æ•°ï¼šè½´å·
-//å‚æ•°ï¼šåç½®
-//å‚æ•°ï¼šå€¼
+//¸ù¾İÆ«ÖÃ´ÓFRAM¶ÁÈ¡Ò»¸ö64bitµÄÖµ
+//²ÎÊı£ºÖáºÅ
+//²ÎÊı£ºÆ«ÖÃ
+//²ÎÊı£ºÖµ
 int16 CServoDriverCom::GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value)
 {
 	if (axis >= COM_AXIS_MAX)
@@ -1797,19 +1797,19 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst, int6
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;						//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;						//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_FRAM_64BIT_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
-	dspdata[3] = ofst;												//è®¾ç½®ofst
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis)); 					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
+	dspdata[3] = ofst;												//ÉèÖÃofst
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -1822,7 +1822,7 @@ int16 CServoDriverCom::GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst, int6
 		int64 tmp, tmp1;
 		tmp = (((int64)dspdata[4]) << 32);
 		tmp1 = ((tmp << 16) & 0xffff000000000000);
-		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//é«˜ä½åœ¨å
+		*value = (((int64)(dspdata[1]) & 0x000000000000ffff) | ((((int64)dspdata[2]) << 16) & 0x00000000ffff0000) | ((((int64)dspdata[3]) << 32) & 0x0000ffff00000000) | tmp1);								//¸ßÎ»ÔÚºó
 		return RTN_SUCCESS;
 	}
 }
@@ -1844,7 +1844,7 @@ int16 CServoDriverCom::GTSD_CMD_StartPlot(int16 axis, WAVE_BUF_PRM& wave)
 		wave_size[i] = wave.inf[i].bytes;
 	}
 	wave.cmd.bit.ENP = 1;
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//è½´å·
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//ÖáºÅ
 	short rtn = m_pPlot->PW_StartDspPlot(station_id, wave.cmd.bit.NUM, wave_size);
 	delete wave_size;
 	if (rtn != RTN_SUCCESS)
@@ -1860,19 +1860,19 @@ int16 CServoDriverCom::GTSD_CMD_StopPlot(int16 axis, WAVE_BUF_PRM& wave)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
-	//åœæ­¢dspAå‘FPGAçš„FIFOä¸­å†™æ•°æ®
+	//Í£Ö¹dspAÏòFPGAµÄFIFOÖĞĞ´Êı¾İ
 	wave.cmd.bit.ENP = 0;
 	Uint16 dsp_id = m_pMapping->ConvertAxiToDspId(axis);
 	short rtn = GTSD_CMD_SetWaveBuf(dsp_id, wave);
 	if (rtn)
 		return rtn;
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//è½´å·
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//ÖáºÅ
 	return m_pPlot->PW_StopDspPlot(station_id);
 }
 int16 CServoDriverCom::GTSD_CMD_PcGetWaveData(int16 axis, double** data, int32& number)
 {
 	Uint32 read_number;
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//è½´å·
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 			//ÖáºÅ
 	short rtn = m_pPlot->PW_PcGetDspWaveData(station_id, data, read_number);
 	number = read_number;
 	return rtn;
@@ -1889,18 +1889,18 @@ int16 CServoDriverCom::GTSD_CMD_FlashWrite(int16 axis, INTEL_HEX_FRAME* packet)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[100] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[100] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_SPI_FLASH_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;												//å†™å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼											
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;												//Ğ´ÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ											
 	dspdata[3] = packet->lenth;
 	dspdata[4] = ((packet->addr >> 16) & 0xffff);
 	dspdata[5] = (packet->addr & 0xffff);
@@ -1930,18 +1930,18 @@ int16 CServoDriverCom::GTSD_CMD_FlashRead(int16 axis, INTEL_HEX_FRAME* packet_w,
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[200] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[200] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = WR_SPI_FLASH_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 	dspdata[3] = packet_w->lenth;
 	dspdata[4] = ((packet_w->addr >> 16) & 0xffff);
 	dspdata[5] = (packet_w->addr & 0xffff);
@@ -1971,19 +1971,19 @@ int16 CServoDriverCom::GTSD_CMD_FlashErase(int16 axis, int16 blockNum)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = SPI_ERASE_FLASH_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));			//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;													//è¿”å›å€¼	
-	dspdata[3] = blockNum;											//éœ€è¦æ“¦å‡ºçš„block number
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));			//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;													//·µ»ØÖµ	
+	dspdata[3] = blockNum;											//ĞèÒª²Á³öµÄblock number
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -2004,20 +2004,20 @@ int16 CServoDriverCom::GTSD_CMD_InterruptSwitch(int16 axis, int16 int_switch)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = INTERRUPT_SWITCH_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;													//è¿”å›å€¼											
-	dspdata[3] = int_switch;											//ä¸­æ–­å¼€å…³							
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;													//·µ»ØÖµ											
+	dspdata[3] = int_switch;											//ÖĞ¶Ï¿ª¹Ø							
 
 	int16 dsp_comNum = 4;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -2053,18 +2053,18 @@ int16 CServoDriverCom::GTSD_CMD_ProcessorGeneralFunc(int16 axis, GENERALFUNCTION
 	{
 		return RTN_PARAM_OVERFLOW;
 	}
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 														//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;												//åœ°å€
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 														//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;												//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-															//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+															//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
-	gefunc->data[0] = GetCmdIDAndAxisNum(gefunc->cmd, m_pMapping->ConvertAxiToSubAxiId(axis));						//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	gefunc->data[1] = gefunc->mode;												//å‘½ä»¤æ¨¡å¼	å†™ï¼š0 è¯»1
-	gefunc->data[2] = 0;															//è¿”å›å€¼	
+	gefunc->data[0] = GetCmdIDAndAxisNum(gefunc->cmd, m_pMapping->ConvertAxiToSubAxiId(axis));						//ºÏ²¢ÖáºÅºÍÃüÁîid
+	gefunc->data[1] = gefunc->mode;												//ÃüÁîÄ£Ê½	Ğ´£º0 ¶Á1
+	gefunc->data[2] = 0;															//·µ»ØÖµ	
 
-	int16 dsp_comNum = gefunc->dataLenth;											//æ•°æ®é•¿åº¦æ˜¯åŒ…å«å›æ¥çš„æ€»é•¿åº¦
+	int16 dsp_comNum = gefunc->dataLenth;											//Êı¾İ³¤¶ÈÊÇ°üº¬»ØÀ´µÄ×Ü³¤¶È
 
 	int rtn = m_pDriver->RnNetCom_DSP_ComHandler((1 - gefunc->mode), dsp_comAddr, gefunc->data, dsp_comNum, station_id >> 8, station_id & 0xFF);
 	if (rtn != RTN_SUCCESS)
@@ -2086,19 +2086,19 @@ int16 CServoDriverCom::GTSD_CMD_ResetSystem(int16 axis)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = RESET_SYSTEM_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;													//è¿”å›å€¼											
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;													//·µ»ØÖµ											
 
 	int16 dsp_comNum = 3;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -2121,22 +2121,22 @@ int16 CServoDriverCom::GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_finish)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = CHECK_RESET_FINISH_COMM;									//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 	int32 value1, value2;
 	int16 dsp_comNum = 15;
-	//è¯»å–ç¬¬ä¸€æ¬¡
+	//¶ÁÈ¡µÚÒ»´Î
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
 	if (rtn != RTN_SUCCESS)
 	{
@@ -2144,12 +2144,12 @@ int16 CServoDriverCom::GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_finish)
 	}
 	else
 	{
-		value1 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
+		value1 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
 	}
 	Sleep(1);
-	//è¯»å–ç¬¬äºŒæ¬¡
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
+	//¶ÁÈ¡µÚ¶ş´Î
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
 	dspdata[2] = 0;
 	rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
 	if (rtn != RTN_SUCCESS)
@@ -2158,7 +2158,7 @@ int16 CServoDriverCom::GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_finish)
 	}
 	else
 	{
-		value2 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//é«˜ä½åœ¨å
+		value2 = (((dspdata[0]) & 0x0000ffff) | ((dspdata[1] << 16) & 0xffff0000));								//¸ßÎ»ÔÚºó
 	}
 
 	if ((value2 > value1) && (value1 != 0) && (value2 != 0))
@@ -2179,19 +2179,19 @@ int16 CServoDriverCom::GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ver)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 												//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = RD_PROCESSOR_VER_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 15;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -2211,7 +2211,7 @@ int16 CServoDriverCom::GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver)
 	if (axis >= COM_AXIS_MAX)
 	{
 		return RTN_PARAM_OVERFLOW;
-	}												//è½´å·
+	}												//ÖáºÅ
 	int16 dsp_id = m_pMapping->ConvertAxiToDspId(axis);;
 	int16 com_addr = (int16)FPGA_VERSION;
 
@@ -2233,19 +2233,19 @@ int16 CServoDriverCom::GTSD_CMD_ClrAlarm(int16 axis)
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[16] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[16] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
-													//å¦‚æœæ˜¯2ï¼Œé‚£ä¹ˆæ˜¯å¦ä¸€ä¸ªdspï¼Œä½†æ˜¯éœ€å°†è½´å·æ›´æ”¹ä¸º0
+													//Èç¹ûÊÇ2£¬ÄÇÃ´ÊÇÁíÒ»¸ödsp£¬µ«ÊÇĞè½«ÖáºÅ¸ü¸ÄÎª0
 	}
 
 	int16 cmd_id = ALARM_CLEAR_COMM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_WRITE;									//å†™å‘½ä»¤	
-	dspdata[2] = 0;													//è¿”å›å€¼											
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_WRITE;									//Ğ´ÃüÁî	
+	dspdata[2] = 0;													//·µ»ØÖµ											
 
 	int16 dsp_comNum = 3;
 	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_WRITE, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
@@ -2327,18 +2327,18 @@ int16 CServoDriverCom::GTSD_CMD_ReadLogAlarmCode(int16 axis, Uint32* alarmCode, 
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[64] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[64] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = RD_ALARM_LOG_CODE_COM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));				//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	Uint16 cur_index = 0;
 	Uint16 bit32lenth = 0;
@@ -2350,18 +2350,18 @@ int16 CServoDriverCom::GTSD_CMD_ReadLogAlarmCode(int16 axis, Uint32* alarmCode, 
 	}
 	else
 	{
-		//ç¬¬ä¸€ä¸ªæ•°æ®æ˜¯å½“å‰çš„index
+		//µÚÒ»¸öÊı¾İÊÇµ±Ç°µÄindex
 		cur_index = dspdata[0];
-		//å‡å¦‚è¯»åˆ°çš„æŠ¥è­¦indexæ˜¯-1ï¼Œé‚£ä¹ˆå°±è¯´æ˜è¿˜æ²¡æœ‰æŠ¥è­¦ï¼Œæ­£å¸¸çš„æ—¶å€™ä¼šå°†ä»–ä»¬åˆå§‹åŒ–ä¸º0
+		//¼ÙÈç¶Áµ½µÄ±¨¾¯indexÊÇ-1£¬ÄÇÃ´¾ÍËµÃ÷»¹Ã»ÓĞ±¨¾¯£¬Õı³£µÄÊ±ºò»á½«ËûÃÇ³õÊ¼»¯Îª0
 		if (((int16)cur_index) < 0)
 		{
 			cur_index = 0;
 		}
 
-		//ç¬¬äºŒä¸ªæ•°æ®æ˜¯32bitæ•°æ®çš„é•¿åº¦
+		//µÚ¶ş¸öÊı¾İÊÇ32bitÊı¾İµÄ³¤¶È
 		bit32lenth = dspdata[1];
 
-		//æ ¹æ®å½“å‰indexå’Œæ€»çš„æ•°æ®é•¿åº¦è¿›è¡Œæ’åºï¼Œå°†æœ€è¿‘çš„æŠ¥è­¦æ’åœ¨æœ€å‰é¢ã€‚
+		//¸ù¾İµ±Ç°indexºÍ×ÜµÄÊı¾İ³¤¶È½øĞĞÅÅĞò£¬½«×î½üµÄ±¨¾¯ÅÅÔÚ×îÇ°Ãæ¡£
 		for (int16 i = 0; i < lenth; ++i)
 		{
 			alarmCode[i] = (((dspdata[(2 + 2 * cur_index)] << 16) & 0xffff0000) | (dspdata[(2 + 2 * cur_index + 1)] & 0x0000ffff));
@@ -2383,18 +2383,18 @@ int16 CServoDriverCom::GTSD_CMD_ReadLogAlarmTimes(int16 axis, Uint16* alarmTimes
 		return RTN_PARAM_OVERFLOW;
 	}
 
-	int16 dspdata[64] = { 0 };											//é€šä¿¡æ•°ç»„
-	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//è½´å·
-	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//åœ°å€
+	int16 dspdata[64] = { 0 };											//Í¨ĞÅÊı×é
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//ÖáºÅ
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//µØÖ·
 	if (m_pDriver == NULL)
 	{
 		return RTN_OBJECT_UNCREATED;
 	}
 
 	int16 cmd_id = RD_ALARM_LOG_TIMES_COM;							//cmd id
-	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//åˆå¹¶è½´å·å’Œå‘½ä»¤id
-	dspdata[1] = GTSD_DSP_READ;												//è¯»å‘½ä»¤	
-	dspdata[2] = 0;												//è¿”å›å€¼																		
+	dspdata[0] = GetCmdIDAndAxisNum(cmd_id, m_pMapping->ConvertAxiToSubAxiId(axis));					//ºÏ²¢ÖáºÅºÍÃüÁîid
+	dspdata[1] = GTSD_DSP_READ;												//¶ÁÃüÁî	
+	dspdata[2] = 0;												//·µ»ØÖµ																		
 
 	int16 dsp_comNum = 40;
 	int rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);

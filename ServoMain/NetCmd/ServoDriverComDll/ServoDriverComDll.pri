@@ -7,7 +7,8 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS +=\
+HEADERS += ./ComBase.h \
+    ./FPGAUpdate.h \
     ./MotionControlComDll.h \
     ./MotionCtrlCom.h \
     ./RnSerialPort.h \
@@ -52,9 +53,9 @@ HEADERS +=\
     ./StRingNetComUser.h \
     ./StRingNetRegDef.h \
     ./UserResp.h
-
-SOURCES +=\
+SOURCES += ./ComBase.cpp \
     ./dllmain.cpp \
+    ./FPGAUpdate.cpp \
     ./MotionControlComDll.cpp \
     ./MotionCtrlCom.cpp \
     ./RnSerialPort.cpp \
@@ -92,4 +93,3 @@ SOURCES +=\
     ./RnDriverPlot.cpp \
     ./RnDriverWave.cpp \
     ./UserResp.cpp
-

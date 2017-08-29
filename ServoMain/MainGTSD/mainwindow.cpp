@@ -481,12 +481,6 @@ void MainWindow::onActionConnectClicked()
       qDebug()<<"connect return value:"<<error;
       uiStatus->btn_connect->setToolTip(tr("com ok"));
       uiStatus->btn_connect->setIcon(QIcon(ICON_FILE_PATH+ICON_STATUS_CONNECT));
-      for(int i=0;i<ui->stackedWidget->count();i++)
-      {
-        AbstractFuncWidget *absWidget;
-        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
-        absWidget->onActionReadFuncValueFromRam();
-      }
 
       uiStatus->btn_warring->hide();
       onTreeWidgetItemClicked(ui->treeWidget->currentItem(),0);
@@ -507,6 +501,12 @@ void MainWindow::onActionConnectClicked()
       //开启定时器定时检查状态及断线情况
       qDebug()<<"timer start";
       m_timer->start();
+      for(int i=0;i<ui->stackedWidget->count();i++)
+      {
+        AbstractFuncWidget *absWidget;
+        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
+        absWidget->onActionReadFuncValueFromRam();
+      }
       m_actConfigNew->setEnabled(false);//禁用新建版本
     }
 

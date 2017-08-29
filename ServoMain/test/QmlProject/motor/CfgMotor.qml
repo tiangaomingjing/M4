@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.1
 //import QtClass 1.0
 
 import "./components/CfgMotor"
+import QmlGlobalClass 1.0
 
 Rectangle{
     id:root;

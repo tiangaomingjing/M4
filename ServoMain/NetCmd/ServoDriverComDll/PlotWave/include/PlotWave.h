@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	plot wave function 		 									//
 //	file				:	PlotWave.h													//
 //	Description			:	plot all the var in the arm  								//
@@ -31,93 +31,93 @@ public:
 	CRn_NoTimer*    m_rn_noTimer;
 
 public:
-	static const int32		RAW_BUFFER_LENTH				= 200000;		//PCè¯»å–FPGAç¼“å­˜çš„bufferï¼Œæ²¡æœ‰åˆ†ç¦»æ›²çº¿
-	static const int32		WAVE_LINE_BUFFER_LENTH			= 200000;		//æ›²çº¿buffuer
-	static const int32		READ_LENTH_ONCE					= 10000;		//pcä¸€æ¬¡è¯»å–çš„doubleæ•°æ®çš„ä¸ªæ•°ï¼Œæ¯ä¸€æ¡çº¿çš„æ•°æ®ä¸ªæ•°,æ ¹æ®FPGAbufferçš„å¤§å°è€Œå®šä¹‰
+	static const int32		RAW_BUFFER_LENTH				= 200000;		//PC¶ÁÈ¡FPGA»º´æµÄbuffer£¬Ã»ÓĞ·ÖÀëÇúÏß
+	static const int32		WAVE_LINE_BUFFER_LENTH			= 200000;		//ÇúÏßbuffuer
+	static const int32		READ_LENTH_ONCE					= 10000;		//pcÒ»´Î¶ÁÈ¡µÄdoubleÊı¾İµÄ¸öÊı£¬Ã¿Ò»ÌõÏßµÄÊı¾İ¸öÊı,¸ù¾İFPGAbufferµÄ´óĞ¡¶ø¶¨Òå
 	static const int32		RAW_CACHE_BUFFER_LENTH			= 10000;		//raw data buffer lenth
 
 	
-	static const int32		FRAME_KEYWORD_LOW				= 0xaaaa;		//åŒæ­¥å¸§çš„å®šä¹‰
+	static const int32		FRAME_KEYWORD_LOW				= 0xaaaa;		//Í¬²½Ö¡µÄ¶¨Òå
 	static const int32		FRAME_KEYWORD_HIGH				= 0x5555;
-	static const int16		pw_MaxAxis						= MAX_DSP_WAVE*2;			//æœ€å¤§è½´æ•°å®šä¹‰
+	static const int16		pw_MaxAxis						= MAX_DSP_WAVE*2;			//×î´óÖáÊı¶¨Òå
 
 	//////////////////////////////////////////////////////////////////////////
 	int16		raw_Buffer_dsp[MAX_DSP_WAVE][RAW_BUFFER_LENTH];
-// 	int16		raw_Buffer_dspA[RAW_BUFFER_LENTH];					//å®šä¹‰ä¸¤ä¸ªbufferï¼Œåˆ†åˆ«æ”¾ç½®DSPAçš„rawæ•°æ®å’ŒDSPBçš„rawæ•°æ®
+// 	int16		raw_Buffer_dspA[RAW_BUFFER_LENTH];					//¶¨ÒåÁ½¸öbuffer£¬·Ö±ğ·ÅÖÃDSPAµÄrawÊı¾İºÍDSPBµÄrawÊı¾İ
 // 	int16		raw_Buffer_dspB[RAW_BUFFER_LENTH];
 
 	int16		raw_CacheBuffer_dsp[MAX_DSP_WAVE][RAW_CACHE_BUFFER_LENTH];
-// 	int16		raw_CacheBuffer_dspA[RAW_CACHE_BUFFER_LENTH];		//å®šä¹‰ä¸¤ä¸ªcacheï¼Œç”¨äºå¤„ç†ä¸Šé¢çš„bufferç¯å›çš„æ—¶å€™çš„rawæ•°æ®
+// 	int16		raw_CacheBuffer_dspA[RAW_CACHE_BUFFER_LENTH];		//¶¨ÒåÁ½¸öcache£¬ÓÃÓÚ´¦ÀíÉÏÃæµÄbuffer»·»ØµÄÊ±ºòµÄrawÊı¾İ
 // 	int16		raw_CacheBuffer_dspB[RAW_CACHE_BUFFER_LENTH];
 
 	int32		raw_Data_Index_dsp[MAX_DSP_WAVE];
-// 	int32		raw_Data_Index_dspA;								//ä»FPGAçš„FIFOä¸­è¯»å–çš„rawæ•°æ®çš„index
+// 	int32		raw_Data_Index_dspA;								//´ÓFPGAµÄFIFOÖĞ¶ÁÈ¡µÄrawÊı¾İµÄindex
 // 	int32		raw_Data_Index_dspB;
 
 	int32		raw_Data_ParseIndex_dsp[MAX_DSP_WAVE];
-// 	int32		raw_Data_ParseIndex_dspA;							//è§£æä»FPGAçš„FIFOä¸­è¯»å–çš„rawæ•°æ®çš„indexï¼Œ
-// 	int32		raw_Data_ParseIndex_dspB;							//è®°å½•å®é™…è§£æçš„indexï¼Œå› ä¸ºæ¯æ¬¡è§£æéƒ½è§£æåˆ°å¸§ç»“æŸçš„åœ°æ–¹ã€‚
+// 	int32		raw_Data_ParseIndex_dspA;							//½âÎö´ÓFPGAµÄFIFOÖĞ¶ÁÈ¡µÄrawÊı¾İµÄindex£¬
+// 	int32		raw_Data_ParseIndex_dspB;							//¼ÇÂ¼Êµ¼Ê½âÎöµÄindex£¬ÒòÎªÃ¿´Î½âÎö¶¼½âÎöµ½Ö¡½áÊøµÄµØ·½¡£
 
 	int32		raw_Data_ParseLeftNumber_dsp[MAX_DSP_WAVE];
-// 	int32		raw_Data_ParseLeftNumber_dspA;						//è§£æå¤„ç†ç¯å›éƒ¨åˆ†çš„æ—¶å€™éœ€è¦è®°å¿†å°¾éƒ¨è¿˜å‰©ä¸‹å¤šå°‘éœ€è¦è§£æ
+// 	int32		raw_Data_ParseLeftNumber_dspA;						//½âÎö´¦Àí»·»Ø²¿·ÖµÄÊ±ºòĞèÒª¼ÇÒäÎ²²¿»¹Ê£ÏÂ¶àÉÙĞèÒª½âÎö
 // 	int32		raw_Data_ParseLeftNumber_dspB;
 	
 	bool		raw_Data_GoBack_Flag_dsp[MAX_DSP_WAVE];
-// 	bool		raw_Data_GoBack_Flag_dspA;							//rawæ•°æ®bufferç¯å›çš„æ ‡å¿—
+// 	bool		raw_Data_GoBack_Flag_dspA;							//rawÊı¾İbuffer»·»ØµÄ±êÖ¾
 // 	bool		raw_Data_GoBack_Flag_dspB;
 
 	bool		raw_Data_GoBack_Aux_Flag_dsp[MAX_DSP_WAVE];
-// 	bool	    raw_Data_GoBack_Aux_Flag_dspA;						//è¿‡åœˆæ ‡å¿—è¾…åŠ©æ ‡å¿—ï¼Œå› ä¸ºæœ‰æ—¶å€™å¹¶ä¸æ˜¯çœŸæ­£çš„è¿‡åœˆï¼Œå› ä¸ºè¦æ‰¾åˆ°ä¸€å¸§çš„ç»“æŸ
+// 	bool	    raw_Data_GoBack_Aux_Flag_dspA;						//¹ıÈ¦±êÖ¾¸¨Öú±êÖ¾£¬ÒòÎªÓĞÊ±ºò²¢²»ÊÇÕæÕıµÄ¹ıÈ¦£¬ÒòÎªÒªÕÒµ½Ò»Ö¡µÄ½áÊø
 // 	bool	    raw_Data_GoBack_Aux_Flag_dspB;
 
 	int32		dataFrame_Lenth_dsp[MAX_DSP_WAVE];
-// 	int32		dataFrame_Lenth_dspA;								//æ•°æ®å¸§çš„æ€»é•¿åº¦ï¼ˆint16çš„é•¿åº¦ï¼‰
-// 	int32		dataFrame_Lenth_dspB;								//æ•°æ®å¸§çš„é•¿åº¦è®°å½•
+// 	int32		dataFrame_Lenth_dspA;								//Êı¾İÖ¡µÄ×Ü³¤¶È£¨int16µÄ³¤¶È£©
+// 	int32		dataFrame_Lenth_dspB;								//Êı¾İÖ¡µÄ³¤¶È¼ÇÂ¼
 
 	int32		waveLine_Index_dsp[MAX_DSP_WAVE];
-// 	int32		waveLine_Index_dspA;								//ç”¨æ¥å¾ªç¯è¦è¯»å–çš„æ›²çº¿çš„ä¸ªæ•°ï¼Œä¾‹å¦‚è¦çœ‹5æ¡æ›²çº¿ï¼Œæ¯ä¸€å¸§å°±æ˜¯5æ¡æ›²çº¿çš„æ•°æ®ç»„æˆçš„ç»“æ„
-// 	int32		waveLine_Index_dspB;								//ç”¨æ¥å¾ªç¯è¦è¯»å–çš„æ›²çº¿çš„ä¸ªæ•°ï¼Œä¾‹å¦‚è¦çœ‹5æ¡æ›²çº¿ï¼Œæ¯ä¸€å¸§å°±æ˜¯5æ¡æ›²çº¿çš„æ•°æ®ç»„æˆçš„ç»“æ„
+// 	int32		waveLine_Index_dspA;								//ÓÃÀ´Ñ­»·Òª¶ÁÈ¡µÄÇúÏßµÄ¸öÊı£¬ÀıÈçÒª¿´5ÌõÇúÏß£¬Ã¿Ò»Ö¡¾ÍÊÇ5ÌõÇúÏßµÄÊı¾İ×é³ÉµÄ½á¹¹
+// 	int32		waveLine_Index_dspB;								//ÓÃÀ´Ñ­»·Òª¶ÁÈ¡µÄÇúÏßµÄ¸öÊı£¬ÀıÈçÒª¿´5ÌõÇúÏß£¬Ã¿Ò»Ö¡¾ÍÊÇ5ÌõÇúÏßµÄÊı¾İ×é³ÉµÄ½á¹¹
 
 	int16		syncFrame_Flag_dsp[MAX_DSP_WAVE];
-// 	int16		syncFrame_Flag_dspA;								//æ‰¾åˆ°å¸§çš„æ ‡å¿—
-// 	int16		syncFrame_Flag_dspB;								//æ‰¾åˆ°å¸§çš„æ ‡å¿—
+// 	int16		syncFrame_Flag_dspA;								//ÕÒµ½Ö¡µÄ±êÖ¾
+// 	int16		syncFrame_Flag_dspB;								//ÕÒµ½Ö¡µÄ±êÖ¾
 
 	int64		recv_SyncFrame_Num_dsp[MAX_DSP_WAVE];
-// 	int64		recv_SyncFrame_Num_dspA;							//æ£€æµ‹åˆ°çš„åŒæ­¥å¸§çš„ä¸ªæ•°//æµ‹è¯•è®°å½•ä½¿ç”¨
-// 	int64		recv_SyncFrame_Num_dspB;							//æ£€æµ‹åˆ°çš„åŒæ­¥å¸§çš„ä¸ªæ•°
+// 	int64		recv_SyncFrame_Num_dspA;							//¼ì²âµ½µÄÍ¬²½Ö¡µÄ¸öÊı//²âÊÔ¼ÇÂ¼Ê¹ÓÃ
+// 	int64		recv_SyncFrame_Num_dspB;							//¼ì²âµ½µÄÍ¬²½Ö¡µÄ¸öÊı
 
 	int64		recv_DataFrame_Num_dsp[MAX_DSP_WAVE];
-// 	int64		recv_DataFrame_Num_dspA;							//æ£€æµ‹åˆ°çš„æ•°æ®å¸§çš„ä¸ªæ•°
-// 	int64		recv_DataFrame_Num_dspB;							//æ£€æµ‹åˆ°çš„æ•°æ®å¸§çš„ä¸ªæ•°
+// 	int64		recv_DataFrame_Num_dspA;							//¼ì²âµ½µÄÊı¾İÖ¡µÄ¸öÊı
+// 	int64		recv_DataFrame_Num_dspB;							//¼ì²âµ½µÄÊı¾İÖ¡µÄ¸öÊı
 
 	double		waveLine_Buffer_dsp[MAX_DSP_WAVE*MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
 //	double		waveLine_Buffer_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
-// 	double		waveLine_Buffer_dspA[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];		//ç”¨äºå­˜æ”¾è§£æå®Œæˆçš„æ•°æ®
+// 	double		waveLine_Buffer_dspA[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];		//ÓÃÓÚ´æ·Å½âÎöÍê³ÉµÄÊı¾İ
 // 	double		waveLine_Buffer_dspB[MAX_WAVE_PLOT_NUM][WAVE_LINE_BUFFER_LENTH];
 		
 	int32		waveLine_RdIndex_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
-// 	int32		waveLine_RdIndex_dspA[MAX_WAVE_PLOT_NUM];			//æ›²çº¿æ•°æ®çš„è¯»index
+// 	int32		waveLine_RdIndex_dspA[MAX_WAVE_PLOT_NUM];			//ÇúÏßÊı¾İµÄ¶Áindex
 // 	int32		waveLine_RdIndex_dspB[MAX_WAVE_PLOT_NUM];
 
 	int32		waveLine_WrIndex_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
-// 	int32		waveLine_WrIndex_dspA[MAX_WAVE_PLOT_NUM];			//æ›²çº¿æ•°æ®çš„å†™index
+// 	int32		waveLine_WrIndex_dspA[MAX_WAVE_PLOT_NUM];			//ÇúÏßÊı¾İµÄĞ´index
 // 	int32		waveLine_WrIndex_dspB[MAX_WAVE_PLOT_NUM];
 	
 	int32		waveLine_WrNumOnce_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
-// 	int32		waveLine_WrNumOnce_dspA[MAX_WAVE_PLOT_NUM];			//ä¸€æ¬¡å†™å…¥çš„ä¸ªæ•°
+// 	int32		waveLine_WrNumOnce_dspA[MAX_WAVE_PLOT_NUM];			//Ò»´ÎĞ´ÈëµÄ¸öÊı
 // 	int32		waveLine_WrNumOnce_dspB[MAX_WAVE_PLOT_NUM];
 	
 	int32		waveLine_WrNumSum_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM];
-// 	int32		waveLine_WrNumSum_dspA[MAX_WAVE_PLOT_NUM];			//æ€»çš„ä¸ªæ•°ï¼Œç´¯åŠ æ¯ä¸€æ¬¡å†™å…¥çš„ä¸ªæ•°
+// 	int32		waveLine_WrNumSum_dspA[MAX_WAVE_PLOT_NUM];			//×ÜµÄ¸öÊı£¬ÀÛ¼ÓÃ¿Ò»´ÎĞ´ÈëµÄ¸öÊı
 // 	int32		waveLine_WrNumSum_dspB[MAX_WAVE_PLOT_NUM];
 
 	int16		m_dsp_line_number[MAX_DSP_WAVE];
-// 	int16		m_dspA_line_number;									//è¯»å–çš„æ›²çº¿çš„ä¸ªæ•°ï¼Œæš‚å­˜
-// 	int16		m_dspB_line_number;									//è¯»å–çš„æ›²çº¿çš„ä¸ªæ•°ï¼Œæš‚å­˜
+// 	int16		m_dspA_line_number;									//¶ÁÈ¡µÄÇúÏßµÄ¸öÊı£¬Ôİ´æ
+// 	int16		m_dspB_line_number;									//¶ÁÈ¡µÄÇúÏßµÄ¸öÊı£¬Ôİ´æ
 	
-	double		plotDataBuffer_dsp[MAX_DSP_WAVE*MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//ç”¨äºå­˜æ”¾ä¸Šå±‚è¯»å–çš„æ•°æ®
-//	double		plotDataBuffer_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//ç”¨äºå­˜æ”¾ä¸Šå±‚è¯»å–çš„æ•°æ®
-// 	double		plotDataBuffer_dspA[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//ç”¨äºå­˜æ”¾ä¸Šå±‚è¯»å–çš„æ•°æ®
+	double		plotDataBuffer_dsp[MAX_DSP_WAVE*MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//ÓÃÓÚ´æ·ÅÉÏ²ã¶ÁÈ¡µÄÊı¾İ
+//	double		plotDataBuffer_dsp[MAX_DSP_WAVE][MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//ÓÃÓÚ´æ·ÅÉÏ²ã¶ÁÈ¡µÄÊı¾İ
+// 	double		plotDataBuffer_dspA[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];//ÓÃÓÚ´æ·ÅÉÏ²ã¶ÁÈ¡µÄÊı¾İ
 // 	double		plotDataBuffer_dspB[MAX_WAVE_PLOT_NUM][READ_LENTH_ONCE];
 
 	bool		pw_RunFlag[(pw_MaxAxis >> 1)];						
@@ -136,20 +136,20 @@ public:
 // 	int16 ParseDspBPlotWaveData(WAVE_BUF_PRM& wave, int32 number);
 	int16 ParseDspPlotWaveData(int16 dsp_number, WAVE_BUF_PRM& wave, int32 number);
 
-// 	//å¯åŠ¨åœæ­¢DSPAçš„ç”»å›¾
+// 	//Æô¶¯Í£Ö¹DSPAµÄ»­Í¼
 // 	int16 PW_StartDspAPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 // 	int16 PW_StopDspAPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-// 	//ä»DSPAæˆ–è€…æ˜¯DSPBè·å–æ•°æ®
+// 	//´ÓDSPA»òÕßÊÇDSPB»ñÈ¡Êı¾İ
 // 	int16 PW_PcGetDspAWaveData(double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
 // 	int16 PW_PcGetDspBWaveData(double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
 	int16 PW_PcGetDspWaveData(int16 dsp_number, double** data, int32& number, int16 com_type = GTSD_COM_TYPE_NET);
 
-// 	//å¯åŠ¨åœæ­¢DSPBçš„ç”»å›¾
+// 	//Æô¶¯Í£Ö¹DSPBµÄ»­Í¼
 // 	int16 PW_StartDspBPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 // 	int16 PW_StopDspBPlot(WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
-	//å¯åŠ¨åœæ­¢DSPçš„ç”»å›¾
+	//Æô¶¯Í£Ö¹DSPµÄ»­Í¼
 	int16 PW_StartDspPlot(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 	int16 PW_StopDspPlot(int16 dsp_number, WAVE_BUF_PRM& wave, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 

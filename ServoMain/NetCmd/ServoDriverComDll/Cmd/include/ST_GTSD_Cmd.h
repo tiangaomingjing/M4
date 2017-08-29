@@ -93,6 +93,7 @@ const int32						FPGA_DSPB_UART_PCDEBUG_BASEADDR = 0x8380;
 //等环网地址
 const int32						FPGA_DSPA_UART_RNNET_BASEADDR	= 0x0800;
 const int32						FPGA_DSPB_UART_RNNET_BASEADDR	= 0x8800;
+const int32						FPGA_DSPC_UART_RNNET_BASEADDR	= 0x4800;
 
 //下面地址是偏移地址，两个dsp对应的偏移一致，基地址不同,偏移都是byte地址，下面使用的时候需要右移一位
 const int32						FPGA_UART_CONFIG_W		= 0x00; //读 / 写 包控制设置

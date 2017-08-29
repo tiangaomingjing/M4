@@ -28,7 +28,7 @@ INCLUDEPATH += ./NetCom/include \
     ./UartBoot/include \
     ./RingNetCom/include \
     ./socketCom/include \
-    ./eeprom/include \
+    ./eeprom/include
 
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .

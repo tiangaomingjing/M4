@@ -36,5 +36,8 @@ public:
 	short PostPci(TPci* gPci, Uint8 station_id = 0xf0);
 	short SendPci(TPci* gPci, Uint8 station_id = 0xf0);
 
+	short PostPcie(TPci* gPci, Uint8 core_index, Uint8 station_id = 0xf0);
+	short SendPcie(TPci* gPci, Uint8 core_index, Uint8 station_id = 0xf0);
+
 };
 

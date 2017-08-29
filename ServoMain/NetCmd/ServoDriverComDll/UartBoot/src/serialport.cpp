@@ -64,6 +64,10 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	{
 		dsp_number = (int16)(GTSD_DSP_B);
 	}
+	if (Axis > 3)
+	{
+		dsp_number = (int16)(GTSD_DSP_C);
+	}
 	//----------------------------------------------------------------------------
 	int16 com_addr		= FPGA_UART_CONFIG_W;								//写配置地址
 	int16 com_addr1		= FPGA_UART_BAUDRATE_WR;							//读写波特率地址
@@ -105,7 +109,8 @@ bool SerialCtl::open(int16 axis, int32 baudRate, int16 com_type, int16 stationId
 	}
 	else
 	{
-		return Net_Rt_param_Err;
+		base_addr = (int16)FPGA_DSPC_UART_RNNET_BASEADDR;
+//		return Net_Rt_param_Err;
 	}
 	//计算实际的地址
 	int16 comAddr;
@@ -220,6 +225,10 @@ bool SerialCtl::close(int16 axis, int16 com_type, int16 stationId)
 		{
 			dsp_number = (int16)(GTSD_DSP_B);
 		}
+		if (Axis > 3)
+		{
+			dsp_number = (int16)(GTSD_DSP_C);
+		}
 		int16 com_addr		= FPGA_UART_STARTEND_W;								//关闭模块地址
 		int16 com_addr1		= FPGA_UART_CONFIG_R;								//查看是否未使能
 		//根据dsp号选择FPGA基地址
@@ -257,7 +266,8 @@ bool SerialCtl::close(int16 axis, int16 com_type, int16 stationId)
 		}
 		else
 		{
-			return Net_Rt_param_Err;
+			base_addr = (int16)FPGA_DSPC_UART_RNNET_BASEADDR;
+			//return Net_Rt_param_Err;
 		}
 		//计算实际的地址
 		int16 comAddr;
@@ -325,6 +335,10 @@ bool SerialCtl::read(int16 axis,Uint8 *buf, int32 length, int32 *length_read, in
 		{
 			dsp_number = (int16)(GTSD_DSP_B);
 		}
+		if (Axis > 3)
+		{
+			dsp_number = (int16)(GTSD_DSP_C);
+		}
 		//根据dsp号选择FPGA基地址
 		int16 base_addr;
 		if (dsp_number == GTSD_DSP_A)
@@ -360,7 +374,8 @@ bool SerialCtl::read(int16 axis,Uint8 *buf, int32 length, int32 *length_read, in
 		}
 		else
 		{
-			return Net_Rt_param_Err;
+			base_addr = (int16)FPGA_DSPC_UART_RNNET_BASEADDR;
+//			return Net_Rt_param_Err;
 		}
 		//计算实际的地址
 		int16 comAddr;
@@ -448,6 +463,11 @@ bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written
 		{
 			dsp_number = (int16)(GTSD_DSP_B);
 		}
+		if (Axis > 3)
+		{
+			dsp_number = (int16)(GTSD_DSP_C);
+		}
+
 		//根据dsp号选择FPGA基地址
 		int16 base_addr;
 		if (dsp_number == GTSD_DSP_A)
@@ -483,7 +503,8 @@ bool SerialCtl::write(int16 axis,Uint8 *buf, int32 length, int32 *length_written
 		}
 		else
 		{
-			return Net_Rt_param_Err;
+			base_addr = (int16)FPGA_DSPC_UART_RNNET_BASEADDR;
+//			return Net_Rt_param_Err;
 		}
 		//计算实际的地址
 		int16 comAddr;

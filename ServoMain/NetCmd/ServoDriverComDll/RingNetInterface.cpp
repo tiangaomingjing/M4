@@ -1,4 +1,4 @@
-ï»¿
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	rn Communicaiton top level		 							//
 //	file				:	Rninterface.CPP												//
@@ -19,19 +19,20 @@
 
 
 //////////////////////////////////////////////////////////////////////////
-static const int32			FPGA_MODE_RD = 0x0;							//FPGAè¯»æ“ä½œ
-static const int32			FPGA_MODE_WR = 0x1;							//FPGAå†™æ“ä½œ	
+static const int32			FPGA_MODE_RD = 0x0;							//FPGA¶Á²Ù×÷
+static const int32			FPGA_MODE_WR = 0x1;							//FPGAÐ´²Ù×÷	
 
-static const int32			DSP_MODE_RD = 0x0;							//DSPè¯»æ“ä½œ
-static const int32			DSP_MODE_WR = 0x1;							//DSPå†™æ“ä½œ	
+static const int32			DSP_MODE_RD = 0x0;							//DSP¶Á²Ù×÷
+static const int32			DSP_MODE_WR = 0x1;							//DSPÐ´²Ù×÷	
 
 
-static const int32			VIRTUAL_DSPA_COMADDR = 0x0400;				 //åœ°å€ä¸ºshortåœ°å€
+static const int32			VIRTUAL_DSPA_COMADDR = 0x0400;				 //µØÖ·ÎªshortµØÖ·
 static const int32			VIRTUAL_DSPB_COMADDR = 0x8400;
 
 
 CRingNetInterface::CRingNetInterface()
 {
+	m_protocol_type = COM_PROTOCO_RINGNET;
 }
 
 
@@ -39,10 +40,10 @@ CRingNetInterface::~CRingNetInterface()
 {
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		æ‰“å¼€è®¾å¤‡
-è¾“å…¥ï¼š		adapter: è®¾å¤‡çš„åç§°ï¼ˆGUIDï¼‰
-port:		ä¿ç•™å‚æ•°
-è¿”å›žï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		´ò¿ªÉè±¸
+ÊäÈë£º		adapter: Éè±¸µÄÃû³Æ£¨GUID£©
+port:		±£Áô²ÎÊý
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁÐ±í¡£
 *******************************************************************************************/
 int16 CRingNetInterface::NC_Open(const int8* adapter, int32 port)
 {
@@ -50,27 +51,27 @@ int16 CRingNetInterface::NC_Open(const int8* adapter, int32 port)
 	return OpenAdapter(NULL, NULL, process);
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼šå…³é—­è®¾å¤‡
-è¾“å…¥ï¼š   æ— 
-è¿”å›žï¼š   æ— 
+¹¦ÄÜ£º¹Ø±ÕÉè±¸
+ÊäÈë£º   ÎÞ
+·µ»Ø£º   ÎÞ
 *******************************************************************************************/
 int16 CRingNetInterface::NC_Close()
 {
 	return CloseAdapter();
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼š		ä»Žæ‰«æåˆ°çš„è®¾å¤‡ä¸­æ‰¾åˆ°æœ‰å“åº”çš„è®¾å¤‡å¹¶æ‰“å¼€è¯¥è®¾å¤‡ï¼Œæ‰¾åˆ°ä¸€ä¸ªæœ‰å“åº”çš„è®¾å¤‡åŽå°±é€€å‡º
-è¾“å…¥ï¼š		æ— 
-è¿”å›žï¼š		0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£º		´ÓÉ¨Ãèµ½µÄÉè±¸ÖÐÕÒµ½ÓÐÏìÓ¦µÄÉè±¸²¢´ò¿ª¸ÃÉè±¸£¬ÕÒµ½Ò»¸öÓÐÏìÓ¦µÄÉè±¸ºó¾ÍÍË³ö
+ÊäÈë£º		ÎÞ
+·µ»Ø£º		0³É¹¦£¬ÆäËû²Î¿´´íÎóÁÐ±í¡£
 *******************************************************************************************/
 int16 CRingNetInterface::RnNetCom_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress)
 {
 	return OpenAdapter(tpfUpdataProgressPt, ptrv, progress);
 }
 /*******************************************************************************************
-åŠŸèƒ½ï¼šå…³é—­æ‰«æåˆ°çš„æœ‰å“åº”çš„è®¾å¤‡
-è¾“å…¥ï¼š   æ— 
-è¿”å›žï¼š   æ— 
+¹¦ÄÜ£º¹Ø±ÕÉ¨Ãèµ½µÄÓÐÏìÓ¦µÄÉè±¸
+ÊäÈë£º   ÎÞ
+·µ»Ø£º   ÎÞ
 *******************************************************************************************/
 int16 CRingNetInterface::RnNetCom_Close()
 {
@@ -78,15 +79,15 @@ int16 CRingNetInterface::RnNetCom_Close()
 }
 
 /*******************************************************************************************
-åŠŸèƒ½ï¼šFPGAæ•°æ®é€šä¿¡äº¤äº’å‡½æ•°
-è¾“å…¥ï¼š
-mode:			1:å†™  0ï¼šè¯»
-byte_addr:		fpgaåœ°å€
-pData:			è¾“å…¥æ•°æ®
-word_num:		è¾“å…¥16ä½æ•°æ®é•¿åº¦
-è¾“å‡ºï¼špData:    è¾“å‡ºæ•°æ®
-num:			è¾“å‡ºæ•°æ®é•¿åº¦
-è¿”å›žï¼š0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£ºFPGAÊý¾ÝÍ¨ÐÅ½»»¥º¯Êý
+ÊäÈë£º
+mode:			1:Ð´  0£º¶Á
+byte_addr:		fpgaµØÖ·
+pData:			ÊäÈëÊý¾Ý
+word_num:		ÊäÈë16Î»Êý¾Ý³¤¶È
+Êä³ö£ºpData:    Êä³öÊý¾Ý
+num:			Êä³öÊý¾Ý³¤¶È
+·µ»Ø£º0³É¹¦£¬ÆäËû²Î¿´´íÎóÁÐ±í¡£
 *******************************************************************************************/
 int16 CRingNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, int16 des_id, int16 needReq/* = TRUE*/)
 {
@@ -214,15 +215,15 @@ int16 CRingNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 byte_addr, i
 }
 
 /*******************************************************************************************
-åŠŸèƒ½ï¼šdspæ•°æ®é€šä¿¡äº¤äº’å‡½æ•°
-è¾“å…¥ï¼š
-mode:			1:å†™  0ï¼šè¯»
-byte_addr:		dspåœ°å€ just used to choice which dsp to select
-pData:			è¾“å…¥æ•°æ®
-word_num:		è¾“å…¥æ•°æ®é•¿åº¦
-è¾“å‡ºï¼špData:    è¾“å‡ºæ•°æ®
-num:			è¾“å‡ºæ•°æ®é•¿åº¦
-è¿”å›žï¼š0æˆåŠŸï¼Œå…¶ä»–å‚çœ‹é”™è¯¯åˆ—è¡¨ã€‚
+¹¦ÄÜ£ºdspÊý¾ÝÍ¨ÐÅ½»»¥º¯Êý
+ÊäÈë£º
+mode:			1:Ð´  0£º¶Á
+byte_addr:		dspµØÖ· just used to choice which dsp to select
+pData:			ÊäÈëÊý¾Ý
+word_num:		ÊäÈëÊý¾Ý³¤¶È
+Êä³ö£ºpData:    Êä³öÊý¾Ý
+num:			Êä³öÊý¾Ý³¤¶È
+·µ»Ø£º0³É¹¦£¬ÆäËû²Î¿´´íÎóÁÐ±í¡£
 *******************************************************************************************/
 int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, int16 des_id)
 {
@@ -246,7 +247,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	pUser_Tx_payload_head = (StRnUserPayloadHead*)packet.dataSection;
 	pUser_Tx_data = packet.dataSection + sizeof(StRnUserPayloadHead);
 
-	//æ ¹æ®åœ°å€åˆ¤æ–­ï¼Œå…¼å®¹ä¹‹å‰çš„PCdebugçš„åœ°å€ï¼Œè™½ç„¶è¿™ä¸ªåœ°å€çŽ°åœ¨æ²¡æœ‰ç”¨å¤„
+	//¸ù¾ÝµØÖ·ÅÐ¶Ï£¬¼æÈÝÖ®Ç°µÄPCdebugµÄµØÖ·£¬ËäÈ»Õâ¸öµØÖ·ÏÖÔÚÃ»ÓÐÓÃ´¦
 	Uint8 des_ch;
 	if ((Uint16)byte_addr == (Uint16)VIRTUAL_DSPA_COMADDR)
 	{
@@ -257,7 +258,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 		des_ch = RN_PCI_CH_ID;
 	}
 
-	//æ ¹æ®æ¨¡å¼è®¾ç½®cmdå’Œæ˜¯å¦éœ€è¦å“åº”
+	//¸ù¾ÝÄ£Ê½ÉèÖÃcmdºÍÊÇ·ñÐèÒªÏìÓ¦
 	Uint8 cmd;
 	Uint8 needReq;
 	Uint8 com_mode = RN_MODE_MAIL;
@@ -288,10 +289,10 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	const Uint32 WAIT_SHORT_TIME = 0;// 200;
 	int32 delay_time = WAIT_SHORT_TIME;
 	//////////////////////////////////////////////////////////////////////////
-	//æ ¹æ®å‘½ä»¤ä¸åŒï¼Œå»¶è¿Ÿç­‰å¾…æ—¶é—´ä¸åŒ
+	//¸ù¾ÝÃüÁî²»Í¬£¬ÑÓ³ÙµÈ´ýÊ±¼ä²»Í¬
 	switch (order & 0x0fff)
 	{
-		//å¦‚æœ‰é•¿æ—¶é—´çš„æŒ‡ä»¤å°±åœ¨æ­¤å¢žåŠ 
+		//ÈçÓÐ³¤Ê±¼äµÄÖ¸Áî¾ÍÔÚ´ËÔö¼Ó
 	case 38:
 	case 39:
 		delay_time = WAIT_LONG_TIME;
@@ -364,7 +365,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 				{
 					continue;
 				}
-				//æŸ¥è¯¢è¿”å›žä¿¡æ¯æ˜¯å¦æ­£ç¡®
+				//²éÑ¯·µ»ØÐÅÏ¢ÊÇ·ñÕýÈ·
 				switch (pUser_data[4])
 				{
 				case NET_COM_EXECUTE_FAIL:
@@ -392,6 +393,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 				}
 				if (pUser_payload_head->cmd == RN_ARD)
 				{
+//the function need return user data only, the cmd head take 6bytes.
 					memcpy(pData, pUser_data+6, pUser_payload_head->num_low + (pUser_payload_head->num_bit8 << 8) - 6);
 					CNetDriver::OpenThreadRx();
 					LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
@@ -436,7 +438,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	pUser_Tx_payload_head = (StRnUserPayloadHead*)packet.dataSection;
 	pUser_Tx_data = packet.dataSection + sizeof(StRnUserPayloadHead);
 
-	//æ ¹æ®æ¨¡å¼è®¾ç½®cmdå’Œæ˜¯å¦éœ€è¦å“åº”
+	//¸ù¾ÝÄ£Ê½ÉèÖÃcmdºÍÊÇ·ñÐèÒªÏìÓ¦
 	Uint8 cmd;
 	Uint8 needReq;
 	Uint8 com_mode = RN_MODE_MAIL;
@@ -467,10 +469,10 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	const Uint32 WAIT_SHORT_TIME = 0;// 200;
 	int32 delay_time = WAIT_SHORT_TIME;
 	//////////////////////////////////////////////////////////////////////////
-	//æ ¹æ®å‘½ä»¤ä¸åŒï¼Œå»¶è¿Ÿç­‰å¾…æ—¶é—´ä¸åŒ
+	//¸ù¾ÝÃüÁî²»Í¬£¬ÑÓ³ÙµÈ´ýÊ±¼ä²»Í¬
 	switch (order & 0x0fff)
 	{
-		//å¦‚æœ‰é•¿æ—¶é—´çš„æŒ‡ä»¤å°±åœ¨æ­¤å¢žåŠ 
+		//ÈçÓÐ³¤Ê±¼äµÄÖ¸Áî¾ÍÔÚ´ËÔö¼Ó
 	case 38:
 	case 39:
 		delay_time = WAIT_LONG_TIME;
@@ -543,7 +545,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 				{
 					continue;
 				}
-				//æŸ¥è¯¢è¿”å›žä¿¡æ¯æ˜¯å¦æ­£ç¡®
+				//²éÑ¯·µ»ØÐÅÏ¢ÊÇ·ñÕýÈ·
 				switch (pUser_data[4])
 				{
 				case NET_COM_EXECUTE_FAIL:
@@ -571,6 +573,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 				}
 				if (pUser_payload_head->cmd == RN_ARD)
 				{
+//the function need return user data only, the cmd head take 6bytes.
 					memcpy(pData, pUser_data + 6, pUser_payload_head->num_low + (pUser_payload_head->num_bit8 << 8) - 6);
 					CNetDriver::OpenThreadRx();
 					LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
@@ -602,12 +605,12 @@ int16 CRingNetInterface::RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pD
 
 	EnterCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
 	int16 length = (word_num << 1) + 4;
-	if (length > RN_USER_TX_LEN_MAX)
+	if (length > RN_USER_TX_LEN_MAX)//472
 		return RTN_PARAM_OVERFLOW;
 	if (pData == NULL)
 		return RTN_NULL_POINT;
 
-	if (length < RN_USER_TX_LEN_MIN)
+	if (length < RN_USER_TX_LEN_MIN)//50
 		length = RN_USER_TX_LEN_MIN;
 
 	StRnUserPayloadHead* pUser_Tx_payload_head;
@@ -616,7 +619,7 @@ int16 CRingNetInterface::RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pD
 	pUser_Tx_payload_head = (StRnUserPayloadHead*)packet.dataSection;
 	pUser_Tx_data = packet.dataSection + sizeof(StRnUserPayloadHead);
 
-	//æ ¹æ®æ¨¡å¼è®¾ç½®cmdå’Œæ˜¯å¦éœ€è¦å“åº”
+	//¸ù¾ÝÄ£Ê½ÉèÖÃcmdºÍÊÇ·ñÐèÒªÏìÓ¦
 	Uint8 cmd;
 	Uint8 com_mode;
 	Uint8 IsResp ;
@@ -675,7 +678,34 @@ int16 CRingNetInterface::RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pD
 		IsResp = RN_IS_RESP;
 		com_mode = RN_MODE_PDU;
 		break;
+/////////////////////////////////////
+	case RN_PACKET_DMA_MAP_RD_ASK:
+		cmd = RN_LMRD;
+		needReq = RN_NEED_REQ;
+		IsResp = RN_ISNOT_RESP;
+		com_mode = RN_MODE_MAIL;
+		break;
+	case RN_PACKET_DMA_MAP_WR_ASK:
+		cmd = RN_LMWR;
+		needReq = RN_NEED_REQ;
+		IsResp = RN_ISNOT_RESP;
+		com_mode = RN_MODE_MAIL;
+		break;
+//////////////////////////////////////////////////////////////////////////
+	case RN_PACKET_DMA_CFG_RD_ASK:
+		cmd = RN_TCRD;
+		needReq = RN_NEED_REQ;
+		IsResp = RN_ISNOT_RESP;
+		com_mode = RN_MODE_MAIL;
+		break;
+	case RN_PACKET_DMA_CFG_WR_ASK:
+		cmd = RN_TCWR;
+		needReq = RN_NEED_REQ;
+		IsResp = RN_ISNOT_RESP;
+		com_mode = RN_MODE_MAIL;
+		break;
 	default:
+		return RTN_PACKET_ERR;
 		break;
 	}
 
@@ -810,15 +840,245 @@ int16 CRingNetInterface::RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pD
 	return RTN_SUCCESS;
 }
 
+int16 CRingNetInterface::RnNetCom(Uint8 com_mode, Uint8 cmd, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_ch,
+	Uint8 needReq/* = TRUE*/, Uint8 addr_mod/* = RN_ADDR_INC*/, Uint8 wait_level/* = RN_OP_WAIT_DEFAULT*/, Uint8 dsitance /*= 0xf0*/)
+{
+	//////////////////////////////////////////////////////////////////////////
+	StRnPacket packet;
+	short rtn;
+
+	EnterCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+	int16 length = (word_num << 1) + 4;
+	if (length > RN_USER_TX_LEN_MAX)//472
+		return RTN_PARAM_OVERFLOW;
+	if (pData == NULL)
+		return RTN_NULL_POINT;
+
+	if (length < RN_USER_TX_LEN_MIN)//50
+		length = RN_USER_TX_LEN_MIN;
+
+	StRnUserPayloadHead* pUser_Tx_payload_head;
+	Uint8*				 pUser_Tx_data;
+
+	pUser_Tx_payload_head = (StRnUserPayloadHead*)packet.dataSection;
+	pUser_Tx_data = packet.dataSection + sizeof(StRnUserPayloadHead);
+
+	//¸ù¾ÝÄ£Ê½ÉèÖÃcmdºÍÊÇ·ñÐèÒªÏìÓ¦
+// 	Uint8 cmd;
+// 	Uint8 com_mode;
+	Uint8 IsResp = RN_ISNOT_RESP;
+// 	switch (mode)
+// 	{
+// 	case RN_PACKET_MAIL_RD_ASK:
+// 		cmd = RN_ARD;
+// 		needReq = RN_NEED_REQ;
+// 		IsResp = RN_ISNOT_RESP;
+// 		com_mode = RN_MODE_MAIL;
+// 		break;
+// 
+// 	case RN_PACKET_MAIL_WR_ASK:
+// 		cmd = RN_AWR;
+// 		needReq = needReq;
+// 		IsResp = RN_ISNOT_RESP;
+// 		com_mode = RN_MODE_MAIL;
+// 		break;
+// 
+// 	case RN_PACKET_MAIL_RD_RESP:
+// 		cmd = RN_ARD;
+// 		needReq = RN_NEED_REQ;
+// 		IsResp = RN_IS_RESP;
+// 		com_mode = RN_MODE_MAIL;
+// 		break;
+// 	case RN_PACKET_MAIL_WR_RESP:
+// 		cmd = RN_AWR;
+// 		needReq = RN_NEED_REQ;
+// 		IsResp = RN_IS_RESP;
+// 		com_mode = RN_MODE_MAIL;
+// 		break;
+// 		//////////////////////////////////////////////////////////////////////////
+// 	case RN_PACKET_PDU_RD_ASK:
+// 		cmd = RN_ARD;
+// 		needReq = RN_NEED_REQ;
+// 		IsResp = RN_ISNOT_RESP;
+// 		com_mode = RN_MODE_PDU;
+// 		break;
+// 
+// 	case RN_PACKET_PDU_WR_ASK:
+// 		cmd = RN_AWR;
+// 		needReq = needReq;
+// 		IsResp = RN_ISNOT_RESP;
+// 		com_mode = RN_MODE_PDU;
+// 		break;
+// 
+// 	case RN_PACKET_PDU_RD_RESP:
+// 		cmd = RN_ARD;
+// 		needReq = RN_NEED_REQ;
+// 		IsResp = RN_IS_RESP;
+// 		com_mode = RN_MODE_PDU;
+// 		break;
+// 	case RN_PACKET_PDU_WR_RESP:
+// 		cmd = RN_AWR;
+// 		needReq = RN_NEED_REQ;
+// 		IsResp = RN_IS_RESP;
+// 		com_mode = RN_MODE_PDU;
+// 		break;
+// 	default:
+// 		break;
+// 	}
+
+	rtn = FormatRingNetUserPakcet(&packet, (Uint8)des_id, des_ch,
+		length, cmd, com_mode, byte_addr, word_num << 1,
+		needReq, IsResp, 0, addr_mod, dsitance);
+
+
+	int32 try_time;
+	switch (wait_level)
+	{
+	case RN_OP_WAIT_DEFAULT:
+		if (des_ch == RN_FPGA_CH_ID)
+		{
+			try_time = COM_FPGA_TRY_TIME;
+			wait_level = RN_OP_WAIT_NORMAL;
+		}
+		else if (des_ch == RN_DSP_CH_ID)
+		{
+			try_time = COM_DSP_TRY_TIME;
+			wait_level = RN_OP_WAIT_MEDIUM;
+		}
+		else
+		{
+			try_time = COM_DSP_TRY_TIME * 10;
+			wait_level = RN_OP_WAIT_LONG;
+		}
+		break;
+	case RN_OP_WAIT_NORMAL:
+		try_time = COM_FPGA_TRY_TIME;
+		break;
+	case RN_OP_WAIT_MEDIUM:
+		try_time = COM_DSP_TRY_TIME;
+		break;
+	case RN_OP_WAIT_LONG:
+		try_time = COM_DSP_TRY_TIME * 10;
+		break;
+	case RN_OP_WAIT_INFINITE:
+		try_time = COM_DSP_TRY_TIME * 100;
+		break;
+	default:
+		try_time = COM_DSP_TRY_TIME * 10;
+		wait_level = RN_OP_WAIT_LONG;
+		break;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	memcpy(pUser_Tx_data, pData, pUser_Tx_payload_head->num_low + (pUser_Tx_payload_head->num_bit8 << 8));
+
+	if (needReq == RN_NEED_REQ && IsResp == RN_ISNOT_RESP)
+		CloseThreadRx();//close the rx thread, and open it after the work finish. 
+	//////////////////////////////////////////////////////////////////////////
+	//dule with the adapter buffer data first//
+	if (needReq == RN_NEED_REQ && IsResp == RN_ISNOT_RESP)
+	{
+		for (int i = 0; i < 1000; i++)
+		{
+			int packet_num = 0;
+			rtn = CheckAdapterPacket(packet_num);
+			if (rtn != RTN_SUCCESS || packet_num <= 0)
+			{
+				break;
+			}
+		}
+	}
+	//////////////////////////////////////////////////////////////////////////
+	rtn = TxPacket(&packet);
+	if (rtn != RTN_SUCCESS)
+	{
+		if (needReq == RN_NEED_REQ && IsResp == RN_ISNOT_RESP)
+			CNetDriver::OpenThreadRx();
+		LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+		return rtn;
+	}
+	if (needReq == RN_NEED_REQ && IsResp == RN_ISNOT_RESP)
+	{
+		for (int i = 0; i < try_time; i++)
+		{
+			int packet_num = 0;
+			rtn = CheckAdapterPacket(packet_num);
+			if (rtn != RTN_SUCCESS)
+			{
+				Sleep(2);
+				i = i + 100;
+				continue;
+			}
+			if (packet_num <= 0)
+			{
+				switch (wait_level)
+				{
+				case RN_OP_WAIT_NORMAL:
+					break;
+				default:
+					Sleep(2);
+					break;
+				}
+				continue;
+			}
+			StRnPacket* pRx_packet;
+			StRnUserPayloadHead* pUser_payload_head;
+			Uint8*				 pUser_data;
+			pRx_packet = (StRnPacket*)m_rx_buffer;
+			pUser_payload_head = (StRnUserPayloadHead*)pRx_packet->dataSection;
+			pUser_data = pRx_packet->dataSection + sizeof(StRnUserPayloadHead);
+
+			if (pUser_payload_head->resp = RN_IS_RESP &&
+				pUser_payload_head->cmd == pUser_Tx_payload_head->cmd &&
+				pUser_payload_head->src_ch == pUser_Tx_payload_head->des_ch &&
+				pUser_payload_head->start_addr_bit7_0 == pUser_Tx_payload_head->start_addr_bit7_0 &&
+				pUser_payload_head->start_addr_bit15_8 == pUser_Tx_payload_head->start_addr_bit15_8) //return CNS
+			{
+				//				if (pUser_payload_head->cmd == RN_ARD)
+				{
+					memcpy(pData, pUser_data, pUser_payload_head->num_low + (pUser_payload_head->num_bit8 << 8));
+					CNetDriver::OpenThreadRx();
+					LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+					return RTN_SUCCESS;;
+				}
+				// 				else
+				// 				{
+				// 					CNetDriver::OpenThreadRx();
+				// 					LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+				// 					return RTN_SUCCESS;;
+				// 				}
+			}
+		}
+		CNetDriver::OpenThreadRx();
+		LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+		return RTN_WAIT_NET_RESP_OVERTIME;
+	}
+
+	LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+	return RTN_SUCCESS;
+}
+
+
+int16 CRingNetInterface::RnNetGetCns(COMMON_NET_STATUS* pCns, Uint8 dsitance)
+{
+	if (dsitance < m_device_num)
+	{
+		*pCns = m_pRnDeviceOnline[dsitance]->m_CNS;
+		return 0;
+	}
+	else
+	{
+		return RTN_PARAM_ERR;
+	}
+}
 // short UserRespDriver(StUserPacket* packet)
 // {
 // 	Uint16 lenth;
 // 	Uint8 dspId;
-// 	//æ›²çº¿éƒ¨åˆ†
+// 	//ÇúÏß²¿·Ö
 // 	lenth = packet->length;// ((pRx->header.bit.num_low & 0x00ff) | ((pRx->header.bit.num_bit8 << 8) & 0x0100));
 // 	waveDataLenth = (lenth >> 1);
 // 	memcpy_s(parsePacket, (lenth)* sizeof(int8), packet->pData, (lenth)* sizeof(int8));
-// 	//ç”¨äºŽåŒºåˆ†å“ªä¸ªdsp
+// 	//ÓÃÓÚÇø·ÖÄÄ¸ödsp
 // 	//////////////////////////////////////////////////////////////////////////
 // 	dspId = packet->src_ch;
 // 	switch (dspId)
@@ -839,3 +1099,20 @@ int16 CRingNetInterface::RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pD
 // 	return RTN_SUCCESS;
 // }
 
+
+short CRingNetInterface::ComWrFpgaHandle(Uint16 byte_addr, int16* pData, Uint16 word_num, Uint16 des_id, void* pParam)
+{
+	if (pParam == NULL)
+	{
+		return RnNetCom(RN_MODE_MAIL, RN_AWR, byte_addr, pData, word_num, (Uint8)des_id, RN_FPGA_CH_ID);
+	}
+	return RTN_PARAM_ERR;
+}
+short CRingNetInterface::ComRdFpgaHandle(Uint16 byte_addr, int16* pData, Uint16 word_num, Uint16 des_id, void* pParam)
+{
+	if (pParam == NULL)
+	{
+		return RnNetCom(RN_MODE_MAIL, RN_ARD, byte_addr, pData, word_num, (Uint8)des_id, RN_FPGA_CH_ID);
+	}
+	return RTN_PARAM_ERR;
+}

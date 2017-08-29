@@ -1,9 +1,10 @@
 TEMPLATE = app
 
-QT += qml quick
+QT += qml quick sql widgets
 CONFIG += c++11
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    SqltableModel/sqltablemodel.cpp
 
 RESOURCES += qml.qrc
 
@@ -20,4 +21,7 @@ DISTFILES += \
     components/CfgMotor/Impedance.qml \
     components/CfgMotor/MechanicalParameter.qml \
     components/CfgMotor/Velocity.qml
+
+HEADERS += \
+    SqltableModel/sqltablemodel.h
 

@@ -139,7 +139,7 @@
         <string>fpga</string>
        </property>
        <property name="text">
-        <string>3</string>
+        <string>1</string>
        </property>
        <property name="text">
         <string>total number</string>
@@ -149,7 +149,7 @@
          <string>fpgaAxis</string>
         </property>
         <property name="text">
-         <string>2</string>
+         <string>6</string>
         </property>
         <property name="text">
          <string>第个fpga管理4个轴</string>
