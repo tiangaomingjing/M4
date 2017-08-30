@@ -4,7 +4,7 @@
 #include <QVariant>
 
 
-SqlTableModel::SqlTableModel(QObject *parent):QSqlTableModel(parent)
+SqlTableModel::SqlTableModel(QObject *parent, QSqlDatabase db):QSqlTableModel(parent,db)
 {
 
 }
