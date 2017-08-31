@@ -46,7 +46,7 @@ Rectangle {
                           "TASKMODE_FIX": 9,
                           "TASKMODE_PT": 10,
                           "TASKMODE_DB": 11,
-                          "TASKMODE_DB": 12
+                          "TASKMODE_CSC": 12
                  }
     function onActiveNow(actived){
         console.log(actived);

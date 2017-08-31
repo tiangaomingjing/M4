@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
   qDebug()<<"database driver name:"<<motorDataBase.driverName();
 
   QSqlQuery query(motorDataBase);
-  query.exec("SELECT CompanyId , MotorName FROM Motor WHERE CompanyId=2");
+  query.exec("SELECT CompanyId , MotorName FROM Motor WHERE MotorName='SX_1'");
   while(query.next())
   {
     int id=query.value(0).toInt();
@@ -71,6 +71,7 @@ int main(int argc, char *argv[])
   SqlTableModel companyTableModel(0,motorDataBase);
   SqlTableModel motorTableModel(0,motorDataBase);
   SqlTableModel prmTableModel(0,motorDataBase);
+  SqlTableModel totalTableModel(0,motorDataBase);
   companyTableModel.setTable("Company");
   companyTableModel.select();
 
@@ -81,10 +82,14 @@ int main(int argc, char *argv[])
   prmTableModel.setTable("Motor");
   prmTableModel.select();
 
+  totalTableModel.setTable("Motor");
+  totalTableModel.select();
+
   QQuickView engine;
   engine.rootContext()->setContextProperty("companyModel",&companyTableModel);
   engine.rootContext()->setContextProperty("motorModel",&motorTableModel);
   engine.rootContext()->setContextProperty("prmModel",&prmTableModel);
+  engine.rootContext()->setContextProperty("totalModel",&totalTableModel);
   QString localFile="D:/Smart/ServoMaster/git-project/servo-4/ServoMain/test/QmlProject/motor/CfgMotor.qml";
   engine.setSource(QUrl::fromLocalFile(localFile));
   engine.show();

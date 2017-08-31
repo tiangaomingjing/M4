@@ -166,7 +166,7 @@ Rectangle{
             console.log("rowCount="+prmModel.rowCount()+" Id="+keyId);
             if(prmModel.rowCount()>0){
                 var columnCount=prmModel.recordColumnCount();
-                console.log(qsTr("rec:columnCount %1").arg(columnCount));
+                //console.log(qsTr("rec:columnCount %1").arg(columnCount));
                 m_listModel_motorPrm.clear();
                 for(var j=SqlTableModel.MotorImax;j<columnCount;j++){
                     var name=prmModel.recordFieldName(j);
@@ -192,6 +192,40 @@ Rectangle{
                 //jsobject  role-name
                 m_listModel_motorPrm.append({"chineseName":chineseName,"value":val,"unit":unit,"name":name});
             }
+        }
+        function userId(){
+            var id=1;
+            totalModel.setTable("Company");
+            totalModel.setFilter("CompanyName='用户'");
+            totalModel.select();
+            console.log(qsTr("company count:%1").arg(totalModel.rowCount()));
+            if(totalModel.rowCount()>0)
+                id=totalModel.recordValueAt(0,0);
+            console.log("userId="+id);
+            return id;
+        }
+
+        function saveData(){
+            var userId=m_motorDataBaseUi.userId();
+
+            totalModel.setTable("Motor");
+            totalModel.setFilter("");
+            totalModel.select();
+            var rowCount=totalModel.rowCount();
+            console.log(qsTr("motor count:%1").arg(rowCount));
+            totalModel.insertRows(rowCount,1);
+            totalModel.setData(
+                        totalModel.index(rowCount,SqlTableModel.MotorName),motorInputName.text);
+            totalModel.setData(
+                        totalModel.index(rowCount,SqlTableModel.MotorCompanyId),userId);
+            var columnCount=m_listModel_motorPrm.count;
+            for(var i=0;i<columnCount;i++){
+                var value=m_listModel_motorPrm.get(i).value;
+//                                            console.log("value "+value);
+                totalModel.setData(
+                            totalModel.index(rowCount,i+SqlTableModel.MotorImax),value);
+            }
+            totalModel.submitAll();
         }
 
         //电机导航栏
@@ -232,13 +266,13 @@ Rectangle{
                     color:"#F0F0F0";
                     ListView{
                         anchors.fill: parent;
-                        id:m_listViewCompany;
+                        id:m_listView_company;
                         model:companyModel;
                         delegate: companyDelegate;
                         focus: true;
                         clip: true;
                         highlight: Rectangle{
-                            color:pressColor;
+                            color:enabled?pressColor:backgroundColor;
                         }
                         highlightMoveDuration: 500;
                         highlightResizeDuration: 100;
@@ -262,11 +296,17 @@ Rectangle{
                             var id;
                             id=motorModel.recordValueAt(0,0);
                             m_motorDataBaseUi.fillPrmModel(currentIndex+1,id);
+
+                            //是否激活移除按钮
+                            if((currentIndex==companyModel.rowCount()-1)&&motorModel.rowCount()>1)
+                                m_btnRemove.enabled=true;
+                            else
+                                m_btnRemove.enabled=false;
                         }
                         Component.onCompleted:{
                         }
                         RollBarHorizontal{
-                            listView: m_listViewCompany;
+                            listView: m_listView_company;
                             mpressColor: pressColor;
                             mhoverColor: hoverColor;
                         }
@@ -299,7 +339,7 @@ Rectangle{
                         delegate: motorDelegate;
                         clip:true;
                         highlight: Rectangle{
-                            color:pressColor;
+                            color:enabled?pressColor:"red";
                         }
                         highlightMoveDuration: 500;
                         highlightResizeDuration: 100;
@@ -307,7 +347,7 @@ Rectangle{
                             var keyId;
                             keyId=motorModel.recordValueAt(currentIndex,0);
                             var companyId;
-                            companyId=companyModel.recordValueAt(m_listViewCompany.currentIndex,0)
+                            companyId=companyModel.recordValueAt(m_listView_company.currentIndex,0)
                             console.log("companyId="+companyId+" keyId="+keyId);
                             m_motorDataBaseUi.fillPrmModel(companyId,keyId);
                         }
@@ -331,10 +371,22 @@ Rectangle{
             width: parent.width-m_motorDataBaseNav.width;
             height: parent.height;
             property bool saveDialogShowFlag: false;
+            property bool removeDialogShowFlag:false;
+            Timer{
+                id:m_timerMsg;
+                interval: 2000;
+                repeat: false;
+                triggeredOnStart: false;
+                onTriggered: {
+                    m_msgShow.visible=false;
+                }
+            }
+
             ColumnLayout{
                 anchors.fill: parent;
                 anchors.margins: 10;
                 spacing: 10;
+                //电机详细参数显示表
                 Rectangle{
                     color:backgroundColor;
                     Layout.fillHeight: true;
@@ -364,13 +416,21 @@ Rectangle{
                         highlightResizeDuration: 100;
                     }
                 }
+                Text{
+                    id:m_msgShow;
+                    text:qsTr("信息");
+                    visible: false;
+                    Layout.fillWidth: true;
+                    horizontalAlignment: Text.AlignRight;
+                }
+
                 //按钮操作区
                 Item{
                     id:m_normalDialog;
                     Layout.fillHeight: true;
                     Layout.fillWidth: true;
                     Layout.maximumHeight: 40;
-                    visible: !m_prmItem.saveDialogShowFlag
+                    visible: true;
                     RowLayout{
                         anchors.fill: parent;
                         spacing: 10;
@@ -388,6 +448,7 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     m_motorDataBaseUi.clearPrmModel();
+                                    m_listView_motorType.currentIndex=-1;
                                 }
                             }
                             Text{
@@ -408,12 +469,16 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
-                                    switchUi(false);
+                                    m_prmItem.removeDialogShowFlag=true;
+                                    m_normalDialog.visible=false;
+                                    m_listView_company.enabled=false;
+                                    m_listView_motorType.enabled=false;
                                 }
                             }
                             Text{
                                 anchors.centerIn: parent;
                                 text:qsTr("移除");
+                                color:parent.enabled?"black":"gray";
                             }
                         }
                         Rectangle{
@@ -430,6 +495,7 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     m_prmItem.saveDialogShowFlag=true;
+                                    m_normalDialog.visible=false;
                                 }
                             }
                             Text{
@@ -530,7 +596,27 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
+                                    if(motorInputName.text==""){
+                                        m_msgShow.text=qsTr("提示：电机名称不能为空!");
+                                    }
+                                    else{
+                                       m_prmItem.saveDialogShowFlag=false;
+                                        m_normalDialog.visible=true;
+                                        //写入数据库
+                                        m_motorDataBaseUi.saveData();
+                                        m_msgShow.text=qsTr("保存电机至用户库!");
 
+                                        if(m_listView_company.currentIndex==companyModel.rowCount()-1){
+//                                            var userId=m_motorDataBaseUi.userId();
+//                                            motorModel.setFilter(qsTr("CompanyId=%1").arg(userId));
+                                            motorModel.select();
+                                            m_listView_motorType.currentIndex=motorModel.rowCount()-1;
+                                        }
+                                        console.log("current item text:"+m_listView_company.currentItem.text);
+                                    }
+                                    m_msgShow.visible=true;
+                                    if(m_timerMsg.running==false)
+                                        m_timerMsg.start();
                                 }
                             }
                         }
@@ -552,6 +638,105 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     m_prmItem.saveDialogShowFlag=false;
+                                    m_normalDialog.visible=true;
+                                }
+                            }
+                        }
+                    }
+                }
+                //移除对话框
+                Item{
+                    id:m_removeDialog;
+                    Layout.fillHeight: true;
+                    Layout.fillWidth: true;
+                    Layout.minimumHeight: 40;
+                    Layout.maximumHeight: 50;
+                    visible: m_prmItem.removeDialogShowFlag;
+                    RowLayout{
+                        anchors.fill: parent;
+                        spacing: 15;
+                        Text{
+                            text:qsTr("是否移除该条电机记录?");
+                            verticalAlignment: Text.AlignVCenter;
+                            Layout.fillWidth: true;
+                            Layout.fillHeight: true;
+                            color:"red";
+                            font.bold: true;
+                            font.letterSpacing: 5;
+                        }
+                        Item{
+                            Layout.fillWidth: true;
+                            Layout.fillHeight: true;
+                            Layout.maximumHeight: 200;
+                        }
+
+                        Rectangle{
+                            radius: 10;
+                            Layout.fillHeight: true;
+                            Layout.fillWidth: true;
+                            Layout.minimumWidth: 50;
+                            color:btn_removeOk.pressed?pressColor:btn_removeOk.containsMouse?hoverColor:backgroundColor;
+                            border.width: 2;
+                            border.color: frameColor;
+                            Text {
+                                anchors.centerIn: parent;
+                                text: qsTr("确定")
+                                font.letterSpacing: 5;
+                            }
+                            MouseArea{
+                                id:btn_removeOk;
+                                anchors.fill: parent;
+                                hoverEnabled: true;
+                                onClicked: {
+                                    m_prmItem.removeDialogShowFlag=false;
+                                    m_normalDialog.visible=true;
+                                    m_listView_company.enabled=true;
+                                    m_listView_motorType.enabled=true;
+                                    //!从数据库中删除
+                                    if(motorModel.rowCount()>1){
+                                        var prevIndex=m_listView_motorType.currentIndex;
+                                        motorModel.removeRows(m_listView_motorType.currentIndex,1);
+                                        motorModel.submitAll();
+                                        //!更新电机显示
+                                        motorModel.select();
+                                        if(prevIndex==0){
+                                            m_listView_motorType.currentIndex=0;
+                                            var keyId;
+                                            keyId=motorModel.recordValueAt(0,0);
+                                            var companyId;
+                                            companyId=companyModel.recordValueAt(m_listView_company.currentIndex,0)
+                                            console.log("companyId="+companyId+" keyId="+keyId);
+                                            m_motorDataBaseUi.fillPrmModel(companyId,keyId);
+                                        }
+                                        else
+                                            m_listView_motorType.currentIndex--;
+                                        console.log("delete record ....");
+                                    }
+                                }
+                            }
+                        }
+                        Rectangle{
+                            radius: 10;
+                            Layout.fillHeight: true;
+                            Layout.fillWidth: true;
+                            Layout.minimumWidth: 50;
+                            color:btn_removeCancel.pressed?pressColor:btn_removeCancel.containsMouse?hoverColor:backgroundColor;
+                            border.width: 2;
+                            border.color: frameColor;
+                            Text {
+                                anchors.centerIn: parent;
+                                text: qsTr("取消")
+                                font.letterSpacing: 5;
+                            }
+                            MouseArea{
+                                id:btn_removeCancel;
+                                anchors.fill: parent;
+                                hoverEnabled: true;
+                                onClicked: {
+                                    m_prmItem.removeDialogShowFlag=false;
+                                    m_normalDialog.visible=true;
+                                    m_listView_company.enabled=true;
+                                    m_listView_motorType.enabled=true;
                                 }
                             }
                         }
@@ -602,6 +787,7 @@ Rectangle{
             id:compannyWrapper;
             width: parent.width;
             height: 40;
+            property alias text: companyTextItem.text;
             Rectangle{
                 anchors.fill: parent;
                 color:compannyWrapper.ListView.isCurrentItem?"transparent":compannyWrapperMouseArea.containsMouse?hoverColor:"transparent";
@@ -618,6 +804,7 @@ Rectangle{
                         source:compannyWrapper.ListView.isCurrentItem? "./components/CfgMotor/company_select.png" :"./components/CfgMotor/company.png";
                     }
                     Text{
+                        id:companyTextItem;
                         text:CompanyName;
                         anchors.verticalCenter: parent.verticalCenter;
                         height: 24;
@@ -699,7 +886,6 @@ Rectangle{
                     anchors.top: parent.top;
                     anchors.verticalCenter: parent.verticalCenter;
                     text:chineseName;
-                    font.pixelSize: 16;
                     height: 24;
                     width: parent.width/3;
                     verticalAlignment: Text.AlignVCenter;
@@ -769,7 +955,6 @@ Rectangle{
                     anchors.left: motorPrmValue.right;
                     anchors.top: parent.top;
                     text:unit;
-                    font.pixelSize: 16;
                     height: 24;
                     width: parent.width/3;
                     verticalAlignment: Text.AlignVCenter;
