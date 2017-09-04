@@ -193,6 +193,7 @@ Rectangle{
                 m_listModel_motorPrm.append({"chineseName":chineseName,"value":val,"unit":unit,"name":name});
             }
         }
+
         function userId(){
             var id=1;
             totalModel.setTable("Company");
@@ -205,7 +206,19 @@ Rectangle{
             return id;
         }
 
-        function saveData(){
+        function companyId(companyName){
+            var id=1;
+            totalModel.setTable("Company");
+            totalModel.setFilter(qsTr("CompanyName='%1'").arg(companyName));
+            totalModel.select();
+            console.log(qsTr("company count:%1").arg(totalModel.rowCount()));
+            if(totalModel.rowCount()>0)
+                id=totalModel.recordValueAt(0,0);
+            console.log("userId="+id);
+            return id;
+        }
+
+        function insertRecordData(){
             var userId=m_motorDataBaseUi.userId();
 
             totalModel.setTable("Motor");
@@ -226,6 +239,22 @@ Rectangle{
                             totalModel.index(rowCount,i+SqlTableModel.MotorImax),value);
             }
             totalModel.submitAll();
+        }
+        function updateRecordData(){
+            if(prmModel.rowCount()===1){
+                console.log("motor name="+prmModel.recordValueAt(0,1));
+                var columnCount=m_listModel_motorPrm.count;
+                var value;
+                for(var i=0;i<columnCount;i++){
+                    m_listView_motorPrm.currentIndex=i;
+                    if(m_listView_motorPrm.currentItem.isEnterClicked===true){
+                        value=m_listModel_motorPrm.get(i).value;
+                        prmModel.setData(prmModel.index(0,i+SqlTableModel.MotorImax),value);
+                        console.log("update : "+i+" value = "+value);
+                    }
+                }
+                prmModel.submitAll();
+            }
         }
 
         //电机导航栏
@@ -290,18 +319,25 @@ Rectangle{
 //                        }
 
                         onCurrentIndexChanged: {
-                            motorModel.setFilter(qsTr("CompanyId=%1").arg(currentIndex+1));
+                            //var selectCompanyName=currentItem.text;
+                            //var companyId=m_motorDataBaseUi.companyId(selectCompanyName);
+                            var companyId=companyModel.recordValueAt(currentIndex,0);
+                            motorModel.setFilter(qsTr("CompanyId=%1").arg(companyId));
                             motorModel.select();
                             m_listView_motorType.currentIndex=0;
-                            var id;
-                            id=motorModel.recordValueAt(0,0);
-                            m_motorDataBaseUi.fillPrmModel(currentIndex+1,id);
+                            var motorid;
+                            motorid=motorModel.recordValueAt(0,0);
+                            m_motorDataBaseUi.fillPrmModel(companyId,motorid);
 
                             //是否激活移除按钮
-                            if((currentIndex==companyModel.rowCount()-1)&&motorModel.rowCount()>1)
+                            if((currentIndex==companyModel.rowCount()-1)&&motorModel.rowCount()>1){
                                 m_btnRemove.enabled=true;
-                            else
+                                m_btnUpdate.enabled=true;
+                            }
+                            else{
                                 m_btnRemove.enabled=false;
+                                m_btnUpdate.enabled=false;
+                            }
                         }
                         Component.onCompleted:{
                         }
@@ -374,7 +410,7 @@ Rectangle{
             property bool removeDialogShowFlag:false;
             Timer{
                 id:m_timerMsg;
-                interval: 2000;
+                interval: 1000;
                 repeat: false;
                 triggeredOnStart: false;
                 onTriggered: {
@@ -482,6 +518,28 @@ Rectangle{
                             }
                         }
                         Rectangle{
+                            id:m_btnUpdate;
+                            color:updateMouse.containsPress?root.pressColor:updateMouse.containsMouse?root.hoverColor:backgroundColor;
+                            border.width: 2;
+                            border.color: frameColor;
+                            Layout.fillHeight: true;
+                            Layout.fillWidth: true;
+                            radius: 10;
+                            MouseArea{
+                                id:updateMouse;
+                                anchors.fill: parent;
+                                hoverEnabled: true;
+                                onClicked: {
+                                    m_motorDataBaseUi.updateRecordData();
+                                }
+                            }
+                            Text{
+                                anchors.centerIn: parent;
+                                text:qsTr("更新记录");
+                                color:parent.enabled?"black":"gray";
+                            }
+                        }
+                        Rectangle{
                             id:m_btnAdd;
                             color:addMouse.containsPress?root.pressColor:addMouse.containsMouse?root.hoverColor:backgroundColor;
                             border.width: 2;
@@ -500,7 +558,7 @@ Rectangle{
                             }
                             Text{
                                 anchors.centerIn: parent;
-                                text:qsTr("增加至用户库");
+                                text:qsTr("增加记录");
                             }
                         }
                         Rectangle{
@@ -603,7 +661,7 @@ Rectangle{
                                        m_prmItem.saveDialogShowFlag=false;
                                         m_normalDialog.visible=true;
                                         //写入数据库
-                                        m_motorDataBaseUi.saveData();
+                                        m_motorDataBaseUi.insertRecordData();
                                         m_msgShow.text=qsTr("保存电机至用户库!");
 
                                         if(m_listView_company.currentIndex==companyModel.rowCount()-1){
@@ -876,7 +934,8 @@ Rectangle{
         Item{
             id:motorPrmWrapper;
             width: parent.width;
-            height: 30;
+            height: 32;
+            property bool isEnterClicked:motorPrmValue.isEnterClicked;
             Rectangle{
                 anchors.fill: parent;
                 color:motorPrmWrapperMouseArea.containsMouse?hoverColor:"transparent";
@@ -890,35 +949,37 @@ Rectangle{
                     width: parent.width/3;
                     verticalAlignment: Text.AlignVCenter;
                 }
-                Loader {
-                    id: loaderEditor
-                    anchors.left: motorPrmName.right;
-                    anchors.leftMargin: -10;
-                    anchors.top: parent.top;
-                    anchors.verticalCenter: parent.verticalCenter;
-                    anchors.margins: 0
-                    width: 0;
-                    height: motorPrmValue.height;
-                    sourceComponent: motorPrmValue.focus ? editor : null
-                    Component {
-                        id: editor
-                        Rectangle{
-                            color:"white"
-                            radius: 5;
-                            Behavior on width {
-                                NumberAnimation{
-                                    easing.type: Easing.Linear
-                                    duration: 100;
-                                }
-                            }
-                        }
-                    }
-                    onSourceComponentChanged: {
-                        if(loaderEditor.item!==null){
-                            loaderEditor.item.width=motorPrmValue.width;
-                        }
-                    }
-                }
+//                Loader {
+//                    id: loaderEditor
+//                    anchors.left: motorPrmName.right;
+//                    anchors.leftMargin: -10;
+//                    anchors.top: parent.top;
+//                    anchors.verticalCenter: parent.verticalCenter;
+//                    anchors.margins: 0
+//                    width: 0;
+//                    height: motorPrmValue.height;
+//                    sourceComponent: motorPrmValue.focus ? editor : null
+//                    Component {
+//                        id: editor
+//                        Rectangle{
+//                            color:"white"
+//                            radius: 5;
+//                            Behavior on width {
+//                                NumberAnimation{
+//                                    easing.type: Easing.Linear
+//                                    duration: 100;
+//                                }
+//                            }
+//                        }
+//                    }
+//                    onSourceComponentChanged: {
+//                        if(loaderEditor.item!==null){
+//                            loaderEditor.item.width=motorPrmValue.width;
+//                        }
+//                    }
+//                }
+
+
                 TextInput{
                     id:motorPrmValue;
                     anchors.left: motorPrmName.right;
@@ -931,22 +992,99 @@ Rectangle{
                     verticalAlignment: Text.AlignVCenter;
                     validator: DoubleValidator{}
                     selectByMouse: true;
+                    property bool isEnterClicked: false;
+                    onTextChanged: {
+                        if(motorPrmValue.focus)
+                            state="textChanged";
+                    }
+                    onFocusChanged: {
+                        if(focus)
+                            console.log("focus in");
+                        else{
+                            console.log("focus out");
+                            text=m_listModel_motorPrm.get(index).value;
+                            state="focusOut";
+                        }
+                    }
 
                     onEditingFinished: {
 //                        text=m_motorPrmModel.get(index).value;
 //                        console.log("onEditingFinished "+m_motorPrmModel.get(index).value);
                     }
                     onAccepted: {
-//                        var prevValue=m_motorPrmModel.get(index).value;
-//                        console.log("typeof "+typeof prevValue);
-//                        if(prevValue!==text){
-//                            saveEnable=true;
-//                            updateServoDataEnable=true;//只有参数有修改时，点下一步才写到驱动器
-//                        }
+                        m_listModel_motorPrm.setProperty(index,"value",motorPrmValue.text);
+                        state="keyEnter";
+                        console.log("onAccepted "+m_listModel_motorPrm.get(index).value);
+                    }
+                    state:"default";
+                    states: [
+                        State {
+                            name: "textChanged";
+                            PropertyChanges {
+                                target: motorPrmValue
+                                color:"red";
+                            }
+                        },
+                        State {
+                            name: "default";
+                            changes: [
+                                PropertyChanges {
+                                    target: motorPrmValue
+                                    color:"black";
+                                },
+                                PropertyChanges {
+                                    target: textInputBackground;
+                                    color:"white";
+                                }
+                            ]
+                        },
+                        State {
+                            name: "focusOut";
+                            changes: [
+                                PropertyChanges {
+                                    target: motorPrmValue
+                                    color:"black";
+                                }
+                            ]
+                        },
+                        State {
+                            name: "focusin";
+                            when:motorPrmValue.focus;
+                            PropertyChanges {
+                                target: textInputBackground;
+                                border.color: "black";
+                                border.width: 1;
+                                restoreEntryValues: true;
+                            }
+                        },
+                        State {
+                            name: "keyEnter";
+                            changes:[
+                                PropertyChanges {
+                                    target: textInputBackground;
+                                    restoreEntryValues: false;
+                                    color:"yellow";
+                                },
+                                PropertyChanges {
+                                    target: motorPrmValue;
+                                    restoreEntryValues: false;
+                                    isEnterClicked:true;
+                                }
+                            ]
 
-//                        m_motorPrmModel.setProperty(index,"value",motorPrmValue.text);
-//                        motorPrmValue.focus=false;//退出编辑状态
-//                        console.log("onAccepted "+m_motorPrmModel.get(index).value);
+                        }
+                    ]
+                    Rectangle{
+                        id:textInputBackground;
+                        color:"white";
+                        radius: 5;
+                        anchors.leftMargin: -10;
+                        anchors.margins: 2
+                        anchors.fill: parent;
+                        width: motorPrmValue.width;
+                        border.color: "transparent";
+                        border.width: 0;
+                        z:-1;
                     }
                 }
 

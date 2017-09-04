@@ -37,17 +37,13 @@ int main(int argc, char *argv[])
   }
 
   query.exec("SELECT CompanyId,COUNT(MotorName) FROM Motor GROUP BY CompanyId");
-  QSqlQuery query2(motorDataBase);
   while(query.next())
   {
-    int id=query.value(0).toInt();
-    QString company="null";
-    query2.exec(QObject::tr("SELECT CompanyName FROM Company WHERE Id=%1").arg(id));
-    if(query2.next())
-      company=query2.value(0).toString();
+    int id;
+    id=query.value(0).toInt();
 
     int count=query.value(1).toInt();
-    qDebug()<<"id="<<company<<" count="<<count;
+    qDebug()<<"id="<<id<<" count="<<count;
   }
 
   QSqlDriver *driver=motorDataBase.driver();

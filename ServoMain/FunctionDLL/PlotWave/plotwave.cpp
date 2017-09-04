@@ -1130,7 +1130,7 @@ void PlotWave::onBtnServoOnClicked(bool checked)
 //          setServoOnUi(on);
         }
       }
-      GlobalFunction::delayms(200);
+      GlobalFunction::delayms(500);
       for(int i=0;i<m_rollBoxUi->rollCount();i++)
       {
         if(m_rollBoxUi->buttonIsChecked(i))
@@ -1152,7 +1152,7 @@ void PlotWave::onBtnServoOnClicked(bool checked)
         if(m_rollBoxUi->buttonIsChecked(i))
         {
           //关伺服
-          bool on=true;
+          bool on=false;
           error=(COM_ERROR)GTSD_CMD_SetServoOff(i, comid,rnStation);
           if(!ServoControl::checkedCmdReturnValue(error))
             return ;
@@ -1161,7 +1161,7 @@ void PlotWave::onBtnServoOnClicked(bool checked)
 //          setServoOnUi(on);
         }
       }
-      GlobalFunction::delayms(200);
+      GlobalFunction::delayms(500);
       for(int i=0;i<m_rollBoxUi->rollCount();i++)
       {
         if(m_rollBoxUi->buttonIsChecked(i))

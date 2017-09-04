@@ -258,7 +258,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>2576980</string>
+           <string>3221225.5</string>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -313,7 +313,7 @@
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>2576980</string>
+           <string>3221225.5</string>
           </property>
           <property name="text">
            <string/>
@@ -368,7 +368,7 @@
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>2576980</string>
+           <string>3221225.5</string>
           </property>
           <property name="text">
            <string/>
@@ -468,7 +468,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>2576980</string>
+           <string>3221225.5</string>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -523,7 +523,7 @@
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>2576980</string>
+           <string>3221225.5</string>
           </property>
           <property name="text">
            <string/>
@@ -578,7 +578,7 @@
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>2576980</string>
+           <string>3221225.5</string>
           </property>
           <property name="text">
            <string/>
@@ -678,7 +678,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>1932735.3</string>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -733,7 +733,7 @@
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>1932735.3</string>
           </property>
           <property name="text">
            <string/>
@@ -788,7 +788,7 @@
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>1932735.3</string>
           </property>
           <property name="text">
            <string/>
@@ -888,7 +888,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>1932735.3</string>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -943,7 +943,7 @@
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>1932735.3</string>
           </property>
           <property name="text">
            <string/>
@@ -998,7 +998,7 @@
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>1932735.3</string>
           </property>
           <property name="text">
            <string/>
@@ -1098,7 +1098,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>644245.1</string>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -1153,7 +1153,7 @@
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>644245.1</string>
           </property>
           <property name="text">
            <string/>
@@ -1208,7 +1208,7 @@
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>644245.1</string>
           </property>
           <property name="text">
            <string/>
@@ -1308,7 +1308,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>644245.1</string>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -1363,7 +1363,7 @@
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>644245.1</string>
           </property>
           <property name="text">
            <string/>
@@ -1418,7 +1418,7 @@
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>1610613</string>
+           <string>644245.1</string>
           </property>
           <property name="text">
            <string/>
