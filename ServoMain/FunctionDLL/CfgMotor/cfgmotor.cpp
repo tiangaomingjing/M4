@@ -1,6 +1,8 @@
 ﻿#include "cfgmotor.h"
 #include "ui_cfgmotor.h"
 #include "MainGTSD/mainwindow.h"
+#include <MainGTSD/MotorSqlModel/motorsqlmodel.h>
+#include <MainGTSD/NavigationConfig/DataBase/SqltableModel/sqltablemodel.h>
 
 #include <QQuickWidget>
 #include <QQmlContext>
@@ -16,6 +18,11 @@ CfgMotor::CfgMotor(QWidget *parent):
 CfgMotor::~CfgMotor()
 {
   qDebug()<<"CfgMotor release ->";
+}
+
+bool CfgMotor::getComConnectSatus()
+{
+  return mp_mainWindow->getComOpenState();
 }
 void CfgMotor::updateUiWhenNavigationTreeClicked()
 {
@@ -73,7 +80,7 @@ void CfgMotor::onWriteFuncTreetoServoFlash()
     {
       k=32767;
 //      mp_mainWindow->setWarningMessage(tr("Imax is too small!"));
-      emit warningMessageChanged(tr("Imax is too small!"));
+      emit showMessage(tr("Imax is too small!"));
     }
     int16 value=(int16)k;
     ret=GTSD_CMD_Fram_Write16BitByAdr(m_axisNumber,gainInfo.offsetAddr,value,config->com.id, config->com.rnStation);
@@ -110,12 +117,22 @@ void CfgMotor::createUiByQml()
   m_qmlFilePath=SYSCONFIG_FILE_PATH+typeName+"/"+modelName+"/"+version+"/ui/"+objectName()+".qml";
   qDebug()<<tr("******************qml path:%1****************\n*****icon path %2********").arg(m_qmlFilePath).arg(m_qmlIconFilePath);
 
+  MotorSqlModel *motorSqlModel=mp_mainWindow->getMotorSqlModel();
+  SqlTableModel *company=motorSqlModel->companyTableModel();
+  SqlTableModel *motor=motorSqlModel->motorTableModel();
+  SqlTableModel *prm=motorSqlModel->prmTableModel();
+  SqlTableModel *total=motorSqlModel->totalTableModel();
+
   QQuickWidget *qwidget=new QQuickWidget(this);
   qwidget->setMinimumSize(600,560);
   qwidget->rootContext()->setContextProperty("iconPath",m_qmlIconFilePath);
   qwidget->rootContext()->setContextProperty("driveMotor",this);
   qwidget->rootContext()->setContextProperty("axisIndex",m_axisNumber);
   qwidget->rootContext()->setContextProperty("treeSource",ui->treeWidget);
+  qwidget->rootContext()->setContextProperty("companyModel",company);
+  qwidget->rootContext()->setContextProperty("motorModel",motor);
+  qwidget->rootContext()->setContextProperty("prmModel",prm);
+  qwidget->rootContext()->setContextProperty("totalModel",total);
 
   qwidget->resize(600,560);
   qwidget->setResizeMode(QQuickWidget::SizeRootObjectToView );

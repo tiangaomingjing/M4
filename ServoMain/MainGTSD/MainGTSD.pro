@@ -104,7 +104,8 @@ SOURCES += main.cpp\
     Uboot/ubootdialog.cpp \
     NavigationConfig/ControlName/controlname.cpp \
     FpgaDialogSetting/fpgadialogsettingrnnet.cpp \
-    ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp
+    ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp \
+    MotorSqlModel/motorsqlmodel.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -133,7 +134,8 @@ HEADERS  += mainwindow.h \
     NavigationConfig/ControlName/controlname.h \
     FpgaDialogSetting/fpgadialogsettingrnnet.h \
     FpgaDialogSetting/highlighttext.h \
-    ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h
+    ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h \
+    MotorSqlModel/motorsqlmodel.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

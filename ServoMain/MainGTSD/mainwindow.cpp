@@ -25,6 +25,7 @@
 #include "./Uboot/ubootdialog.h"
 #include "plotwaveui.h"
 #include "QtTreeManager/qttreemanager.h"
+#include "MotorSqlModel/motorsqlmodel.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -103,6 +104,12 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_timer->setInterval(300);
   connect(m_timer,SIGNAL(timeout()),this,SLOT(onTimeOut()));
 
+  //电机数据库连接
+  QString dataBaseFileName=RESOURCE_FILE_PATH+"DataBase/MotorInfomation.sqlite";
+  m_motorSqlModel=new MotorSqlModel(this);
+  m_motorSqlModel->connectDataBase(dataBaseFileName);
+  qmlRegisterType<SqlTableModel>("QmlGlobalClass", 1, 0, "SqlTableModel");
+
   initialUi();
   createActions();
   createMenus();
@@ -119,10 +126,10 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
 
   showMaximized();//setWindowState(Qt::WindowMaximized);是一样的功能
 
-  QString dataBaseFile=RESOURCE_FILE_PATH+"DataBase/"+DB_MotorInfo;
+//  QString dataBaseFile=RESOURCE_FILE_PATH+"DataBase/"+DB_MotorInfo;
 //  qDebug()<<"dataBaseFile"<<dataBaseFile;
-  m_dataBase=new ConnectDataBase(this);
-  m_dataBase->doConnectBase(dataBaseFile);
+//  m_dataBase=new ConnectDataBase(this);
+//  m_dataBase->doConnectBase(dataBaseFile);
 
   this->setWindowTitle(tr("Servo Driver Technology"));
 //  QString str=tr("current config:typeId %1 \n typeName %2 \n comId %3 \n comName %4 \n comRnStation %5").arg(mp_userConfig->typeId).arg(mp_userConfig->typeName).arg(mp_userConfig->com.id).arg(mp_userConfig->com.comName).arg(mp_userConfig->com.rnStation);

@@ -873,7 +873,6 @@ Item {
                         m_motorPrmModel.append({"chineseName":chineseName,"value":val,"unit":unit,"name":name,"controlKey":controlKey});
                     }
                 }
-
                 updateServoDataEnable=true;//允许下一步时写电机能数
             }
         }

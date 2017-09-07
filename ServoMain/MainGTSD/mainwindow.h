@@ -30,6 +30,7 @@ class QmlUserConfigProxy;
 class ConnectDataBase;
 class FpgaDialogSettingRnNet;
 class AbstractFuncWidget;
+class MotorSqlModel;
 
 class MainWindow : public QMainWindow
 {
@@ -44,6 +45,7 @@ public:
   QTreeWidget *getRamAllAxisTree(void){return mp_ramAllTreeWidget;}
   QTreeWidget *getFunctionCmdTree(void){return mp_functionCmdTreeWidget;}
   QTreeWidget *getFunctionExtensionTree(void){return mp_funcExtension;}
+  MotorSqlModel *getMotorSqlModel(void){return m_motorSqlModel;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
   bool getComOpenState(void){return m_isOpenCom;}
@@ -240,6 +242,7 @@ private:
   static int m_step;
 
   QMap<QString,QVariant> m_moduleShareData;//多个dll模块中的共享数据
+  MotorSqlModel *m_motorSqlModel;
 
 };
 #endif // MAINWINDOW_H

@@ -2,11 +2,15 @@
 #include <QSqlRecord>
 #include <QSqlField>
 #include <QVariant>
+#include <QDebug>
 
-
-SqlTableModel::SqlTableModel(QObject *parent):QSqlTableModel(parent)
+SqlTableModel::SqlTableModel(QObject *parent, QSqlDatabase db):QSqlTableModel(parent,db)
 {
 
+}
+SqlTableModel::~SqlTableModel()
+{
+  qDebug()<<"SqlTableModel release ->";
 }
 
 QVariant SqlTableModel::data(const QModelIndex &index, int role) const

@@ -94,7 +94,7 @@ Rectangle{
                             anchors.bottom: parent.bottom;
                             anchors.bottomMargin: 5;
                             anchors.horizontalCenter: parent.horizontalCenter;
-                            text:qsTr("电机重新安装");
+                            text:qsTr("电机安装");
                             font.bold: motorCfgMouse.containsMouse?true:false;
                             horizontalAlignment: Text.AlignHCenter;
                             width: parent.width;
@@ -160,8 +160,8 @@ Rectangle{
             "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"对",
             "Tqr":"N.m","PHIm":"mV/rpm","Vmax":"V"
         }
-        function fillPrmModel(companyId,keyId){
-            prmModel.setFilter(qsTr("CompanyId=%1 AND Id=%2").arg(companyId).arg(keyId));
+        function fillPrmModel(keyId){
+            prmModel.setFilter(qsTr("Id=%1").arg(keyId));
             prmModel.select();
             console.log("rowCount="+prmModel.rowCount()+" Id="+keyId);
             if(prmModel.rowCount()>0){
@@ -241,20 +241,32 @@ Rectangle{
             totalModel.submitAll();
         }
         function updateRecordData(){
+            var hasModified=false;
             if(prmModel.rowCount()===1){
-                console.log("motor name="+prmModel.recordValueAt(0,1));
                 var columnCount=m_listModel_motorPrm.count;
-                var value;
+                //先判断有没有修改
                 for(var i=0;i<columnCount;i++){
                     m_listView_motorPrm.currentIndex=i;
                     if(m_listView_motorPrm.currentItem.isEnterClicked===true){
-                        value=m_listModel_motorPrm.get(i).value;
-                        prmModel.setData(prmModel.index(0,i+SqlTableModel.MotorImax),value);
-                        console.log("update : "+i+" value = "+value);
+                        hasModified=true;
                     }
                 }
-                prmModel.submitAll();
+                if(hasModified){
+                    console.log("motor name="+prmModel.recordValueAt(0,1));
+                    var value;
+                    for(var j=0;j<columnCount;j++){
+                        m_listView_motorPrm.currentIndex=j;
+                        if(m_listView_motorPrm.currentItem.isEnterClicked===true){
+                            value=m_listModel_motorPrm.get(j).value;
+                            prmModel.setData(prmModel.index(0,j+SqlTableModel.MotorImax),value);
+                            m_listView_motorPrm.currentItem.isEnterClicked=false;
+                            console.log("update : "+j+" value = "+value);
+                        }
+                    }
+                    prmModel.submitAll();
+                }
             }
+            return hasModified;
         }
 
         //电机导航栏
@@ -325,18 +337,20 @@ Rectangle{
                             motorModel.setFilter(qsTr("CompanyId=%1").arg(companyId));
                             motorModel.select();
                             m_listView_motorType.currentIndex=0;
-                            var motorid;
-                            motorid=motorModel.recordValueAt(0,0);
-                            m_motorDataBaseUi.fillPrmModel(companyId,motorid);
+                            var keyId;
+                            keyId=motorModel.recordValueAt(0,0);
+                            m_motorDataBaseUi.fillPrmModel(keyId);
 
                             //是否激活移除按钮
                             if((currentIndex==companyModel.rowCount()-1)&&motorModel.rowCount()>1){
                                 m_btnRemove.enabled=true;
                                 m_btnUpdate.enabled=true;
+                                m_btnNew.enabled=true;
                             }
                             else{
                                 m_btnRemove.enabled=false;
                                 m_btnUpdate.enabled=false;
+                                m_btnNew.enabled=false;
                             }
                         }
                         Component.onCompleted:{
@@ -382,10 +396,7 @@ Rectangle{
                         onCurrentIndexChanged: {
                             var keyId;
                             keyId=motorModel.recordValueAt(currentIndex,0);
-                            var companyId;
-                            companyId=companyModel.recordValueAt(m_listView_company.currentIndex,0)
-                            console.log("companyId="+companyId+" keyId="+keyId);
-                            m_motorDataBaseUi.fillPrmModel(companyId,keyId);
+                            m_motorDataBaseUi.fillPrmModel(keyId);
                         }
                         Component.onCompleted:{
                             currentIndex=0;
@@ -406,8 +417,6 @@ Rectangle{
             anchors.top: parent.top;
             width: parent.width-m_motorDataBaseNav.width;
             height: parent.height;
-            property bool saveDialogShowFlag: false;
-            property bool removeDialogShowFlag:false;
             Timer{
                 id:m_timerMsg;
                 interval: 1000;
@@ -458,6 +467,7 @@ Rectangle{
                     visible: false;
                     Layout.fillWidth: true;
                     horizontalAlignment: Text.AlignRight;
+                    height: 40;
                 }
 
                 //按钮操作区
@@ -484,12 +494,14 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     m_motorDataBaseUi.clearPrmModel();
-                                    m_listView_motorType.currentIndex=-1;
+                                    m_saveDialog.visible=true;
+                                    m_normalDialog.visible=false;
                                 }
                             }
                             Text{
                                 anchors.centerIn: parent;
                                 text:qsTr("新建");
+                                color:parent.enabled?"black":"gray";
                             }
                         }
                         Rectangle{
@@ -505,10 +517,12 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
-                                    m_prmItem.removeDialogShowFlag=true;
+                                    m_removeDialog.visible=true;
                                     m_normalDialog.visible=false;
                                     m_listView_company.enabled=false;
                                     m_listView_motorType.enabled=false;
+                                    m_listView_motorPrm.enabled=false;
+                                    m_removeDialog.state="remove";
                                 }
                             }
                             Text{
@@ -530,12 +544,16 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
-                                    m_motorDataBaseUi.updateRecordData();
+                                    var hasModified=m_motorDataBaseUi.updateRecordData();
+                                    if(hasModified){
+                                        var keyId=prmModel.recordValueAt(0,0);
+                                        m_motorDataBaseUi.fillPrmModel(keyId);
+                                    }
                                 }
                             }
                             Text{
                                 anchors.centerIn: parent;
-                                text:qsTr("更新记录");
+                                text:qsTr("保存修改");
                                 color:parent.enabled?"black":"gray";
                             }
                         }
@@ -552,13 +570,13 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
-                                    m_prmItem.saveDialogShowFlag=true;
+                                    m_saveDialog.visible=true;
                                     m_normalDialog.visible=false;
                                 }
                             }
                             Text{
                                 anchors.centerIn: parent;
-                                text:qsTr("增加记录");
+                                text:qsTr("增加至用户库");
                             }
                         }
                         Rectangle{
@@ -574,7 +592,12 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
-                                    switchUi(false);
+                                    m_removeDialog.visible=true;
+                                    m_normalDialog.visible=false;
+                                    m_listView_company.enabled=false;
+                                    m_listView_motorType.enabled=false;
+                                    m_listView_motorPrm.enabled=false;
+                                    m_removeDialog.state="install";
                                 }
                             }
                             Text{
@@ -611,9 +634,9 @@ Rectangle{
                     id:m_saveDialog;
                     Layout.fillHeight: true;
                     Layout.fillWidth: true;
-                    Layout.minimumHeight: 40;
-                    Layout.maximumHeight: 50;
-                    visible: m_prmItem.saveDialogShowFlag
+                    Layout.maximumHeight: 40;
+                    Layout.minimumHeight: 35;
+                    visible: false;
                     RowLayout{
                         anchors.fill: parent;
                         spacing: 15;
@@ -631,7 +654,7 @@ Rectangle{
                                 background: Rectangle{
                                     radius: 5;
                                     implicitWidth: 180;
-                                    implicitHeight: 35;
+                                    implicitHeight: 30;
                                     border.color: "#333";
                                     border.width: 1;
                                 }
@@ -658,15 +681,13 @@ Rectangle{
                                         m_msgShow.text=qsTr("提示：电机名称不能为空!");
                                     }
                                     else{
-                                       m_prmItem.saveDialogShowFlag=false;
+                                        m_saveDialog.visible=false;
                                         m_normalDialog.visible=true;
                                         //写入数据库
                                         m_motorDataBaseUi.insertRecordData();
                                         m_msgShow.text=qsTr("保存电机至用户库!");
 
                                         if(m_listView_company.currentIndex==companyModel.rowCount()-1){
-//                                            var userId=m_motorDataBaseUi.userId();
-//                                            motorModel.setFilter(qsTr("CompanyId=%1").arg(userId));
                                             motorModel.select();
                                             m_listView_motorType.currentIndex=motorModel.rowCount()-1;
                                         }
@@ -695,8 +716,10 @@ Rectangle{
                                 anchors.fill: parent;
                                 hoverEnabled: true;
                                 onClicked: {
-                                    m_prmItem.saveDialogShowFlag=false;
+                                    m_saveDialog.visible=false;
                                     m_normalDialog.visible=true;
+                                    var keyId=prmModel.recordValueAt(0,0);
+                                    m_motorDataBaseUi.fillPrmModel(keyId);
                                 }
                             }
                         }
@@ -707,49 +730,86 @@ Rectangle{
                     id:m_removeDialog;
                     Layout.fillHeight: true;
                     Layout.fillWidth: true;
-                    Layout.minimumHeight: 40;
-                    Layout.maximumHeight: 50;
-                    visible: m_prmItem.removeDialogShowFlag;
-                    RowLayout{
-                        anchors.fill: parent;
-                        spacing: 15;
+                    Layout.maximumHeight: 40;
+                    Layout.minimumHeight: 35;
+                    visible: false;
+                    Timer{
+                        id:m_writeTimer;
+                        interval: 20;
+                        repeat: true;
+                        triggeredOnStart: false;
+                        property int writeIndex: 0;
+                        onTriggered: {
+                            installProgressBar.value+=1;
+                            console.log("progress bar value = "+installProgressBar.value);
+                            if(installProgressBar.value>=100){
+                                m_removeDialog.visible=false;
+                                m_normalDialog.visible=true;
+                                stop();
+                            }
+                        }
+                    }
+                    Row{
+                        anchors.left: parent.left;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        width: parent.width-170;
+                        height: parent.height;
                         Text{
+                            id:dialogLabel;
+                            anchors.verticalCenter: parent.verticalCenter
                             text:qsTr("是否移除该条电机记录?");
                             verticalAlignment: Text.AlignVCenter;
-                            Layout.fillWidth: true;
-                            Layout.fillHeight: true;
                             color:"red";
                             font.bold: true;
                             font.letterSpacing: 5;
                         }
-                        Item{
-                            Layout.fillWidth: true;
-                            Layout.fillHeight: true;
-                            Layout.maximumHeight: 200;
-                        }
-
-                        Rectangle{
-                            radius: 10;
-                            Layout.fillHeight: true;
-                            Layout.fillWidth: true;
-                            Layout.minimumWidth: 50;
-                            color:btn_removeOk.pressed?pressColor:btn_removeOk.containsMouse?hoverColor:backgroundColor;
-                            border.width: 2;
-                            border.color: frameColor;
-                            Text {
-                                anchors.centerIn: parent;
-                                text: qsTr("确定")
-                                font.letterSpacing: 5;
+                        //进度条
+                        ProgressBar{
+                            id:installProgressBar;
+                            minimumValue: 0;
+                            maximumValue: 100;
+                            anchors.verticalCenter: parent.verticalCenter
+                            value:50;
+                            width:parent.width-10;
+                            height:30;
+                            style: ProgressBarStyle {
+                                background: Rectangle {
+                                    radius: 2
+                                    color: "lightgray"
+                                    border.color: "gray"
+                                    border.width: 1
+                                    implicitWidth: 200
+                                    implicitHeight: 24
+                                }
+                                progress: Rectangle {
+                                    color: "steelblue"
+                                    border.color: "steelblue"
+                                }
                             }
-                            MouseArea{
-                                id:btn_removeOk;
-                                anchors.fill: parent;
-                                hoverEnabled: true;
-                                onClicked: {
-                                    m_prmItem.removeDialogShowFlag=false;
-                                    m_normalDialog.visible=true;
-                                    m_listView_company.enabled=true;
-                                    m_listView_motorType.enabled=true;
+                        }
+                    }
+                    Rectangle{
+                        id:submitRect;
+                        anchors.right: cancelRect.left;
+                        anchors.rightMargin: 10;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        radius: 10;
+                        height:parent.height;
+                        width: 80;
+                        color:btn_removeOk.pressed?pressColor:btn_removeOk.containsMouse?hoverColor:backgroundColor;
+                        border.width: 2;
+                        border.color: frameColor;
+                        Text {
+                            anchors.centerIn: parent;
+                            text: qsTr("确定")
+                            font.letterSpacing: 5;
+                        }
+                        MouseArea{
+                            id:btn_removeOk;
+                            anchors.fill: parent;
+                            hoverEnabled: true;
+                            onClicked: {
+                                if(m_removeDialog.state==="remove"){
                                     //!从数据库中删除
                                     if(motorModel.rowCount()>1){
                                         var prevIndex=m_listView_motorType.currentIndex;
@@ -761,44 +821,100 @@ Rectangle{
                                             m_listView_motorType.currentIndex=0;
                                             var keyId;
                                             keyId=motorModel.recordValueAt(0,0);
-                                            var companyId;
-                                            companyId=companyModel.recordValueAt(m_listView_company.currentIndex,0)
-                                            console.log("companyId="+companyId+" keyId="+keyId);
-                                            m_motorDataBaseUi.fillPrmModel(companyId,keyId);
+                                            m_motorDataBaseUi.fillPrmModel(keyId);
                                         }
                                         else
-                                            m_listView_motorType.currentIndex--;
+                                            m_listView_motorType.currentIndex--;//index变了自动调动onCurrentIndexChanged()
                                         console.log("delete record ....");
                                     }
-                                }
-                            }
-                        }
-                        Rectangle{
-                            radius: 10;
-                            Layout.fillHeight: true;
-                            Layout.fillWidth: true;
-                            Layout.minimumWidth: 50;
-                            color:btn_removeCancel.pressed?pressColor:btn_removeCancel.containsMouse?hoverColor:backgroundColor;
-                            border.width: 2;
-                            border.color: frameColor;
-                            Text {
-                                anchors.centerIn: parent;
-                                text: qsTr("取消")
-                                font.letterSpacing: 5;
-                            }
-                            MouseArea{
-                                id:btn_removeCancel;
-                                anchors.fill: parent;
-                                hoverEnabled: true;
-                                onClicked: {
-                                    m_prmItem.removeDialogShowFlag=false;
+                                    m_removeDialog.visible=false;
                                     m_normalDialog.visible=true;
-                                    m_listView_company.enabled=true;
-                                    m_listView_motorType.enabled=true;
                                 }
+                                else{
+                                    m_removeDialog.state="installing";
+                                    m_writeTimer.start();
+                                }
+                                m_listView_company.enabled=true;
+                                m_listView_motorType.enabled=true;
+                                m_listView_motorPrm.enabled=true;
                             }
                         }
                     }
+                    Rectangle{
+                        id:cancelRect;
+                        anchors.verticalCenter: parent.verticalCenter;
+                        anchors.right: parent.right;
+                        radius: 10;
+                        height:parent.height;
+                        width: 80;
+                        color:btn_removeCancel.pressed?pressColor:btn_removeCancel.containsMouse?hoverColor:backgroundColor;
+                        border.width: 2;
+                        border.color: frameColor;
+                        Text {
+                            anchors.centerIn: parent;
+                            text: qsTr("取消")
+                            font.letterSpacing: 5;
+                        }
+                        MouseArea{
+                            id:btn_removeCancel;
+                            anchors.fill: parent;
+                            hoverEnabled: true;
+                            onClicked: {
+                                m_removeDialog.visible=false;
+                                m_normalDialog.visible=true;
+                                m_listView_company.enabled=true;
+                                m_listView_motorType.enabled=true;
+                                m_listView_motorPrm.enabled=true;
+                            }
+                        }
+                    }
+                    state:"remove";
+                    states:[
+                        State {
+                            name: "remove"
+                            changes: [
+                                PropertyChanges {
+                                    target: dialogLabel;
+                                    text:qsTr("是否移除该条电机记录?");
+                                    visible:true;
+                                },
+                                PropertyChanges {
+                                    target: installProgressBar;
+                                    visible:false;
+                                    value:0;
+                                }
+                            ]
+                        },
+                        State {
+                            name: "install";
+                            changes:[
+                                PropertyChanges {
+                                    target: dialogLabel;
+                                    text:qsTr("是否将电机参数保存到设备?");
+                                    visible:true;
+                                },
+                                PropertyChanges {
+                                    target: installProgressBar;
+                                    visible:false;
+                                    value:0;
+                                }
+                            ]
+                        },
+                        State {
+                            name: "installing";
+                            changes:[
+                                PropertyChanges {
+                                    target: dialogLabel;
+                                    visible:false;
+                                },
+                                PropertyChanges {
+                                    target: installProgressBar;
+                                    visible:true;
+                                    value:0;
+                                }
+                            ]
+                        }
+                    ]
                 }
             }
 

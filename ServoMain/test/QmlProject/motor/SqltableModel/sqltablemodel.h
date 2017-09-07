@@ -21,6 +21,7 @@ public:
   Q_ENUM(CompanyColumnFieldIndex)
 
   explicit SqlTableModel(QObject *parent=0,QSqlDatabase db = QSqlDatabase());
+  ~SqlTableModel();
 
   Q_INVOKABLE QVariant        data(const QModelIndex &index,int role) const Q_DECL_OVERRIDE;
   Q_INVOKABLE void            setTable(const QString &tableName)Q_DECL_OVERRIDE;

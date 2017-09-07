@@ -118,6 +118,7 @@ typedef struct _highLightInfo
   bool enterFlag;
   QString prevItemText;
 }HighLightInfo;
+
 namespace GlobalFunction
 {
   int getBytesNumber(QString &str);
