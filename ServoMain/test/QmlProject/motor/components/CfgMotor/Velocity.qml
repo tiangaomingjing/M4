@@ -29,49 +29,121 @@ Rectangle
             Text{
                 text:"额定转速(rpm)"
             }
-            TextField{
+            /*TextField{
                 id:sct_1;
+                property double lowerValue: 0.0;
+                property double upperValue: 5000.0;
+                property double defaultValue: 3000.0;
+                property double writeValue: 0;
+
                 text:"0";
                 style:textStyle;
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
+                validator: DoubleValidator{
+                    bottom: sct_1.lowerValue;
+                    top:sct_1.upperValue;
+                    decimals: 3;
+                }
+                Keys.onReturnPressed: {
+                    var value=parseFloat(text);
+                    console.log("value="+value);
+                    if(value<lowerValue||value>upperValue){
+                        console.log("wrong value----");
+                    }
+                }
+
 //                onTextChanged: {sct_1.textColor="red";dataTree.setTopLevelText(2,1,sct_1.text);}
-                function onTheTextChanged(){sct_1.textColor="red";dataTree.setTopLevelText(2,1,sct_1.text);}
+                function onTheTextChanged(){
+                    sct_1.textColor="red";
+//                    dataTree.setTopLevelText(2,1,sct_1.text);
+                }
+                function previousValue(row,column){
+                    var value=0.0;
+//                    value=parseFloat(dataTree.textTopLevel(row,column));
+                    return value;
+                }
+
                 Component.onCompleted: {
                     sct_1.textChanged.connect(onTheTextChanged);
                 }
+            }*/
+            MyTextInput{
+                id:sct_1;
+                Layout.fillWidth: true;
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:2;
+                column: 1;
+                tree: dataTree;
+                lowerValue: 0.0;
+                upperValue: 5000.0;
+                defaultValue: 3000.0;
+                writeValue: 0;
             }
 
             Text{
                 text:"过速百分比(%)"
             }
-            TextField{
+            /*TextField{
                 id:srat_1;
                 text:"0";
                 style:textStyle;
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {srat_1.textColor="red";dataTree.setTopLevelText(3,1,srat_1.text);}
-                function onTheTextChanged(){srat_1.textColor="red";dataTree.setTopLevelText(3,1,srat_1.text);}
+                function onTheTextChanged(){
+                    srat_1.textColor="red";
+//                    dataTree.setTopLevelText(3,1,srat_1.text);
+                }
                 Component.onCompleted: {
                     srat_1.textChanged.connect(onTheTextChanged);
                 }
+            }*/
+            MyTextInput{
+                id:srat_1;
+                Layout.fillWidth: true;
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:3;
+                column: 1;
+                tree: dataTree;
+                lowerValue: 0.0;
+                upperValue: 5000.0;
+                defaultValue: 3000.0;
+                writeValue: 0;
             }
 
             Text{
                 text:"最大转速(rpm)"
             }
-            TextField{
+            /*TextField{
                 id:nos_1;
                 text:"0";
                 style:textStyle;
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {nos_1.textColor="red";dataTree.setTopLevelText(4,1,nos_1.text);}
-                function onTheTextChanged(){nos_1.textColor="red";dataTree.setTopLevelText(4,1,nos_1.text);}
+                function onTheTextChanged(){
+                    nos_1.textColor="red";
+//                    dataTree.setTopLevelText(4,1,nos_1.text);
+                }
                 Component.onCompleted: {
                     nos_1.textChanged.connect(onTheTextChanged);
                 }
+            }*/
+            MyTextInput{
+                id:nos_1;
+                Layout.fillWidth: true;
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:4;
+                column: 1;
+                tree: dataTree;
+                lowerValue: 0.0;
+                upperValue: 5000.0;
+                defaultValue: 3000.0;
+                writeValue: 0;
             }
         }
     }
@@ -79,20 +151,22 @@ Rectangle
     Component{
         id:textStyle;
         TextFieldStyle{
+            id:field;
             textColor: "black";
             background: Rectangle{
+                id:backgroundRect
                 radius: 6;
                 implicitWidth: 100;
                 implicitHeight: 24;
-                border.color: "#333";
+                border.color: "gray";
                 border.width: 1;
             }
         }
     }
     Component.onCompleted: {
-        sct_1.textColor="black";
-        srat_1.textColor="black";
-        nos_1.textColor="black";
+//        sct_1.textColor="black";
+//        srat_1.textColor="black";
+//        nos_1.textColor="black";
     }
 }
 

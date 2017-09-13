@@ -8,6 +8,7 @@ class CfgMotor;
 }
 class QTreeWidget;
 class QWidget;
+class SqlTableModel;
 
 class CFGMOTORSHARED_EXPORT CfgMotor:public AbstractFuncWidget
 {
@@ -51,6 +52,10 @@ private:
 private:
   Ui::CfgMotor *ui;
 //  QList<ImaxExtensinPrm>m_imaxExtPrm;
+  SqlTableModel *m_companyTableModel;
+  SqlTableModel *m_motorTableModel;
+  SqlTableModel *m_prmTableModel;
+  SqlTableModel *m_totalTableModel;
 };
 
 #endif // CFGMOTOR_H

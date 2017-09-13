@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #ifndef		__GTSD_COM_DLL_DEFINE__
 #define		__GTSD_COM_DLL_DEFINE__
@@ -35,17 +35,17 @@ typedef enum _servoTaskMode
 const int32						MAX_WAVE_PLOT_NUM = 12;
 
 /************************************************************************/
-/* ¶¨ÒåÍ¨ĞÅÀàĞÍ                                                        */
+/* å®šä¹‰é€šä¿¡ç±»å‹                                                        */
 /************************************************************************/
 typedef enum com_type
 {
-	GTSD_COM_TYPE_NET,			//Âã»úÍø¿Ú
-	GTSD_COM_TYPE_RNNET,		//µÈ»·Íø
-	GTSD_COM_TYPE_TCPIP,		//TCP/IPĞ­ÒéÍø¿Ú
-	GTSD_COM_TYPE_USB2UART,		//usb×ª´®¿Ú
-	GTSD_COM_TYPE_VIRTUAL,		//ĞéÄâÉè±¸
-	GTSD_COM_TYPE_RINGNET,		//µÈ»·Íø
-	GTSD_COM_TYPE_MAX			//×î´óÖµ
+	GTSD_COM_TYPE_NET,			//è£¸æœºç½‘å£
+	GTSD_COM_TYPE_RNNET,		//ç­‰ç¯ç½‘
+	GTSD_COM_TYPE_TCPIP,		//TCP/IPåè®®ç½‘å£
+	GTSD_COM_TYPE_USB2UART,		//usbè½¬ä¸²å£
+	GTSD_COM_TYPE_VIRTUAL,		//è™šæ‹Ÿè®¾å¤‡
+	GTSD_COM_TYPE_RINGNET,		//ç­‰ç¯ç½‘
+	GTSD_COM_TYPE_MAX			//æœ€å¤§å€¼
 }COM_TYPE;
 
 typedef enum
@@ -84,7 +84,7 @@ typedef enum
 	KGV_FF_POS_WR_COMM = 31,														// kgv value of velocity feedforward
 	TFA_FF_POS_WR_COMM = 32,														// tfa value of accelerate feedforward		
 	TFV_FF_POS_WR_COMM = 33,														// tfv value of accelerate feedforward	
-	WAVE_BUF_SET_WR_COMM = 34,														//ÉèÖÃÇúÏß		
+	WAVE_BUF_SET_WR_COMM = 34,														//è®¾ç½®æ›²çº¿		
 	WR_FRAM_16BIT_COMM = 35,														// MpiFramWr16BitByAdr
 	WR_FRAM_32BIT_COMM = 36,														// MpiFramWr32BitByAdr
 	WR_FRAM_64BIT_COMM = 37,														// MpiFramWr64BitByAdr
@@ -229,15 +229,15 @@ typedef		struct	wave_buf_prm
 //define INTEL HEX struct 
 typedef struct intel_hex_frame
 {
-	Uint16			lenth;									//³¤¶È   (unit :byte)   
-	Uint32			addr;									//µØÖ·      
-	Uint16			type;									//¼ÇÂ¼ÀàĞÍ£¬0£­Êı¾İ£¬1£­ÖÕÖ¹     
-	int16			data[INTEL_HEX_FRAME_DAT_LENTH];		//Êı¾İ     
-	int16			checksum;								//Ğ£ÑéºÍ 
+	Uint16			lenth;									//é•¿åº¦   (unit :byte)   
+	Uint32			addr;									//åœ°å€      
+	Uint16			type;									//è®°å½•ç±»å‹ï¼Œ0ï¼æ•°æ®ï¼Œ1ï¼ç»ˆæ­¢     
+	int16			data[INTEL_HEX_FRAME_DAT_LENTH];		//æ•°æ®     
+	int16			checksum;								//æ ¡éªŒå’Œ 
 }INTEL_HEX_FRAME;
 
 
-//////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
 
 
 typedef struct generalFunction
@@ -259,6 +259,6 @@ typedef enum
 	SEV_SECTION = 0,
 	AUX_SECTION = 1
 }tRwRamPrm;
-//²ÎÊı£¬0£ºsev£¬ 1£ºaux
+//å‚æ•°ï¼Œ0ï¼šsevï¼Œ 1ï¼šaux
 
 #endif

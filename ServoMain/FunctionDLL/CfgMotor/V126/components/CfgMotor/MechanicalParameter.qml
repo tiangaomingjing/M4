@@ -35,7 +35,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {jm_1.textColor="red";dataTree.setTopLevelText(12,1,jm_1.text);}
-                function onTheTextChanged(){jm_1.textColor="red";dataTree.setTopLevelText(12,1,jm_1.text);}
+                function onTheTextChanged(){
+                    jm_1.textColor="red";
+//                    dataTree.setTopLevelText(12,1,jm_1.text);
+                }
                 Component.onCompleted: {
                     jm_1.textChanged.connect(onTheTextChanged);
                 }
@@ -48,7 +51,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {jrat_1.textColor="red";dataTree.setTopLevelText(13,1,jrat_1.text);}
-                function onTheTextChanged(){jrat_1.textColor="red";dataTree.setTopLevelText(13,1,jrat_1.text);}
+                function onTheTextChanged(){
+                    jrat_1.textColor="red";
+//                    dataTree.setTopLevelText(13,1,jrat_1.text);
+                }
                 Component.onCompleted: {
                     jrat_1.textChanged.connect(onTheTextChanged);
                 }
@@ -61,7 +67,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {fm_1.textColor="red";dataTree.setTopLevelText(14,1,fm_1.text);}
-                function onTheTextChanged(){fm_1.textColor="red";dataTree.setTopLevelText(14,1,fm_1.text);}
+                function onTheTextChanged(){
+                    fm_1.textColor="red";
+//                    dataTree.setTopLevelText(14,1,fm_1.text);
+                }
                 Component.onCompleted: {
                     fm_1.textChanged.connect(onTheTextChanged);
                 }
@@ -74,7 +83,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {ppn_1.textColor="red";dataTree.setTopLevelText(6,1,ppn_1.text);}
-                function onTheTextChanged(){ppn_1.textColor="red";dataTree.setTopLevelText(6,1,ppn_1.text);}
+                function onTheTextChanged(){
+                    ppn_1.textColor="red";
+//                    dataTree.setTopLevelText(6,1,ppn_1.text);
+                }
                 Component.onCompleted: {
                     ppn_1.textChanged.connect(onTheTextChanged);
                 }
@@ -86,6 +98,8 @@ Rectangle
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;

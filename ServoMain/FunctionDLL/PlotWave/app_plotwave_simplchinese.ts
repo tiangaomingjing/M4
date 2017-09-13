@@ -762,7 +762,7 @@ const parameters has the same name</source>
     <message>
         <location filename="PlotWave.ui" line="848"/>
         <source>IDLE_MODE</source>
-        <translation type="unfinished">空闭模式</translation>
+        <translation type="unfinished">空闲模式</translation>
     </message>
     <message>
         <location filename="PlotWave.ui" line="862"/>
@@ -1404,7 +1404,7 @@ const parameters has the same name</source>
     <message>
         <location filename="plotwave.cpp" line="2966"/>
         <source>2 Initial position Adjust</source>
-        <translation type="unfinished">2 电机初始相位校正</translation>
+        <translation type="unfinished">2 位置模式</translation>
     </message>
     <message>
         <location filename="plotwave.cpp" line="2967"/>

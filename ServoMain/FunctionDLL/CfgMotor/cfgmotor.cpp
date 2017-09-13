@@ -115,13 +115,37 @@ void CfgMotor::createUiByQml()
   QString modelName=mp_mainWindow->getUserConfig()->model.modelName;
   QString typeName=mp_mainWindow->getUserConfig()->typeName;
   m_qmlFilePath=SYSCONFIG_FILE_PATH+typeName+"/"+modelName+"/"+version+"/ui/"+objectName()+".qml";
-  qDebug()<<tr("******************qml path:%1****************\n*****icon path %2********").arg(m_qmlFilePath).arg(m_qmlIconFilePath);
+  qDebug()<<tr("******************qml path:%1****************\r\n*****icon path %2********").arg(m_qmlFilePath).arg(m_qmlIconFilePath);
 
-  MotorSqlModel *motorSqlModel=mp_mainWindow->getMotorSqlModel();
-  SqlTableModel *company=motorSqlModel->companyTableModel();
-  SqlTableModel *motor=motorSqlModel->motorTableModel();
-  SqlTableModel *prm=motorSqlModel->prmTableModel();
-  SqlTableModel *total=motorSqlModel->totalTableModel();
+  qmlRegisterType<SqlTableModel>("QmlGlobalClass", 1, 0, "SqlTableModel");
+
+  MotorSqlModel* motorSqlModel=mp_mainWindow->getMotorSqlModel();
+  QSqlDatabase *db=motorSqlModel->db();
+
+  m_companyTableModel=new SqlTableModel(this,*db);
+  m_motorTableModel=new SqlTableModel(this,*db);
+  m_prmTableModel=new SqlTableModel(this,*db);
+  m_totalTableModel=new SqlTableModel(this,*db);
+
+  m_companyTableModel->setTable("Company");
+  m_companyTableModel->select();
+
+  m_motorTableModel->setTable("Motor");
+  m_motorTableModel->setFilter("CompanyId=1");
+  m_motorTableModel->select();
+
+  m_prmTableModel->setTable("Motor");
+  m_prmTableModel->select();
+
+  m_totalTableModel->setTable("Motor");
+  m_totalTableModel->select();
+
+//  m_company=motorSqlModel->companyTableModel();
+//  m_motor=motorSqlModel->motorTableModel();
+//  m_prm=motorSqlModel->prmTableModel();
+//  m_total=motorSqlModel->totalTableModel();
+//  qDebug()<<tr("*************step1********");
+//  qDebug()<<"motor:  "<<(quint64)&m_motor;
 
   QQuickWidget *qwidget=new QQuickWidget(this);
   qwidget->setMinimumSize(600,560);
@@ -129,16 +153,20 @@ void CfgMotor::createUiByQml()
   qwidget->rootContext()->setContextProperty("driveMotor",this);
   qwidget->rootContext()->setContextProperty("axisIndex",m_axisNumber);
   qwidget->rootContext()->setContextProperty("treeSource",ui->treeWidget);
-  qwidget->rootContext()->setContextProperty("companyModel",company);
-  qwidget->rootContext()->setContextProperty("motorModel",motor);
-  qwidget->rootContext()->setContextProperty("prmModel",prm);
-  qwidget->rootContext()->setContextProperty("totalModel",total);
+  qwidget->rootContext()->setContextProperty("companyModel",m_companyTableModel);
+  qwidget->rootContext()->setContextProperty("motorModel",m_motorTableModel);
+  qwidget->rootContext()->setContextProperty("prmModel",m_prmTableModel);
+  qwidget->rootContext()->setContextProperty("totalModel",m_totalTableModel);
+  qDebug()<<tr("*************step2********");
 
   qwidget->resize(600,560);
   qwidget->setResizeMode(QQuickWidget::SizeRootObjectToView );
+  qDebug()<<tr("*************step3********");
   qwidget->setSource(QUrl::fromLocalFile(m_qmlFilePath));
+  qDebug()<<tr("*************step4********");
 //  qwidget->show();
   ui->qmlHboxLayout->addWidget(qwidget);
+  qDebug()<<tr("*************step5********");
 }
 void CfgMotor::connectionSignalSlotHandler()
 {

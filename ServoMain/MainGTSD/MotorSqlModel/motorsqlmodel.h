@@ -15,13 +15,7 @@ public:
   bool connectDataBase(const QString & fileName);
   bool disconnectDataBase();
 
-  SqlTableModel *companyTableModel() const;
-
-  SqlTableModel *motorTableModel() const;
-
-  SqlTableModel *prmTableModel() const;
-
-  SqlTableModel *totalTableModel() const;
+  QSqlDatabase* db();
 
 signals:
 
@@ -29,10 +23,6 @@ public slots:
 
 private:
   QSqlDatabase m_db;
-  SqlTableModel *m_companyTableModel;
-  SqlTableModel *m_motorTableModel;
-  SqlTableModel *m_prmTableModel;
-  SqlTableModel *m_totalTableModel;
 };
 
 #endif // MOTORSQLMODEL_H

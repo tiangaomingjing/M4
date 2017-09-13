@@ -20,7 +20,8 @@ DISTFILES += \
     components/CfgMotor/ForceParameter.qml \
     components/CfgMotor/Impedance.qml \
     components/CfgMotor/MechanicalParameter.qml \
-    components/CfgMotor/Velocity.qml
+    components/CfgMotor/Velocity.qml \
+    components/CfgMotor/MyTextInput.qml
 
 HEADERS += \
     SqltableModel/sqltablemodel.h

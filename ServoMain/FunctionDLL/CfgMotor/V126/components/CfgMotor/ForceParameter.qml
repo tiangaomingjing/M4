@@ -35,7 +35,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {tqr_1.textColor="red";dataTree.setTopLevelText(5,1,tqr_1.text);}
-                function onTheTextChanged(){tqr_1.textColor="red";dataTree.setTopLevelText(5,1,tqr_1.text);}
+                function onTheTextChanged(){
+                    tqr_1.textColor="red";
+//                    dataTree.setTopLevelText(5,1,tqr_1.text);
+                }
                 Component.onCompleted: {
                     tqr_1.textChanged.connect(onTheTextChanged);
                 }
@@ -48,7 +51,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
-                function onTheTextChanged(){phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
+                function onTheTextChanged(){
+                    phim_1.textColor="red";
+//                    dataTree.setTopLevelText(8,1,phim_1.text);
+                }
                 Component.onCompleted: {
                     phim_1.textChanged.connect(onTheTextChanged);
                 }
@@ -61,7 +67,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {vmax_1.textColor="red";dataTree.setTopLevelText(7,1,vmax_1.text);}
-                function onTheTextChanged(){vmax_1.textColor="red";dataTree.setTopLevelText(7,1,vmax_1.text);}
+                function onTheTextChanged(){
+                    vmax_1.textColor="red";
+//                    dataTree.setTopLevelText(7,1,vmax_1.text);
+                }
                 Component.onCompleted: {
                     vmax_1.textChanged.connect(onTheTextChanged);
                 }
@@ -73,6 +82,8 @@ Rectangle
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;

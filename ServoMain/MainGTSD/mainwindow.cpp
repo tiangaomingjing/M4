@@ -107,8 +107,11 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   //电机数据库连接
   QString dataBaseFileName=RESOURCE_FILE_PATH+"DataBase/MotorInfomation.sqlite";
   m_motorSqlModel=new MotorSqlModel(this);
-  m_motorSqlModel->connectDataBase(dataBaseFileName);
-  qmlRegisterType<SqlTableModel>("QmlGlobalClass", 1, 0, "SqlTableModel");
+  if(m_motorSqlModel->connectDataBase(dataBaseFileName)==false)
+  {
+    QMessageBox::information(0,tr("database Error"),tr("can not open motor database "));
+  }
+
 
   initialUi();
   createActions();

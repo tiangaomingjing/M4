@@ -36,7 +36,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {rm_1.textColor="red";dataTree.setTopLevelText(11,1,rm_1.text);}
-                function onTheTextChanged(){rm_1.textColor="red";dataTree.setTopLevelText(11,1,rm_1.text);}
+                function onTheTextChanged(){
+                    rm_1.textColor="red";
+//                    dataTree.setTopLevelText(11,1,rm_1.text);
+                }
                 Component.onCompleted: {
                     rm_1.textChanged.connect(onTheTextChanged);
                 }
@@ -77,6 +80,8 @@ Rectangle
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;

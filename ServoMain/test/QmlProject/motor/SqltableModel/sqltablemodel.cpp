@@ -8,7 +8,7 @@ SqlTableModel::SqlTableModel(QObject *parent, QSqlDatabase db):QSqlTableModel(pa
 {
 
 }
-SqlTableModel::~QSqlTableModel()
+SqlTableModel::~SqlTableModel()
 {
   qDebug()<<"sqltablemodel release------->";
 }

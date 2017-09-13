@@ -42,10 +42,10 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/CfgCurrentLoopd.lib\
             $${LIB_PATH}/CfgDriverPowerd.lib\
             $${LIB_PATH}/CfgEncoderd.lib\
-            $${LIB_PATH}/CfgIOd.lib\
-            $${LIB_PATH}/CfgLimitd.lib\
+#            $${LIB_PATH}/CfgIOd.lib\
+#            $${LIB_PATH}/CfgLimitd.lib\
             $${LIB_PATH}/CfgMotord.lib\
-            $${LIB_PATH}/CfgMoveProfiled.lib\
+#            $${LIB_PATH}/CfgMoveProfiled.lib\
             $${LIB_PATH}/CfgPositionLoopd.lib\
             $${LIB_PATH}/CfgSpeedLoopd.lib\
             $${LIB_PATH}/DeviceStatusd.lib\
@@ -64,10 +64,10 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/CfgCurrentLoop.lib\
             $${LIB_PATH}/CfgDriverPower.lib\
             $${LIB_PATH}/CfgEncoder.lib\
-            $${LIB_PATH}/CfgIO.lib\
-            $${LIB_PATH}/CfgLimit.lib\
+#            $${LIB_PATH}/CfgIO.lib\
+#            $${LIB_PATH}/CfgLimit.lib\
             $${LIB_PATH}/CfgMotor.lib\
-            $${LIB_PATH}/CfgMoveProfile.lib\
+#            $${LIB_PATH}/CfgMoveProfile.lib\
             $${LIB_PATH}/CfgPositionLoop.lib\
             $${LIB_PATH}/CfgSpeedLoop.lib\
             $${LIB_PATH}/DeviceStatus.lib\

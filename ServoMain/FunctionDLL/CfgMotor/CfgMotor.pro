@@ -50,4 +50,5 @@ DISTFILES += \
     V126/components/CfgMotor/Impedance.qml \
     V126/components/CfgMotor/MechanicalParameter.qml \
     V126/components/CfgMotor/Velocity.qml \
-    V126/components/CfgMotor/RollBarHorizontal.qml
+    V126/components/CfgMotor/RollBarHorizontal.qml \
+    V126/components/CfgMotor/MyTextInput.qml

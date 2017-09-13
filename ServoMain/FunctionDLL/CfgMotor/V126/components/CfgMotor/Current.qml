@@ -38,7 +38,10 @@ Rectangle{
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {irat_1.textColor="red";dataTree.setTopLevelText(0,1,irat_1.text);}
-                function onTheTextChanged(){irat_1.textColor="red";dataTree.setTopLevelText(0,1,irat_1.text);}
+                function onTheTextChanged(){
+                    irat_1.textColor="red";
+//                    dataTree.setTopLevelText(0,1,irat_1.text);
+                }
                 Component.onCompleted: {
                     irat_1.textChanged.connect(onTheTextChanged);
                 }
@@ -54,7 +57,10 @@ Rectangle{
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {imax_1.textColor="red";dataTree.setTopLevelText(1,1,imax_1.text);}
-                function onTheTextChanged(){imax_1.textColor="red";dataTree.setTopLevelText(1,1,imax_1.text);}
+                function onTheTextChanged(){
+                    imax_1.textColor="red";
+//                    dataTree.setTopLevelText(1,1,imax_1.text);
+                }
                 Component.onCompleted: {
                     imax_1.textChanged.connect(onTheTextChanged);
                 }
@@ -67,6 +73,8 @@ Rectangle{
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;

@@ -36,7 +36,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {sct_1.textColor="red";dataTree.setTopLevelText(2,1,sct_1.text);}
-                function onTheTextChanged(){sct_1.textColor="red";dataTree.setTopLevelText(2,1,sct_1.text);}
+                function onTheTextChanged(){
+                    sct_1.textColor="red";
+//                    dataTree.setTopLevelText(2,1,sct_1.text);
+                }
                 Component.onCompleted: {
                     sct_1.textChanged.connect(onTheTextChanged);
                 }
@@ -52,7 +55,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {srat_1.textColor="red";dataTree.setTopLevelText(3,1,srat_1.text);}
-                function onTheTextChanged(){srat_1.textColor="red";dataTree.setTopLevelText(3,1,srat_1.text);}
+                function onTheTextChanged(){
+                    srat_1.textColor="red";
+//                    dataTree.setTopLevelText(3,1,srat_1.text);
+                }
                 Component.onCompleted: {
                     srat_1.textChanged.connect(onTheTextChanged);
                 }
@@ -68,7 +74,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {nos_1.textColor="red";dataTree.setTopLevelText(4,1,nos_1.text);}
-                function onTheTextChanged(){nos_1.textColor="red";dataTree.setTopLevelText(4,1,nos_1.text);}
+                function onTheTextChanged(){
+                    nos_1.textColor="red";
+//                    dataTree.setTopLevelText(4,1,nos_1.text);
+                }
                 Component.onCompleted: {
                     nos_1.textChanged.connect(onTheTextChanged);
                 }
@@ -80,6 +89,8 @@ Rectangle
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;
