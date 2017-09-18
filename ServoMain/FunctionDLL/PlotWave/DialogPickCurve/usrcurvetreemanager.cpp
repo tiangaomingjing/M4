@@ -11,7 +11,7 @@ UsrCurveTreeManager::UsrCurveTreeManager(QTreeWidget *srcAllTreePtr,QString &cur
   mp_srcAllTree(srcAllTreePtr),
   m_treeFileName(curveTemplateFileName)
 {
-  m_usrTreeTemplate=QtTreeManager::readTreeWidgetFromXmlFile(curveTemplateFileName);
+  m_usrTreeTemplate=QtTreeManager::createTreeWidgetFromXmlFile(curveTemplateFileName);
   m_currentAxisSize=mp_srcAllTree->topLevelItemCount();
   createUsrTreeListBaseAxisSize(m_currentAxisSize);
   updateUsrTreeList();

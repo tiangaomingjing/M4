@@ -11,7 +11,7 @@ class QtTreeManager : public QObject
   Q_OBJECT
 public:
   explicit QtTreeManager(QObject *parent = 0);
-  static QTreeWidget* readTreeWidgetFromXmlFile(const QString &fileName);
+  static QTreeWidget* createTreeWidgetFromXmlFile(const QString &fileName);
   static bool writeTreeWidgetToXmlFile(const QString &fileName, const QTreeWidget *treeWidget);
 signals:
 

@@ -52,7 +52,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/PlotWaved.lib\
             $${LIB_PATH}/ServoDriverComDlld.lib\
             $${LIB_PATH}/ModuleIOd.lib\
-            $${LIB_PATH}/PlotWaveUid.lib
+            $${LIB_PATH}/PlotWaveUid.lib\
+            $${LIB_PATH}/ServoGeneralCmdd.lib
 
 } else{
     TARGET = SDT
@@ -74,7 +75,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/PlotWave.lib\
             $${LIB_PATH}/ServoDriverComDll.lib\
             $${LIB_PATH}/ModuleIO.lib\
-            $${LIB_PATH}/PlotWaveUi.lib
+            $${LIB_PATH}/PlotWaveUi.lib\
+            $${LIB_PATH}/ServoGeneralCmd.lib
 }
 
 DESTDIR =$${OUT_ROOT}/Bin

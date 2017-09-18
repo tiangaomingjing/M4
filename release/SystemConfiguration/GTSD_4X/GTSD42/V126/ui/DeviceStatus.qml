@@ -394,7 +394,7 @@ Rectangle{
         target: driverStatus;
         onTimeOutToQml:{
             updateUiData();
-            console.log(qsTr("updata qml ui....")+axisIndex);
+            //console.log(qsTr("updata qml ui....")+axisIndex);
         }
     }
 }

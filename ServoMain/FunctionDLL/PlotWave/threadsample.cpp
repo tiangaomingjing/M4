@@ -136,7 +136,15 @@ void ThreadSample::run()
   {
     wavePrm=wavePrmList.at(i);
     if(plotTableControlDoubleList[i].size()>0)
+    {
       startSampling(0+2*i,wavePrm);
+      qDebug()<<"DSP ="<<i;
+      qDebug()<<"CMD------>";
+      qDebug()<<" Tim="<<wavePrm.cmd.bit.TIM<<'\n'<<"Num="<<wavePrm.cmd.bit.NUM<<'\n'<<"ENP ="<<wavePrm.cmd.bit.ENP;
+      qDebug()<<"CMD------>\n";
+      for(int i=0;i<wavePrm.cmd.bit.NUM;i++)
+        qDebug()<<"curve :"<<i<<" bytes="<<wavePrm.inf[0].bytes<<" base="<<wavePrm.inf[0].base<<" ofst"<<wavePrm.inf[0].ofst<<"\n";
+    }
   }
 
   //定义要发送的数据

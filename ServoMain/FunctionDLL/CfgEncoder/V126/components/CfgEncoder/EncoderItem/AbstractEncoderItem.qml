@@ -57,42 +57,5 @@ Item {
         counter>>=8;
         return counter;
     }
-
-
-    /*RowLayout{
-        anchors.fill: parent;
-        Text{
-            text:qsTr("编码器分辨率:")
-        }
-
-        TextField{
-            id:m_lineNumberInput;
-            Layout.fillWidth: true;
-            text:qsTr("0");
-            style: TextFieldStyle{
-                textColor: "black";
-                background: Rectangle{
-                    radius: 5;
-                    implicitHeight: 24;
-                    implicitWidth: 100;
-                    border.color: "gray";
-                    border.width: 1;
-                }
-            }
-            function onLinerNumberTextChanged(){
-                m_lineNumberInput.textColor="red";
-            }
-            Component.onCompleted: {
-                m_lineNumberInput.textChanged.connect(onLinerNumberTextChanged);
-            }
-        }
-        Loader{
-            Layout.fillWidth: true;
-            sourceComponent: control;
-            Layout.minimumWidth: 50;
-            Layout.minimumHeight: 40;
-        }
-
-    }*/
 }
 

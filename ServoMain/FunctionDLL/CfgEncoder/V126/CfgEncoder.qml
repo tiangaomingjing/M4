@@ -381,7 +381,7 @@ Rectangle {
                 onClicked: {
                     var connected=driveEncoder.getComConnectSatus();
                     if(connected){
-                        if("NULL"==m_cmd.writeCommand("gSevDrv.sev_obj.cur.pro.enc_info.all",0))
+                        if("NULL"===m_cmd.writeCommand("gSevDrv.sev_obj.cur.pro.enc_info.all",0))
                             m_cmd.writeCommand("gSevDrv.sev_obj.cur.pro.enc_info.all",0)
                         m_encoderWarnningBlock.visible=false;
                         console.log("clear encoder alarm");

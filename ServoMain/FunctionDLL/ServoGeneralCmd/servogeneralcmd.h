@@ -10,8 +10,14 @@ class QTreeWidgetItem;
 class SERVOGENERALCMDSHARED_EXPORT ServoGeneralCmd:public QObject
 {
   Q_OBJECT
-public:
+protected:
   ServoGeneralCmd(QTreeWidget *cmdTree,qint16 comType,qint16 rnStation,QObject *parent=0);
+  ServoGeneralCmd(QObject *parent=0);
+private:
+  static ServoGeneralCmd* m_instance;
+  static QMutex *m_mutex;
+public:
+  static ServoGeneralCmd* instance(QTreeWidget *cmdTree,qint16 comType,qint16 rnStation,QObject *parent=0);
   ~ServoGeneralCmd();
   //---------通用指令--------------
   double read(const QString &cmdReadName,qint16 axisIndex);

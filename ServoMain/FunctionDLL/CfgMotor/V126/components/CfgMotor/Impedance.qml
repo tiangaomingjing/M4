@@ -27,7 +27,7 @@ Rectangle
         RowLayout{
             spacing: 10;
             Text{
-                text:"绕线电阻(Ohm)"
+                text:"相电阻(Ohm)"
             }
             TextField{
                 id:rm_1;

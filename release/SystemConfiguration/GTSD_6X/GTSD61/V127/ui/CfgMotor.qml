@@ -170,7 +170,7 @@ Rectangle{
         width: root.width;
         height: root.height;
         property var chineseNameMap: {
-            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"电阻","Ldm":"D轴电感",
+            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"相电阻","Ldm":"D轴电感",
             "Lqm":"Q轴电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
             "Tqr":"额定转矩","PHIm":"反电动势系数","Vmax":"最大电压"
         }

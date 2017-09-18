@@ -15,11 +15,11 @@ QtTreeManager::QtTreeManager(QObject *parent) : QObject(parent)
 }
 
 //!
-//! \brief QtTreeManager::readTreeWidgetFromXmlFile
+//! \brief QtTreeManager::createTreeWidgetFromXmlFile
 //! \param fileName
 //! \return QTreeWidget*:OK   NULL:error occurs
 //!
-QTreeWidget* QtTreeManager::readTreeWidgetFromXmlFile(const QString &fileName)
+QTreeWidget* QtTreeManager::createTreeWidgetFromXmlFile(const QString &fileName)
 {
   QFormBuilder builder;
   QFile file(fileName);

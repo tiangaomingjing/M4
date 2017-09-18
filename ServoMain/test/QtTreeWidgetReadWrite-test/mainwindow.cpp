@@ -22,12 +22,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //#if TEST_QTTREEWIDGET_RW
 //  QTreeWidget *treeWidget;
-//  treeWidget=QtTreeManager::readTreeWidgetFromXmlFile(":/watchcurvesetting.xml");
+//  treeWidget=QtTreeManager::createTreeWidgetFromXmlFile(":/watchcurvesetting.xml");
 //  treeWidget->show();
 //  QtTreeManager::writeTreeWidgetToXmlFile("./widget.ui",treeWidget);
 
 //  QTreeWidget *treeWidget2;
-//  treeWidget2=QtTreeManager::readTreeWidgetFromXmlFile(":/FlashPrm_AllAxis.xml");
+//  treeWidget2=QtTreeManager::createTreeWidgetFromXmlFile(":/FlashPrm_AllAxis.xml");
 //  treeWidget2->show();
 //  QtTreeManager::writeTreeWidgetToXmlFile("./flash.ui",treeWidget2);
 //#endif

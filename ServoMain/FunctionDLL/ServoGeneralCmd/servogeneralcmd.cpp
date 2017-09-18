@@ -7,6 +7,9 @@
 
 #define DEBUG_TEST 0
 
+ServoGeneralCmd* ServoGeneralCmd::m_instance=NULL;
+QMutex * ServoGeneralCmd::m_mutex=new QMutex;
+
 ServoGeneralCmd::ServoGeneralCmd(QTreeWidget *cmdTree,qint16 comType,qint16 rnStation,QObject *parent):
   QObject(parent),
   m_comType(comType),
@@ -31,6 +34,23 @@ ServoGeneralCmd::ServoGeneralCmd(QTreeWidget *cmdTree,qint16 comType,qint16 rnSt
   }
 #endif
 }
+
+ServoGeneralCmd::ServoGeneralCmd(QObject *parent):QObject(parent)
+{
+
+}
+
+ServoGeneralCmd* ServoGeneralCmd::instance(QTreeWidget *cmdTree,qint16 comType,qint16 rnStation,QObject *parent)
+{
+  if(m_instance==NULL)
+  {
+    QMutexLocker locker(m_mutex);
+    if(m_instance==NULL)
+      m_instance=new ServoGeneralCmd(cmdTree,comType,rnStation,parent);
+  }
+  return m_instance;
+}
+
 ServoGeneralCmd::~ServoGeneralCmd()
 {
   m_cmdTreeDataMaps.clear();

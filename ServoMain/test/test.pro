@@ -6,4 +6,5 @@ SUBDIRS += \
     console-test \
     TreeWidgetSync \
     MainWidget \
-    QmlProject
+    QmlProject \
+    NavigationBar

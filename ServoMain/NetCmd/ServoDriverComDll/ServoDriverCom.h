@@ -27,7 +27,8 @@ protected:
 
 	const int16						COM_AXIS_MAX = 240;					//轴最大个数为4	
 
-	const Uint16					FPGA_VERSION = (0x0007<<1);
+//	const Uint16					FPGA_VERSION = (0x0007<<1);
+  const Uint16					FPGA_VERSION = (0xFF02);
 protected:
 	int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);////将命令ID和轴号合并成一个short，其中bit[0-11]为命令ID, bit[12 - 15]为轴号
 public:

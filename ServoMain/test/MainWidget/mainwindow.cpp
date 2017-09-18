@@ -10,6 +10,8 @@
 #include <QTreeWidgetItem>
 #include <QStyledItemDelegate>
 
+#include "./ServoGeneralCmd/servogeneralcmd.h"
+
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
   ui(new Ui::MainWindow)
@@ -79,6 +81,12 @@ MainWindow::MainWindow(QWidget *parent) :
       ui->comboBox->setStyleSheet(style);
     QStyledItemDelegate* itemDelegate = new QStyledItemDelegate(ui->comboBox);
     ui->comboBox->setItemDelegate(itemDelegate);
+    QString fileName="D:/Smart/ServoMaster/git-project/servo-4/release/SystemConfiguration/GTSD_6X/GTSD61/V127/PrmFuncCmd.xml";
+    QTreeWidget *treeWidget=QtTreeManager::createTreeWidgetFromXmlFile(fileName);
+    ServoGeneralCmd *cmd1=ServoGeneralCmd::instance(treeWidget,0,0);
+    ServoGeneralCmd *cmd2=ServoGeneralCmd::instance(treeWidget,0,0);
+    qDebug()<<"cmd1="<<(quint64)cmd1;
+    qDebug()<<"cmd2="<<(quint64)cmd2;
 
 }
 
@@ -148,7 +156,7 @@ typedef enum{
 void MainWindow::on_pushButton_2_clicked()
 {
   QString fileName="D:/Smart/Xml_V125/Xml_V125/PrmPrtyTree.xml";
-  QTreeWidget *treeWidget=QtTreeManager::readTreeWidgetFromXmlFile(fileName);
+  QTreeWidget *treeWidget=QtTreeManager::createTreeWidgetFromXmlFile(fileName);
 
   QTreeWidgetItemIterator it(treeWidget);
   QTreeWidgetItem *item;

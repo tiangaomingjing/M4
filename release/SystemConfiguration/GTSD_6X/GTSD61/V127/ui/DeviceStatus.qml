@@ -244,6 +244,12 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
+                    LedIndicator{
+                        id:led_OT;
+                        title: "过温";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
                 }
                 Item{
                     Layout.fillHeight: true;
@@ -251,12 +257,7 @@ Rectangle{
                 }
                 ColumnLayout{
                     spacing: 10;
-                    LedIndicator{
-                        id:led_OT;
-                        title: "过温";
-                        iconPath: root.iconPath;
-                        Layout.fillHeight: true;
-                    }
+
                     LedIndicator{
                         id:led_IOerr;
                         title: "IO故障";
@@ -287,14 +288,6 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
-
-                }
-                Item{
-                    Layout.fillHeight: true;
-                    Layout.fillWidth: true;
-                }
-                ColumnLayout{
-                    spacing: 10;
                     LedIndicator{
                         id:led_DIR;
                         title: "方向错误";
@@ -307,6 +300,14 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
+
+                }
+                Item{
+                    Layout.fillHeight: true;
+                    Layout.fillWidth: true;
+                }
+                ColumnLayout{
+                    spacing: 10;
                     LedIndicator{
                         id:led_OBPH;
                         title: "输出断线";
@@ -326,8 +327,26 @@ Rectangle{
                         Layout.fillHeight: true;
                     }
                     LedIndicator{
-                        id:led_resv;
-                        title: "保留";
+                        id:led_STO;
+                        title: "STO故障";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
+                    LedIndicator{
+                        id:led_OB_ERR;
+                        title: "电机抱匣故障";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
+                    LedIndicator{
+                        id:led_FAN;
+                        title: "风扇故障";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
+                    LedIndicator{
+                        id:led_SRF;
+                        title: "安全继电器故障";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -357,6 +376,10 @@ Rectangle{
         led_OBPH.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,14,1)));
         led_OTMOT.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,15,1)));
         led_PTE.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,16,1)));
+        led_STO.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,17,1)));
+        led_OB_ERR.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,18,1)));
+        led_FAN.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,19,1)));
+        led_SRF.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,20,1)));
 
         m_allLedFlag.ledOn=!Boolean(parseInt(factory.dataTree.textTopLevel(2,1)));
 

@@ -155,7 +155,7 @@ private:
   void closeNetCom(void);
   bool MessageBoxAsk(QString &msg);
   void setWidgetStyleSheet(void);
-
+  QString minorVersion();
 
 
 private:

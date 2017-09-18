@@ -255,7 +255,7 @@ short CRnDriverWave::InitDspWaveVar(Uint16 wave_num, Uint16 *wave_byte_size_list
 	m_wave_en = 0;
 	m_size_of_frame = 0;
 	bool param_update = false;
-	if (m_wave_num != wave_num)
+	if (1)//m_wave_num != wave_num)
 	{
 		param_update = true;
 		if (m_wave_byte_size_list)

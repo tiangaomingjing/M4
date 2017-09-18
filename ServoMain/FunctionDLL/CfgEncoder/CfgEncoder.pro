@@ -73,4 +73,16 @@ DISTFILES += \
     V126/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
     V126/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
     V126/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
-    V126/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml
+    V126/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml \
+    V127/CfgEncoder.qml \
+    V127/components/CfgEncoder/EncoderItem/AbstractEncoderItem.qml \
+    V127/components/CfgEncoder/EncoderItem/DuoMoEncoderItem.qml \
+    V127/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
+    V127/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
+    V127/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
+    V127/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml \
+    V127/components/CfgEncoder/ToolBox/AbsoluteEncoder.qml \
+    V127/components/CfgEncoder/ToolBox/IncrementalEncoder.qml \
+    V127/components/CfgEncoder/ToolBox/NoneEncoder.qml \
+    V127/components/CfgEncoder/ToolBox/ToolBox.qml \
+    V127/components/CfgEncoder/ToolBox/ToolItem.qml

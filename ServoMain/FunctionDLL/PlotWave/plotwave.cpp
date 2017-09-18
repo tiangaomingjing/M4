@@ -3045,7 +3045,8 @@ void PlotWave::initialUi()
   ui->widget_progressGo->setHidden(true);
   ui->widget_progressGo->setLayout(layout);
   MotionStatus *motionStatus;
-  m_generalCmd=new ServoGeneralCmd(mp_mainWindow->getFunctionCmdTree(),mp_userConfig->com.id,mp_userConfig->com.rnStation,this);
+//  m_generalCmd=new ServoGeneralCmd(mp_mainWindow->getFunctionCmdTree(),mp_userConfig->com.id,mp_userConfig->com.rnStation,this);
+  m_generalCmd=ServoGeneralCmd::instance(mp_mainWindow->getFunctionCmdTree(),mp_userConfig->com.id,mp_userConfig->com.rnStation,0);
   QString strBarStyle="QProgressBar::chunk {background-color: #CD96CD;height: 5px;margin: 0.5px;}QProgressBar {border: 2px solid grey;border-radius: 5px;text-align: center;}";
   for(int i=0;i<mp_userConfig->model.axisCount;i++)
   {
@@ -3141,7 +3142,7 @@ bool PlotWave::readInitialFile(QString &fileName)
   vPrmFactor.controlPrm.offsetAddr=-1;
   vPrmFactor.controlPrm.baseAddr=-1;
 
-  m_curveSettingTree=QtTreeManager::readTreeWidgetFromXmlFile(fileName);
+  m_curveSettingTree=QtTreeManager::createTreeWidgetFromXmlFile(fileName);
 //  m_curveSettingTree->show();
   if(m_curveSettingTree!=NULL)
   {

@@ -26,6 +26,7 @@
 #include "plotwaveui.h"
 #include "QtTreeManager/qttreemanager.h"
 #include "MotorSqlModel/motorsqlmodel.h"
+#include "../FunctionDLL/ServoGeneralCmd/servogeneralcmd.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -46,6 +47,7 @@
 #define FILENAME_RAMALL "RamPrm_AllAxis"
 #define FILENAME_FUNCEXT "PrmFuncExtension"
 #define SDT_VERSION "1.1.3"
+#define MINOR_VERSION_CONTROL_KEY "gSevDrv.no.prm.soft_min_version"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -1227,10 +1229,13 @@ void MainWindow::onActionAboutConfigClicked()
   if(m_isOpenCom)//已经连接
   {
     quint16 pVersion;
+    QString minVersion;
     quint16 fVersion;
     QString hexFVersion;
     ServoControl::readDeviceVersion(0,pVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
     ServoControl::readDeviceFirmwareVersion(0,fVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
+    minVersion=minorVersion();
+    qDebug()<<"minVersion="<<minVersion;
     hexFVersion=QString::asprintf("%#04X",fVersion);
     info=tr("SDT setting info:\nmodel:%1\nversion:%2\naxisCount:%3\ncomName:%4"
                           "\n\nDevice info:\nprocessor version:%5\nfirmware version:%6\n")
@@ -1238,7 +1243,7 @@ void MainWindow::onActionAboutConfigClicked()
                               .arg(mp_userConfig->model.version.at(0))
                               .arg(mp_userConfig->model.axisCount)
                               .arg(mp_userConfig->com.comName)
-                              .arg(pVersion)
+                              .arg((QString::number(pVersion)+"-"+minVersion))
                               .arg(hexFVersion);
   }
 
@@ -1251,6 +1256,8 @@ void MainWindow::onActionAboutConfigClicked()
       quint16 pVersion;
       quint16 fVersion;
       QString hexFVersion;
+      QString minVersion;
+      minVersion=minorVersion();
       ServoControl::readDeviceVersion(0,pVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
       ServoControl::readDeviceFirmwareVersion(0,fVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
       hexFVersion=QString::asprintf("%#04X",fVersion);
@@ -1260,7 +1267,7 @@ void MainWindow::onActionAboutConfigClicked()
                                 .arg(mp_userConfig->model.version.at(0))
                                 .arg(mp_userConfig->model.axisCount)
                                 .arg(mp_userConfig->com.comName)
-                                .arg(pVersion)
+                                .arg((QString::number(pVersion)+"-"+minVersion))
                                 .arg(hexFVersion);
     }
     else
@@ -2358,4 +2365,15 @@ void MainWindow::setWidgetStyleSheet()
 {
   QStyledItemDelegate* itemDelegate = new QStyledItemDelegate(ui->combo_axis);
   ui->combo_axis->setItemDelegate(itemDelegate);
+}
+QString MainWindow::minorVersion()
+{
+  QString minV;
+  double ver=0;
+  ServoGeneralCmd *cmd=ServoGeneralCmd::instance(mp_functionCmdTreeWidget,mp_userConfig->com.id,mp_userConfig->com.rnStation,0);
+  ver=cmd->read(MINOR_VERSION_CONTROL_KEY,0);
+  minV=QString::number(ver);
+  if(minV=="-1")
+    minV=" ";
+  return minV;
 }
