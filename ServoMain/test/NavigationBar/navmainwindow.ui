@@ -386,7 +386,7 @@
              <item>
               <widget class="QToolBox" name="toolBox">
                <property name="currentIndex">
-                <number>0</number>
+                <number>3</number>
                </property>
                <property name="tabSpacing">
                 <number>0</number>
@@ -421,6 +421,14 @@
                 </layout>
                </widget>
                <widget class="QWidget" name="page_5">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>262</width>
+                  <height>222</height>
+                 </rect>
+                </property>
                 <attribute name="label">
                  <string>页</string>
                 </attribute>
@@ -453,11 +461,158 @@
                 <attribute name="label">
                  <string>Page 2</string>
                 </attribute>
+                <layout class="QVBoxLayout" name="verticalLayout_5">
+                 <item>
+                  <widget class="QTableWidget" name="tableWidget">
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <row>
+                    <property name="text">
+                     <string>新建行</string>
+                    </property>
+                   </row>
+                   <column>
+                    <property name="text">
+                     <string>新建列</string>
+                    </property>
+                   </column>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
                <widget class="QWidget" name="page_6">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>262</width>
+                  <height>222</height>
+                 </rect>
+                </property>
                 <attribute name="label">
                  <string>页</string>
                 </attribute>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <item>
+                  <widget class="LockCheckBox" name="widget" native="true"/>
+                 </item>
+                 <item>
+                  <widget class="LockCheckBox" name="widget_2" native="true"/>
+                 </item>
+                </layout>
                </widget>
               </widget>
              </item>
@@ -494,6 +649,14 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>LockCheckBox</class>
+   <extends>QWidget</extends>
+   <header location="global">lockcheckbox.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

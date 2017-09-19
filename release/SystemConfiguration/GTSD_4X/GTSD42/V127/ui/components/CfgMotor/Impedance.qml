@@ -45,7 +45,7 @@ Rectangle
                 }
             }
             Text{
-                text:"d轴电感(mH)"
+                text:"d轴相电感(mH)"
             }
             TextField{
                 id:ldm_1;
@@ -60,7 +60,7 @@ Rectangle
                 }
             }
             Text{
-                text:"q轴电感(mH)"
+                text:"q轴相电感(mH)"
             }
             TextField{
                 id:lqm_1;

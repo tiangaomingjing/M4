@@ -7,6 +7,7 @@
 QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+INCLUDEPATH+=./lock
 
 TARGET = NavigationBar
 TEMPLATE = app
@@ -14,10 +15,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         navmainwindow.cpp \
-    myhelp.cpp
+    myhelp.cpp \
+    lockcheckbox.cpp
 
 HEADERS  += navmainwindow.h \
-    myhelp.h
+    myhelp.h \
+    lockcheckbox.h
 
 FORMS    += navmainwindow.ui
 

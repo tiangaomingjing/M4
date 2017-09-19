@@ -29,7 +29,7 @@ Rectangle{
             spacing: 10;
 
             Text{
-                text:"额定电流(A)";
+                text:"额定电流(Arms)";
             }
             TextField{
                 id:irat_1;
@@ -48,7 +48,7 @@ Rectangle{
             }
 
             Text{
-                text:"峰值电流(A)";
+                text:"峰值电流(Apeak)";
             }
             TextField{
                 id:imax_1;
@@ -72,10 +72,12 @@ Rectangle{
     Component{
         id:textStyle;
         TextFieldStyle{
+            id:styleRoot;
+
             textColor: "black";
             passwordCharacter: "0"
             placeholderTextColor:"lightgray"
-            background: Rectangle{
+            background:Rectangle{
                 radius: 6;
                 implicitWidth: 100;
                 implicitHeight: 24;

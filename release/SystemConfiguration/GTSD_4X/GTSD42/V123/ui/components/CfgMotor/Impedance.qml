@@ -36,13 +36,16 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {rm_1.textColor="red";dataTree.setTopLevelText(11,1,rm_1.text);}
-                function onTheTextChanged(){rm_1.textColor="red";dataTree.setTopLevelText(11,1,rm_1.text);}
+                function onTheTextChanged(){
+                    rm_1.textColor="red";
+//                    dataTree.setTopLevelText(11,1,rm_1.text);
+                }
                 Component.onCompleted: {
                     rm_1.textChanged.connect(onTheTextChanged);
                 }
             }
             Text{
-                text:"d轴电感(mH)"
+                text:"d轴相电感(mH)"
             }
             TextField{
                 id:ldm_1;
@@ -57,7 +60,7 @@ Rectangle
                 }
             }
             Text{
-                text:"q轴电感(mH)"
+                text:"q轴相电感(mH)"
             }
             TextField{
                 id:lqm_1;
@@ -77,6 +80,8 @@ Rectangle
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;

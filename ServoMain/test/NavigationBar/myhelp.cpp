@@ -15,7 +15,7 @@ MyHelp::MyHelp(QObject *parent) : QObject(parent)
 //!
 void MyHelp::SetStyle(const QString &styleName)
 {
-    QFile file(QString(":/cssFile/%1.css").arg(styleName));
+    QFile file(QString(":/css/%1.css").arg(styleName));
     file.open(QFile::ReadOnly);
     QString qss = QLatin1String(file.readAll());
     qApp->setStyleSheet(qss);

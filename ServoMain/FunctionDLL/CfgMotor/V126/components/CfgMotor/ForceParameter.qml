@@ -43,11 +43,12 @@ Rectangle
                     tqr_1.textChanged.connect(onTheTextChanged);
                 }
             }
-            Text{text:"反电动势系数(mV/rpm)"}
+            Text{text:"反电动势系数(mVpeak/rpm)"}
             TextField{
                 id:phim_1;
                 text:"0";
                 style:textStyle;
+                placeholderText: "=力矩系数(N.m/Arms)X49.3"
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
@@ -75,6 +76,12 @@ Rectangle
                     vmax_1.textChanged.connect(onTheTextChanged);
                 }
             }
+        }
+        Text{
+            text:"注：反电动势系数=力矩系数(N.m/Arms)X49.3"
+            Layout.fillWidth: true;
+            horizontalAlignment: Text.AlignRight;
+            color:"gray"
         }
     }
 

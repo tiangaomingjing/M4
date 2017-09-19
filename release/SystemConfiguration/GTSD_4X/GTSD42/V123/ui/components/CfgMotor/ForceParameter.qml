@@ -35,20 +35,27 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {tqr_1.textColor="red";dataTree.setTopLevelText(5,1,tqr_1.text);}
-                function onTheTextChanged(){tqr_1.textColor="red";dataTree.setTopLevelText(5,1,tqr_1.text);}
+                function onTheTextChanged(){
+                    tqr_1.textColor="red";
+//                    dataTree.setTopLevelText(5,1,tqr_1.text);
+                }
                 Component.onCompleted: {
                     tqr_1.textChanged.connect(onTheTextChanged);
                 }
             }
-            Text{text:"反电动势系数(mV/rpm)"}
+            Text{text:"反电动势系数(mVpeak/rpm)"}
             TextField{
                 id:phim_1;
                 text:"0";
                 style:textStyle;
+                placeholderText: "=力矩系数(N.m/Arms)X49.3"
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
-                function onTheTextChanged(){phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
+                function onTheTextChanged(){
+                    phim_1.textColor="red";
+//                    dataTree.setTopLevelText(8,1,phim_1.text);
+                }
                 Component.onCompleted: {
                     phim_1.textChanged.connect(onTheTextChanged);
                 }
@@ -61,11 +68,20 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {vmax_1.textColor="red";dataTree.setTopLevelText(7,1,vmax_1.text);}
-                function onTheTextChanged(){vmax_1.textColor="red";dataTree.setTopLevelText(7,1,vmax_1.text);}
+                function onTheTextChanged(){
+                    vmax_1.textColor="red";
+//                    dataTree.setTopLevelText(7,1,vmax_1.text);
+                }
                 Component.onCompleted: {
                     vmax_1.textChanged.connect(onTheTextChanged);
                 }
             }
+        }
+        Text{
+            text:"注：反电动势系数=力矩系数(N.m/Arms)X49.3"
+            Layout.fillWidth: true;
+            horizontalAlignment: Text.AlignRight;
+            color:"gray"
         }
     }
 
@@ -73,6 +89,8 @@ Rectangle
         id:textStyle;
         TextFieldStyle{
             textColor: "black";
+            passwordCharacter: "0"
+            placeholderTextColor:"lightgray"
             background: Rectangle{
                 radius: 6;
                 implicitWidth: 100;

@@ -5,7 +5,4 @@
         <file>Lock_Locked.png</file>
         <file>Lock_Unlocked.png</file>
     </qresource>
-    <qresource prefix="/css">
-        <file>style_1.css</file>
-    </qresource>
 </RCC>
