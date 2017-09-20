@@ -386,7 +386,7 @@
              <item>
               <widget class="QToolBox" name="toolBox">
                <property name="currentIndex">
-                <number>3</number>
+                <number>1</number>
                </property>
                <property name="tabSpacing">
                 <number>0</number>
@@ -404,6 +404,32 @@
                  <string>page1</string>
                 </attribute>
                 <layout class="QHBoxLayout" name="horizontalLayout">
+                 <item>
+                  <spacer name="horizontalSpacer">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_2">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>40</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
                  <item>
                   <widget class="QPushButton" name="pushButton">
                    <property name="text">
@@ -435,8 +461,33 @@
                 <layout class="QVBoxLayout" name="verticalLayout_4">
                  <item>
                   <widget class="QCheckBox" name="checkBox">
+                   <property name="styleSheet">
+                    <string notr="true">QCheckBox {
+    spacing: 5px;
+}
+
+QCheckBox::indicator {
+    width: 64px;
+    height: 64px;
+}
+
+QCheckBox::indicator:unchecked {
+    image: url(:/checkbox_unchecked.png);
+}
+
+QCheckBox::indicator:checked {
+    image: url(:/checkbox_checked.png);
+}
+</string>
+                   </property>
                    <property name="text">
                     <string>CheckBox</string>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>32</width>
+                     <height>32</height>
+                    </size>
                    </property>
                   </widget>
                  </item>

@@ -29,6 +29,8 @@ private:
   QTreeWidget* getUiTree()Q_DECL_OVERRIDE {return NULL;}
   QStackedWidget* getUiStackedWidget()Q_DECL_OVERRIDE {return NULL;}
   void setActionReadFuncValueFromFlashEnable()Q_DECL_OVERRIDE{}
+  void buildTreeWidget(QString &fileName_noxml) Q_DECL_OVERRIDE{Q_UNUSED(fileName_noxml);}
+  void createUiByQml();
 
 private:
   Ui::ModuleIoNew *ui;

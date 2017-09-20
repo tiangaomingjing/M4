@@ -4,5 +4,7 @@
         <file>checkbox_unchecked.png</file>
         <file>Lock_Locked.png</file>
         <file>Lock_Unlocked.png</file>
+        <file>checkbox_checked_hover.png</file>
+        <file>checkbox_unchecked_hover.png</file>
     </qresource>
 </RCC>
