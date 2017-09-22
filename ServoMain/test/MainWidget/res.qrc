@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>menu_servo2file.png</file>
+    </qresource>
+</RCC>

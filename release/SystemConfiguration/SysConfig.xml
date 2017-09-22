@@ -25,6 +25,7 @@
 		<FirmWare name="V125"/>
 		<FirmWare name="V126"/>
 		<FirmWare name="V127"/>
+		<FirmWare name="V128"/>
 	</Model>
     <Tree>
       <Root name="参数配置">

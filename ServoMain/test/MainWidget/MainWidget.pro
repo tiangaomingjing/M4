@@ -28,3 +28,6 @@ FORMS    += mainwindow.ui
 
 DEFINES += SERVOGENERALCMD_LIBRARY
 INCLUDEPATH+=../../
+
+RESOURCES += \
+    res.qrc

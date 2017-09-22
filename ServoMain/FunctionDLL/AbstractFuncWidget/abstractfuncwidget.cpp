@@ -186,18 +186,24 @@ void AbstractFuncWidget::createUiByQml()
 //!-------------------------------private function---------------------------------
 void AbstractFuncWidget::setTreeAndStackedWidget(MainWindow *mainWindow,int axisNum)
 {
+
   m_axisNumber=axisNum;
   mp_mainWindow=mainWindow;
   m_uiTree=getUiTree();
   m_stackedWidget=getUiStackedWidget();
+  if(m_uiTree==NULL)
+    return;
   m_uiTree->installEventFilter(this);
   setTreeStyle(m_uiTree);
 
   connect(m_uiTree,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(onTreeItemClickedEdit(QTreeWidgetItem*,int)));
   connect(m_uiTree,SIGNAL(itemSelectionChanged()),this,SLOT(onItemSelecttionChangedHighlight()));
+  qDebug()<<this->objectName()<<"setTreeAndStackedWidget";
 }
 void AbstractFuncWidget::setTreeWidgetParentBackgroundColor()
 {
+  if(m_uiTree==NULL)
+    return;
   QTreeWidgetItem *item;
   QTreeWidgetItemIterator it_src(m_uiTree);
   QBrush brush;

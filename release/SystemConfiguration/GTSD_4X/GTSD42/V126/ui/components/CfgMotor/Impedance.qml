@@ -27,7 +27,7 @@ Rectangle
         RowLayout{
             spacing: 10;
             Text{
-                text:"绕线电阻(Ohm)"
+                text:"相电阻(Ohm)"
             }
             TextField{
                 id:rm_1;
@@ -38,14 +38,14 @@ Rectangle
 //                onTextChanged: {rm_1.textColor="red";dataTree.setTopLevelText(11,1,rm_1.text);}
                 function onTheTextChanged(){
                     rm_1.textColor="red";
-//                    dataTree.setTopLevelText(11,1,rm_1.text);
+                    dataTree.setTopLevelText(11,1,rm_1.text);
                 }
                 Component.onCompleted: {
                     rm_1.textChanged.connect(onTheTextChanged);
                 }
             }
             Text{
-                text:"d轴电感(mH)"
+                text:"d轴相电感(mH)"
             }
             TextField{
                 id:ldm_1;
@@ -54,13 +54,16 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {ldm_1.textColor="red";dataTree.setTopLevelText(9,1,ldm_1.text);}
-                function onTheTextChanged(){ldm_1.textColor="red";dataTree.setTopLevelText(9,1,ldm_1.text);}
+                function onTheTextChanged(){
+                    ldm_1.textColor="red";
+                    dataTree.setTopLevelText(9,1,ldm_1.text);
+                }
                 Component.onCompleted: {
                     ldm_1.textChanged.connect(onTheTextChanged);
                 }
             }
             Text{
-                text:"q轴电感(mH)"
+                text:"q轴相电感(mH)"
             }
             TextField{
                 id:lqm_1;
@@ -69,7 +72,10 @@ Rectangle
                 Layout.fillWidth: true;
                 Layout.minimumWidth: 20;
 //                onTextChanged: {lqm_1.textColor="red";dataTree.setTopLevelText(10,1,lqm_1.text);}
-                function onTheTextChanged(){lqm_1.textColor="red";dataTree.setTopLevelText(10,1,lqm_1.text);}
+                function onTheTextChanged(){
+                    lqm_1.textColor="red";
+                    dataTree.setTopLevelText(10,1,lqm_1.text);
+                }
                 Component.onCompleted: {
                     lqm_1.textChanged.connect(onTheTextChanged);
                 }

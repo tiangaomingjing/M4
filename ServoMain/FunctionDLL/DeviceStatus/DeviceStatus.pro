@@ -51,6 +51,7 @@ FORMS += \
 DISTFILES += \
     V126/DeviceStatus.qml \
     V123/DeviceStatus.qml \
-    V127/DeviceStatus.qml
+    V127/DeviceStatus.qml \
+    V128/DeviceStatus.qml
 #DEFINES+=   QT_NO_DEBUG\
 #            QT_NO_DEBUG_OUTPUT

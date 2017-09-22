@@ -29,7 +29,8 @@ INCLUDEPATH +=$${PWD}/..\
                 $${PWD}/../FunctionDLL/DeviceStatus\
                 $${PWD}/../FunctionDLL/PlotWave\
                 $${PWD}/../FunctionDLL/ModuleIO\
-                $${PWD}/../FunctionDLL/PlotWaveUi
+                $${PWD}/../FunctionDLL/PlotWaveUi\
+                $${PWD}/../FunctionDLL/ModuleIoNew
 
 
 CONFIG(debug, debug|release){
@@ -53,7 +54,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/ServoDriverComDlld.lib\
             $${LIB_PATH}/ModuleIOd.lib\
             $${LIB_PATH}/PlotWaveUid.lib\
-            $${LIB_PATH}/ServoGeneralCmdd.lib
+            $${LIB_PATH}/ServoGeneralCmdd.lib\
+            $${LIB_PATH}/ModuleIoNewd.lib
 
 } else{
     TARGET = SDT
@@ -76,7 +78,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/ServoDriverComDll.lib\
             $${LIB_PATH}/ModuleIO.lib\
             $${LIB_PATH}/PlotWaveUi.lib\
-            $${LIB_PATH}/ServoGeneralCmd.lib
+            $${LIB_PATH}/ServoGeneralCmd.lib\
+            $${LIB_PATH}/ModuleIoNew.lib
 }
 
 DESTDIR =$${OUT_ROOT}/Bin

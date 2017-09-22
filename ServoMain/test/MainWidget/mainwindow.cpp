@@ -9,6 +9,7 @@
 #include <QTreeWidgetItemIterator>
 #include <QTreeWidgetItem>
 #include <QStyledItemDelegate>
+#include <QToolButton>
 
 #include "./ServoGeneralCmd/servogeneralcmd.h"
 
@@ -88,6 +89,37 @@ MainWindow::MainWindow(QWidget *parent) :
     qDebug()<<"cmd1="<<(quint64)cmd1;
     qDebug()<<"cmd2="<<(quint64)cmd2;
 
+    QToolButton *tbtn;
+    tbtn=new QToolButton();
+
+//    tbtn->setPopupMode(QToolButton::MenuButtonPopup);
+
+    QImage ima(":/menu_servo2file.png");
+    tbtn->setIconSize(QSize(128, 64));
+    tbtn->setMinimumSize(QSize(128, 64));
+    QIcon icon;
+    icon.addFile(QStringLiteral(":/menu_servo2file.png"), QSize(128,64), QIcon::Normal, QIcon::Off);
+    tbtn->setIcon(icon);
+
+
+    ui->mainToolBar->addWidget(tbtn);
+    ui->mainToolBar->setMinimumHeight(64);
+
+
+
+
+
+//    QAction *act=new QAction("hello",this);
+//    act->setToolTip("aaaaaaaa");
+//    act->setStatusTip("aaaaaaaaaaaaaaaaaaaaaaa");
+//    tbtn->addAction(act);
+//    tbtn->setDefaultAction(act);
+//    act=new QAction("bbb",this);
+//    tbtn->addAction(act);
+//    act=new QAction("ccc",this);
+//    tbtn->addAction(act);
+//    act=new QAction("ddd",this);
+//    tbtn->addAction(act);
 }
 
 MainWindow::~MainWindow()
@@ -155,7 +187,7 @@ typedef enum{
 }ColPrtyTreeIndex;
 void MainWindow::on_pushButton_2_clicked()
 {
-  QString fileName="D:/Smart/Xml_V125/Xml_V125/PrmPrtyTree.xml";
+  QString fileName="D:/PrmPrtyTree.xml";
   QTreeWidget *treeWidget=QtTreeManager::createTreeWidgetFromXmlFile(fileName);
 
   QTreeWidgetItemIterator it(treeWidget);
@@ -213,7 +245,7 @@ void MainWindow::on_pushButton_2_clicked()
     }
     it++;
   }
-  QString savePath="D:/PrmPrtyTree.xml";
+  QString savePath="D:/PrmPrtyTree2.xml";
   QtTreeManager::writeTreeWidgetToXmlFile(savePath,treeWidget);
 
 }

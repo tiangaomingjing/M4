@@ -29,7 +29,7 @@ Rectangle{
             spacing: 10;
 
             Text{
-                text:"额定电流(A)";
+                text:"额定电流(Arms)";
             }
             TextField{
                 id:irat_1;
@@ -40,7 +40,7 @@ Rectangle{
 //                onTextChanged: {irat_1.textColor="red";dataTree.setTopLevelText(0,1,irat_1.text);}
                 function onTheTextChanged(){
                     irat_1.textColor="red";
-//                    dataTree.setTopLevelText(0,1,irat_1.text);
+                    dataTree.setTopLevelText(0,1,irat_1.text);
                 }
                 Component.onCompleted: {
                     irat_1.textChanged.connect(onTheTextChanged);
@@ -48,7 +48,7 @@ Rectangle{
             }
 
             Text{
-                text:"峰值电流(A)";
+                text:"峰值电流(Apeak)";
             }
             TextField{
                 id:imax_1;
@@ -59,7 +59,7 @@ Rectangle{
 //                onTextChanged: {imax_1.textColor="red";dataTree.setTopLevelText(1,1,imax_1.text);}
                 function onTheTextChanged(){
                     imax_1.textColor="red";
-//                    dataTree.setTopLevelText(1,1,imax_1.text);
+                    dataTree.setTopLevelText(1,1,imax_1.text);
                 }
                 Component.onCompleted: {
                     imax_1.textChanged.connect(onTheTextChanged);
@@ -72,10 +72,12 @@ Rectangle{
     Component{
         id:textStyle;
         TextFieldStyle{
+            id:styleRoot;
+
             textColor: "black";
             passwordCharacter: "0"
             placeholderTextColor:"lightgray"
-            background: Rectangle{
+            background:Rectangle{
                 radius: 6;
                 implicitWidth: 100;
                 implicitHeight: 24;

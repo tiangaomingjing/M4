@@ -9,9 +9,13 @@ class LockCheckBox : public QWidget
 {
   Q_OBJECT
 public:
-  explicit LockCheckBox(QWidget *parent = 0);
+  explicit LockCheckBox(int axisNum, QWidget *parent = 0);
+  ~LockCheckBox();
   bool isChecked(void);
   void setChecked(bool checked);
+
+  int axisNum() const;
+  void setAxisNum(int axisNum);
 
 signals:
   void lockClicked(bool checked);
@@ -24,6 +28,7 @@ private:
 private:
   QLabel*m_image;
   QCheckBox *m_box;
+  int m_axisNum;
 };
 
 #endif // LOCKCHECKBOX_H

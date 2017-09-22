@@ -7,9 +7,10 @@
 #include <windows.h>
 using namespace std;
 void updateProgress(void *arg, int16 *value);
-#define TEST_UBOOT 0
-#define  TEST_PLOT 1
-
+#define TEST_UBOOT 1
+#define  TEST_PLOT 0
+#define TEST_FPGA 1
+#define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/gtsd42_va_20170920_1.rpd")
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int ret = 0x00ff;
@@ -18,6 +19,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	ret = GTSD_CMD_Open(updateProgress, (void *)&aa, comType);
 	cout << "ret=" << ret;
 	//GTSD_CMD_Close(comType);
+#if TEST_FPGA
+	Uint16 axis = 0;
+	std::wstring fpgaFileName = FPGA_RPD_FILE;
+	ret = GTSD_CMD_FirmwareFlashHandler(axis, fpgaFileName, updateProgress, NULL, comType, 0xf0);
+#endif
 
 #if TEST_PLOT
 
@@ -61,7 +67,7 @@ int _tmain(int argc, _TCHAR* argv[])
 #if TEST_UBOOT
 	std::wstring ldrPath = L"D:/Smart/ServoMaster/git-project/servo-4/release/Resource/Uboot/ServoUboot.ldr";
 	std::string key = "a5e4b8a4d71d04d2f89d8318fec19283";
-	for (int i = 0; i < 3;i++)
+	for (int i = 0; i < 2;i++)
 	{
 		ret = GTSD_CMD_ProcessorUartBootHandler(2*i, ldrPath, 115200, 1, key, updateProgress, NULL, comType, 1);
 		cout << "ret=" << ret;
@@ -107,5 +113,6 @@ void updateProgress(void *arg, int16 *value)
 {
 	int16 v = *value;
 	cout << "value=" << v << endl;
+	cout << "aaaaaaaaaaaaaaaaaaaa";
 }
 

@@ -27,6 +27,7 @@
 #include "QtTreeManager/qttreemanager.h"
 #include "MotorSqlModel/motorsqlmodel.h"
 #include "../FunctionDLL/ServoGeneralCmd/servogeneralcmd.h"
+#include "moduleionew.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -40,6 +41,7 @@
 #include <QQmlContext>
 #include <QQuickItem>
 #include <QStyledItemDelegate>
+#include <QStringList>
 #define TEST_DEBUG 0
 #define FILENAME_MODULEIO "PrmFuncIO"
 #define FILENAME_FUNCCMD "PrmFuncCmd"
@@ -724,11 +726,11 @@ void MainWindow::onActionServo2FileClicked()
   startTimer();
 }
 
-void MainWindow::onActionAxisCloneClicked()
-{
-  AxisClone *axis=AxisClone::getAxisCloneInstance(this,0);//单例模式
-  axis->show();
-}
+//void MainWindow::onActionAxisCloneClicked()
+//{
+//  AxisClone *axis=AxisClone::getAxisCloneInstance(this,0);//单例模式
+//  axis->show();
+//}
 
 void MainWindow::onActionAxisFileCloneClicked()
 {
@@ -1578,7 +1580,7 @@ void MainWindow::createMenus(void)
   m_menuTool->addAction(m_actFileservo);
   m_menuTool->addAction(m_actServofile);
   m_menuTool->addAction(m_actFPGAControl);
-  m_menuTool->addAction(m_actAxisClone);
+//  m_menuTool->addAction(m_actAxisClone);
   m_menuTool->addAction(m_actAxisFileClone);
   m_menuTool->addSeparator();
   m_menuTool->addAction(m_actFuncConfig);
@@ -1683,12 +1685,12 @@ void MainWindow::createActions(void)
   m_actServo2File->setStatusTip(tr("save sevo file"));
   connect(m_actServo2File,SIGNAL(triggered(bool)),this,SLOT(onActionServo2FileClicked()));
 
-  m_actAxisClone=new QAction(this);
-  m_actAxisClone->setText(tr("clone"));
-  m_actAxisClone->setToolTip(tr("clone one axis'parameters to another"));
-  m_actAxisClone->setStatusTip(tr("clone one axis'parameters to another"));
-  m_actAxisClone->setIcon(QIcon(ICON_FILE_PATH+ICON_CLONE));
-  connect(m_actAxisClone,SIGNAL(triggered(bool)),this,SLOT(onActionAxisCloneClicked()));
+//  m_actAxisClone=new QAction(this);
+//  m_actAxisClone->setText(tr("clone"));
+//  m_actAxisClone->setToolTip(tr("clone one axis'parameters to another"));
+//  m_actAxisClone->setStatusTip(tr("clone one axis'parameters to another"));
+//  m_actAxisClone->setIcon(QIcon(ICON_FILE_PATH+ICON_CLONE));
+//  connect(m_actAxisClone,SIGNAL(triggered(bool)),this,SLOT(onActionAxisCloneClicked()));
 
   m_actAxisFileClone=new QAction(this);
   m_actAxisFileClone->setText(tr("file copy"));
@@ -2025,9 +2027,16 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   itemGlobalChild->setText(COL_NAVIGATION_TREE_UIINDEX,QString::number(GLOBAL_UI_INDEX_IOMODULE));
   itemGlobalChild->setText(COL_NAVIGATION_TREE_GLOBAL,QString::number(UI_TAB_TYPE_GLOBAL));//设置是全局标志位
   itemGlobalChild->setIcon(0,QIcon(ICON_FILE_PATH+ICON_TREE_GLOBAL_IO));
-  ModuleIO *ioWidget=new ModuleIO(0);//这个已经在进来时释放空间了，所以不用释放
+  qDebug()<<"ModuIoNew starting-------------------------";
+  AbstractFuncWidget *ioWidget;
+  QString version=theconfig->model.version.at(0);
+  version=version.remove(0,1);
+  if(version.toInt()<128)
+    ioWidget=new ModuleIO(0);//这个已经在进来时释放空间了，所以不用释放
+  else
+    ioWidget=new ModuleIoNew(0);//这个已经在进来时释放空间了，所以不用释放
   fileName=FILENAME_MODULEIO;
-  ioWidget->readTreeXMLFile(this,configName+fileName,0);
+  ioWidget->readTreeXMLFile(this,configName+fileName,4);
 //  ioWidget->show();
   ui->stackedWidget->addWidget(ioWidget);
 
@@ -2256,7 +2265,7 @@ void MainWindow::setUbootModeUi(bool sta)
   //--------tool action--------
   m_actXmUpdate->setEnabled(state);
   m_actServo2File->setEnabled(state);
-  m_actAxisClone->setEnabled(state);
+//  m_actAxisClone->setEnabled(state);
   m_actAxisFileClone->setEnabled(state);
   m_actFPGAControl->setEnabled(state);
   m_actFuncConfig->setEnabled(state);

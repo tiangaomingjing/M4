@@ -1,4 +1,4 @@
-#ifndef MACTION_H
+﻿#ifndef MACTION_H
 #define MACTION_H
 
 #include <QWidget>

@@ -15,10 +15,12 @@ INCLUDEPATH +=../AbstractFuncWidget
 #------------------------------------------------
 CONFIG(debug, debug|release){
     TARGET = ModuleIoNewd
-    LIBS +=$${FUNC_LIB_ROOT}/AbstractFuncWidgetd.lib
+    LIBS +=$${FUNC_LIB_ROOT}/AbstractFuncWidgetd.lib\
+           $${FUNC_LIB_ROOT}/ServoGeneralCmdd.lib
 } else{
     TARGET = ModuleIoNew
-    LIBS +=$${FUNC_LIB_ROOT}/AbstractFuncWidget.lib
+    LIBS +=$${FUNC_LIB_ROOT}/AbstractFuncWidget.lib\
+           $${FUNC_LIB_ROOT}/ServoGeneralCmd.lib
 }
 #---------------------------------------------------
 

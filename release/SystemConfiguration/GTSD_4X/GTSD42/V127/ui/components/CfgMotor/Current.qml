@@ -40,7 +40,7 @@ Rectangle{
 //                onTextChanged: {irat_1.textColor="red";dataTree.setTopLevelText(0,1,irat_1.text);}
                 function onTheTextChanged(){
                     irat_1.textColor="red";
-//                    dataTree.setTopLevelText(0,1,irat_1.text);
+                    dataTree.setTopLevelText(0,1,irat_1.text);
                 }
                 Component.onCompleted: {
                     irat_1.textChanged.connect(onTheTextChanged);
@@ -59,7 +59,7 @@ Rectangle{
 //                onTextChanged: {imax_1.textColor="red";dataTree.setTopLevelText(1,1,imax_1.text);}
                 function onTheTextChanged(){
                     imax_1.textColor="red";
-//                    dataTree.setTopLevelText(1,1,imax_1.text);
+                    dataTree.setTopLevelText(1,1,imax_1.text);
                 }
                 Component.onCompleted: {
                     imax_1.textChanged.connect(onTheTextChanged);

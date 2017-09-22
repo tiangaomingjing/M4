@@ -92,7 +92,7 @@ private slots:
   void onActionToolXmlUpdateClicked(void);
   void onActionFile2ServoClicked(void);
   void onActionServo2FileClicked(void);
-  void onActionAxisCloneClicked(void);
+//  void onActionAxisCloneClicked(void);
   void onActionAxisFileCloneClicked(void);
   void onActionFuncConfigClicked(void);
   void onActionFuncSaveClicked(void);
@@ -185,7 +185,7 @@ private:
   QAction *m_actFileservo;//与m_actFile2Servo是一样的，只不过是在menu中
   MAction *m_actServo2File;
   QAction *m_actServofile;//与m_actServo2File是一样的，只不过是在menu中
-  QAction *m_actAxisClone;
+//  QAction *m_actAxisClone;
   QAction *m_actAxisFileClone;
   QAction *m_actFPGAControl;
   QAction *m_actFuncConfig;

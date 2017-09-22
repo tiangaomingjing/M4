@@ -25,6 +25,8 @@ private slots:
   void onEnterKeyPress(void)Q_DECL_OVERRIDE{}
   void onActionReadFuncValueFromFlash(){}//从Flas中读取数据到功能模块树（还可以右键弹出请求）
 
+  void onLockCheckBoxClicked(bool checked);
+
 private:
   QTreeWidget* getUiTree()Q_DECL_OVERRIDE {return NULL;}
   QStackedWidget* getUiStackedWidget()Q_DECL_OVERRIDE {return NULL;}
