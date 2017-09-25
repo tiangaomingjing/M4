@@ -726,8 +726,6 @@ void MainWindow::onActionFile2ServoClicked()
 
     }
     //检查属性表
-    PrmCheck check;
-
     bool ptyValid;
     bool hardwareValid;
     QMap<QString,double> valueMap;
@@ -741,9 +739,11 @@ void MainWindow::onActionFile2ServoClicked()
       delete tree;
       return;
     }
+    PrmCheck check(ptyTree);
     ui->progressBar->show();
     connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
-    ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
+//    check.setLimitMaps(ptyTree);
+    ptyValid=check.checkXmlFilePropertyValid(tree);
     ptyTree->clear();
     delete ptyTree;
     if(ptyValid==false)
