@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>438</height>
+    <width>571</width>
+    <height>533</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,6 +36,34 @@
        <string>addressOffset</string>
       </property>
      </column>
+     <item>
+      <property name="text">
+       <string>XmlFileInformation</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>XmlVersion</string>
+       </property>
+       <property name="text">
+        <string>128</string>
+       </property>
+       <property name="text">
+        <string>Uint16</string>
+       </property>
+       <property name="text">
+        <string>-1</string>
+       </property>
+      </item>
+     </item>
      <item>
       <property name="text">
        <string>SevDrvRoot0</string>

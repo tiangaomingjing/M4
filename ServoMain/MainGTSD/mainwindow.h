@@ -126,6 +126,7 @@ private slots:
 
   //烧写参数时进度条处理
   void onXmlPrmToServo(int axis,int value);
+  void onCheckingProgress(QString &name, int value);
 
 protected:
   void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;

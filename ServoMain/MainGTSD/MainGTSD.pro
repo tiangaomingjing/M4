@@ -110,7 +110,8 @@ SOURCES += main.cpp\
     NavigationConfig/ControlName/controlname.cpp \
     FpgaDialogSetting/fpgadialogsettingrnnet.cpp \
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp \
-    MotorSqlModel/motorsqlmodel.cpp
+    MotorSqlModel/motorsqlmodel.cpp \
+    PrmCheck/prmcheck.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -140,7 +141,8 @@ HEADERS  += mainwindow.h \
     FpgaDialogSetting/fpgadialogsettingrnnet.h \
     FpgaDialogSetting/highlighttext.h \
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h \
-    MotorSqlModel/motorsqlmodel.h
+    MotorSqlModel/motorsqlmodel.h \
+    PrmCheck/prmcheck.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

@@ -10,7 +10,7 @@ void updateProgress(void *arg, int16 *value);
 #define TEST_UBOOT 1
 #define  TEST_PLOT 0
 #define TEST_FPGA 1
-#define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/gtsd42_va_20170920_1.rpd")
+#define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/GTSD42_VA_V0_0922.rpd")
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int ret = 0x00ff;

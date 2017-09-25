@@ -28,6 +28,7 @@
 #include "MotorSqlModel/motorsqlmodel.h"
 #include "../FunctionDLL/ServoGeneralCmd/servogeneralcmd.h"
 #include "moduleionew.h"
+#include "PrmCheck/prmcheck.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -48,8 +49,13 @@
 #define FILENAME_FLASHALL "FlashPrm_AllAxis"
 #define FILENAME_RAMALL "RamPrm_AllAxis"
 #define FILENAME_FUNCEXT "PrmFuncExtension"
+#define FILENAME_PRTYTREE "PrmPrtyTree"
 #define SDT_VERSION "1.1.3"
 #define MINOR_VERSION_CONTROL_KEY "gSevDrv.no.prm.soft_min_version"
+#define SPLIT_VERSION 128
+#define XMLFILE_ROW_INDEX 0
+#define XMLFILE_CHILD_VERSION_ROW_INDEX 0
+#define XMLFILE_NODE_NAME "XmlFileInformation"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -654,7 +660,6 @@ void MainWindow::onActionFile2ServoClicked()
     return ;
   }
 
-  stopTimer();
   QString filename;
   filename = QFileDialog::getOpenFileName(this, tr("Open XML File"), MainWindow::g_lastFilePath, tr("XML Files(*.xml)"));
   if (filename.isNull())
@@ -666,9 +671,103 @@ void MainWindow::onActionFile2ServoClicked()
   fileInfo.setFile(filename);
   MainWindow::g_lastFilePath=fileInfo.filePath()+"/";
 
+  QTreeWidget *tree=XmlBuilder::readTreeWidgetFromFile(filename);
+  if(tree==NULL)
+  {
+    QMessageBox::information(0,tr("Warring"),tr("xml file error !"));
+    return;
+  }
+
+  quint16 dspVersion;
+  //读取DSP固件版本
+  ServoControl::readDeviceVersion(0,dspVersion,mp_userConfig->com.id,mp_userConfig->com.rnStation);
+  qDebug()<<"dsp version="<<dspVersion;
+  QString xmlNodeName=tree->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
+  quint16 xmlVersion;
+  if(xmlNodeName==XMLFILE_NODE_NAME)
+  {
+    xmlVersion=tree->topLevelItem(XMLFILE_ROW_INDEX)->child(XMLFILE_CHILD_VERSION_ROW_INDEX)->text(COL_VALUE).toUInt();
+    qDebug()<<"xmlversion="<<xmlVersion;
+    tree->takeTopLevelItem(XMLFILE_ROW_INDEX);
+    qDebug()<<"tree toplevel count="<<tree->topLevelItemCount();
+//    tree->show();
+  }
+
+  if(dspVersion>=SPLIT_VERSION)
+  {
+    //按128之后处理
+    //判断第一个节点是否有xmlversion记录(128之后才有)
+
+    if(xmlNodeName!=XMLFILE_NODE_NAME)
+    {
+      QMessageBox::information(0,tr("Warring"),tr("refuse to download file\n dsp version_%1 is not equal to xml version_%2!").arg(dspVersion).arg("none"));
+      tree->clear();
+      delete tree;
+      return;
+    }
+
+    if(dspVersion>xmlVersion)
+    {
+      QMessageBox::information(0,tr("Warring"),tr("refuse to download file\n dsp version_%1 >xml version_%2!").arg(dspVersion).arg(xmlVersion));
+      tree->clear();
+      delete tree;
+      return;
+    }
+    else if(dspVersion<xmlVersion)
+    {
+      QString msg=tr("current dsp version_%1 is not equal to xml version_%2\ndo you still want to continue to download file to servo?").arg(dspVersion).arg(xmlVersion);
+      bool ret=MessageBoxAsk(msg);
+      if(ret==false)
+      {
+        tree->clear();
+        delete tree;
+        return;
+      }
+
+    }
+    //检查属性表
+    PrmCheck check;
+
+    bool ptyValid;
+    bool hardwareValid;
+    QMap<QString,double> valueMap;
+    QString limitFileName;
+    limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
+    QTreeWidget  *ptyTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
+    if(ptyTree==NULL)
+    {
+      QMessageBox::information(0,tr("Warring"),tr("can not load ptryTree!"));
+      tree->clear();
+      delete tree;
+      return;
+    }
+    ui->progressBar->show();
+    connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
+    ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
+    ptyTree->clear();
+    delete ptyTree;
+    if(ptyValid==false)
+    {
+      tree->clear();
+      delete tree;
+      ui->progressBar->hide();
+      return;
+    }
+
+    hardwareValid=check.checkHardwareValid(NULL,valueMap);
+    if(hardwareValid==false)
+    {
+      tree->clear();
+      delete tree;
+      ui->progressBar->hide();
+      return;
+    }
+
+  }
+
   ui->progressBar->show();
   ui->progressBar->setValue(0);
-  QTreeWidget *tree=XmlBuilder::readTreeWidgetFromFile(filename);
+  stopTimer();
   ServoControl sctl;
 //  ui->progressBar->setValue(50);
 //  ServoControl::writeServoFlashByAllAxisTree(tree,(COM_TYPE)mp_userConfig->com.id,mp_userConfig->com.rnStation);
@@ -1536,6 +1635,15 @@ void MainWindow::onXmlPrmToServo(int axis, int value)
   if((axis==(mp_userConfig->model.axisCount-1))&&value>90)
     ui->statusBar->showMessage(tr("write xml parameters to servo successfully !"),1000);
 
+}
+void MainWindow::onCheckingProgress(QString &name,int value)
+{
+  ui->progressBar->setValue(value);
+  if(value%5==0)
+  {
+    ui->statusBar->showMessage(tr("checking parameters :%1").arg(name));
+    qApp->processEvents();
+  }
 }
 
 //-------------protected function-------------------------
