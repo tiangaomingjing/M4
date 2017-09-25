@@ -726,6 +726,8 @@ void MainWindow::onActionFile2ServoClicked()
 
     }
     //检查属性表
+    PrmCheck check;
+
     bool ptyValid;
     bool hardwareValid;
     QMap<QString,double> valueMap;
@@ -739,11 +741,9 @@ void MainWindow::onActionFile2ServoClicked()
       delete tree;
       return;
     }
-    PrmCheck check(ptyTree);
     ui->progressBar->show();
     connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
-//    check.setLimitMaps(ptyTree);
-    ptyValid=check.checkXmlFilePropertyValid(tree);
+    ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
     ptyTree->clear();
     delete ptyTree;
     if(ptyValid==false)
@@ -1639,11 +1639,14 @@ void MainWindow::onXmlPrmToServo(int axis, int value)
 void MainWindow::onCheckingProgress(QString &name,int value)
 {
   ui->progressBar->setValue(value);
-  if(value%5==0)
-  {
-    ui->statusBar->showMessage(tr("checking parameters :%1").arg(name));
-    qApp->processEvents();
-  }
+  ui->statusBar->showMessage(tr("checking parameters :%1").arg(name));
+  qApp->processEvents();
+//  if(value%20==0)
+//  {
+//    ui->progressBar->setValue(value);
+//    ui->statusBar->showMessage(tr("checking parameters :%1").arg(name));
+//    qApp->processEvents();
+//  }
 }
 
 //-------------protected function-------------------------
