@@ -3544,13 +3544,20 @@ void PlotWave::writePlotWaveFile()
         ->setText(COL_CURVESETTING_INDEX_VALUE,QString::number(m_viewSetting.curViewIndex));
 
     //remove old row first
-    QTreeWidgetItem *tItem;
+//    QTreeWidgetItem *tItem;
     qDebug()<<"count:"<<m_curveSettingTree->topLevelItemCount();
     int topCount=m_curveSettingTree->topLevelItemCount();
-    for(int i=0;i<topCount-1;i++)
+//    for(int i=0;i<topCount-1;i++)
+//    {
+//      tItem=m_curveSettingTree->takeTopLevelItem(0+ROW_CURVESETTING_INDEX_PRM_ROW);
+//      qDebug()<<tItem->text(0)<<" : "<<tItem->text(1);
+//    }
+    QTreeWidgetItem *removeItem;
+    while(topCount>1)
     {
-      tItem=m_curveSettingTree->takeTopLevelItem(0+ROW_CURVESETTING_INDEX_PRM_ROW);
-      qDebug()<<tItem->text(0)<<" : "<<tItem->text(1);
+      removeItem=m_curveSettingTree->takeTopLevelItem(topCount-1);
+      delete removeItem;
+      topCount=m_curveSettingTree->topLevelItemCount();
     }
 
     //copy prmdata to tree

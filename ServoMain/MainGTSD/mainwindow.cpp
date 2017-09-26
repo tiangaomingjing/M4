@@ -50,12 +50,14 @@
 #define FILENAME_RAMALL "RamPrm_AllAxis"
 #define FILENAME_FUNCEXT "PrmFuncExtension"
 #define FILENAME_PRTYTREE "PrmPrtyTree"
-#define SDT_VERSION "1.1.3"
+
 #define MINOR_VERSION_CONTROL_KEY "gSevDrv.no.prm.soft_min_version"
 #define SPLIT_VERSION 128
 #define XMLFILE_ROW_INDEX 0
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
+
+#define SDT_VERSION "1.1.4"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -185,12 +187,12 @@ MainWindow::~MainWindow()
     delete m_quickView;
   }
   //释放树
-  if(mp_flashAllTreeWidget!=NULL)
-  {
-    mp_flashAllTreeWidget->clear();
-    delete mp_flashAllTreeWidget;
-    mp_flashAllTreeWidget=NULL;
-  }
+//  if(mp_flashAllTreeWidget!=NULL)
+//  {
+//    mp_flashAllTreeWidget->clear();
+//    delete mp_flashAllTreeWidget;
+//    mp_flashAllTreeWidget=NULL;
+//  }
   if(mp_ramAllTreeWidget!=NULL)
   {
     mp_ramAllTreeWidget->clear();
@@ -686,11 +688,24 @@ void MainWindow::onActionFile2ServoClicked()
   quint16 xmlVersion;
   if(xmlNodeName==XMLFILE_NODE_NAME)
   {
+    QTreeWidgetItem *versionNodeItem;
     xmlVersion=tree->topLevelItem(XMLFILE_ROW_INDEX)->child(XMLFILE_CHILD_VERSION_ROW_INDEX)->text(COL_VALUE).toUInt();
     qDebug()<<"xmlversion="<<xmlVersion;
-    tree->takeTopLevelItem(XMLFILE_ROW_INDEX);
+    versionNodeItem=tree->takeTopLevelItem(XMLFILE_ROW_INDEX);
+    delete versionNodeItem;
     qDebug()<<"tree toplevel count="<<tree->topLevelItemCount();
 //    tree->show();
+    if(dspVersion<xmlVersion)
+    {
+      QString msg=tr("current dsp version_%1 is not equal to xml version_%2\ndo you still want to continue to download file to servo?").arg(dspVersion).arg(xmlVersion);
+      bool ret=MessageBoxAsk(msg);
+      if(ret==false)
+      {
+        tree->clear();
+        delete tree;
+        return;
+      }
+    }
   }
 
   if(dspVersion>=SPLIT_VERSION)
@@ -723,7 +738,6 @@ void MainWindow::onActionFile2ServoClicked()
         delete tree;
         return;
       }
-
     }
     //检查属性表
     PrmCheck check;
@@ -790,7 +804,7 @@ void MainWindow::onActionServo2FileClicked()
     QMessageBox::information(0,tr("Warring"),tr("please open the com first !"));
     return ;
   }
-  stopTimer();
+
   QString fileNameXml;
   QString fileNameDefaultQString =MainWindow::g_lastFilePath+"Prm_"+mp_userConfig->model.version.at(0) +"_"+ QDateTime::currentDateTime().toString("yyyyMMdd");//默认文件名
   fileNameXml = QFileDialog::getSaveFileName(this, tr("Save XML"), fileNameDefaultQString, tr("xml file (*.xml)"));
@@ -803,26 +817,49 @@ void MainWindow::onActionServo2FileClicked()
 
   bool waveIsVisible=false;
   ui->progressBar->show();
-  ui->progressBar->setValue(40);
+  ui->progressBar->setValue(5);
   if(ui->dock_wave->isVisible())
   {
     ui->dock_wave->hide();
     waveIsVisible=true;
   }
+  stopTimer();
+  bool hasXmlNode=false;
+  QTreeWidgetItem *top;
 
-  ServoControl::updateAllFlashTreeWidget(mp_flashAllTreeWidget,(COM_TYPE)mp_userConfig->com.id,mp_userConfig->com.rnStation);
+  ui->progressBar->setValue(10);
+  QString flashFileName;
+  flashFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_FLASHALL+".xml";
+  QTreeWidget  *flashTree=QtTreeManager::createTreeWidgetFromXmlFile(flashFileName);
+
+  QString xmlNodeName=flashTree->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
+  if(xmlNodeName==XMLFILE_NODE_NAME)
+  {
+    hasXmlNode=true;
+    top=flashTree->takeTopLevelItem(0);
+  }
+
+  ServoControl sctl;
+  connect(&sctl,SIGNAL(progressValue(int,int)),this,SLOT(onXmlServoToPrm(int,int)));
+  sctl.updateAllFlashTreeWidget(flashTree,(COM_TYPE)mp_userConfig->com.id,mp_userConfig->com.rnStation);
+
 //  QWidget *mwidget=new QWidget();
 //  QHBoxLayout *hLayout=new QHBoxLayout(mwidget);
 //  hLayout->addWidget(mp_flashAllTreeWidget);
 //  mwidget->show();
-  ui->progressBar->setValue(80);
-//  XmlBuilder::saveFlashAllAxisTreeFile(fileNameXml,mp_flashAllTreeWidget);
-  QtTreeManager::writeTreeWidgetToXmlFile(fileNameXml,mp_flashAllTreeWidget);
+
+  if(hasXmlNode)
+    flashTree->insertTopLevelItem(0,top);
+
+  QtTreeManager::writeTreeWidgetToXmlFile(fileNameXml,flashTree);
+
   ui->progressBar->setValue(100);
   ui->progressBar->hide();
   if(waveIsVisible)
     ui->dock_wave->show();
   startTimer();
+  flashTree->clear();
+  delete flashTree;
 }
 
 //void MainWindow::onActionAxisCloneClicked()
@@ -1636,6 +1673,15 @@ void MainWindow::onXmlPrmToServo(int axis, int value)
     ui->statusBar->showMessage(tr("write xml parameters to servo successfully !"),1000);
 
 }
+void MainWindow::onXmlServoToPrm(int axis,int value)
+{
+  ui->progressBar->setValue(value);
+  ui->statusBar->showMessage(tr("axis:%1   writing servo parameters to xml file....").arg(axis+1));
+  qApp->processEvents();
+  if((axis==(mp_userConfig->model.axisCount-1))&&value>90)
+    ui->statusBar->showMessage(tr("write servo parameters to xml file successfully !"),1000);
+}
+
 void MainWindow::onCheckingProgress(QString &name,int value)
 {
   ui->progressBar->setValue(value);
@@ -2168,12 +2214,12 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
 
   updateStartUpMessage(tr("clear the tree data......"));
   //更新所有轴的树结构
-  if(mp_flashAllTreeWidget!=NULL)
-  {
-    mp_flashAllTreeWidget->clear();
-    delete mp_flashAllTreeWidget;
-    mp_flashAllTreeWidget=NULL;
-  }
+//  if(mp_flashAllTreeWidget!=NULL)
+//  {
+//    mp_flashAllTreeWidget->clear();
+//    delete mp_flashAllTreeWidget;
+//    mp_flashAllTreeWidget=NULL;
+//  }
   if(mp_ramAllTreeWidget!=NULL)
   {
     mp_ramAllTreeWidget->clear();
@@ -2188,13 +2234,13 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
     mp_funcExtension=NULL;
   }
 
-  fileName=QString(FILENAME_FLASHALL)+".xml";
-  updateStartUpMessage(fileName);
-  mp_flashAllTreeWidget=m_xml->readTreeWidgetFromFile(QString(configName+fileName));
+//  fileName=QString(FILENAME_FLASHALL)+".xml";
+//  updateStartUpMessage(fileName);
+//  mp_flashAllTreeWidget=m_xml->readTreeWidgetFromFile(QString(configName+fileName));
 //  qDebug()<<"flash tree update";
   emit updateProgressBar(80);
   DownloadDialog::delayms(20);
-//  m_xml->ramFlashTreeWidgetNormalization(mp_flashAllTreeWidget);
+
   fileName=QString(FILENAME_RAMALL)+".xml";
   updateStartUpMessage(fileName);
   mp_ramAllTreeWidget=m_xml->readTreeWidgetFromFile(QString(configName+fileName));

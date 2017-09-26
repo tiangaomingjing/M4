@@ -16,7 +16,7 @@ public:
   ~ServoControl();
   static bool checkedCmdReturnValue(COM_ERROR retvalue); 
   static void updateFlashTreeWidget(QTreeWidget *tree, int axisIndex, COM_TYPE comtype, short comStation);
-  static void updateAllFlashTreeWidget(QTreeWidget *treeSrc, COM_TYPE comtype, short station);
+  void updateAllFlashTreeWidget(QTreeWidget *treeSrc, COM_TYPE comtype, short station);
   static void updateFlashTreeWidgetByExpanded(QTreeWidgetItem *item, int axisIndex, COM_TYPE comtype, short station);
   static void updateRamTreeWidgetByExpanded(QTreeWidgetItem *item, int axisIndex, const QMap<QString,QVariant>&map,COM_TYPE comtype, short station);
 

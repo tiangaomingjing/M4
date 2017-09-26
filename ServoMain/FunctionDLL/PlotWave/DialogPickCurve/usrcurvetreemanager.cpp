@@ -94,7 +94,9 @@ void UsrCurveTreeManager::removeTreeItem(int index,QTreeWidget *treeWidget)
     int currentId=treeWidget->topLevelItem(index+i)->child(ROW_PRM_INDEX_CURVEID)->text(COL_CURVESETTING_INDEX_VALUE).toInt();
     treeWidget->topLevelItem(index+i)->child(ROW_PRM_INDEX_CURVEID)->setText(COL_CURVESETTING_INDEX_VALUE,QString::number(currentId-1));
   }
-  treeWidget->takeTopLevelItem(index);
+  QTreeWidgetItem *item;
+  item=treeWidget->takeTopLevelItem(index);
+  delete item;
 }
 /**
  * @brief UsrCurveTreeManager::removeTreeCurve

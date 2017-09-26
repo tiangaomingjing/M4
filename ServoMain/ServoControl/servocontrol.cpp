@@ -99,20 +99,26 @@ void ServoControl::updateAllFlashTreeWidget(QTreeWidget *treeSrc, COM_TYPE comty
   QList<QTreeWidget *>treeList;
   QTreeWidget *tree;
   QTreeWidgetItem *treeItem;
-  for(int i=0;i<treeSrc->topLevelItemCount();i++)
+  int count=treeSrc->topLevelItemCount();
+  int inc=100/count;
+  int progress=0;
+  for(int i=0;i<count;i++)
   {
     tree=new QTreeWidget();
     treeItem=treeSrc->topLevelItem(i)->clone();
     tree->addTopLevelItem(treeItem);
     updateFlashTreeWidget(tree, i, comtype,station);
     treeList.append(tree);
+    progress+=inc;
+    emit progressValue(i,progress);
   }
   treeSrc->clear();
   for(int i=0;i<treeList.count();i++)
   {
-    treeItem=treeList.at(i)->topLevelItem(0)->clone();
+    tree=treeList.at(i);
+    treeItem=tree->topLevelItem(0)->clone();
     treeSrc->addTopLevelItem(treeItem);
-    treeList.at(i)->clear();
+    tree->clear();
   }
   treeList.clear();
 }
