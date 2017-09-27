@@ -111,7 +111,9 @@ SOURCES += main.cpp\
     FpgaDialogSetting/fpgadialogsettingrnnet.cpp \
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp \
     MotorSqlModel/motorsqlmodel.cpp \
-    PrmCheck/prmcheck.cpp
+    PrmCheck/prmcheck.cpp \
+    UserRole/userrole.cpp \
+    UserRole/logindialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -142,7 +144,9 @@ HEADERS  += mainwindow.h \
     FpgaDialogSetting/highlighttext.h \
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h \
     MotorSqlModel/motorsqlmodel.h \
-    PrmCheck/prmcheck.h
+    PrmCheck/prmcheck.h \
+    UserRole/userrole.h \
+    UserRole/logindialog.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \
@@ -154,10 +158,12 @@ FORMS    += mainwindow.ui \
     NormalizeTree/normalizetreeform.ui \
     FpgaDialogSetting/fpgadialogsetting.ui \
     Uboot/ubootdialog.ui \
-    FpgaDialogSetting/fpgadialogsettingrnnet.ui
+    FpgaDialogSetting/fpgadialogsettingrnnet.ui \
+    UserRole/logindialog.ui
 
 RESOURCES += \
-    image.qrc
+    image.qrc \
+    UserRole/res.qrc
 RC_ICONS +=AppIco.ico
 
 TRANSLATIONS +=app_main_simplchinese.ts

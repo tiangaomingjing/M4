@@ -31,6 +31,7 @@ class ConnectDataBase;
 class FpgaDialogSettingRnNet;
 class AbstractFuncWidget;
 class MotorSqlModel;
+class UserRole;
 
 class MainWindow : public QMainWindow
 {
@@ -104,6 +105,8 @@ private slots:
   //help
   void onActionAboutConfigClicked();
   void onActionAboutSDTClicked();
+  //preference
+  void onActionUserLoginClicked();
   //-----------新建配置--------------
   void onNewConfigurationActived(UserConfig *config);//槽连接到新建窗口发射的信号,响应新建配置
 
@@ -128,6 +131,8 @@ private slots:
   void onXmlPrmToServo(int axis,int value);
   void onXmlServoToPrm(int axis,int value);
   void onCheckingProgress(QString &name, int value);
+
+  void onUserRoleChanged(void);
 
 protected:
   void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
@@ -158,7 +163,7 @@ private:
   bool MessageBoxAsk(QString &msg);
   void setWidgetStyleSheet(void);
   QString minorVersion();
-
+  void readSettings();
 
 private:
   Ui::MainWindow *ui;
@@ -202,6 +207,8 @@ private:
   //--------help action------
   QAction *m_actAboutConfig;
   QAction *m_actAboutSDT;
+  //------configuration action-------
+  QAction *m_actUserLogin;
 
   //--------菜单--------------
   QMenu *m_menuConfig;
@@ -209,6 +216,7 @@ private:
   QMenu *m_menuView;
   QMenu *m_menuTool;
   QMenu *m_menuHelp;
+  QMenu *m_menuPreference;
   //--------toolbar-----------
   QToolBar *m_toolBarView;
   QToolBar *m_toolBarTool;
@@ -246,5 +254,6 @@ private:
   QMap<QString,QVariant> m_moduleShareData;//多个dll模块中的共享数据
   MotorSqlModel *m_motorSqlModel;
 
+  UserRole *m_userRole;
 };
 #endif // MAINWINDOW_H

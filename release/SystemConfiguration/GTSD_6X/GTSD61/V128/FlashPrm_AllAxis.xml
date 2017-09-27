@@ -38,6 +38,34 @@
      </column>
      <item>
       <property name="text">
+       <string>XmlFileInformation</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>XmlVersion</string>
+       </property>
+       <property name="text">
+        <string>128</string>
+       </property>
+       <property name="text">
+        <string>Uint16</string>
+       </property>
+       <property name="text">
+        <string>-1</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
        <string>SevDrvRoot0</string>
       </property>
       <property name="text">

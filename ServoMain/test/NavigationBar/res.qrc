@@ -6,6 +6,12 @@
         <file>Lock_Unlocked.png</file>
         <file>checkbox_checked_hover.png</file>
         <file>checkbox_unchecked_hover.png</file>
+        <file>user_admin_checked.png</file>
+        <file>user_admin_hover.png</file>
+        <file>user_admin_unchecked.png</file>
+        <file>user_general_checked.png</file>
+        <file>user_general_hover.png</file>
+        <file>user_general_unchecked.png</file>
     </qresource>
     <qresource prefix="/css">
         <file>style_1.css</file>

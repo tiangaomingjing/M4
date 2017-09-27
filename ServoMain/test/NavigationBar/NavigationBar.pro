@@ -16,13 +16,18 @@ TEMPLATE = app
 SOURCES += main.cpp\
         navmainwindow.cpp \
     myhelp.cpp \
-    lockcheckbox.cpp
+    lockcheckbox.cpp \
+    logindialog.cpp \
+    userrole.cpp
 
 HEADERS  += navmainwindow.h \
     myhelp.h \
-    lockcheckbox.h
+    lockcheckbox.h \
+    logindialog.h \
+    userrole.h
 
-FORMS    += navmainwindow.ui
+FORMS    += navmainwindow.ui \
+    logindialog.ui
 
 RESOURCES += \
     res.qrc

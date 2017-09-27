@@ -386,7 +386,7 @@
              <item>
               <widget class="QToolBox" name="toolBox">
                <property name="currentIndex">
-                <number>1</number>
+                <number>3</number>
                </property>
                <property name="tabSpacing">
                 <number>0</number>
@@ -397,7 +397,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>222</height>
+                  <height>164</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -452,7 +452,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>222</height>
+                  <height>164</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -506,7 +506,7 @@ QCheckBox::indicator:checked {
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>222</height>
+                  <height>164</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -650,7 +650,7 @@ QCheckBox::indicator:checked {
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>222</height>
+                  <height>164</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -665,6 +665,20 @@ QCheckBox::indicator:checked {
                  </item>
                 </layout>
                </widget>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>get</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_4">
+               <property name="text">
+                <string>set</string>
+               </property>
               </widget>
              </item>
             </layout>

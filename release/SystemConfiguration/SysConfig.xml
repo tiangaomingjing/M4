@@ -56,6 +56,7 @@
     <Model name="GTSD61" axisCount ="6">
 		<FirmWare name="V123"/>
 		<FirmWare name="V127"/>
+		<FirmWare name="V128"/>
 	</Model>
     <Tree>
       <Root name="参数配置">

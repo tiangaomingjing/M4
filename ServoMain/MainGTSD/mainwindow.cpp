@@ -29,6 +29,8 @@
 #include "../FunctionDLL/ServoGeneralCmd/servogeneralcmd.h"
 #include "moduleionew.h"
 #include "PrmCheck/prmcheck.h"
+#include "UserRole/userrole.h"
+#include "UserRole/logindialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -102,9 +104,11 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_fpgaDialogSetting(NULL),
   m_fpgaDialogSettingRnNet(NULL),
   m_quickView(NULL),
-  m_userConfigProxyQml(NULL)
+  m_userConfigProxyQml(NULL),
+  m_userRole(new UserRole(UserRole::USER_GENERAL,parent))
 {
   ui->setupUi(this);
+  qRegisterMetaType<UserRole::UserRoleType>("UserRoleType");//信号与槽发送自己定义的数据
   m_moduleShareData.clear();
   ui->dock_navigation->setMinimumSize(50,120);
   ui->progressBar->hide();
@@ -153,6 +157,9 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   ui->btn_navigation->setVisible(false);
   m_actFullScreen->setVisible(false);
   setWidgetStyleSheet();
+
+  connect(m_userRole,SIGNAL(userTypeChanged(UserRole::UserRoleType&)),this,SLOT(onUserRoleChanged()));
+  readSettings();
 }
 
 MainWindow::~MainWindow()
@@ -728,17 +735,17 @@ void MainWindow::onActionFile2ServoClicked()
       delete tree;
       return;
     }
-    else if(dspVersion<xmlVersion)
-    {
-      QString msg=tr("current dsp version_%1 is not equal to xml version_%2\ndo you still want to continue to download file to servo?").arg(dspVersion).arg(xmlVersion);
-      bool ret=MessageBoxAsk(msg);
-      if(ret==false)
-      {
-        tree->clear();
-        delete tree;
-        return;
-      }
-    }
+//    else if(dspVersion<xmlVersion)
+//    {
+//      QString msg=tr("current dsp version_%1 is not equal to xml version_%2\ndo you still want to continue to download file to servo?").arg(dspVersion).arg(xmlVersion);
+//      bool ret=MessageBoxAsk(msg);
+//      if(ret==false)
+//      {
+//        tree->clear();
+//        delete tree;
+//        return;
+//      }
+//    }
     //检查属性表
     PrmCheck check;
 
@@ -1295,6 +1302,16 @@ void MainWindow::onActionRestoreFactorySettingClicked()
           QTreeWidget *treePrm=XmlBuilder::readTreeWidgetFromFile(xmlPath);
           DownloadDialog::delayms(20);
           ui->progressBar->setValue(50);
+
+          QString xmlNodeName=treePrm->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
+          QTreeWidgetItem *versionNodeItem;
+          if(xmlNodeName==XMLFILE_NODE_NAME)
+          {
+            versionNodeItem=treePrm->takeTopLevelItem(XMLFILE_ROW_INDEX);
+            delete versionNodeItem;
+            qDebug()<<"tree toplevel count="<<treePrm->topLevelItemCount();
+//            treePrm->show();
+          }
           scontrol.writeServoFlashByAllAxisTree(treePrm,(COM_TYPE)netId,netRnStation);
 //          ServoControl::writeServoFlashByAllAxisTree(treePrm,(COM_TYPE)netId,netRnStation);
           qDebug()<<"write file to servo complete";
@@ -1436,6 +1453,15 @@ void MainWindow::onActionAboutSDTClicked()
   mess.setText(info);
   mess.setIconPixmap(QPixmap(ICON_FILE_PATH+ICON_SDT_LOGO));
   mess.exec();
+}
+void MainWindow::onActionUserLoginClicked()
+{
+//  static bool checked=false;
+//  checked=!checked;
+//  ui->treeWidget->topLevelItem(2)->setHidden(checked);
+  LoginDialog dialog(m_userRole);
+  qDebug()<<dialog.exec();
+  qDebug()<<"preference ";
 }
 
 void MainWindow::onNewConfigurationActived(UserConfig *config)
@@ -1670,7 +1696,7 @@ void MainWindow::onXmlPrmToServo(int axis, int value)
     qApp->processEvents();
   }
   if((axis==(mp_userConfig->model.axisCount-1))&&value>90)
-    ui->statusBar->showMessage(tr("write xml parameters to servo successfully !"),1000);
+    ui->statusBar->showMessage(tr("write xml parameters to servo successfully !"),2000);
 
 }
 void MainWindow::onXmlServoToPrm(int axis,int value)
@@ -1679,7 +1705,7 @@ void MainWindow::onXmlServoToPrm(int axis,int value)
   ui->statusBar->showMessage(tr("axis:%1   writing servo parameters to xml file....").arg(axis+1));
   qApp->processEvents();
   if((axis==(mp_userConfig->model.axisCount-1))&&value>90)
-    ui->statusBar->showMessage(tr("write servo parameters to xml file successfully !"),1000);
+    ui->statusBar->showMessage(tr("write servo parameters to xml file successfully !"),2000);
 }
 
 void MainWindow::onCheckingProgress(QString &name,int value)
@@ -1693,6 +1719,19 @@ void MainWindow::onCheckingProgress(QString &name,int value)
 //    ui->statusBar->showMessage(tr("checking parameters :%1").arg(name));
 //    qApp->processEvents();
 //  }
+}
+
+void MainWindow::onUserRoleChanged()
+{
+  switch(m_userRole->userType())
+  {
+  case UserRole::USER_GENERAL:
+    ui->treeWidget->topLevelItem(2)->setHidden(true);
+    break;
+  case UserRole::USER_ADMIN:
+    ui->treeWidget->topLevelItem(2)->setHidden(false);
+    break;
+  }
 }
 
 //-------------protected function-------------------------
@@ -1748,6 +1787,9 @@ void MainWindow::createMenus(void)
   menuDsp->addAction(m_actProgramUpdate);
   menuDsp->addAction(m_actResetServo);
   menuDsp->addAction(m_actRestoreFactorySetting);
+  //-------------Preference----------------------------
+  m_menuPreference=menuBar()->addMenu(tr("Preference"));
+  m_menuPreference->addAction(m_actUserLogin);
   //--------------help menu-------------------
   m_menuHelp=menuBar()->addMenu(tr("Help(&H)"));
   m_menuHelp->addAction(m_actAboutConfig);
@@ -1923,6 +1965,12 @@ void MainWindow::createActions(void)
   m_actAboutSDT->setToolTip(tr("About SDT version"));
   m_actAboutSDT->setStatusTip(tr("About SDT version"));
   connect(m_actAboutSDT,SIGNAL(triggered(bool)),this,SLOT(onActionAboutSDTClicked()));
+
+  m_actUserLogin=new QAction(this);
+  m_actUserLogin->setText(tr("Preference"));
+  m_actUserLogin->setToolTip(tr("Preference setting"));
+  m_actUserLogin->setStatusTip(tr("Preference setting"));
+  connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
 }
 
 void MainWindow::createToolBars(void)
@@ -2332,6 +2380,8 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   DownloadDialog::delayms(20);
   ui->progressBar->hide();
   updateStartUpMessage(tr(">>finish update"));
+
+  ui->treeWidget->topLevelItem(2)->setHidden(true);
 }
 
 void MainWindow::createHistoryAction()
@@ -2459,11 +2509,13 @@ void MainWindow::updateProgessBarWhenRestoreClicked(void *arg, qint16 *value)
   QProgressBar *bar=static_cast<QProgressBar *>(arg);
   m_progessValue=(100/m_dspNum)*m_step+(*value)/m_dspNum;
   bar->setValue(m_progessValue);
+  qApp->processEvents();
 }
 void MainWindow::updateProgessBarWhenConnectClicked(void *arg, qint16 *value)
 {
   QProgressBar *bar=static_cast<QProgressBar *>(arg);
   bar->setValue(*value);
+  qApp->processEvents();
   qDebug()<<"value "<<*value;
 }
 bool MainWindow::openNetCom()
@@ -2542,4 +2594,18 @@ QString MainWindow::minorVersion()
   if(minV=="-1")
     minV=" ";
   return minV;
+}
+void MainWindow::readSettings()
+{
+  QSettings settings(QApplication::applicationDirPath()+"/start.ini",
+                     QSettings::IniFormat);
+
+  settings.beginGroup("UserRole");
+  UserRole::UserRoleType type;
+
+  type=(UserRole::UserRoleType)settings.value("userType",0).toInt();
+
+  m_userRole->setUserType(type);
+  settings.endGroup();
+  qDebug()<<"read type="<<type;
 }
