@@ -2,6 +2,7 @@
 #define NAVMAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStateMachine>
 
 namespace Ui {
 class NavMainWindow;
@@ -21,11 +22,18 @@ private slots:
 
   void on_pushButton_4_clicked();
 
+  void on_btnStateMachine_clicked();
+
 private:
   void writeSettings();
   void readSettings();
   Ui::NavMainWindow *ui;
   UserRole *m_userRole;
+
+  QStateMachine machine;
+  QState *s1 ;
+  QState *s2 ;
+  QState *s3 ;
 };
 
 #endif // NAVMAINWINDOW_H

@@ -693,6 +693,7 @@ void MainWindow::onActionFile2ServoClicked()
   qDebug()<<"dsp version="<<dspVersion;
   QString xmlNodeName=tree->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
   quint16 xmlVersion;
+  //先拿掉xml记录头
   if(xmlNodeName==XMLFILE_NODE_NAME)
   {
     QTreeWidgetItem *versionNodeItem;
@@ -715,7 +716,7 @@ void MainWindow::onActionFile2ServoClicked()
     }
   }
 
-  if(dspVersion>=SPLIT_VERSION)
+  if((dspVersion>=SPLIT_VERSION)&&(m_userRole->userType()==UserRole::USER_GENERAL))
   {
     //按128之后处理
     //判断第一个节点是否有xmlversion记录(128之后才有)
@@ -1967,9 +1968,9 @@ void MainWindow::createActions(void)
   connect(m_actAboutSDT,SIGNAL(triggered(bool)),this,SLOT(onActionAboutSDTClicked()));
 
   m_actUserLogin=new QAction(this);
-  m_actUserLogin->setText(tr("Preference"));
-  m_actUserLogin->setToolTip(tr("Preference setting"));
-  m_actUserLogin->setStatusTip(tr("Preference setting"));
+  m_actUserLogin->setText(tr("UserRole"));
+  m_actUserLogin->setToolTip(tr("UserRole setting"));
+  m_actUserLogin->setStatusTip(tr("UserRole setting"));
   connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
 }
 
@@ -2005,7 +2006,6 @@ void MainWindow::createToolBars(void)
   m_toolBarTool->addSeparator();
   m_toolBarTool->addAction(m_actFuncConfig);
   m_toolBarTool->addAction(m_actFuncSave);
-
 }
 
 void MainWindow::createConnections()

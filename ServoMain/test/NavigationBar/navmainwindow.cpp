@@ -16,9 +16,23 @@ NavMainWindow::NavMainWindow(QWidget *parent) :
   ui->treeWidget->topLevelItem(0)->setExpanded(true);
   ui->treeWidget->topLevelItem(0)->child(0)->setSelected(true);
   readSettings();
-  LoginDialog *dialog;
-  dialog=new LoginDialog;
-  dialog->show();
+//  LoginDialog *dialog;
+//  dialog=new LoginDialog;
+//  dialog->show();
+  s1 = new QState();
+  s2 = new QState();
+  s3 = new QState();
+  s1->addTransition(ui->btnStateMachine, SIGNAL(clicked()), s2);
+  s2->addTransition(ui->btnStateMachine, SIGNAL(clicked()), s3);
+  s3->addTransition(ui->btnStateMachine, SIGNAL(clicked()), s1);
+  machine.addState(s1);
+  machine.addState(s2);
+  machine.addState(s3);
+  machine.setInitialState(s1);
+  s1->assignProperty(ui->label, "text", "In state s1");
+  s2->assignProperty(ui->label, "text", "In state s2");
+  s3->assignProperty(ui->label, "text", "In state s3");
+  machine.start();
 }
 
 NavMainWindow::~NavMainWindow()
@@ -74,4 +88,9 @@ void NavMainWindow::on_pushButton_4_clicked()
       m_userRole->setUserType(UserRole::USER_GENERAL);
     else
       m_userRole->setUserType(UserRole::USER_ADMIN);
+}
+
+void NavMainWindow::on_btnStateMachine_clicked()
+{
+
 }

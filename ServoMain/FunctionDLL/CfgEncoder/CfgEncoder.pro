@@ -85,4 +85,11 @@ DISTFILES += \
     V127/components/CfgEncoder/ToolBox/IncrementalEncoder.qml \
     V127/components/CfgEncoder/ToolBox/NoneEncoder.qml \
     V127/components/CfgEncoder/ToolBox/ToolBox.qml \
-    V127/components/CfgEncoder/ToolBox/ToolItem.qml
+    V127/components/CfgEncoder/ToolBox/ToolItem.qml \
+    V128/CfgEncoder.qml \
+    V128/components/CfgEncoder/EncoderItem/AbstractEncoderItem.qml \
+    V128/components/CfgEncoder/EncoderItem/DuoMoEncoderItem.qml \
+    V128/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
+    V128/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
+    V128/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
+    V128/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml

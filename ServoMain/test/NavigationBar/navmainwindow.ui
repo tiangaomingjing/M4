@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>496</width>
-    <height>415</height>
+    <width>599</width>
+    <height>401</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>NavMainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
      <widget class="QSplitter" name="splitter">
       <property name="frameShape">
@@ -375,7 +375,7 @@
           <x>0</x>
           <y>0</y>
           <width>298</width>
-          <height>338</height>
+          <height>324</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -397,7 +397,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>164</height>
+                  <height>150</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -452,7 +452,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>164</height>
+                  <height>150</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -506,7 +506,7 @@ QCheckBox::indicator:checked {
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>164</height>
+                  <height>150</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -650,7 +650,7 @@ QCheckBox::indicator:checked {
                   <x>0</x>
                   <y>0</y>
                   <width>262</width>
-                  <height>164</height>
+                  <height>150</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -689,6 +689,44 @@ QCheckBox::indicator:checked {
         </layout>
        </widget>
       </widget>
+      <widget class="QWidget" name="widget_3" native="true">
+       <property name="minimumSize">
+        <size>
+         <width>200</width>
+         <height>0</height>
+        </size>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStateMachine">
+          <property name="text">
+           <string>stateMachine</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -698,7 +736,7 @@ QCheckBox::indicator:checked {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>496</width>
+     <width>599</width>
      <height>23</height>
     </rect>
    </property>
