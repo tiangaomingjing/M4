@@ -24,6 +24,26 @@ bool CfgMotor::getComConnectSatus()
 {
   return mp_mainWindow->getComOpenState();
 }
+bool CfgMotor::checkPrm()
+{
+  if(m_uiTree!=NULL)
+  {
+    QTreeWidgetItem *item;
+    QString name;
+    double value;
+    double kgain;
+    bool ok=true;
+    for(int i=0;i<m_uiTree->topLevelItemCount();i++)
+    {
+      item=m_uiTree->topLevelItem(i);
+      name=item->text(COL_NAME);
+      kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
+      value=kgain*item->text(COL_VALUE).toDouble();
+    }
+  }
+  return true;
+}
+
 void CfgMotor::updateUiWhenNavigationTreeClicked()
 {
   onActionReadFuncValueFromFlash();

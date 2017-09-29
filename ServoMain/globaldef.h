@@ -126,6 +126,7 @@ namespace GlobalFunction
   void delayms(quint16 ms);
   QString exeFilePath(void);
   QString binFilePath(void);
+  double cmdKgain(QString &cmdName,QTreeWidget *cmdTree);
 }
 
 #endif // GLOBALDEF

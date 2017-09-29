@@ -105,7 +105,8 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_fpgaDialogSettingRnNet(NULL),
   m_quickView(NULL),
   m_userConfigProxyQml(NULL),
-  m_userRole(new UserRole(UserRole::USER_GENERAL,parent))
+  m_userRole(new UserRole(UserRole::USER_GENERAL,parent)),
+  m_gPtyLimitTree(NULL)
 {
   ui->setupUi(this);
   qRegisterMetaType<UserRole::UserRoleType>("UserRoleType");//信号与槽发送自己定义的数据
@@ -217,6 +218,11 @@ MainWindow::~MainWindow()
     mp_functionCmdTreeWidget->clear();
     delete mp_functionCmdTreeWidget;
     mp_functionCmdTreeWidget=NULL;
+  }
+  if(m_gPtyLimitTree!=NULL)
+  {
+    m_gPtyLimitTree->clear();
+    delete m_gPtyLimitTree;
   }
   qDebug()<<"manwidow release ->";
   delete ui;
@@ -2111,7 +2117,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   emit updateProgressBar(10);
 
   //初始化combobox
-  QString strmodel=theconfig->model.modelName;
+//  QString strmodel=theconfig->model.modelName;
   for(int i=0;i<axisCount;i++)
   {
     ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i+1));
@@ -2320,27 +2326,23 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   value=treeExtensionItemChild->text(COL_FUNC_EXTENSION_PARAMETER).toInt();
   m_moduleShareData.insert(key,value);
 
-//  for(int i=0;i<mp_funcExtension->topLevelItemCount();i++)
-//  {
-//    treeExtensionItem=mp_funcExtension->topLevelItem(i);
-//    if(treeExtensionItem->text(COL_FUNC_EXTENSION_NAME).contains(EXTENSION_ADVCONTROLPRM))
-//    {
-//      for(int j=0;j<treeExtensionItem->childCount();j++)
-//      {
-//        treeExtensionItemChild=treeExtensionItem->child(j);
-//        int value=treeExtensionItemChild->text(COL_FUNC_EXTENSION_PARAMETER).toInt();
-//        if(treeExtensionItemChild->text(COL_FUNC_EXTENSION_NAME).contains(EXTENSION_ADVCONTROLPRM_GSERVDRV))
-//        {
-//          m_moduleShareData.insert(EXTENSION_ADVCONTROLPRM_GSERVDRV,value);
-//        }
-//        else if(treeExtensionItemChild->text(COL_FUNC_EXTENSION_NAME).contains(EXTENSION_ADVCONTROLPRM_GAUXFUNC))
-//        {
-//          m_moduleShareData.insert(EXTENSION_ADVCONTROLPRM_GAUXFUNC,value);
-//        }
-//      }
-//      break;
-//    }
-//  }
+  //V128之后增加全局属性表
+  if(m_gPtyLimitTree!=NULL)
+  {
+    m_gPtyLimitTree->clear();
+    delete m_gPtyLimitTree;
+    m_gPtyLimitTree=NULL;
+  }
+
+  if(version.toInt()>=128)
+  {
+    qDebug()<<"curent version "<<theconfig->model.version.at(0);
+    QString limitFileName;
+    limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
+    m_gPtyLimitTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
+//    m_gPtyLimitTree->show();
+  }
+
 #if TEST_DEBUG
   QMapIterator<QString ,QVariant> imap(m_moduleShareData);
   while(imap.hasNext()){
@@ -2348,18 +2350,6 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
     qDebug()<<tr("Key:%1 Value:%2").arg(imap.key()).arg(imap.value().toInt());
   }
 #endif
-
-//  qDebug()<<"mp_funcExtension  update";
-//  m_xml->ramFlashTreeWidgetNormalization(mp_ramAllTreeWidget);
-//  QWidget *mwidget=new QWidget();
-//  QHBoxLayout *hLayout=new QHBoxLayout(mwidget);
-//  hLayout->addWidget(mp_functionCmdTreeWidget);
-//  mwidget->show();
-//  QWidget *mwidget2=new QWidget();
-//  QHBoxLayout *hLayout2=new QHBoxLayout(mwidget2);
-//  hLayout2->addWidget(mp_ramAllTreeWidget);
-//  mwidget2->show();
-
 
   //因为RnNet与PcDebug的FPGA不一样，所以要从新更新
   if(m_fpgaDialogSetting!=NULL)

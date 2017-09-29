@@ -20,6 +20,7 @@ public:
   bool isWrite2Flash()Q_DECL_OVERRIDE {return true;}
   //use in qml
   Q_INVOKABLE bool getComConnectSatus();
+  Q_INVOKABLE bool checkPrm();
 public slots:
   void updateUiWhenNavigationTreeClicked()Q_DECL_OVERRIDE;
   void onWriteFuncTreetoServoFlash(void)Q_DECL_OVERRIDE;//与其它的不一样，因为保存到Flash时还要根据Imax额外保存gSevDrv.sev_obj.cur.adc.prm.kia,kib,kic信息

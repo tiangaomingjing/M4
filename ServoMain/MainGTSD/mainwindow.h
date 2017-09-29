@@ -46,6 +46,7 @@ public:
   QTreeWidget *getRamAllAxisTree(void){return mp_ramAllTreeWidget;}
   QTreeWidget *getFunctionCmdTree(void){return mp_functionCmdTreeWidget;}
   QTreeWidget *getFunctionExtensionTree(void){return mp_funcExtension;}
+  QTreeWidget *getPtyLimitTree(){return m_gPtyLimitTree;}
   MotorSqlModel *getMotorSqlModel(void){return m_motorSqlModel;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
@@ -255,5 +256,7 @@ private:
   MotorSqlModel *m_motorSqlModel;
 
   UserRole *m_userRole;
+
+  QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
 };
 #endif // MAINWINDOW_H

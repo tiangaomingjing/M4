@@ -1,4 +1,8 @@
 ﻿#include "globaldef.h"
+#include <QTreeWidget>
+#include <QTreeWidgetItemIterator>
+#define COL_CMD_NAME 0
+#define COL_CMD_KGAIN 7
 namespace GlobalFunction{
 
 int getBytesNumber(QString &str)
@@ -44,6 +48,23 @@ QString binFilePath()
   dir.cdUp();
   path=dir.absolutePath()+"/";
   return path;
+}
+double cmdKgain(QString &cmdName,QTreeWidget *cmdTree)
+{
+  double ret=1;
+  QTreeWidgetItemIterator it(cmdTree);
+  QTreeWidgetItem *item;
+  while (*it)
+  {
+    item=(*it);
+    if(item->text(COL_CMD_NAME)==cmdName)
+    {
+      ret=item->text(COL_CMD_KGAIN).toDouble();
+      break;
+    }
+    it++;
+  }
+  return ret;
 }
 
 }
