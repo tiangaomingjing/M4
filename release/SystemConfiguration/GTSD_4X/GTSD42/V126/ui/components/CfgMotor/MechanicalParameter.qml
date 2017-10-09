@@ -27,7 +27,7 @@ Rectangle
         }
         RowLayout{
             spacing: 10;
-            Text{text:"转动惯量(10^-6.kg.m^2)"}
+            Text{text:"电机转动惯量(10^-6.kg.m^2)"}
             TextField{
                 id:jm_1;
                 text:"0";

@@ -699,7 +699,7 @@ void MainWindow::onActionFile2ServoClicked()
   qDebug()<<"dsp version="<<dspVersion;
   QString xmlNodeName=tree->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
   quint16 xmlVersion;
-  //先拿掉xml记录头
+  //如果能检查到有xml的记录，说明是128之后的版本，先拿掉xml记录头
   if(xmlNodeName==XMLFILE_NODE_NAME)
   {
     QTreeWidgetItem *versionNodeItem;
