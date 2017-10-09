@@ -722,7 +722,7 @@ void MainWindow::onActionFile2ServoClicked()
     }
   }
 
-  if((dspVersion>=SPLIT_VERSION)&&(m_userRole->userType()==UserRole::USER_GENERAL))
+  if((dspVersion>=SPLIT_VERSION))
   {
     //按128之后处理
     //判断第一个节点是否有xmlversion记录(128之后才有)
@@ -753,44 +753,46 @@ void MainWindow::onActionFile2ServoClicked()
 //        return;
 //      }
 //    }
-    //检查属性表
-    PrmCheck check;
-
-    bool ptyValid;
-    bool hardwareValid;
-    QMap<QString,double> valueMap;
-    QString limitFileName;
-    limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
-    QTreeWidget  *ptyTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
-    if(ptyTree==NULL)
+    if((m_userRole->userType()==UserRole::USER_GENERAL))
     {
-      QMessageBox::information(0,tr("Warring"),tr("can not load ptryTree!"));
-      tree->clear();
-      delete tree;
-      return;
-    }
-    ui->progressBar->show();
-    connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
-    ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
-    ptyTree->clear();
-    delete ptyTree;
-    if(ptyValid==false)
-    {
-      tree->clear();
-      delete tree;
-      ui->progressBar->hide();
-      return;
-    }
+      //检查属性表
+      PrmCheck check;
 
-    hardwareValid=check.checkHardwareValid(NULL,valueMap);
-    if(hardwareValid==false)
-    {
-      tree->clear();
-      delete tree;
-      ui->progressBar->hide();
-      return;
-    }
+      bool ptyValid;
+      bool hardwareValid;
+      QMap<QString,double> valueMap;
+      QString limitFileName;
+      limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
+      QTreeWidget  *ptyTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
+      if(ptyTree==NULL)
+      {
+        QMessageBox::information(0,tr("Warring"),tr("can not load ptryTree!"));
+        tree->clear();
+        delete tree;
+        return;
+      }
+      ui->progressBar->show();
+      connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
+      ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
+      ptyTree->clear();
+      delete ptyTree;
+      if(ptyValid==false)
+      {
+        tree->clear();
+        delete tree;
+        ui->progressBar->hide();
+        return;
+      }
 
+      hardwareValid=check.checkHardwareValid(NULL,valueMap);
+      if(hardwareValid==false)
+      {
+        tree->clear();
+        delete tree;
+        ui->progressBar->hide();
+        return;
+      }
+    }
   }
 
   ui->progressBar->show();
