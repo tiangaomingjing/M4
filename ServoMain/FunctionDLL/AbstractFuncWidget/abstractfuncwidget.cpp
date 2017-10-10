@@ -16,6 +16,7 @@
 #include "MainGTSD/mainwindow.h"
 #include "ServoDriverComDll.h"
 #include "QmlFactory/qmlregisterincludes.h"
+#include "userrole.h"
 
 #define OFFSETADDRESS  "offsetAddress"
 
@@ -181,6 +182,13 @@ void AbstractFuncWidget::setActionReadFuncValueFromFlashEnable()
 void AbstractFuncWidget::createUiByQml()
 {
 
+}
+bool AbstractFuncWidget::prmNeedChecked()
+{
+  bool checked=mp_mainWindow->prmNeedChecked();
+  bool isGeneralUser=(mp_mainWindow->getUserRole()->userType()==UserRole::USER_GENERAL)?true:false;
+  qDebug()<<"checked="<<checked<<"isGeneralUser="<<isGeneralUser;
+  return checked&&isGeneralUser;
 }
 
 //!-------------------------------private function---------------------------------

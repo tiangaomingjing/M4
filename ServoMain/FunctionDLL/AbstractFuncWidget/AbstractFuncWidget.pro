@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 include($$PWD/../FuncCommon.pri)
+INCLUDEPATH+=../../MainGTSD/UserRole
 
 QT       += core widgets xml designer qml
 
@@ -35,7 +36,8 @@ SOURCES += abstractfuncwidget.cpp \
     QmlFactory/qformlayoutproxy.cpp \
     QmlFactory/qspaceritemproxy.cpp \
     QmlFactory/DeviceStatus/treedatadevicestatus.cpp \
-    QmlFactory/qtreewidgetproxy.cpp
+    QmlFactory/qtreewidgetproxy.cpp \
+    ../../MainGTSD/UserRole/userrole.cpp
 
 HEADERS += abstractfuncwidget.h\
         abstractfuncwidget_global.h \
@@ -52,7 +54,8 @@ HEADERS += abstractfuncwidget.h\
     QmlFactory/qformlayoutproxy.h \
     QmlFactory/qspaceritemproxy.h \
     QmlFactory/DeviceStatus/treedatadevicestatus.h \
-    QmlFactory/qtreewidgetproxy.h
+    QmlFactory/qtreewidgetproxy.h \
+    ../../MainGTSD/UserRole/userrole.h
 
 unix {
     target.path = /usr/lib

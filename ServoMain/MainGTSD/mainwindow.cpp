@@ -106,7 +106,8 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_quickView(NULL),
   m_userConfigProxyQml(NULL),
   m_userRole(new UserRole(UserRole::USER_GENERAL,parent)),
-  m_gPtyLimitTree(NULL)
+  m_gPtyLimitTree(NULL),
+  m_versionBiger127(false)
 {
   ui->setupUi(this);
   qRegisterMetaType<UserRole::UserRoleType>("UserRoleType");//信号与槽发送自己定义的数据
@@ -510,6 +511,7 @@ void MainWindow::onActionConnectClicked()
         return ;
       }
     }
+    m_versionBiger127=version>=128?true:false;
     //更新每一个页面的参数
     if(m_isOpenCom)
     {
@@ -614,6 +616,7 @@ void MainWindow::onActionDisConnectClicked()
   m_actConfigSave->setEnabled(true);
   m_actConfigSaveAs->setEnabled(true);
   m_menuConfigRecent->setEnabled(true);
+  m_versionBiger127=false;
 }
 void MainWindow::onActionViewNavigation(void)
 {
@@ -2601,3 +2604,8 @@ void MainWindow::readSettings()
   settings.endGroup();
   qDebug()<<"read type="<<type;
 }
+
+//bool MainWindow::prmNeedChecked()
+//{
+//  return (m_versionBiger127&&(m_userRole->userType()==UserRole::USER_GENERAL));
+//}

@@ -48,6 +48,8 @@ public:
   QTreeWidget *getFunctionExtensionTree(void){return mp_funcExtension;}
   QTreeWidget *getPtyLimitTree(){return m_gPtyLimitTree;}
   MotorSqlModel *getMotorSqlModel(void){return m_motorSqlModel;}
+  bool prmNeedChecked(){return m_versionBiger127;}
+  UserRole *getUserRole(){ return m_userRole;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
   bool getComOpenState(void){return m_isOpenCom;}
@@ -258,5 +260,6 @@ private:
   UserRole *m_userRole;
 
   QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
+  bool m_versionBiger127;//比127版本大，用于判断是否要作参数范围检查
 };
 #endif // MAINWINDOW_H

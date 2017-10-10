@@ -34,6 +34,7 @@ private:
   void setActionReadFuncValueFromFlashEnable() Q_DECL_OVERRIDE;
   void createUiByQml()Q_DECL_OVERRIDE;
   void connectionSignalSlotHandler()Q_DECL_OVERRIDE;
+
   typedef struct{
     double gain;
     QString writeFlashName;

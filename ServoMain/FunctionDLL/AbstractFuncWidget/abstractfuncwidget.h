@@ -53,6 +53,7 @@ protected:
   virtual void setActionReadFuncValueFromFlashEnable();
   virtual void connectionSignalSlotHandler(){ }//为了几个不同的功能模块有关不同的信号与槽连接关系
   virtual void createUiByQml();
+  bool prmNeedChecked();
   //抽象接口，子类必须实现
   virtual QTreeWidget* getUiTree(void)=0;
   virtual QStackedWidget *getUiStackedWidget(void)=0;

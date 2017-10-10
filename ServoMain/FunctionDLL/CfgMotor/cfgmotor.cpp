@@ -26,22 +26,37 @@ bool CfgMotor::getComConnectSatus()
 }
 bool CfgMotor::checkPrm()
 {
+  bool ok=true;
   if(m_uiTree!=NULL)
   {
     QTreeWidgetItem *item;
     QString name;
     double value;
     double kgain;
-    bool ok=true;
+    double max;
+    double min;
     for(int i=0;i<m_uiTree->topLevelItemCount();i++)
     {
       item=m_uiTree->topLevelItem(i);
-      name=item->text(COL_NAME);
+      name=item->text(COL_FUNC_NAME);
       kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
-      value=kgain*item->text(COL_VALUE).toDouble();
+      value=kgain*item->text(COL_FUNC_VALUE).toDouble();
+      qDebug()<<"value="<<value;
+      max=item->text(COL_FUNC_UPLIMIT).toDouble();
+      min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
+      //发送消息到qml，还原颜色
+
+      if(!(value>=min&&value<=max))
+      {
+        ok=false;
+        //发送错误消息到qml界面，变红色
+        qDebug()<<"error:"<<name;
+        break;
+      }
+      qDebug()<<name<<"-----OK";
     }
   }
-  return true;
+  return ok;
 }
 
 void CfgMotor::updateUiWhenNavigationTreeClicked()
@@ -50,6 +65,13 @@ void CfgMotor::updateUiWhenNavigationTreeClicked()
 }
 void CfgMotor::onWriteFuncTreetoServoFlash()
 {
+  bool needChecked=prmNeedChecked();
+  qDebug()<<"Need Check="<<needChecked;
+  if(needChecked)
+  {
+    if(false==checkPrm())
+      return;
+  }
   ImaxExtensionPrm imaxPrm;
   ImaxExtensionPrmGain gainInfo;
 
