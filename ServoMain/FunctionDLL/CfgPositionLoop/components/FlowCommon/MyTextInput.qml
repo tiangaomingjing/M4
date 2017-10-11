@@ -11,7 +11,6 @@ Item {
 //    property double upperValue: 5000.0;
 //    property double defaultValue: 3000.0;
 //    property double writeValue: 0;
-    signal editReturnPressed();
     function resetbackground(){
         backgroundRect.state="normal";
         input.color="black";
@@ -43,7 +42,6 @@ Item {
             backgroundRect.state="ready";
             input.color="black";
             tree.setTopLevelText(row,column,input.text);//将数值暂存到树表中
-            editReturnPressed();
         }
         onFocusChanged: {
             if(focus)

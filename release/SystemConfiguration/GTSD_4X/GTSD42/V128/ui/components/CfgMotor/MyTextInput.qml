@@ -1,19 +1,28 @@
 ﻿import QtQuick 2.0
 Item {
     id: root;
-    height:30;
+    height:24;
     width: 100;
     property alias text: input.text;
     property var tree: null;
     property int row: 0;
     property int column:0;
-    property double lowerValue: 0.0;
-    property double upperValue: 5000.0;
-    property double defaultValue: 3000.0;
-    property double writeValue: 0;
+//    property double lowerValue: 0.0;
+//    property double upperValue: 5000.0;
+//    property double defaultValue: 3000.0;
+//    property double writeValue: 0;
+    signal editReturnPressed();
     function resetbackground(){
         backgroundRect.state="normal";
         input.color="black";
+    }
+    function setErrorState(){
+        backgroundRect.state="error";
+    }
+    function setInnerUiTreeValue(){
+        backgroundRect.state="ready";
+        input.color="black";
+        tree.setTopLevelText(row,column,input.text);//将数值暂存到树表中
     }
 
     TextInput{
@@ -24,23 +33,17 @@ Item {
         selectByMouse: true;
         verticalAlignment: Text.AlignVCenter;
         validator: DoubleValidator{
-            bottom: root.lowerValue;
-            top:root.upperValue;
+//            bottom: root.lowerValue;
+//            top:root.upperValue;
             decimals: 3;
         }
 
         Keys.onReturnPressed: {
-            var value=parseFloat(text);
-            console.log("value="+value);
-            if(value<lowerValue||value>upperValue){
-                console.log("wrong value----");
-                backgroundRect.state="error";
-            }
-            else{
-                writeValue=value;
-                backgroundRect.state="ready";
-    //            tree.setTopLevelText(row,column,input.text);
-            }
+            console.log("value="+text);
+            backgroundRect.state="ready";
+            input.color="black";
+            tree.setTopLevelText(row,column,input.text);//将数值暂存到树表中
+            editReturnPressed();
         }
         onFocusChanged: {
             if(focus)

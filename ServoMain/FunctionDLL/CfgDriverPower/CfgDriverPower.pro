@@ -39,7 +39,8 @@ FORMS += \
     CfgDriverPower.ui
 
 DISTFILES += \
-    CfgDriverPower.qml \
-    components/CfgDriverPower/PowerEditBlock.qml
+    V128/CfgDriverPower.qml \
+    V128/components/CfgDriverPower/PowerEditBlock.qml \
+    V128/components/CfgDriverPower/MyTextInput.qml
 DEFINES+=   QT_NO_DEBUG\
             QT_NO_DEBUG_OUTPUT

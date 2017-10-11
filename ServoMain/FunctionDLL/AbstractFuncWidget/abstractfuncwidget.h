@@ -24,6 +24,7 @@ public:
 signals:
   void itemValueChanged();//树的值发生改变，发送到QML UI中，让其进行更新操作
   void showMessage(QString str);
+  void qmlEditUiStateChanged(int row,bool hasError);//检查参数时通知qml界面更改其状态
 
 public slots:
   virtual void onWriteFuncTreetoServoRam(void);//主程序中的 config 按钮请求(FLASH RAM无关)
@@ -45,6 +46,8 @@ public:
   void readTreeXMLFile(MainWindow *mainWindow, QString fileName_noxml, int axisNum);
   virtual void setTreeWidgetHeaderLables();
   virtual void setActiveNow(bool actived){Q_UNUSED(actived)}//当前的窗口激活显示时，可以增加自己的功能(在速度环，位置环时就需要重绘QML UI)
+
+  Q_INVOKABLE bool checkPrm();
 protected:
   virtual void buildTreeWidget(QString &fileName_noxml);
   virtual void saveTreeXMLFile(QString &fileName);
@@ -73,6 +76,7 @@ protected:
 
   QString m_qmlFilePath;
   QString m_qmlIconFilePath;
+  bool m_passChecked;
 
 };
 

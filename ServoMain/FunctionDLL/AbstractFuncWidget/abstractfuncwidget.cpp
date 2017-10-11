@@ -20,7 +20,8 @@
 
 #define OFFSETADDRESS  "offsetAddress"
 
-AbstractFuncWidget::AbstractFuncWidget( QWidget *parent) : QWidget(parent)
+AbstractFuncWidget::AbstractFuncWidget( QWidget *parent) : QWidget(parent),
+  m_passChecked(true)
 {
   m_uiTree=NULL;
   m_stackedWidget=NULL;
@@ -398,6 +399,18 @@ void AbstractFuncWidget::onWriteFuncTreetoServoFlash()
     QMessageBox::information(0,tr("connect"),tr("please open com first !"));
     return;
   }
+  bool needChecked=prmNeedChecked();
+  qDebug()<<"Need Check="<<needChecked;
+  m_passChecked=true;
+  if(needChecked)
+  {
+    if(false==checkPrm())
+    {
+      m_passChecked=false;
+      return;
+    }
+  }
+
   m_highLightInfo.enterFlag=true;
   quint16 offsetAddr=0;
   UserConfig *config=mp_mainWindow->getUserConfig();
@@ -423,4 +436,40 @@ void AbstractFuncWidget::onWriteFuncTreetoServoFlash()
   ServoControl::writeFunctionValue2FlashAllTree(m_uiTree,cmdTree,offsetAddr,m_axisNumber,comtype,config->com.rnStation);
   qDebug()<<this->objectName()<<"axisnum:"<<m_axisNumber;
   emit itemValueChanged();
+}
+bool AbstractFuncWidget::checkPrm()
+{
+  bool ok=true;
+  if(m_uiTree!=NULL)
+  {
+    QTreeWidgetItem *item;
+    QString name;
+    double value;
+    double kgain;
+    double max;
+    double min;
+    for(int i=0;i<m_uiTree->topLevelItemCount();i++)
+    {
+      item=m_uiTree->topLevelItem(i);
+      name=item->text(COL_FUNC_NAME);
+      kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
+      value=kgain*item->text(COL_FUNC_VALUE).toDouble();
+      qDebug()<<"value="<<value;
+      max=item->text(COL_FUNC_UPLIMIT).toDouble();
+      min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
+      //发送消息到qml，还原颜色
+      emit qmlEditUiStateChanged(i,false);
+      if(!(value>=min&&value<=max))
+      {
+        ok=false;
+        //发送错误消息到qml界面，变红色
+        emit qmlEditUiStateChanged(i,true);
+        emit showMessage(tr("Range Error %1 ").arg(item->text(COL_FUNC_VALUE)));
+        qDebug()<<"error:"<<name;
+        break;
+      }
+      qDebug()<<name<<"-----OK";
+    }
+  }
+  return ok;
 }

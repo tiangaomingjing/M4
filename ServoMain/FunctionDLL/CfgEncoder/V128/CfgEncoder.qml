@@ -229,7 +229,7 @@ Rectangle {
                        RowLayout{
                            anchors.fill: parent;
                            Text{
-                               text:qsTr("编码器分辨率:")
+                               text:qsTr("编码器线数:")
                            }
                            TextField{
                                id:m_lineNumberInput;

@@ -8,9 +8,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Rectangle{
-    Component.onCompleted: {
-        console.log("cfgmotor on completed");
-    }
+
 
     id:root;
     color: "#F0F0F0";
@@ -20,6 +18,7 @@ Rectangle{
     property color pressColor: "#567DBC";
     property color frameColor: "#BBB9B9";
     property color backgroundColor: Qt.lighter(frameColor,1.2);
+    property var inputEditArray: null;//这个对应到树行的顺序
 
     function switchUi(isHome){
         if(isHome){
@@ -30,6 +29,35 @@ Rectangle{
             m_motorPrmUi.x=0;
             m_motorDataBaseUi.x=root.width+1000;
         }
+    }
+    function setEditSate(row,hasError)
+    {
+        if(hasError)
+            inputEditArray[row].setErrorState();
+        else
+            inputEditArray[row].resetbackground();
+    }
+
+    Component.onCompleted: {
+        console.log("cfgmotor on completed");
+        inputEditArray= [
+                         cur.irat_1,
+                         cur.imax_1,
+                         vel.sct_1,
+                         vel.srat_1,
+                         vel.nos_1,
+                         forprm.tqr_1,
+                         mecprm.ppn_1,
+                         forprm.vmax_1,
+                         forprm.phim_1,
+                         imp.ldm_1,
+                         imp.lqm_1,
+                         imp.rm_1,
+                         mecprm.jm_1,
+                         mecprm.jrat_1,
+                         mecprm.fm_1
+                         ];
+        driveMotor.qmlEditUiStateChanged.connect(setEditSate);
     }
 
 //    Item{
@@ -788,6 +816,7 @@ Rectangle{
                             installProgressBar.value+=incValue;
 //                            console.log("progress bar value = "+installProgressBar.value);
                             inputTextArray[writeIndex].text=m_listModel_motorPrm.get(writeIndex).value;
+                            inputTextArray[writeIndex].setInnerUiTreeValue();
                             console.log(m_listModel_motorPrm.get(writeIndex).chineseName+"="+inputTextArray[writeIndex].text);
                             writeIndex++;
                             if(writeIndex>count-1){
@@ -795,7 +824,10 @@ Rectangle{
                                 m_normalDialog.visible=true;
                                 writeIndex=0;
                                 driveMotor.onWriteFuncTreetoServoFlash();
-                                driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
+                                if(driveMotor.passChecked())
+                                    driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
+                                else
+                                    driveMotor.showMessage(qsTr("电机安装失败，请返回检查输入参数！"));
                                 stop();
                             }
                         }
@@ -1320,9 +1352,6 @@ Rectangle{
             vel.sct_1.text=factory.dataTree.textTopLevel(2,1);
             vel.srat_1.text=factory.dataTree.textTopLevel(3,1);
             vel.nos_1.text=factory.dataTree.textTopLevel(4,1);
-//            vel.sct_1.writeValue=parseFloat(vel.sct_1.text);
-//            vel.srat_1.writeValue=parseFloat(vel.srat_1.text);
-//            vel.nos_1.writeValue=parseFloat(vel.nos_1.text);
 
             forprm.tqr_1.text=factory.dataTree.textTopLevel(5,1);
             mecprm.ppn_1.text=factory.dataTree.textTopLevel(6,1);
@@ -1335,24 +1364,29 @@ Rectangle{
             mecprm.jrat_1.text=factory.dataTree.textTopLevel(13,1);
             mecprm.fm_1.text=factory.dataTree.textTopLevel(14,1);
 
-            cur.irat_1.textColor="black";
-            cur.imax_1.textColor="black";
+//            cur.irat_1.textColor="black";
+//            cur.imax_1.textColor="black";
+            cur.resetTextInputState();
 
-            vel.sct_1.textColor="black";
-            vel.srat_1.textColor="black";
-            vel.nos_1.textColor="black";
-//            vel.resetTextInputState();
+//            vel.sct_1.textColor="black";
+//            vel.srat_1.textColor="black";
+//            vel.nos_1.textColor="black";
+            vel.resetTextInputState();
 
-            forprm.tqr_1.textColor="black";
-            mecprm.ppn_1.textColor="black";
-            forprm.vmax_1.textColor="black";
-            forprm.phim_1.textColor="black";
-            imp.ldm_1.textColor="black";
-            imp.lqm_1.textColor="black";
-            imp.rm_1.textColor="black";
-            mecprm.jm_1.textColor="black";
-            mecprm.jrat_1.textColor="black";
-            mecprm.fm_1.textColor="black";
+//            forprm.tqr_1.textColor="black";
+//            mecprm.ppn_1.textColor="black";
+//            forprm.vmax_1.textColor="black";
+//            forprm.phim_1.textColor="black";
+//            imp.ldm_1.textColor="black";
+//            imp.lqm_1.textColor="black";
+//            imp.rm_1.textColor="black";
+//            mecprm.jm_1.textColor="black";
+//            mecprm.jrat_1.textColor="black";
+//            mecprm.fm_1.textColor="black";
+            forprm.resetTextInputState();
+            mecprm.resetTextInputState();
+            imp.resetTextInputState();
+
         }
     }
 

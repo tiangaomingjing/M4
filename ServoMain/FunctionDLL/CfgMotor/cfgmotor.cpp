@@ -24,40 +24,47 @@ bool CfgMotor::getComConnectSatus()
 {
   return mp_mainWindow->getComOpenState();
 }
-bool CfgMotor::checkPrm()
+bool CfgMotor::passChecked()
 {
-  bool ok=true;
-  if(m_uiTree!=NULL)
-  {
-    QTreeWidgetItem *item;
-    QString name;
-    double value;
-    double kgain;
-    double max;
-    double min;
-    for(int i=0;i<m_uiTree->topLevelItemCount();i++)
-    {
-      item=m_uiTree->topLevelItem(i);
-      name=item->text(COL_FUNC_NAME);
-      kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
-      value=kgain*item->text(COL_FUNC_VALUE).toDouble();
-      qDebug()<<"value="<<value;
-      max=item->text(COL_FUNC_UPLIMIT).toDouble();
-      min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
-      //发送消息到qml，还原颜色
-
-      if(!(value>=min&&value<=max))
-      {
-        ok=false;
-        //发送错误消息到qml界面，变红色
-        qDebug()<<"error:"<<name;
-        break;
-      }
-      qDebug()<<name<<"-----OK";
-    }
-  }
-  return ok;
+  return m_passChecked;
 }
+
+//bool CfgMotor::checkPrm()
+//{
+//  bool ok=true;
+//  if(m_uiTree!=NULL)
+//  {
+//    QTreeWidgetItem *item;
+//    QString name;
+//    double value;
+//    double kgain;
+//    double max;
+//    double min;
+//    for(int i=0;i<m_uiTree->topLevelItemCount();i++)
+//    {
+//      item=m_uiTree->topLevelItem(i);
+//      name=item->text(COL_FUNC_NAME);
+//      kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
+//      value=kgain*item->text(COL_FUNC_VALUE).toDouble();
+//      qDebug()<<"value="<<value;
+//      max=item->text(COL_FUNC_UPLIMIT).toDouble();
+//      min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
+//      //发送消息到qml，还原颜色
+//      emit qmlEditUiStateChanged(i,false);
+//      if(!(value>=min&&value<=max))
+//      {
+//        ok=false;
+//        //发送错误消息到qml界面，变红色
+//        emit qmlEditUiStateChanged(i,true);
+//        emit showMessage(tr("Range Error %1 ").arg(item->text(COL_FUNC_VALUE)));
+//        qDebug()<<"error:"<<name;
+//        break;
+//      }
+//      qDebug()<<name<<"-----OK";
+//    }
+//  }
+//  return ok;
+//}
 
 void CfgMotor::updateUiWhenNavigationTreeClicked()
 {
@@ -65,21 +72,25 @@ void CfgMotor::updateUiWhenNavigationTreeClicked()
 }
 void CfgMotor::onWriteFuncTreetoServoFlash()
 {
-  bool needChecked=prmNeedChecked();
-  qDebug()<<"Need Check="<<needChecked;
-  if(needChecked)
-  {
-    if(false==checkPrm())
-      return;
-  }
+//  bool needChecked=prmNeedChecked();
+//  qDebug()<<"Need Check="<<needChecked;
+//  m_passChecked=true;
+//  if(needChecked)
+//  {
+//    if(false==checkPrm())
+//    {
+//      m_passChecked=false;
+//      return;
+//    }
+//  }
   ImaxExtensionPrm imaxPrm;
   ImaxExtensionPrmGain gainInfo;
 
   QTreeWidgetItem *imaxTreeItem;
   QTreeWidgetItem *imaxInfoItem;
   QTreeWidgetItem *gainInfoItem;
-  AbstractFuncWidget::onWriteFuncTreetoServoFlash();
-//  mp_mainWindow->clearWarning();
+  AbstractFuncWidget::onWriteFuncTreetoServoFlash();//调用父类方法写FLASH
+
   emit clearWarning();
   imaxTreeItem=mp_mainWindow->getFunctionExtensionTree()\
           ->topLevelItem(ROW_FUNC_EXT_INDEX_MODULEPRM)\
@@ -115,6 +126,8 @@ void CfgMotor::onWriteFuncTreetoServoFlash()
   if(ret!=0)
      ret=GTSD_CMD_Fram_Read16BitByAdr(m_axisNumber, (int16) imaxPrm.imaxInfo.offsetAddr, (int16*) &imaxValue, config->com.id, config->com.rnStation);
   qDebug()<<"imax value:"<<imaxValue;
+  if(ret!=0)
+    return;
   foreach (gainInfo, imaxPrm.gainInfoList)
   {
     double k=gainInfo.gain/imaxValue;
