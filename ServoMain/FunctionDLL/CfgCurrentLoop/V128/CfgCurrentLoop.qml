@@ -254,6 +254,23 @@ Rectangle {
 //            m_currentLoopPID.iEditTextColor="black";
             m_currentLoopPID.resetEditBackground();
         }
+        onQmlEditUiStateChanged:{
+            switch(row){
+            case 0:
+                if(hasError)
+                    m_currentLoopPID.iEdit.setErrorState();
+                else
+                    m_currentLoopPID.iEdit.resetbackground();
+                break;
+            case 2:
+                if(hasError)
+                    m_currentLoopPID.pEdit.setErrorState();
+                else
+                    m_currentLoopPID.pEdit.resetbackground();
+                break;
+            }
+        }
+
         onActiveNow:{
             console.log("cfgcurrentLoop activenow:"+actived);
             replot();

@@ -19,6 +19,10 @@ Item {
     function setErrorState(){
         backgroundRect.state="error";
     }
+    function setReadyState(){
+        backgroundRect.state="ready";
+    }
+
     function setInnerUiTreeValue(){
         backgroundRect.state="ready";
         input.color="black";

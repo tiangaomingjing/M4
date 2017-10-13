@@ -2,7 +2,7 @@
 Item {
     id: root;
     height:24;
-    width: 100;
+    width: 60;
     property alias text: input.text;
     property var tree: null;
     property int row: 0;
@@ -19,6 +19,10 @@ Item {
     function setErrorState(){
         backgroundRect.state="error";
     }
+    function setReadyState(){
+        backgroundRect.state="ready";
+    }
+
     function setInnerUiTreeValue(){
         backgroundRect.state="ready";
         input.color="black";

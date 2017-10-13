@@ -308,6 +308,16 @@ void AbstractFuncWidget::onWriteFuncTreetoServoRam()
     QMessageBox::information(0,tr("connect"),tr("please open com first !"));
     return;
   }
+  bool needChecked=prmNeedChecked();
+  qDebug()<<"Need Check="<<needChecked;
+  if(needChecked)
+  {
+    if(false==checkPrm())
+    {
+      return;
+    }
+  }
+
   m_highLightInfo.enterFlag=true;
   UserConfig *config=mp_mainWindow->getUserConfig();
   COM_TYPE comtype=(COM_TYPE)config->com.id;
