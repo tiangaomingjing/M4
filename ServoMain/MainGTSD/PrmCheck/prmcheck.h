@@ -5,20 +5,27 @@
 class QTreeWidget;
 class QTreeWidgetItem;
 
+struct PowerBoardLimit{
+  double max;
+  double min;
+};
+
 class PrmCheck : public QObject
 {
   Q_OBJECT
 public:
   explicit PrmCheck(QObject *parent = 0);
   ~PrmCheck();
-  bool checkPropertyValid(QTreeWidgetItem *srcItem, QString &ptyName, double value, QTreeWidget *ptyLimitTree);
+
   bool checkXmlFilePropertyValid(QTreeWidget *xmlTree,QTreeWidget *ptyLimitTree);
   bool checkHardwareValid(QTreeWidget *xmlTree,QMap<QString,double> &valueMap);
 signals:
   void checkingProgress(QString &prmName,int value);
 public slots:
 private:
+  bool checkPropertyValid(QTreeWidgetItem *srcItem, QTreeWidget *ptyLimitTree);
   QTreeWidget *m_xmlDownLoadTree;
+
 };
 
 #endif // PRMCHECK_H

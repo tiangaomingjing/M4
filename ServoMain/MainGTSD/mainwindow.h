@@ -7,6 +7,7 @@
 
 #include "ServoDriverComDll.h"
 #include "xmlbuilder.h"
+#include "PrmCheck/prmcheck.h"
 
 namespace Ui {
 class MainWindow;
@@ -261,5 +262,6 @@ private:
 
   QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
   bool m_versionBiger127;//比127版本大，用于判断是否要作参数范围检查
+  QMap<QString ,PowerBoardLimit>m_powerLimitMap;//功率板的约束 连机时读取ID更新
 };
 #endif // MAINWINDOW_H

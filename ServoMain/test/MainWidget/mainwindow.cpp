@@ -94,17 +94,26 @@ MainWindow::MainWindow(QWidget *parent) :
 
 //    tbtn->setPopupMode(QToolButton::MenuButtonPopup);
 
-    QImage ima(":/menu_servo2file.png");
-    tbtn->setIconSize(QSize(128, 64));
-    tbtn->setMinimumSize(QSize(128, 64));
-    QIcon icon;
-    icon.addFile(QStringLiteral(":/menu_servo2file.png"), QSize(128,64), QIcon::Normal, QIcon::Off);
-    tbtn->setIcon(icon);
-
-
-    ui->mainToolBar->addWidget(tbtn);
-    ui->mainToolBar->setMinimumHeight(64);
-
+    //将硬件功率模块controlname清null
+    QTreeWidget *tree=QtTreeManager::createTreeWidgetFromXmlFile(tr("D:/Smart/ServoMaster/git-project/servo-4/SD41P003_1017.ui"));
+    qDebug()<<"-----------------------------------";
+    qDebug()<<tree->topLevelItem(0)->text(7);
+    if(tree->topLevelItem(0)->text(7)=="")
+      qDebug()<<"*********************";
+    QTreeWidgetItemIterator it(tree);
+    QTreeWidgetItem *item;
+    while (*it)
+    {
+      item=(*it);
+      if(item->text(7)=="")
+      {
+        item->setText(7,"null");
+      }
+      else
+        qDebug()<<item->text(7);
+      it++;
+    }
+    QtTreeManager::writeTreeWidgetToXmlFile("D:/Smart/ServoMaster/git-project/servo-4/SD41P003.ui",tree);
 
 
 

@@ -2321,6 +2321,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   QTreeWidgetItem *treeExtensionItem,*treeExtensionItemChild;
   QString key;
   int value;
+  //gSevDrv 0 gAuxFunc 1
   treeExtensionItem=mp_funcExtension->topLevelItem(ROW_FUNC_EXT_INDEX_ADVCONTROLPRM);
   treeExtensionItemChild=treeExtensionItem->child(ROW_ADVCTLPRM_INDEX_SERDRV);
   key=treeExtensionItemChild->text(COL_FUNC_EXTENSION_NAME);

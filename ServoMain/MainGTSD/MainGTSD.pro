@@ -113,7 +113,8 @@ SOURCES += main.cpp\
     MotorSqlModel/motorsqlmodel.cpp \
     PrmCheck/prmcheck.cpp \
     UserRole/userrole.cpp \
-    UserRole/logindialog.cpp
+    UserRole/logindialog.cpp \
+    EpromManage/eprommanage.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -146,7 +147,8 @@ HEADERS  += mainwindow.h \
     MotorSqlModel/motorsqlmodel.h \
     PrmCheck/prmcheck.h \
     UserRole/userrole.h \
-    UserRole/logindialog.h
+    UserRole/logindialog.h \
+    EpromManage/eprommanage.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

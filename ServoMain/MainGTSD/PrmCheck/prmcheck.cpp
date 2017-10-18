@@ -5,11 +5,11 @@
 #include <QDebug>
 #include "globaldef.h"
 
-enum ptyColumnIndex{
-  PTY_COL_NAME,
-  PTY_COL_VALUE,
-  PTY_COL_TYPE,
-  PTY_COL_OFFSET
+enum prmColumnIndex{
+  PRM_COL_NAME,
+  PRM_COL_VALUE,
+  PRM_COL_TYPE,
+  PRM_COL_OFFSET
 };
 enum limitPtyColumnIndex{
   LIMIT_COL_NAME,
@@ -26,11 +26,13 @@ PrmCheck::~PrmCheck()
 {
 
 }
-bool PrmCheck::checkPropertyValid(QTreeWidgetItem *srcItem,QString &ptyName,double value,QTreeWidget *ptyLimitTree)
+bool PrmCheck::checkPropertyValid(QTreeWidgetItem *srcItem,QTreeWidget *ptyLimitTree)
 {
   bool ret=true;
   QTreeWidgetItemIterator it(ptyLimitTree);
   QTreeWidgetItem *item;
+  QString ptyName;
+  double value;
   while (*it)
   {
     item=(*it);
@@ -40,10 +42,12 @@ bool PrmCheck::checkPropertyValid(QTreeWidgetItem *srcItem,QString &ptyName,doub
       list=item->parent()->text(LIMIT_COL_NAME).split(".");
       if(list.last()!="bit")
       {
+        ptyName=srcItem->text(PRM_COL_NAME);
         if(item->text(LIMIT_COL_NAME)==ptyName)
         {
           double maxV;
           double minV;
+          value=srcItem->text(PRM_COL_VALUE).toDouble();
           maxV=item->text(LIMIT_COL_MAX).toDouble();
           minV=item->text(LIMIT_COL_MIN).toDouble();
           if((maxV>=value)&&(value>=minV))
@@ -74,6 +78,12 @@ bool PrmCheck::checkPropertyValid(QTreeWidgetItem *srcItem,QString &ptyName,doub
   }
   return ret;
 }
+/**
+* @brief PrmCheck::checkXmlFilePropertyValid
+* @param xmlTree 要下载的xml参数文件
+* @param ptyLimitTree 对应版本的属性表文件
+* @return true:检查在范围内 false:不在范围内
+*/
 bool PrmCheck::checkXmlFilePropertyValid(QTreeWidget *xmlTree, QTreeWidget *ptyLimitTree)
 {
   if(xmlTree==NULL||ptyLimitTree==NULL)
@@ -87,15 +97,13 @@ bool PrmCheck::checkXmlFilePropertyValid(QTreeWidget *xmlTree, QTreeWidget *ptyL
   while (*it)
   {
     item=(*it);
-    QString offsetText=item->text(PTY_COL_OFFSET);
+    QString offsetText=item->text(PRM_COL_OFFSET);
     if(offsetText!="-1")
     {
-      double value;
       QString ptyName;
       bool ret;
-      ptyName=item->text(PTY_COL_NAME);
-      value=item->text(PTY_COL_VALUE).toDouble();
-      ret=checkPropertyValid(item,ptyName,value,ptyLimitTree);
+      ptyName=item->text(PRM_COL_NAME);
+      ret=checkPropertyValid(item,ptyLimitTree);
       if(ret==false)
       {
         isOk=false;
