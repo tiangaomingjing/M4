@@ -31,6 +31,7 @@
 #include "PrmCheck/prmcheck.h"
 #include "UserRole/userrole.h"
 #include "UserRole/logindialog.h"
+#include "PowerTreeManage/powertreemanage.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -2610,3 +2611,42 @@ void MainWindow::readSettings()
 //{
 //  return (m_versionBiger127&&(m_userRole->userType()==UserRole::USER_GENERAL));
 //}
+
+quint32 MainWindow::readPowerId(bool *isOK)
+{
+  *isOK=true;
+  quint32 id;
+  //目前先根据配置来决定ID
+  QString modelName=mp_userConfig->model.modelName;
+  qDebug()<<"model name ="<<modelName;
+  if((modelName=="GTSD41")||(modelName=="GTSD42"))
+  {
+    id=21000509;
+  }
+  else if(modelName=="GTSD61")
+  {
+    id=21000510;
+  }
+  return id;
+}
+
+quint32 MainWindow::readControlId(bool *isOK)
+{
+  *isOK=true;
+  return 0;
+}
+
+void MainWindow::setPowerLimitMap()
+{
+  quint32 powerId;
+  bool isOK;
+  QTreeWidgetItem *pwrItem;
+  powerId=readPowerId(&isOK);
+
+  QString powerFileName=RESOURCE_FILE_PATH+"DataBase/PowerBoard.ui";
+  QTreeWidget *powerTree=QtTreeManager::createTreeWidgetFromXmlFile(powerFileName);
+  PowerTreeManage treeManage(powerTree);
+
+//  pwrItem=treeManage.findTargetBoard(powerId);
+
+}

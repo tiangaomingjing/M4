@@ -114,7 +114,8 @@ SOURCES += main.cpp\
     PrmCheck/prmcheck.cpp \
     UserRole/userrole.cpp \
     UserRole/logindialog.cpp \
-    EpromManage/eprommanage.cpp
+    EpromManage/eprommanage.cpp \
+    PowerTreeManage/powertreemanage.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -148,7 +149,8 @@ HEADERS  += mainwindow.h \
     PrmCheck/prmcheck.h \
     UserRole/userrole.h \
     UserRole/logindialog.h \
-    EpromManage/eprommanage.h
+    EpromManage/eprommanage.h \
+    PowerTreeManage/powertreemanage.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

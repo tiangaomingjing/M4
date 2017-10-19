@@ -169,6 +169,11 @@ private:
   QString minorVersion();
   void readSettings();
 
+  quint32 readPowerId(bool *isOK);
+  quint32 readControlId(bool *isOK);
+  void setPowerLimitMap(void);
+
+
 private:
   Ui::MainWindow *ui;
   Ui::status *uiStatus;
@@ -262,6 +267,6 @@ private:
 
   QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
   bool m_versionBiger127;//比127版本大，用于判断是否要作参数范围检查
-  QMap<QString ,PowerBoardLimit>m_powerLimitMap;//功率板的约束 连机时读取ID更新
+  QList<QMap<QString ,PowerBoardLimit>>m_powerLimitMapList;//功率板的约束 连机时读取ID更新
 };
 #endif // MAINWINDOW_H

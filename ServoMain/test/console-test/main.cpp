@@ -112,6 +112,15 @@ int main(int argc, char *argv[])
   offsetAddr=num.toUShort();
   cout<<num.toStdString()<<" toUShort() "<<offsetAddr<<endl;
 
+  qDebug()<<"sizeof uint="<<sizeof(uint);
+  qDebug()<<"sizeof int="<<sizeof(int);
+  qDebug()<<"sizeof ushort="<<sizeof(ushort);
+  qDebug()<<"sizeof short="<<sizeof(short);
+  qDebug()<<"sizeof ulong="<<sizeof(ulong);
+  qDebug()<<"sizeof long="<<sizeof(long);
+  qDebug()<<"sizeof double="<<sizeof(double);
+  qDebug()<<"sizeof float="<<sizeof(float);
+
 
   return a.exec();
 }
