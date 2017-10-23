@@ -703,7 +703,7 @@ void MainWindow::onActionFile2ServoClicked()
   qDebug()<<"dsp version="<<dspVersion;
   QString xmlNodeName=tree->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
   quint16 xmlVersion;
-  //如果能检查到有xml的记录，说明是128之后的版本，先拿掉xml记录头
+  //如果能检查到有xml的记录，说明是128之后的版本，先拿掉tree xml记录头
   if(xmlNodeName==XMLFILE_NODE_NAME)
   {
     QTreeWidgetItem *versionNodeItem;
@@ -764,7 +764,7 @@ void MainWindow::onActionFile2ServoClicked()
 
       bool ptyValid;
       bool hardwareValid;
-      QMap<QString,double> valueMap;
+
       QString limitFileName;
       limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
       QTreeWidget  *ptyTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
@@ -778,6 +778,7 @@ void MainWindow::onActionFile2ServoClicked()
       ui->progressBar->show();
       connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
       ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
+
       ptyTree->clear();
       delete ptyTree;
       if(ptyValid==false)
@@ -788,7 +789,7 @@ void MainWindow::onActionFile2ServoClicked()
         return;
       }
 
-      hardwareValid=check.checkHardwareValid(NULL,valueMap);
+      hardwareValid=check.checkHardwareValid(tree,m_powerLimitMapList);
       if(hardwareValid==false)
       {
         tree->clear();
@@ -1476,6 +1477,11 @@ void MainWindow::onActionUserLoginClicked()
   qDebug()<<dialog.exec();
   qDebug()<<"preference ";
 }
+void MainWindow::onActionAutoLoadClicked(bool checked)
+{
+  m_autoLoad=checked;
+  qDebug()<<"auto load clicked "<<m_autoLoad;
+}
 
 void MainWindow::onNewConfigurationActived(UserConfig *config)
 {
@@ -1800,9 +1806,12 @@ void MainWindow::createMenus(void)
   menuDsp->addAction(m_actProgramUpdate);
   menuDsp->addAction(m_actResetServo);
   menuDsp->addAction(m_actRestoreFactorySetting);
-  //-------------Preference----------------------------
-  m_menuPreference=menuBar()->addMenu(tr("Preference"));
+  //增加首选项
+  m_menuPreference=new QMenu(tr("Preference"),this);
   m_menuPreference->addAction(m_actUserLogin);
+  m_menuPreference->addAction(m_actAutoLoad);
+  m_menuTool->addMenu(m_menuPreference);
+
   //--------------help menu-------------------
   m_menuHelp=menuBar()->addMenu(tr("Help(&H)"));
   m_menuHelp->addAction(m_actAboutConfig);
@@ -1984,6 +1993,13 @@ void MainWindow::createActions(void)
   m_actUserLogin->setToolTip(tr("UserRole setting"));
   m_actUserLogin->setStatusTip(tr("UserRole setting"));
   connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
+
+  m_actAutoLoad=new QAction(this);
+  m_actAutoLoad->setCheckable(true);
+  m_actAutoLoad->setText(tr("AutoLoad"));
+  m_actAutoLoad->setToolTip(tr("AutoLoad By ID"));
+  m_actAutoLoad->setStatusTip(tr("AutoLoad By ID"));
+  connect(m_actAutoLoad,SIGNAL(triggered(bool)),this,SLOT(onActionAutoLoadClicked(bool)));
 }
 
 void MainWindow::createToolBars(void)
@@ -2592,6 +2608,10 @@ QString MainWindow::minorVersion()
     minV=" ";
   return minV;
 }
+/**
+ * @brief MainWindow::readSettings
+ * 读软件启动参数设置
+ */
 void MainWindow::readSettings()
 {
   QSettings settings(QApplication::applicationDirPath()+"/start.ini",
@@ -2599,12 +2619,15 @@ void MainWindow::readSettings()
 
   settings.beginGroup("UserRole");
   UserRole::UserRoleType type;
-
   type=(UserRole::UserRoleType)settings.value("userType",0).toInt();
-
   m_userRole->setUserType(type);
   settings.endGroup();
   qDebug()<<"read type="<<type;
+
+  settings.beginGroup("AutoLoadById");
+  m_autoLoad=settings.value("Auto",false).toBool();
+  settings.endGroup();
+  qDebug()<<"auto load :"<<m_autoLoad;
 }
 
 //bool MainWindow::prmNeedChecked()
@@ -2612,41 +2635,39 @@ void MainWindow::readSettings()
 //  return (m_versionBiger127&&(m_userRole->userType()==UserRole::USER_GENERAL));
 //}
 
-quint32 MainWindow::readPowerId(bool *isOK)
+bool MainWindow::readPowerId()
 {
-  *isOK=true;
-  quint32 id;
   //目前先根据配置来决定ID
   QString modelName=mp_userConfig->model.modelName;
   qDebug()<<"model name ="<<modelName;
   if((modelName=="GTSD41")||(modelName=="GTSD42"))
   {
-    id=21000509;
+    m_powerId=21000509;
   }
   else if(modelName=="GTSD61")
   {
-    id=21000510;
+    m_powerId=21000510;
   }
-  return id;
+  return true;
 }
 
-quint32 MainWindow::readControlId(bool *isOK)
+bool MainWindow::readControlId()
 {
-  *isOK=true;
-  return 0;
+  m_controlId=1000;
+  return true;
 }
 
-void MainWindow::setPowerLimitMap()
+void MainWindow::setPowerLimitMap(quint32 id)
 {
-  quint32 powerId;
   bool isOK;
-  QTreeWidgetItem *pwrItem;
-  powerId=readPowerId(&isOK);
-
   QString powerFileName=RESOURCE_FILE_PATH+"DataBase/PowerBoard.ui";
   QTreeWidget *powerTree=QtTreeManager::createTreeWidgetFromXmlFile(powerFileName);
   PowerTreeManage treeManage(powerTree);
-
-//  pwrItem=treeManage.findTargetBoard(powerId);
+  //更新硬件约束
+  treeManage.updatePowerLimitMapList(id,m_powerLimitMapList);
+  //更新电阻值
+  m_samplingData=treeManage.samplingDataInfo(id,&isOK);
+  powerTree->clear();
+  delete powerTree;
 
 }

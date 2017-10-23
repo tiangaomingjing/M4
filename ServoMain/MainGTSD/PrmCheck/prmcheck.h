@@ -17,14 +17,14 @@ public:
   explicit PrmCheck(QObject *parent = 0);
   ~PrmCheck();
 
-  bool checkXmlFilePropertyValid(QTreeWidget *xmlTree,QTreeWidget *ptyLimitTree);
-  bool checkHardwareValid(QTreeWidget *xmlTree,QMap<QString,double> &valueMap);
+  bool checkXmlFilePropertyValid(QTreeWidget *xmlTree, QTreeWidget *ptyLimitTree);
+  bool checkHardwareValid( QTreeWidget *xmlTree, const QList<QMap<QString ,PowerBoardLimit>> &valueMapList);
 signals:
   void checkingProgress(QString &prmName,int value);
 public slots:
 private:
   bool checkPropertyValid(QTreeWidgetItem *srcItem, QTreeWidget *ptyLimitTree);
-  QTreeWidget *m_xmlDownLoadTree;
+  const QTreeWidget *m_xmlDownLoadTree;
 
 };
 

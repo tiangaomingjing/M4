@@ -49,10 +49,9 @@ void NavMainWindow::writeSettings()
   settings.setValue("userType",QVariant((int)m_userRole->userType()));
   settings.endGroup();
 
-//  settings.beginGroup("MainWindow");
-//  settings.setValue("size", size());
-//  settings.setValue("pos", pos());
-//  settings.endGroup();
+  settings.beginGroup("AutoLoadById");
+  settings.setValue("Auto", false);
+  settings.endGroup();
 
 }
 
@@ -67,12 +66,15 @@ void NavMainWindow::readSettings()
 //  settings.endGroup();
   settings.beginGroup("UserRole");
   UserRole::UserRoleType type;
-
   type=(UserRole::UserRoleType)settings.value("userType",0).toInt();
-
   m_userRole->setUserType(type);
   settings.endGroup();
   qDebug()<<"read type="<<type;
+
+  settings.beginGroup("AutoLoadById");
+  m_autoLoad=settings.value("Auto",false).toBool();
+  settings.endGroup();
+  qDebug()<<"auto load :"<<m_autoLoad;
 }
 
 void NavMainWindow::on_pushButton_3_clicked()

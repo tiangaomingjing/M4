@@ -127,10 +127,30 @@ MainWindow::MainWindow(QWidget *parent) :
 #if USE_FIND_ID_TEST
   QTreeWidget *powerTree=QtTreeManager::createTreeWidgetFromXmlFile(tr("D:/Smart/ServoMaster/git-project/servo-4/release/Resource/DataBase/PowerBoard.ui"));
   powerTree->show();
-  quint32 id=21000510;
+  quint32 id=21000509;
+  bool isOK;
   PowerTreeManage *pwrManage=new PowerTreeManage(powerTree);
-  pwrManage->powerLimitMapList(id);
+  QList<QMap<QString ,PowerBoardLimit>>powerLimitMapList;
+  SamplingDataInfo samplingData;
 
+  pwrManage->updatePowerLimitMapList(id,powerLimitMapList);
+  samplingData=pwrManage->samplingDataInfo(id,&isOK);
+
+  for(int i=0;i<samplingData.types().count();i++)
+  {
+    qDebug()<<"axis:"<<i+1<<"type="<<samplingData.types().at(i)<<" value="<<samplingData.values().at(i);
+  }
+
+  qDebug()<<"-----------------get data--------------------";
+  for(int i=0;i<powerLimitMapList.count();i++)
+  {
+    qDebug()<<"axis="<<i;
+    QMapIterator<QString ,PowerBoardLimit> mapIt(powerLimitMapList.at(i));
+    while (mapIt.hasNext()) {
+      mapIt.next();
+      qDebug()<<mapIt.key()<<" max="<<mapIt.value().max<<" min="<<mapIt.value().min;
+    }
+  }
 #endif
 
 //    QAction *act=new QAction("hello",this);

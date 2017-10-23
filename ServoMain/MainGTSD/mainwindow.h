@@ -8,6 +8,7 @@
 #include "ServoDriverComDll.h"
 #include "xmlbuilder.h"
 #include "PrmCheck/prmcheck.h"
+#include "PowerTreeManage/powertreemanage.h"
 
 namespace Ui {
 class MainWindow;
@@ -111,6 +112,7 @@ private slots:
   void onActionAboutSDTClicked();
   //preference
   void onActionUserLoginClicked();
+  void onActionAutoLoadClicked(bool checked);
   //-----------新建配置--------------
   void onNewConfigurationActived(UserConfig *config);//槽连接到新建窗口发射的信号,响应新建配置
 
@@ -169,9 +171,9 @@ private:
   QString minorVersion();
   void readSettings();
 
-  quint32 readPowerId(bool *isOK);
-  quint32 readControlId(bool *isOK);
-  void setPowerLimitMap(void);
+  bool readPowerId();
+  bool readControlId();
+  void setPowerLimitMap(quint32 id);
 
 
 private:
@@ -218,6 +220,7 @@ private:
   QAction *m_actAboutSDT;
   //------configuration action-------
   QAction *m_actUserLogin;
+  QAction *m_actAutoLoad;
 
   //--------菜单--------------
   QMenu *m_menuConfig;
@@ -263,10 +266,15 @@ private:
   QMap<QString,QVariant> m_moduleShareData;//多个dll模块中的共享数据
   MotorSqlModel *m_motorSqlModel;
 
+  //首选项配置参数
   UserRole *m_userRole;
+  bool m_autoLoad;
 
   QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
   bool m_versionBiger127;//比127版本大，用于判断是否要作参数范围检查
   QList<QMap<QString ,PowerBoardLimit>>m_powerLimitMapList;//功率板的约束 连机时读取ID更新
+  SamplingDataInfo m_samplingData;//每一个轴的采样电阻信息
+  quint32 m_powerId;
+  quint32 m_controlId;
 };
 #endif // MAINWINDOW_H

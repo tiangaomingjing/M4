@@ -29,6 +29,7 @@ private:
   void readSettings();
   Ui::NavMainWindow *ui;
   UserRole *m_userRole;
+  bool m_autoLoad;
 
   QStateMachine machine;
   QState *s1 ;

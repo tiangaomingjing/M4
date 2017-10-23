@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>765</width>
-    <height>604</height>
+    <width>562</width>
+    <height>484</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,7 @@
     <widget class="QTreeWidget" name="treeWidget">
      <column>
       <property name="text">
-       <string>ID name</string>
+       <string>name</string>
       </property>
      </column>
      <column>
@@ -64,6 +64,11 @@
      <column>
       <property name="text">
        <string>controlvalue_min</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>uniquename</string>
       </property>
      </column>
      <item>
@@ -5387,6 +5392,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -6572,6 +6583,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -9830,6 +9847,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -11015,6 +11038,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -14273,6 +14302,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -15458,6 +15493,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -18716,6 +18757,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -19901,6 +19948,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
