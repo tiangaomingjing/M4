@@ -101,19 +101,19 @@ Rectangle{
                         Layout.fillWidth: true;
                         Layout.minimumWidth: 100;
                         Layout.minimumHeight: 80;
-                        color:motorCfgMouse.containsPress?root.pressColor:motorCfgMouse.containsMouse?root.hoverColor:"transparent";
-                        radius: 10;
-                        border.color: motorCfgMouse.containsMouse?"#BBB9B9":"transparent";
-                        border.width: 2;
-                        MouseArea{
-                            id:motorCfgMouse;
-                            anchors.fill: parent;
-                            hoverEnabled: true;
-                            onClicked: {
-                                console.log("on click .....");
-                                switchUi(true);
-                            }
-                        }
+                        color:"transparent";
+//                        radius: 10;
+//                        border.color: motorCfgMouse.containsMouse?"#BBB9B9":"transparent";
+//                        border.width: 2;
+//                        MouseArea{
+//                            id:motorCfgMouse;
+//                            anchors.fill: parent;
+//                            hoverEnabled: true;
+//                            onClicked: {
+//                                console.log("on click .....");
+//                                switchUi(true);
+//                            }
+//                        }
                         Image {
                             id: motorImg;
                             anchors.top: parent.top;
@@ -121,6 +121,27 @@ Rectangle{
                             height: parent.height*0.8;
                             width: height*1.5;
                             source: motorCfgMouse.containsMouse?"./components/CfgMotor/motor3d_hover.png":"./components/CfgMotor/motor3d.png";
+                            z:101;
+                            MouseArea{
+                                id:motorCfgMouse;
+                                anchors.fill: parent;
+                                hoverEnabled: true;
+                                onClicked: {
+                                    console.log("on click .....");
+                                    switchUi(true);
+                                }
+                            }
+                        }
+                        Rectangle{
+                            anchors.top: motorImg.top;
+                            anchors.left: motorImg.left;
+                            width: motorImg.width;
+                            height: motorImg.height;
+                            color:motorCfgMouse.containsPress?root.pressColor:motorCfgMouse.containsMouse?root.hoverColor:"transparent";
+                            radius: 10;
+                            border.color: motorCfgMouse.containsMouse?"#BBB9B9":"transparent";
+                            border.width: 2;
+                            z:0;
                         }
                         Text{
                             anchors.bottom: parent.bottom;
@@ -204,7 +225,7 @@ Rectangle{
         }
         property var unitNameMap: {
             "Imax":"A","Irat":"A","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
-            "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"对",
+            "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"pair",
             "Tqr":"N.m","PHIm":"mV/rpm","Vmax":"V"
         }
         property var prmIndex: {

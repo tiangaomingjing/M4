@@ -54,6 +54,7 @@ public:
   UserRole *getUserRole(){ return m_userRole;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
+  const QList<QMap<QString ,PowerBoardLimit>> *getPowerBoardLimitMapList(void) const {return &m_powerLimitMapList;}
   bool getComOpenState(void){return m_isOpenCom;}
   void stopTimer(){m_timer->stop();}
   void startTimer(){m_timer->start();}
@@ -173,7 +174,7 @@ private:
 
   bool readPowerId();
   bool readControlId();
-  void setPowerLimitMap(quint32 id);
+  bool setPowerLimitMap(quint32 id);
 
 
 private:

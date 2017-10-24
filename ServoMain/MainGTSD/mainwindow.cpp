@@ -32,6 +32,7 @@
 #include "UserRole/userrole.h"
 #include "UserRole/logindialog.h"
 #include "PowerTreeManage/powertreemanage.h"
+#include "EpromManage/eprommanage.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -161,6 +162,7 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_actFullScreen->setVisible(false);
   setWidgetStyleSheet();
 
+  ui->treeWidget->topLevelItem(2)->setHidden(true);
   connect(m_userRole,SIGNAL(userTypeChanged(UserRole::UserRoleType&)),this,SLOT(onUserRoleChanged()));
   readSettings();
 }
@@ -426,49 +428,6 @@ void MainWindow::onActionConfigExitClicked()
 void MainWindow::onActionConnectClicked()
 {
   COM_ERROR error=COM_OK;
-//  m_isOpenCom=false;
-//  ui->progressBar->setVisible(true);
-//  enableAllUi(false);
-//  error=static_cast<COM_ERROR>(GTSD_CMD_Open(updateProgessBarWhenConnectClicked,(void*)ui->progressBar,static_cast<COM_TYPE>(mp_userConfig->com.id)));
-//  if(error!=COM_OK)
-//  {
-//    QMap<COM_ERROR ,QString>warningMap;
-//    warningMap.insert(COM_ARM_OUT_TIME,tr("ARM OUT OFF TIME !"));
-//    warningMap.insert(COM_OK,tr("COM NET OK !"));
-//    warningMap.insert(COM_NET_ERROR,tr("COM NET ERROR !"));
-//    warningMap.insert(COM_NOT_FINISH,tr("COM NOT FINISH !"));
-//    QString eMsg;
-//    if(warningMap.contains(error))
-//      eMsg=warningMap.value(error);
-//    else
-//      eMsg=tr("FPGA error or disconnect");
-//    QMessageBox::information(0,tr("connect"),tr("com connect error:%1").arg(eMsg));
-//    m_actConnect->setChecked(false);
-//    m_actDisConnect->setChecked(true);
-//    m_isOpenCom=false;
-//    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-//    ui->progressBar->setVisible(false);
-//    enableAllUi(true);
-//    return;
-//  }
-//  //判断是不是千兆网络，提示相关信息后返回
-//  short netCarMsg=GTSD_CMD_GetNetCardMsg();
-//  QMap<int ,QString>netCarInfoMap;
-//  netCarInfoMap.insert(0,tr("1000M ETH"));
-//  netCarInfoMap.insert(1,tr("FUNCTION ADDRESS ERROR"));
-//  netCarInfoMap.insert(2,tr("NOT 1000M ETH"));
-//  netCarInfoMap.insert(3,tr("NO ETH"));
-//  if(netCarMsg!=0){
-//    QMessageBox::information(0,tr("net error"),tr("com net error information:%1").arg(netCarInfoMap.value(netCarMsg)));
-//    m_actConnect->setChecked(false);
-//    m_actDisConnect->setChecked(true);
-//    m_isOpenCom=false;
-//    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-//    ui->progressBar->setVisible(false);
-//    enableAllUi(true);
-//    return;
-//  }
-//  m_isOpenCom=true;
 
   m_isOpenCom=openNetCom();
   if(m_isOpenCom==false)
@@ -476,11 +435,10 @@ void MainWindow::onActionConnectClicked()
     closeNetCom();
     return;
   }
-
+  enableAllUi(false);
   //查询一下所连接的固件版本，与当前设置的版本对比
   //提示用户版本信息
   //当version=0时，说明是uboot程序
-
 
   quint16 version=0xffff;
   ServoControl::readDeviceVersion(0,version,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
@@ -491,32 +449,70 @@ void MainWindow::onActionConnectClicked()
     QString verStr=QString::number(version);
     QString currentVersion=mp_userConfig->model.version.at(0);
 
-    if(currentVersion.contains(verStr))
-    {
-      //版本的一致
-      qDebug()<<"compare";
-    }
-    else
+    if(currentVersion.contains(verStr)==false)
     {
       //版本的不一致
       qDebug()<<"not compare";
-      QMessageBox::StandardButton rb = QMessageBox::question(this, "Warring",
-                                                             tr("current version:%1\n"
-                                                                "device version :%2\n"
-                                                                "the current version which you select is not matching\n"
-                                                                "do you still want to use version:%3?").arg(currentVersion).arg("V"+verStr).arg(currentVersion),
-                                                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+      QMessageBox::StandardButton rb;
+      rb = QMessageBox::question(this, "Warring",\
+                                 tr("current version:%1\n"\
+                                    "device version :%2\n"\
+                                    "the current version which you select is not matching\n"\
+                                    "do you still want to use version:%3?")\
+                                 .arg(currentVersion)\
+                                 .arg("V"+verStr)\
+                                 .arg(currentVersion),\
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
       if (rb == QMessageBox::No)
       {
         closeNetCom();
+        enableAllUi(true);
         return ;
       }
+
+    }
+    else
+    {
+      //版本的一致
+      qDebug()<<"compare";
     }
     m_versionBiger127=version>=128?true:false;
     //更新每一个页面的参数
     if(m_isOpenCom)
     {
       qDebug()<<"connect return value:"<<error;
+
+      //读硬件ID
+      if(readPowerId()==false)//读power id没有成功
+      {
+        QMessageBox::information(0,tr("warnning"),tr("read powerboard id error\n1.check powerboard \nor 2 set menu->autoload false"));
+        enableAllUi(true);
+        closeNetCom();
+        return;
+      }
+      readControlId();
+      if(setPowerLimitMap(m_powerId)==false)
+      {
+        enableAllUi(true);
+        closeNetCom();
+        qDebug()<<"cannot set power limit map";
+        return;
+      }
+      qDebug()<<"-----------------get data--------------------";
+      for(int i=0;i<m_powerLimitMapList.count();i++)
+      {
+        qDebug()<<"axis="<<i;
+        QMapIterator<QString ,PowerBoardLimit> mapIt(m_powerLimitMapList.at(i));
+        while (mapIt.hasNext()) {
+          mapIt.next();
+          qDebug()<<mapIt.key()<<" max="<<mapIt.value().max<<" min="<<mapIt.value().min;
+        }
+      }
+      for(int i=0;i<m_samplingData.types().count();i++)
+      {
+        qDebug()<<"axis:"<<i+1<<"type="<<m_samplingData.types().at(i)<<" value="<<m_samplingData.values().at(i);
+      }
+
       uiStatus->btn_connect->setToolTip(tr("com ok"));
       uiStatus->btn_connect->setIcon(QIcon(ICON_FILE_PATH+ICON_STATUS_CONNECT));
 
@@ -524,27 +520,22 @@ void MainWindow::onActionConnectClicked()
       onTreeWidgetItemClicked(ui->treeWidget->currentItem(),0);
       uiStatus->warningMessge->setText(tr(""));
 
-//      //读伺服状态，更新到绘图中的控件
-//      QList<ServoStatus>statusList;
-//      ServoStatus sta;
-//      for(int i=0;i<mp_userConfig->model.axisCount;i++)
-//      {
-//        sta.currentModeIndex=ServoControl::servoCurrentUserTaskMode(i,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
-//        sta.isOn=ServoControl::checkServoIsReady(i,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);//读是否上伺服
-//        statusList.append(sta);
-//      }
       m_plotWave->updateCurrentServoStatus();
       enableAllUi(true);
 
       //开启定时器定时检查状态及断线情况
       qDebug()<<"timer start";
       m_timer->start();
-      for(int i=0;i<ui->stackedWidget->count();i++)
-      {
-        AbstractFuncWidget *absWidget;
-        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
-        absWidget->onActionReadFuncValueFromRam();
-      }
+//      for(int i=0;i<ui->stackedWidget->count();i++)
+//      {
+//        AbstractFuncWidget *absWidget;
+//        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
+//        absWidget->onActionReadFuncValueFromRam();
+//      }
+//      AbstractFuncWidget *absWidget;
+//      absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->currentWidget());
+//      absWidget->onActionReadFuncValueFromRam();
+
       m_actConfigNew->setEnabled(false);//禁用新建版本
     }
 
@@ -569,6 +560,7 @@ void MainWindow::onActionConnectClicked()
     closeNetCom();
     setComConnectStatus(false);
     m_actConfigNew->setEnabled(true);//使能新建版本
+    enableAllUi(true);
     return;
   }
   ui->progressBar->setVisible(false);
@@ -789,6 +781,7 @@ void MainWindow::onActionFile2ServoClicked()
         return;
       }
 
+      qDebug()<<"begin hardware checked.....";
       hardwareValid=check.checkHardwareValid(tree,m_powerLimitMapList);
       if(hardwareValid==false)
       {
@@ -1992,6 +1985,7 @@ void MainWindow::createActions(void)
   m_actUserLogin->setText(tr("UserRole"));
   m_actUserLogin->setToolTip(tr("UserRole setting"));
   m_actUserLogin->setStatusTip(tr("UserRole setting"));
+  m_actUserLogin->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_USER_LOGIN));
   connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
 
   m_actAutoLoad=new QAction(this);
@@ -2393,8 +2387,6 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   DownloadDialog::delayms(20);
   ui->progressBar->hide();
   updateStartUpMessage(tr(">>finish update"));
-
-  ui->treeWidget->topLevelItem(2)->setHidden(true);
 }
 
 void MainWindow::createHistoryAction()
@@ -2536,7 +2528,6 @@ bool MainWindow::openNetCom()
   COM_ERROR error=COM_OK;
   bool isOpenCom=true;
   ui->progressBar->setVisible(true);
-  enableAllUi(false);
   error=static_cast<COM_ERROR>(GTSD_CMD_Open(updateProgessBarWhenConnectClicked,(void*)ui->progressBar,static_cast<COM_TYPE>(mp_userConfig->com.id)));
   if(error!=COM_OK)//没有连上
   {
@@ -2619,7 +2610,7 @@ void MainWindow::readSettings()
 
   settings.beginGroup("UserRole");
   UserRole::UserRoleType type;
-  type=(UserRole::UserRoleType)settings.value("userType",0).toInt();
+  type=(UserRole::UserRoleType)(settings.value("userType",0).toInt());
   m_userRole->setUserType(type);
   settings.endGroup();
   qDebug()<<"read type="<<type;
@@ -2638,36 +2629,62 @@ void MainWindow::readSettings()
 bool MainWindow::readPowerId()
 {
   //目前先根据配置来决定ID
-  QString modelName=mp_userConfig->model.modelName;
-  qDebug()<<"model name ="<<modelName;
-  if((modelName=="GTSD41")||(modelName=="GTSD42"))
+  if(m_autoLoad==false)
   {
-    m_powerId=21000509;
+    QString modelName=mp_userConfig->model.modelName;
+    qDebug()<<"model name ="<<modelName;
+    if((modelName=="GTSD41")||(modelName=="GTSD42"))
+    {
+      m_powerId=21000509;
+    }
+    else if(modelName=="GTSD61")
+    {
+      m_powerId=21000510;
+    }
   }
-  else if(modelName=="GTSD61")
+  else//根据实际硬件读ID
   {
-    m_powerId=21000510;
+    EpromManage epromMaster;
+    bool isOK;
+    m_powerId=epromMaster.readId(EpromManage::EADD_POWER,&isOK);
+    if(!isOK)
+      return false;
   }
   return true;
 }
 
 bool MainWindow::readControlId()
 {
-  m_controlId=1000;
+  //目前先根据配置来决定ID
+  if(m_autoLoad==false)
+  {
+    m_controlId=1000;
+  }
+  else//根据实际硬件读ID
+  {
+    EpromManage epromMaster;
+    bool isOK;
+    m_controlId=epromMaster.readId(EpromManage::EADD_CONTROL,&isOK);
+    if(!isOK)
+      return false;
+  }
   return true;
 }
 
-void MainWindow::setPowerLimitMap(quint32 id)
+bool MainWindow::setPowerLimitMap(quint32 id)
 {
   bool isOK;
   QString powerFileName=RESOURCE_FILE_PATH+"DataBase/PowerBoard.ui";
   QTreeWidget *powerTree=QtTreeManager::createTreeWidgetFromXmlFile(powerFileName);
-  PowerTreeManage treeManage(powerTree);
-  //更新硬件约束
-  treeManage.updatePowerLimitMapList(id,m_powerLimitMapList);
-  //更新电阻值
-  m_samplingData=treeManage.samplingDataInfo(id,&isOK);
+  {
+    PowerTreeManage treeManage(powerTree);
+    //更新硬件约束
+    treeManage.updatePowerLimitMapList(id,m_powerLimitMapList);
+    //更新电阻值
+    m_samplingData=treeManage.samplingDataInfo(id,&isOK);
+  }
   powerTree->clear();
   delete powerTree;
-
+  qDebug()<<"isOK "<<isOK;
+  return isOK;
 }

@@ -9,8 +9,19 @@ Rectangle {
     width: 1000;
     height: 600;
     color: "#F0F0F0"
+    property var inputEditArray:null;
     property color arrowColor: "blue"
     property color arrowBrushColor: "yellow"
+    Component.onCompleted: {
+        inputEditArray=[
+                    pid.pEdit,
+                    pid.iEdit,
+                    speedLimit.absEdit,
+                    speedLimit.posEdit,
+                    speedLimit.negEdit
+                ];
+    }
+
     //测试按钮
 //    Rectangle{
 //        color:"green";
@@ -56,32 +67,41 @@ Rectangle {
         anchors.bottom: saturation1.top;
         anchors.bottomMargin: -15;
         visible: false;
-        onAbsEditTextChanged: {
-            console.log("abs edit changed ....");
-            factory.dataTree.setTopLevelText(2,1,absEditText);
-        }
-        onPosEditTextChanged: {
-            console.log("pos edit changed ....");
-            factory.dataTree.setTopLevelText(3,1,posEditText);
-        }
-        onNegEditTextChanged: {
-            console.log("neg edit changed ....");
-            factory.dataTree.setTopLevelText(4,1,negEditText);
-        }
+
+        absRowIndex: 2;
+        posRowIndex: 3;
+        negRowIndex: 4;
+        srcTree: factory.dataTree;
+//        onAbsEditTextChanged: {
+//            console.log("abs edit changed ....");
+//            factory.dataTree.setTopLevelText(2,1,absEditText);
+//        }
+//        onPosEditTextChanged: {
+//            console.log("pos edit changed ....");
+//            factory.dataTree.setTopLevelText(3,1,posEditText);
+//        }
+//        onNegEditTextChanged: {
+//            console.log("neg edit changed ....");
+//            factory.dataTree.setTopLevelText(4,1,negEditText);
+//        }
     }
     PidControler{
         id:pid;
         anchors.horizontalCenter: parent.horizontalCenter;
         anchors.horizontalCenterOffset: -30;
         anchors.verticalCenter: parent.verticalCenter;
-        onPEditTextChanged: {
-            console.log("PPPPP edit changed ....");
-            factory.dataTree.setTopLevelText(0,1,pEditText);
-        }
-        onIEditTextChanged: {
-            console.log("IIII edit changed ....");
-            factory.dataTree.setTopLevelText(1,1,iEditText);
-        }
+
+        pRowIndex:0;
+        iRowIndex:1;
+        dataTree:factory.dataTree;
+//        onPEditTextChanged: {
+//            console.log("PPPPP edit changed ....");
+//            factory.dataTree.setTopLevelText(0,1,pEditText);
+//        }
+//        onIEditTextChanged: {
+//            console.log("IIII edit changed ....");
+//            factory.dataTree.setTopLevelText(1,1,iEditText);
+//        }
     }
     SegmentArrow{
         id:arrow4;
@@ -234,18 +254,26 @@ Rectangle {
             console.log("value change....");
             updateEditValueFromTree();
         }
-    }
-    function updateEditValueFromTree(){
-        pid.pEditText=factory.dataTree.textTopLevel(0,1);
-        pid.iEditText=factory.dataTree.textTopLevel(1,1);
-        speedLimit.absEditText=factory.dataTree.textTopLevel(2,1);
-        speedLimit.posEditText=factory.dataTree.textTopLevel(3,1);
-        speedLimit.negEditText=factory.dataTree.textTopLevel(4,1);
-        pid.pEditTextColor="black";
-        pid.iEditTextColor="black";
-        speedLimit.absEditTextColor="black";
-        speedLimit.posEditTextColor="black";
-        speedLimit.negEditTextColor="black";
+        onQmlEditUiStateChanged:{
+            if(hasError)
+                inputEditArray[row].setErrorState();
+            else
+                inputEditArray[row].resetbackground();
+        }
+        function updateEditValueFromTree(){
+            pid.pEditText=factory.dataTree.textTopLevel(0,1);
+            pid.iEditText=factory.dataTree.textTopLevel(1,1);
+            speedLimit.absEditText=factory.dataTree.textTopLevel(2,1);
+            speedLimit.posEditText=factory.dataTree.textTopLevel(3,1);
+            speedLimit.negEditText=factory.dataTree.textTopLevel(4,1);
+    //        pid.pEditTextColor="black";
+    //        pid.iEditTextColor="black";
+    //        speedLimit.absEditTextColor="black";
+    //        speedLimit.posEditTextColor="black";
+    //        speedLimit.negEditTextColor="black";
+            speedLimit.restEditBackground();
+            pid.resetEditBackground();
+        }
     }
 
 }

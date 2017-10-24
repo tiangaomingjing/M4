@@ -26652,6 +26652,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -27837,6 +27843,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -31095,6 +31107,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -32280,6 +32298,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -35538,6 +35562,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -36723,6 +36753,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -39981,6 +40017,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -41166,6 +41208,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -44424,6 +44472,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -45609,6 +45663,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>
@@ -48867,6 +48927,12 @@
                <property name="text">
                 <string/>
                </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="text">
+                <string>axis.cur.sampling</string>
+               </property>
                <item>
                 <property name="text">
                  <string>hall current sensor</string>
@@ -50052,6 +50118,12 @@
                   </property>
                   <property name="text">
                    <string/>
+                  </property>
+                  <property name="text">
+                   <string/>
+                  </property>
+                  <property name="text">
+                   <string>axis.cur.sampling.shunt.res.value</string>
                   </property>
                  </item>
                  <item>

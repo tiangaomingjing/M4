@@ -452,12 +452,14 @@ bool AbstractFuncWidget::checkPrm()
   bool ok=true;
   if(m_uiTree!=NULL)
   {
+    const QList<QMap<QString ,PowerBoardLimit>> *powerBoardLimitMapList;
     QTreeWidgetItem *item;
     QString name;
     double value;
     double kgain;
     double max;
     double min;
+    powerBoardLimitMapList=mp_mainWindow->getPowerBoardLimitMapList();
     for(int i=0;i<m_uiTree->topLevelItemCount();i++)
     {
       item=m_uiTree->topLevelItem(i);
@@ -465,6 +467,8 @@ bool AbstractFuncWidget::checkPrm()
       kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
       value=kgain*item->text(COL_FUNC_VALUE).toDouble();
       qDebug()<<"value="<<value;
+
+      //1 根据界面最大最小值进行约束
       max=item->text(COL_FUNC_UPLIMIT).toDouble();
       min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
       //发送消息到qml，还原颜色
@@ -477,6 +481,26 @@ bool AbstractFuncWidget::checkPrm()
         emit showMessage(tr("Range Error %1 ").arg(item->text(COL_FUNC_VALUE)));
         qDebug()<<"error:"<<name;
         break;
+      }
+
+      //2 根据实际硬件进行约束
+      const QMap<QString ,PowerBoardLimit> *limit;
+      limit=&powerBoardLimitMapList->at(m_axisNumber);
+
+      if(limit->contains(name))
+      {
+        qDebug()<<"check power board "<<name;
+        min=limit->value(name).min;
+        max=limit->value(name).max;
+        if(!(value>=min&&value<=max))
+        {
+          ok=false;
+          //发送错误消息到qml界面，变红色
+          emit qmlEditUiStateChanged(i,true);
+          emit showMessage(tr("Range Error %1 ").arg(item->text(COL_FUNC_VALUE)));
+          qDebug()<<"error:"<<name;
+          break;
+        }
       }
       qDebug()<<name<<"-----OK";
     }

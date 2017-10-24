@@ -35,9 +35,11 @@
 #define ICON_MENU_RESETSERVO "menu_reload.png"
 #define ICON_MENU_RESTORESETTING "menu_restoresetting.png"
 #define ICON_MENU_DOWNLOAD "menu_download.png"
+#define ICON_MENU_USER_LOGIN "menu_user_login.png"
 #define ICON_TREE_GLOBAL_ANALYSIS "tree_analysis.png"
 #define ICON_TREE_GLOBAL "tree_global.png"
 #define ICON_TREE_GLOBAL_IO "tree_iomodule.png"
+
 
 #define ICON_STATUS_CONNECT "connect.png"
 #define ICON_STATUS_DISCONNECT "disconnect.png"

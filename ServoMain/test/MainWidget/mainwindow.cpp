@@ -131,21 +131,23 @@ MainWindow::MainWindow(QWidget *parent) :
   bool isOK;
   PowerTreeManage *pwrManage=new PowerTreeManage(powerTree);
   QList<QMap<QString ,PowerBoardLimit>>powerLimitMapList;
+  QList<QMap<QString ,PowerBoardLimit>>powerLimitMapList2;
   SamplingDataInfo samplingData;
 
   pwrManage->updatePowerLimitMapList(id,powerLimitMapList);
   samplingData=pwrManage->samplingDataInfo(id,&isOK);
 
+  powerLimitMapList2=powerLimitMapList;
   for(int i=0;i<samplingData.types().count();i++)
   {
     qDebug()<<"axis:"<<i+1<<"type="<<samplingData.types().at(i)<<" value="<<samplingData.values().at(i);
   }
 
   qDebug()<<"-----------------get data--------------------";
-  for(int i=0;i<powerLimitMapList.count();i++)
+  for(int i=0;i<powerLimitMapList2.count();i++)
   {
     qDebug()<<"axis="<<i;
-    QMapIterator<QString ,PowerBoardLimit> mapIt(powerLimitMapList.at(i));
+    QMapIterator<QString ,PowerBoardLimit> mapIt(powerLimitMapList2.at(i));
     while (mapIt.hasNext()) {
       mapIt.next();
       qDebug()<<mapIt.key()<<" max="<<mapIt.value().max<<" min="<<mapIt.value().min;

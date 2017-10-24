@@ -84,6 +84,7 @@ bool PrmCheck::checkXmlFilePropertyValid( QTreeWidget *xmlTree, QTreeWidget *pty
 bool PrmCheck::checkHardwareValid( QTreeWidget *xmlTree,const QList<QMap<QString, PowerBoardLimit> > &valueMapList)
 {
   bool ret=true;
+  int outValue=0;
   int axisCount=xmlTree->topLevelItemCount();
   if(axisCount!=valueMapList.count())
   {
@@ -94,10 +95,12 @@ bool PrmCheck::checkHardwareValid( QTreeWidget *xmlTree,const QList<QMap<QString
   {
     //轴与轴对应检查
     QTreeWidgetItem *axisItem=xmlTree->topLevelItem(i)->clone();
+    QTreeWidget *treeWidget=new QTreeWidget;
+    treeWidget->addTopLevelItem(axisItem);
     const QMap<QString, PowerBoardLimit>&valueMap=valueMapList.at(i);
-
+    qDebug()<<"check powerboard axisnum="<<i+1;
     {
-      QTreeWidgetItemIterator it(axisItem);
+      QTreeWidgetItemIterator it(treeWidget);
       QTreeWidgetItem *item;
       while(*it)
       {
@@ -107,23 +110,28 @@ bool PrmCheck::checkHardwareValid( QTreeWidget *xmlTree,const QList<QMap<QString
         {
           if(valueMap.contains(item->text(PRM_COL_NAME)))
           {
-            qDebug()<<"map text "<<item->text(PRM_COL_NAME);
+            qDebug()<<"check:"<<item->text(PRM_COL_NAME);
             double max;
             double min;
             double value;
             max=valueMap.value(item->text(PRM_COL_NAME)).max;
             min=valueMap.value(item->text(PRM_COL_NAME)).min;
-
             value=item->text(PRM_COL_VALUE).toDouble();
+
+            outValue++;
+            if(outValue>100)
+              outValue=0;
+            emit checkingProgress(item->text(PRM_COL_NAME),outValue);
+
             if((max>=value)&&(value>=min))
             {
-              //            qDebug()<<ptyName<<" value="<<value<<"fits the  range ("<<minV<<"~"<<maxV<<")";
+              qDebug()<<"OK:"<<item->text(PRM_COL_NAME)<<" value="<<value<<"fits the  range ("<<min<<"~"<<max<<")";
               ret=true;
             }
             else
             {
               qDebug()<<"out of range";
-              QMessageBox::information(0,tr("Warring"),tr("axisNum=%1 prm:%2 value=%3 is out of range (%4~%5)")
+              QMessageBox::information(0,tr("Warring"),tr("axisNum=%1\nprm:%2 value=%3\nis out of range (%4~%5)")
                                        .arg(i+1).
                                        arg(item->text(PRM_COL_NAME)).
                                        arg(value).
@@ -137,9 +145,9 @@ bool PrmCheck::checkHardwareValid( QTreeWidget *xmlTree,const QList<QMap<QString
         it++;
       }
     }
-
-    delete axisItem;
-    if(ret=false)
+    treeWidget->clear();
+    delete treeWidget;
+    if(ret==false)
       break;
   }
 
@@ -184,7 +192,7 @@ bool PrmCheck::checkPropertyValid(QTreeWidgetItem *srcItem,QTreeWidget *ptyLimit
             QTreeWidgetItem *top;
             top=GlobalFunction::findTopLevelItem(srcItem);
             axisNum=m_xmlDownLoadTree->indexOfTopLevelItem(top);
-            QMessageBox::information(0,tr("Warring"),tr("axisNum=%1 prm:%2 value=%3 is out of range (%4~%5)").arg(axisNum+1).arg(ptyName).arg(value).arg(minV).arg(maxV));
+            QMessageBox::information(0,tr("Warring"),tr("axisNum=%1\nprm:%2 value=%3\nis out of range (%4~%5)").arg(axisNum+1).arg(ptyName).arg(value).arg(minV).arg(maxV));
             ret=false;
           }
           break;

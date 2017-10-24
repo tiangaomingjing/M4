@@ -229,7 +229,7 @@ Rectangle {
                        RowLayout{
                            anchors.fill: parent;
                            Text{
-                               text:qsTr("编码器分辨率:")
+                               text:qsTr("编码器线数:")
                            }
                            TextField{
                                id:m_lineNumberInput;
@@ -400,6 +400,12 @@ Rectangle {
         anchors.margins: 0;
         spacing: 10;
 
+        Item{
+            Layout.fillHeight: true;
+            Layout.fillWidth: true;
+            width: 100;
+        }
+
         CircularGauge {
             id: gauge;
             implicitHeight: 400;
@@ -560,6 +566,11 @@ Rectangle {
                 text:qsTr("电气角");
                 horizontalAlignment: Text.AlignHCenter;
             }
+        }
+        Item{
+            Layout.fillHeight: true;
+            Layout.fillWidth: true;
+            width: 100;
         }
     }
 

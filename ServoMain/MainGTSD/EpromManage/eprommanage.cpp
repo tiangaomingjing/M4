@@ -13,6 +13,7 @@ EpromManage::EpromManage(QObject *parent) : QObject(parent)
  */
 quint32 EpromManage::readId(EpromAddress addr, bool *isOk)
 {
+  *isOk=false;
   return 0;
 }
 

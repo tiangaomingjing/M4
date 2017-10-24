@@ -164,6 +164,7 @@ bool PowerTreeManage::updatePowerLimitMapList(const quint32 id, QList<QMap<QStri
 SamplingDataInfo PowerTreeManage::samplingDataInfo(const quint32 id, bool *isOK)
 {
   SamplingDataInfo samplingInfo;
+  *isOK=true;
   if(m_pwrTarget==NULL)
   {
     m_pwrTarget=findTargetBoard(id);
@@ -210,11 +211,12 @@ SamplingDataInfo PowerTreeManage::samplingDataInfo(const quint32 id, bool *isOK)
     else
     {
       QMessageBox::information(0,tr("error"),tr("cannot find Sampling type item"));
+      *isOK=false;
     }
     types.append(type);
     values.append(value);
   }
-  *isOK=true;
+
   samplingInfo.setTypes(types);
   samplingInfo.setValues(values);
   return samplingInfo;

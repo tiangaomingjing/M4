@@ -400,6 +400,12 @@ Rectangle {
         anchors.margins: 0;
         spacing: 10;
 
+        Item{
+            Layout.fillHeight: true;
+            Layout.fillWidth: true;
+            width: 100;
+        }
+
         CircularGauge {
             id: gauge;
             implicitHeight: 400;
@@ -560,6 +566,11 @@ Rectangle {
                 text:qsTr("电气角");
                 horizontalAlignment: Text.AlignHCenter;
             }
+        }
+        Item{
+            Layout.fillHeight: true;
+            Layout.fillWidth: true;
+            width: 100;
         }
     }
 
