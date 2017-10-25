@@ -198,6 +198,7 @@ Rectangle {
         anchors.verticalCenter:  arrow7.bottom;
         anchors.verticalCenterOffset: -5;
         anchors.horizontalCenter: saturation1.horizontalCenter;
+        anchors.horizontalCenterOffset: -10;
         width: 100;
         height: 40;
         name.text:qsTr("速度反馈");

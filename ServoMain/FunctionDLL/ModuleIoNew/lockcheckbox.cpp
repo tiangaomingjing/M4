@@ -15,7 +15,7 @@ LockCheckBox::LockCheckBox(int axisNum,QWidget *parent) : QWidget(parent),
   QHBoxLayout *hlayout=new QHBoxLayout;
   m_image=new QLabel(this);
 //  m_image->setPixmap(QPixmap(":/Lock_Locked.png"));
-  m_image->setText(tr("Motor Brake Polarity\n\n%1").arg(axisNum));
+  m_image->setText(tr("Motor Brake Polarity\n\naxis_%1").arg(axisNum+1));
   m_image->setAlignment(Qt::AlignCenter);
   m_box=new QCheckBox(this);
   QSpacerItem *spacer=new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);

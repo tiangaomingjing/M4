@@ -262,7 +262,7 @@ Rectangle {
     }
     SegmentArrow{
         id:arrow16;
-        points: [Qt.point(0,138),Qt.point(285,138),Qt.point(285,276)];
+        points: [Qt.point(0,138),Qt.point(305,138),Qt.point(305,276)];
         anchors.left: m_kga.right;
         anchors.verticalCenter: m_kga.verticalCenter;
         aText: "+";

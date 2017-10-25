@@ -55,6 +55,7 @@ public:
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
   const QList<QMap<QString ,PowerBoardLimit>> *getPowerBoardLimitMapList(void) const {return &m_powerLimitMapList;}
+  const SamplingDataInfo *getPowerBoardLimitSamplingData(void) const{return &m_samplingData;}
   bool getComOpenState(void){return m_isOpenCom;}
   void stopTimer(){m_timer->stop();}
   void startTimer(){m_timer->start();}
@@ -214,7 +215,7 @@ private:
   QAction *m_actResetServo;
   QAction *m_actRestoreFactorySetting;
 
-  QAction *m_actNormalizeTree;
+//  QAction *m_actNormalizeTree;
 
   //--------help action------
   QAction *m_actAboutConfig;

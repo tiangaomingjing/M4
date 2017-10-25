@@ -27,13 +27,15 @@ DEFINES += CFGMOTOR_LIBRARY
 SOURCES += cfgmotor.cpp \
     ../../globaldef.cpp \
     ../../MainGTSD/NavigationConfig/DataBase/SqltableModel/sqltablemodel.cpp \
-    ../../MainGTSD/MotorSqlModel/motorsqlmodel.cpp
+    ../../MainGTSD/MotorSqlModel/motorsqlmodel.cpp \
+    ../../MainGTSD/PowerTreeManage/powertreemanage.cpp
 
 HEADERS += cfgmotor.h\
         cfgmotor_global.h \
     ../../globaldef.h \
     ../../MainGTSD/NavigationConfig/DataBase/SqltableModel/sqltablemodel.h \
-    ../../MainGTSD/MotorSqlModel/motorsqlmodel.h
+    ../../MainGTSD/MotorSqlModel/motorsqlmodel.h \
+    ../../MainGTSD/PowerTreeManage/powertreemanage.h
 
 unix {
     target.path = /usr/lib

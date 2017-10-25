@@ -61,7 +61,7 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.4"
+#define SDT_VERSION "1.1.5"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -485,7 +485,7 @@ void MainWindow::onActionConnectClicked()
       //读硬件ID
       if(readPowerId()==false)//读power id没有成功
       {
-        QMessageBox::information(0,tr("warnning"),tr("read powerboard id error\n1.check powerboard \nor 2 set menu->autoload false"));
+        QMessageBox::information(0,tr("warnning"),tr("read powerboard id error\n1.check powerboard \nor\n2 set menu->autoload false"));
         enableAllUi(true);
         closeNetCom();
         return;
@@ -1779,7 +1779,7 @@ void MainWindow::createMenus(void)
   m_menuView->addAction(m_actResetView);
   //--------------tool menu-------------------
   m_menuTool=menuBar()->addMenu(tr("Tool(&T)"));
-  m_menuTool->addAction(m_actXmUpdate);
+
 
   m_actFileservo=new QAction(QIcon(ICON_FILE_PATH+ICON_MENU_FILE2SERVO),tr("File2Servo"),this);
   connect(m_actFileservo,SIGNAL(triggered(bool)),this,SLOT(onActionFile2ServoClicked()));
@@ -1787,20 +1787,26 @@ void MainWindow::createMenus(void)
   connect(m_actServofile,SIGNAL(triggered(bool)),this,SLOT(onActionServo2FileClicked()));
   m_menuTool->addAction(m_actFileservo);
   m_menuTool->addAction(m_actServofile);
-  m_menuTool->addAction(m_actFPGAControl);
+  m_menuTool->addSeparator();
 //  m_menuTool->addAction(m_actAxisClone);
+  m_menuTool->addAction(m_actXmUpdate);
   m_menuTool->addAction(m_actAxisFileClone);
   m_menuTool->addSeparator();
   m_menuTool->addAction(m_actFuncConfig);
   m_menuTool->addAction(m_actFuncSave);
-  m_menuTool->addAction(m_actNormalizeTree);
+  m_menuTool->addSeparator();
+//  m_menuTool->addAction(m_actNormalizeTree);
   QMenu *menuDsp=new QMenu(tr("DSPUpdate"),this);
+  menuDsp->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_DSP_UPDATE));
   m_menuTool->addMenu(menuDsp);
   menuDsp->addAction(m_actProgramUpdate);
   menuDsp->addAction(m_actResetServo);
   menuDsp->addAction(m_actRestoreFactorySetting);
+  m_menuTool->addAction(m_actFPGAControl);
+  m_menuTool->addSeparator();
   //增加首选项
-  m_menuPreference=new QMenu(tr("Preference"),this);
+  m_menuPreference=new QMenu(tr("Preference..."),this);
+  m_menuPreference->setIcon(QIcon(ICON_FILE_PATH+ICON_CHILD));
   m_menuPreference->addAction(m_actUserLogin);
   m_menuPreference->addAction(m_actAutoLoad);
   m_menuTool->addMenu(m_menuPreference);
@@ -1958,12 +1964,12 @@ void MainWindow::createActions(void)
   m_actRestoreFactorySetting->setStatusTip(tr("Restore Factory setting"));
   connect(m_actRestoreFactorySetting,SIGNAL(triggered(bool)),this,SLOT(onActionRestoreFactorySettingClicked()));
 
-  m_actNormalizeTree=new QAction(this);
-  m_actNormalizeTree->setText(tr("NormalizeTree"));
-//  m_actNormalizeTree->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_RESETSERVO));
-  m_actNormalizeTree->setToolTip(tr("Normalize Tree Content"));
-  m_actNormalizeTree->setStatusTip(tr("Normalize Tree Content"));
-  connect(m_actNormalizeTree,SIGNAL(triggered(bool)),this,SLOT(onActionNormalizeTreeClicked()));
+//  m_actNormalizeTree=new QAction(this);
+//  m_actNormalizeTree->setText(tr("NormalizeTree"));
+////  m_actNormalizeTree->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_RESETSERVO));
+//  m_actNormalizeTree->setToolTip(tr("Normalize Tree Content"));
+//  m_actNormalizeTree->setStatusTip(tr("Normalize Tree Content"));
+//  connect(m_actNormalizeTree,SIGNAL(triggered(bool)),this,SLOT(onActionNormalizeTreeClicked()));
 
 
   //help action
@@ -2485,7 +2491,7 @@ void MainWindow::setUbootModeUi(bool sta)
 
   //程序烧写
   m_actResetServo->setEnabled(state);
-  m_actNormalizeTree->setEnabled(state);
+//  m_actNormalizeTree->setEnabled(state);
 
   m_menuHelp->setEnabled(state);
   m_menuConfigRecent->setEnabled(state);
@@ -2619,6 +2625,7 @@ void MainWindow::readSettings()
   m_autoLoad=settings.value("Auto",false).toBool();
   settings.endGroup();
   qDebug()<<"auto load :"<<m_autoLoad;
+  m_actAutoLoad->setChecked(m_autoLoad);
 }
 
 //bool MainWindow::prmNeedChecked()

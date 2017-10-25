@@ -262,7 +262,7 @@ Rectangle {
     }
     SegmentArrow{
         id:arrow16;
-        points: [Qt.point(0,138),Qt.point(285,138),Qt.point(285,276)];
+        points: [Qt.point(0,138),Qt.point(305,138),Qt.point(305,276)];
         anchors.left: m_kga.right;
         anchors.verticalCenter: m_kga.verticalCenter;
         aText: "+";
@@ -274,7 +274,7 @@ Rectangle {
         id:m_realPostion
         width:60;
         height: 60;
-        name.text: "位置信号"
+        name.text: "位置反馈"
         anchors.top: m_pid.bottom;
         anchors.topMargin: 20;
         anchors.horizontalCenter: m_pid.horizontalCenter;
