@@ -109,7 +109,7 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_userConfigProxyQml(NULL),
   m_userRole(new UserRole(UserRole::USER_GENERAL,parent)),
   m_gPtyLimitTree(NULL),
-  m_versionBiger127(false)
+  m_versionNeedCheck(false)
 {
   ui->setupUi(this);
   qRegisterMetaType<UserRole::UserRoleType>("UserRoleType");//信号与槽发送自己定义的数据
@@ -448,6 +448,7 @@ void MainWindow::onActionConnectClicked()
   {
     QString verStr=QString::number(version);
     QString currentVersion=mp_userConfig->model.version.at(0);
+    qDebug()<<"currentVersion ="<<currentVersion;
 
     if(currentVersion.contains(verStr)==false)
     {
@@ -476,7 +477,10 @@ void MainWindow::onActionConnectClicked()
       //版本的一致
       qDebug()<<"compare";
     }
-    m_versionBiger127=version>=128?true:false;
+    bool hardIsBigger127=version>=128?true:false;
+    bool softIsBigger127=(currentVersion.remove(0,1).toInt())>=128?true:false;
+    m_versionNeedCheck=(softIsBigger127&&hardIsBigger127);
+    qDebug()<<"hbiger"<<hardIsBigger127<<"sbigger"<<softIsBigger127<<"need check"<<m_versionNeedCheck;
     //更新每一个页面的参数
     if(m_isOpenCom)
     {
@@ -609,7 +613,7 @@ void MainWindow::onActionDisConnectClicked()
   m_actConfigSave->setEnabled(true);
   m_actConfigSaveAs->setEnabled(true);
   m_menuConfigRecent->setEnabled(true);
-  m_versionBiger127=false;
+  m_versionNeedCheck=false;
 }
 void MainWindow::onActionViewNavigation(void)
 {
@@ -718,7 +722,9 @@ void MainWindow::onActionFile2ServoClicked()
     }
   }
 
-  if((dspVersion>=SPLIT_VERSION))
+  QString currentVersion=mp_userConfig->model.version.at(0);
+  bool softIsBigger127=(currentVersion.remove(0,1).toInt())>127?true:false;
+  if((dspVersion>=SPLIT_VERSION)&&softIsBigger127)//软件与硬件版本都大于127
   {
     //按128之后处理
     //判断第一个节点是否有xmlversion记录(128之后才有)
@@ -1085,6 +1091,7 @@ void MainWindow::onActionResetDSPClicked()
   //使当前的窗口生效
   absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->currentWidget());
   absWidget->setActiveNow(true);
+  absWidget->onActionReadFuncValueFromRam();
 }
 
 void MainWindow::onActionNormalizeTreeClicked()
@@ -2393,6 +2400,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   DownloadDialog::delayms(20);
   ui->progressBar->hide();
   updateStartUpMessage(tr(">>finish update"));
+  onUserRoleChanged();
 }
 
 void MainWindow::createHistoryAction()
@@ -2630,7 +2638,7 @@ void MainWindow::readSettings()
 
 //bool MainWindow::prmNeedChecked()
 //{
-//  return (m_versionBiger127&&(m_userRole->userType()==UserRole::USER_GENERAL));
+//  return (m_versionNeedCheck&&(m_userRole->userType()==UserRole::USER_GENERAL));
 //}
 
 bool MainWindow::readPowerId()

@@ -50,7 +50,7 @@ public:
   QTreeWidget *getFunctionExtensionTree(void){return mp_funcExtension;}
   QTreeWidget *getPtyLimitTree(){return m_gPtyLimitTree;}
   MotorSqlModel *getMotorSqlModel(void){return m_motorSqlModel;}
-  bool prmNeedChecked(){return m_versionBiger127;}
+  bool prmNeedChecked(){return m_versionNeedCheck;}
   UserRole *getUserRole(){ return m_userRole;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
@@ -273,7 +273,7 @@ private:
   bool m_autoLoad;
 
   QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
-  bool m_versionBiger127;//比127版本大，用于判断是否要作参数范围检查
+  bool m_versionNeedCheck;//硬件与软件 比127版本大，用于判断是否要作参数范围检查
   QList<QMap<QString ,PowerBoardLimit>>m_powerLimitMapList;//功率板的约束 连机时读取ID更新
   SamplingDataInfo m_samplingData;//每一个轴的采样电阻信息
   quint32 m_powerId;

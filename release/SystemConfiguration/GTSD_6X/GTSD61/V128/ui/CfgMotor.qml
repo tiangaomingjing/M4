@@ -212,6 +212,7 @@ Rectangle{
     Item{
         Component.onCompleted: {
             console.log("m_motorDataBaseUi on completed");
+            m_listView_company.currentIndex=0;
         }
         id:m_motorDataBaseUi
         x:root.width+1000;
@@ -219,14 +220,14 @@ Rectangle{
         width: root.width;
         height: root.height;
         property var chineseNameMap: {
-            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"相电阻","Ldm":"D轴电感",
-            "Lqm":"Q轴电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
+            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"相电阻","Ldm":"D轴相电感",
+            "Lqm":"Q轴相电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
             "Tqr":"额定转矩","PHIm":"反电动势系数","Vmax":"最大电压"
         }
         property var unitNameMap: {
-            "Imax":"A","Irat":"A","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
+            "Imax":"A(peak)","Irat":"A(rms)","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
             "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"pair",
-            "Tqr":"N.m","PHIm":"mV/rpm","Vmax":"V"
+            "Tqr":"N.m","PHIm":"mVpeak/rpm","Vmax":"V"
         }
         property var prmIndex: {
             "PRM_IMAX":0,"PRM_IRAT":1,"PRM_SCT":2,"PRM_SRAT":3,"PRM_NOS":4,"PRM_RM":5,"PRM_LDM":6,
@@ -390,7 +391,7 @@ Rectangle{
                         delegate: companyDelegate;
                         focus: true;
                         clip: true;
-                        currentIndex:0;
+                        currentIndex:-1;
                         highlight: Rectangle{
                             color:enabled?pressColor:backgroundColor;
                         }
@@ -844,12 +845,13 @@ Rectangle{
                                 m_removeDialog.visible=false;
                                 m_normalDialog.visible=true;
                                 writeIndex=0;
+                                stop();
                                 driveMotor.onWriteFuncTreetoServoFlash();
                                 if(driveMotor.passChecked())
                                     driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
                                 else
                                     driveMotor.showMessage(qsTr("电机安装失败，请返回检查输入参数！"));
-                                stop();
+
                             }
                         }
                         Component.onCompleted: {

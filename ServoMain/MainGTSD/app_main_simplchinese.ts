@@ -1564,7 +1564,7 @@ SDT版本:%2
         <location filename="mainwindow.cpp" line="2000"/>
         <location filename="mainwindow.cpp" line="2001"/>
         <source>AutoLoad By ID</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">通过硬件ID自动加载</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="2020"/>

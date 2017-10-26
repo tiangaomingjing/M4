@@ -9,6 +9,18 @@ Rectangle {
     width: 1000;
     height: 600;
     color: "#F0F0F0";
+    property var inputEditArray: null;
+    Component.onCompleted: {
+        inputEditArray=[
+                    m_pid.pEdit,
+                    m_positionLimit.absEdit,
+                    m_positionLimit.posEdit,
+                    m_positionLimit.negEdit,
+                    m_kgv,
+                    m_kga
+                ]
+    }
+
     function replot(){
         m_positionLimit.replot();
         m_saturation.replot();
@@ -64,6 +76,9 @@ Rectangle {
         anchors.horizontalCenterOffset: -100;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.verticalCenterOffset: -20;
+
+        pRowIndex: 0;
+        dataTree: factory.dataTree;
     }
     SegmentArrow{
         id:arrow4;
@@ -216,6 +231,8 @@ Rectangle {
         anchors.verticalCenter: arrow13.verticalCenter;
         title: "速度前馈增益:";
         unit:"%"
+        tree: factory.dataTree;
+        rowIndex: 4;
     }
     SegmentArrow{
         id:arrow15;
@@ -240,10 +257,12 @@ Rectangle {
         anchors.verticalCenter: arrow14.verticalCenter;
         title: "加速度前馈增益:";
         unit:"%";
+        tree: factory.dataTree;
+        rowIndex: 5;
     }
     SegmentArrow{
         id:arrow16;
-        points: [Qt.point(0,138),Qt.point(285,138),Qt.point(285,276)];
+        points: [Qt.point(0,138),Qt.point(305,138),Qt.point(305,276)];
         anchors.left: m_kga.right;
         anchors.verticalCenter: m_kga.verticalCenter;
         aText: "+";
@@ -284,6 +303,12 @@ Rectangle {
         anchors.horizontalCenter: m_saturation.horizontalCenter;
         anchors.horizontalCenterOffset: 0;
         visible: false;
+
+        //input
+        absRowIndex: 1;
+        posRowIndex: 2;
+        negRowIndex: 3;
+        srcTree: factory.dataTree;
     }
     Text{
         text:"位置指令";
@@ -301,6 +326,13 @@ Rectangle {
             console.log("value change....");
             updateEditValueFromTree();
         }
+        onQmlEditUiStateChanged:{
+            if(hasError)
+                inputEditArray[row].setErrorState();
+            else
+                inputEditArray[row].resetbackground();
+        }
+
         function updateEditValueFromTree(){
             m_pid.pEditText=factory.dataTree.textTopLevel(0,1);
             m_positionLimit.absEditText=factory.dataTree.textTopLevel(1,1);
@@ -308,45 +340,50 @@ Rectangle {
             m_positionLimit.negEditText=factory.dataTree.textTopLevel(3,1);
             m_kgv.editText=factory.dataTree.textTopLevel(4,1);
             m_kga.editText=factory.dataTree.textTopLevel(5,1);
-            m_pid.pEditTextColor="black";
-            m_positionLimit.absEditTextColor="black";
-            m_positionLimit.posEditTextColor="black";
-            m_positionLimit.negEditTextColor="black";
-            m_kgv.editTextColor="black";
-            m_kga.editTextColor="black";
+
+//            m_positionLimit.absEditTextColor="black";
+//            m_positionLimit.posEditTextColor="black";
+//            m_positionLimit.negEditTextColor="black";
+//            m_kgv.editTextColor="black";
+//            m_kga.editTextColor="black";
+            m_pid.resetEditBackground();
+            m_positionLimit.restEditBackground();
+            m_kga.resetbackground();
+            m_kgv.resetbackground();
         }
     }
 
-    Connections{
-        target: m_pid;
-        onPEditTextChanged: {
-            factory.dataTree.setTopLevelText(0,1,m_pid.pEditText);
-        }
-    }
-    Connections{
-        target: m_kgv;
-        onEditTextChanged: {
-            factory.dataTree.setTopLevelText(4,1,m_kgv.editText);
-        }
-    }
-    Connections{
-        target: m_kga;
-        onEditTextChanged: {
-            factory.dataTree.setTopLevelText(5,1,m_kga.editText);
-        }
-    }
-    Connections{
-        target: m_positionLimit;
-        onAbsEditTextChanged: {
-            factory.dataTree.setTopLevelText(1,1,m_positionLimit.absEditText);
-        }
-        onPosEditTextChanged: {
-            factory.dataTree.setTopLevelText(2,1,m_positionLimit.posEditText);
-        }
-        onNegEditTextChanged: {
-            factory.dataTree.setTopLevelText(3,1,m_positionLimit.negEditText);
-        }
-    }
+//    Connections{
+//        target: m_pid;
+//        onPEditTextChanged: {
+//            factory.dataTree.setTopLevelText(0,1,m_pid.pEditText);
+//        }
+//    }
+//    Connections{
+//        target: m_kgv;
+//        onEditTextChanged: {
+//            factory.dataTree.setTopLevelText(4,1,m_kgv.editText);
+//        }
+//    }
+//    Connections{
+//        target: m_kga;
+//        onEditTextChanged: {
+//            factory.dataTree.setTopLevelText(5,1,m_kga.editText);
+//        }
+//    }
+
+//    Connections{
+//        target: m_positionLimit;
+//        onAbsEditTextChanged: {
+//            factory.dataTree.setTopLevelText(1,1,m_positionLimit.absEditText);
+//        }
+//        onPosEditTextChanged: {
+//            factory.dataTree.setTopLevelText(2,1,m_positionLimit.posEditText);
+//        }
+//        onNegEditTextChanged: {
+//            factory.dataTree.setTopLevelText(3,1,m_positionLimit.negEditText);
+//        }
+//    }
 
 }
 

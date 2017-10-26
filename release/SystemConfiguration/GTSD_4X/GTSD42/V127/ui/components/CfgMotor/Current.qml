@@ -14,6 +14,10 @@ Rectangle{
     property alias irat_1: irat_1;
     property alias imax_1: imax_1;
     property var dataTree: null;
+    function resetTextInputState(){
+        irat_1.resetbackground();
+        imax_1.resetbackground();
+    }
 
     ColumnLayout{
         anchors.fill: parent;
@@ -31,65 +35,64 @@ Rectangle{
             Text{
                 text:"额定电流(Arms)";
             }
-            TextField{
+//            TextField{
+//                id:irat_1;
+//                text:"0";
+//                style:textStyle;
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 20;
+////                onTextChanged: {irat_1.textColor="red";dataTree.setTopLevelText(0,1,irat_1.text);}
+//                function onTheTextChanged(){
+//                    irat_1.textColor="red";
+//                    dataTree.setTopLevelText(0,1,irat_1.text);
+//                }
+//                Component.onCompleted: {
+//                    irat_1.textChanged.connect(onTheTextChanged);
+//                }
+//            }
+            MyTextInput{
                 id:irat_1;
-                text:"0";
-                style:textStyle;
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 20;
-//                onTextChanged: {irat_1.textColor="red";dataTree.setTopLevelText(0,1,irat_1.text);}
-                function onTheTextChanged(){
-                    irat_1.textColor="red";
-                    dataTree.setTopLevelText(0,1,irat_1.text);
-                }
-                Component.onCompleted: {
-                    irat_1.textChanged.connect(onTheTextChanged);
-                }
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:0;
+                column: 1;
+                tree: dataTree;
             }
 
             Text{
                 text:"峰值电流(Apeak)";
             }
-            TextField{
+//            TextField{
+//                id:imax_1;
+//                text:"0";
+//                style:textStyle;
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 20;
+////                onTextChanged: {imax_1.textColor="red";dataTree.setTopLevelText(1,1,imax_1.text);}
+//                function onTheTextChanged(){
+//                    imax_1.textColor="red";
+//                    dataTree.setTopLevelText(1,1,imax_1.text);
+//                }
+//                Component.onCompleted: {
+//                    imax_1.textChanged.connect(onTheTextChanged);
+//                }
+//            }
+            MyTextInput{
                 id:imax_1;
-                text:"0";
-                style:textStyle;
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 20;
-//                onTextChanged: {imax_1.textColor="red";dataTree.setTopLevelText(1,1,imax_1.text);}
-                function onTheTextChanged(){
-                    imax_1.textColor="red";
-                    dataTree.setTopLevelText(1,1,imax_1.text);
-                }
-                Component.onCompleted: {
-                    imax_1.textChanged.connect(onTheTextChanged);
-                }
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:1;
+                column: 1;
+                tree: dataTree;
             }
 
-        }
-    }
-
-    Component{
-        id:textStyle;
-        TextFieldStyle{
-            id:styleRoot;
-
-            textColor: "black";
-            passwordCharacter: "0"
-            placeholderTextColor:"lightgray"
-            background:Rectangle{
-                radius: 6;
-                implicitWidth: 100;
-                implicitHeight: 24;
-                border.color: "#333";
-                border.width: 1;
-            }
         }
     }
 
     Component.onCompleted: {
-        irat_1.textColor="black";
-        imax_1.textColor="black";
+
     }
 }
 
