@@ -5,12 +5,17 @@ Item {
     id:speedLimit;
     width: 600;
     height: 250;
+    property int absRowIndex: 0;
+    property int posRowIndex: 0;
+    property int negRowIndex: 0;
+    property var srcTree: null;
+
     property alias absEditText: abs.editText;
-    property alias absEditTextColor: abs.editTextColor;
     property alias posEditText: pos_rat.editText;
-    property alias posEditTextColor: pos_rat.editTextColor;
     property alias negEditText: neg_rat.editText;
-    property alias negEditTextColor: neg_rat.editTextColor;
+    property alias absEdit: abs;
+    property alias posEdit: pos_rat;
+    property alias negEdit: neg_rat;
     property color arrowColor: "blue";
     property color arrowBrushColor: "yellow";
     function replot(){
@@ -19,6 +24,11 @@ Item {
         arrow2.replot();
         arrow3.replot();
         arrow4.replot();
+    }
+    function restEditBackground(){
+        abs.resetbackground();
+        pos_rat.resetbackground();
+        neg_rat.resetbackground();
     }
 
     ChatDialog{
@@ -32,6 +42,7 @@ Item {
 //        brushColor: "green"
 //        penColor: "red"
     }
+
     LineEditBlock{
         id:abs;
         title: "最大扭矩:"
@@ -40,9 +51,9 @@ Item {
         anchors.leftMargin: parent.width*0.08;
         anchors.verticalCenter: parent.verticalCenter;
         anchors.verticalCenterOffset: -background.hPercent*speedLimit.height/2;
-//        onValueChanged: {
-//            speedLimit.absValueChanged(value);
-//        }
+
+        rowIndex: absRowIndex;
+        tree: srcTree;
     }
     LineEditBlock{
         id:pos_rat;
@@ -52,9 +63,9 @@ Item {
         anchors.horizontalCenterOffset: parent.width*0.07;
         anchors.top: parent.top;
         anchors.topMargin: parent.height*0.13;
-//        onValueChanged: {
-//            speedLimit.posValueChanged(value);
-//        }
+
+        rowIndex: posRowIndex;
+        tree:srcTree;
     }
     LineEditBlock{
         id:neg_rat;
@@ -64,9 +75,9 @@ Item {
         anchors.horizontalCenterOffset: parent.width*0.07;
         anchors.bottom: parent.bottom;
         anchors.bottomMargin:  parent.height*(0.1+background.hPercent);
-//        onValueChanged: {
-//            speedLimit.negValueChanged(value);
-//        }
+
+        rowIndex: negRowIndex;
+        tree: srcTree;
     }
     SegmentArrow{
         id:arrow1;

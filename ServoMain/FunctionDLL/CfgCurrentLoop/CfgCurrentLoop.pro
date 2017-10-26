@@ -40,5 +40,5 @@ FORMS += \
     CfgCurrentLoop.ui
 
 DISTFILES += \
-    CfgCurrentLoop.qml
+    V128/CfgCurrentLoop.qml
 

@@ -23,6 +23,9 @@ int main(int argc, char *argv[])
   QTranslator trans3;
   trans3.load("app_IO_simplchinese.qm");
   a.installTranslator(&trans3);
+  QTranslator trans4;
+  trans4.load("app_IO_new_simplchinese.qm");
+  a.installTranslator(&trans4);
 
   MainWindow *w=new MainWindow(splashScreen,0);
   w->show();

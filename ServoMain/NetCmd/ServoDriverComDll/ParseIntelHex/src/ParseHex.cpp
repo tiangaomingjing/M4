@@ -381,7 +381,7 @@ int16 Hex::ParseHex(string filename)
 		return 1;
 	}
 
-	WriteHexFile(filename, &m_hex_frame_write);
+//	WriteHexFile(filename, &m_hex_frame_write);
 	
 	return 0;
 }

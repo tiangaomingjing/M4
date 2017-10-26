@@ -2,6 +2,8 @@
 #include <QDebug>
 #include <QString>
 #include <QList>
+#include <QMap>
+#include <QMapIterator>
 
 #include <iostream>
 using namespace std;
@@ -112,6 +114,25 @@ int main(int argc, char *argv[])
   offsetAddr=num.toUShort();
   cout<<num.toStdString()<<" toUShort() "<<offsetAddr<<endl;
 
+  qDebug()<<"sizeof uint="<<sizeof(uint);
+  qDebug()<<"sizeof int="<<sizeof(int);
+  qDebug()<<"sizeof ushort="<<sizeof(ushort);
+  qDebug()<<"sizeof short="<<sizeof(short);
+  qDebug()<<"sizeof ulong="<<sizeof(ulong);
+  qDebug()<<"sizeof long="<<sizeof(long);
+  qDebug()<<"sizeof double="<<sizeof(double);
+  qDebug()<<"sizeof float="<<sizeof(float);
+
+  QMap<QString ,int>map;
+  map.insert("hello",1);
+  map.insert("hello",2);
+  map.insert("world",3);
+  QMapIterator<QString ,int> it(map);
+  while(it.hasNext())
+  {
+    it.next();
+    qDebug()<<it.key()<<" "<<it.value();
+  }
 
   return a.exec();
 }

@@ -7,6 +7,7 @@ Rectangle{
     Layout.fillHeight: true;
     signal selectEncOwner(int owner);
     property color selectColor: "#567DBC";
+    property color hoverColor: "#cbdaf1";
     function setCurrentIndex(idx){
         m_listCompany.currentIndex=idx;
         console.log("on current index change...."+m_listCompany.currentIndex);
@@ -57,7 +58,7 @@ Rectangle{
             id: wrapper;
             width: parent.width;
             height: 40;
-            color:wrapper.ListView.isCurrentItem?selectColor:mouseArea.containsMouse?"lightgray":"transparent";
+            color:wrapper.ListView.isCurrentItem?"transparent":mouseArea.containsMouse?hoverColor:"transparent";
             radius: 0;
             MouseArea{
                 id:mouseArea;

@@ -16,6 +16,11 @@ Rectangle
     property alias phim_1: phim_1;
     property alias vmax_1: vmax_1;
     property var dataTree: null;
+    function resetTextInputState(){
+        tqr_1.resetbackground();
+        phim_1.resetbackground();
+        vmax_1.resetbackground();
+    }
 
     ColumnLayout{
         anchors.fill: parent;
@@ -28,53 +33,80 @@ Rectangle
         RowLayout{
             spacing: 10;
             Text{text:"额定转矩(N.m)"}
-            TextField{
+//            TextField{
+//                id:tqr_1;
+//                text:"0";
+//                style:textStyle;
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 20;
+////                onTextChanged: {tqr_1.textColor="red";dataTree.setTopLevelText(5,1,tqr_1.text);}
+//                function onTheTextChanged(){
+//                    tqr_1.textColor="red";
+//                    dataTree.setTopLevelText(5,1,tqr_1.text);
+//                }
+//                Component.onCompleted: {
+//                    tqr_1.textChanged.connect(onTheTextChanged);
+//                }
+//            }
+            MyTextInput{
                 id:tqr_1;
-                text:"0";
-                style:textStyle;
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 20;
-//                onTextChanged: {tqr_1.textColor="red";dataTree.setTopLevelText(5,1,tqr_1.text);}
-                function onTheTextChanged(){
-                    tqr_1.textColor="red";
-                    dataTree.setTopLevelText(5,1,tqr_1.text);
-                }
-                Component.onCompleted: {
-                    tqr_1.textChanged.connect(onTheTextChanged);
-                }
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:5;
+                column: 1;
+                tree: dataTree;
             }
             Text{text:"反电动势系数(mVpeak/rpm)"}
-            TextField{
+//            TextField{
+//                id:phim_1;
+//                text:"0";
+//                style:textStyle;
+//                placeholderText: "=力矩系数(N.m/Arms)X49.3"
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 20;
+////                onTextChanged: {phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
+//                function onTheTextChanged(){
+//                    phim_1.textColor="red";
+//                    dataTree.setTopLevelText(8,1,phim_1.text);
+//                }
+//                Component.onCompleted: {
+//                    phim_1.textChanged.connect(onTheTextChanged);
+//                }
+//            }
+            MyTextInput{
                 id:phim_1;
-                text:"0";
-                style:textStyle;
-                placeholderText: "=力矩系数(N.m/Arms)X49.3"
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 20;
-//                onTextChanged: {phim_1.textColor="red";dataTree.setTopLevelText(8,1,phim_1.text);}
-                function onTheTextChanged(){
-                    phim_1.textColor="red";
-                    dataTree.setTopLevelText(8,1,phim_1.text);
-                }
-                Component.onCompleted: {
-                    phim_1.textChanged.connect(onTheTextChanged);
-                }
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:8;
+                column: 1;
+                tree: dataTree;
             }
             Text{text:"最大电压(V)"}
-            TextField{
+//            TextField{
+//                id:vmax_1;
+//                text:"0";
+//                style:textStyle;
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 20;
+////                onTextChanged: {vmax_1.textColor="red";dataTree.setTopLevelText(7,1,vmax_1.text);}
+//                function onTheTextChanged(){
+//                    vmax_1.textColor="red";
+//                    dataTree.setTopLevelText(7,1,vmax_1.text);
+//                }
+//                Component.onCompleted: {
+//                    vmax_1.textChanged.connect(onTheTextChanged);
+//                }
+//            }
+            MyTextInput{
                 id:vmax_1;
-                text:"0";
-                style:textStyle;
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 20;
-//                onTextChanged: {vmax_1.textColor="red";dataTree.setTopLevelText(7,1,vmax_1.text);}
-                function onTheTextChanged(){
-                    vmax_1.textColor="red";
-                    dataTree.setTopLevelText(7,1,vmax_1.text);
-                }
-                Component.onCompleted: {
-                    vmax_1.textChanged.connect(onTheTextChanged);
-                }
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:7;
+                column: 1;
+                tree: dataTree;
             }
         }
         Text{
@@ -85,26 +117,26 @@ Rectangle
         }
     }
 
-    Component{
-        id:textStyle;
-        TextFieldStyle{
-            textColor: "black";
-            passwordCharacter: "0"
-            placeholderTextColor:"lightgray"
-            background: Rectangle{
-                radius: 6;
-                implicitWidth: 100;
-                implicitHeight: 24;
-                border.color: "#333";
-                border.width: 1;
-            }
-        }
-    }
+//    Component{
+//        id:textStyle;
+//        TextFieldStyle{
+//            textColor: "black";
+//            passwordCharacter: "0"
+//            placeholderTextColor:"lightgray"
+//            background: Rectangle{
+//                radius: 6;
+//                implicitWidth: 100;
+//                implicitHeight: 24;
+//                border.color: "#333";
+//                border.width: 1;
+//            }
+//        }
+//    }
 
     Component.onCompleted: {
-        tqr_1.textColor="black";
-        phim_1.textColor="black";
-        vmax_1.textColor="black";
+//        tqr_1.textColor="black";
+//        phim_1.textColor="black";
+//        vmax_1.textColor="black";
     }
 }
 

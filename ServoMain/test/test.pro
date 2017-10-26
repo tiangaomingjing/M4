@@ -7,4 +7,5 @@ SUBDIRS += \
     TreeWidgetSync \
     MainWidget \
     QmlProject \
-    NavigationBar
+    NavigationBar \
+    FillLimit

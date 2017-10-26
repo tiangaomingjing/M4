@@ -3,10 +3,19 @@
 #include "MainGTSD/mainwindow.h"
 #include <MainGTSD/MotorSqlModel/motorsqlmodel.h>
 #include <MainGTSD/NavigationConfig/DataBase/SqltableModel/sqltablemodel.h>
+#include <MainGTSD/PowerTreeManage/powertreemanage.h>
 
 #include <QQuickWidget>
 #include <QQmlContext>
 
+typedef enum{
+  ROW_GAINIx_INX_WRITE_FLASH_INFO,
+  ROW_GAINIx_INX_SAMPLING_TYPE
+}RowGainIInx;
+typedef enum{
+  ROW_SAMPLING_INX_HALL,
+  ROW_SAMPLING_INX_SHUNT
+}RowSamplingTypeInx;
 
 CfgMotor::CfgMotor(QWidget *parent):
   AbstractFuncWidget(parent),
@@ -24,20 +33,63 @@ bool CfgMotor::getComConnectSatus()
 {
   return mp_mainWindow->getComOpenState();
 }
+bool CfgMotor::passChecked()
+{
+  return m_passChecked;
+}
+
+//bool CfgMotor::checkPrm()
+//{
+//  bool ok=true;
+//  if(m_uiTree!=NULL)
+//  {
+//    QTreeWidgetItem *item;
+//    QString name;
+//    double value;
+//    double kgain;
+//    double max;
+//    double min;
+//    for(int i=0;i<m_uiTree->topLevelItemCount();i++)
+//    {
+//      item=m_uiTree->topLevelItem(i);
+//      name=item->text(COL_FUNC_NAME);
+//      kgain=GlobalFunction::cmdKgain(name,mp_mainWindow->getFunctionCmdTree());
+//      value=kgain*item->text(COL_FUNC_VALUE).toDouble();
+//      qDebug()<<"value="<<value;
+//      max=item->text(COL_FUNC_UPLIMIT).toDouble();
+//      min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
+//      //发送消息到qml，还原颜色
+//      emit qmlEditUiStateChanged(i,false);
+//      if(!(value>=min&&value<=max))
+//      {
+//        ok=false;
+//        //发送错误消息到qml界面，变红色
+//        emit qmlEditUiStateChanged(i,true);
+//        emit showMessage(tr("Range Error %1 ").arg(item->text(COL_FUNC_VALUE)));
+//        qDebug()<<"error:"<<name;
+//        break;
+//      }
+//      qDebug()<<name<<"-----OK";
+//    }
+//  }
+//  return ok;
+//}
+
 void CfgMotor::updateUiWhenNavigationTreeClicked()
 {
   onActionReadFuncValueFromFlash();
 }
 void CfgMotor::onWriteFuncTreetoServoFlash()
 {
-  ImaxExtensionPrm imaxPrm;
+
+  ImaxExtensionPrm axisPrm;
   ImaxExtensionPrmGain gainInfo;
 
-  QTreeWidgetItem *imaxTreeItem;
-  QTreeWidgetItem *imaxInfoItem;
-  QTreeWidgetItem *gainInfoItem;
-  AbstractFuncWidget::onWriteFuncTreetoServoFlash();
-//  mp_mainWindow->clearWarning();
+  QTreeWidgetItem *imaxTreeItem;//对应PrmFuncExtension树中-->Axis0
+  QTreeWidgetItem *imaxInfoItem;// -->ImaxInfo
+  QTreeWidgetItem *gainInfoItem;//  -->GainInfo
+  AbstractFuncWidget::onWriteFuncTreetoServoFlash();//调用父类方法写FLASH
+
   emit clearWarning();
   imaxTreeItem=mp_mainWindow->getFunctionExtensionTree()\
           ->topLevelItem(ROW_FUNC_EXT_INDEX_MODULEPRM)\
@@ -46,40 +98,50 @@ void CfgMotor::onWriteFuncTreetoServoFlash()
   qDebug()<<"imaxTree: "<<imaxTreeItem->text(COL_FUNC_EXTENSION_NAME);
   imaxInfoItem=imaxTreeItem->child(ROW_MOTOR_AXIS_INDEX_IMAXINFO);
   gainInfoItem=imaxTreeItem->child(ROW_MOTOR_AXIS_INDEX_GAININFO);
-  imaxPrm.imaxInfo.name=imaxInfoItem->child(ROW_IMAXINFO_INDEX_NAME)->text(COL_FUNC_EXTENSION_PARAMETER);
-  imaxPrm.imaxInfo.type=imaxInfoItem->child(ROW_IMAXINFO_INDEX_TYPE)->text(COL_FUNC_EXTENSION_PARAMETER);
-  imaxPrm.imaxInfo.offsetAddr=imaxInfoItem->child(ROW_IMAXINFO_INDEX_OFFSETADDR)->text(COL_FUNC_EXTENSION_PARAMETER).toUInt();
+  axisPrm.imaxInfo.name=imaxInfoItem->child(ROW_IMAXINFO_INDEX_NAME)->text(COL_FUNC_EXTENSION_PARAMETER);
+  axisPrm.imaxInfo.type=imaxInfoItem->child(ROW_IMAXINFO_INDEX_TYPE)->text(COL_FUNC_EXTENSION_PARAMETER);
+  axisPrm.imaxInfo.offsetAddr=imaxInfoItem->child(ROW_IMAXINFO_INDEX_OFFSETADDR)->text(COL_FUNC_EXTENSION_PARAMETER).toUInt();
 
+  const SamplingDataInfo * samplingData=mp_mainWindow->getPowerBoardLimitSamplingData();
+  quint8 type=0;
+  double rValue=0;
   for(int i=0;i<gainInfoItem->childCount();i++)
   {
-    QTreeWidgetItem *item=gainInfoItem->child(i);
-    qDebug()<<"child name: "<<item->text(COL_FUNC_EXTENSION_NAME);
-    gainInfo.gain=item->text(COL_FUNC_EXTENSION_PARAMETER).toDouble();
-    gainInfo.writeFlashName=item->child(0)->child(ROW_GAINWRFLASH_INDEX_NAME)->text(COL_FUNC_EXTENSION_PARAMETER);
-    gainInfo.writeFlashType=item->child(0)->child(ROW_GAINWRFLASH_INDEX_TYPE)->text(COL_FUNC_EXTENSION_PARAMETER);
-    gainInfo.offsetAddr=item->child(0)->child(ROW_GAINWRFLASH_INDEX_OFFSETADDR)->text(COL_FUNC_EXTENSION_PARAMETER).toUInt();
-    imaxPrm.gainInfoList.append(gainInfo);
+    QTreeWidgetItem *itemGainx=gainInfoItem->child(i);//-->GainIa (b c)
+
+    type=samplingData->types().at(m_axisNumber);
+    rValue=samplingData->values().at(m_axisNumber);
+    gainInfo.gain=itemGainx->child(ROW_GAINIx_INX_SAMPLING_TYPE)->child(type)->text(COL_FUNC_EXTENSION_PARAMETER).toDouble()/(rValue+0.0);
+    gainInfo.writeFlashName=itemGainx->child(ROW_GAINIx_INX_WRITE_FLASH_INFO)->child(ROW_GAINWRFLASH_INDEX_NAME)->text(COL_FUNC_EXTENSION_PARAMETER);
+    gainInfo.writeFlashType=itemGainx->child(ROW_GAINIx_INX_WRITE_FLASH_INFO)->child(ROW_GAINWRFLASH_INDEX_TYPE)->text(COL_FUNC_EXTENSION_PARAMETER);
+    gainInfo.offsetAddr=itemGainx->child(ROW_GAINIx_INX_WRITE_FLASH_INFO)->child(ROW_GAINWRFLASH_INDEX_OFFSETADDR)->text(COL_FUNC_EXTENSION_PARAMETER).toUInt();
+    axisPrm.gainInfoList.append(gainInfo);
+    qDebug()<<"child name: "<<itemGainx->text(COL_FUNC_EXTENSION_NAME)<<"Gain="<<QString::number(gainInfo.gain,'g',15);
   }
 
-  qDebug()<<"ImaxInfo: "<<" name:"<<imaxPrm.imaxInfo.name<<" type:"<<imaxPrm.imaxInfo.type<<" offset:"<<imaxPrm.imaxInfo.offsetAddr;
-  foreach (gainInfo, imaxPrm.gainInfoList) {
+  qDebug()<<"ImaxInfo: "<<" name:"<<axisPrm.imaxInfo.name<<" type:"<<axisPrm.imaxInfo.type<<" offset:"<<axisPrm.imaxInfo.offsetAddr;
+  foreach (gainInfo, axisPrm.gainInfoList) {
     qDebug()<<"list in imaxExtPrmList: "<<gainInfo.writeFlashName<<" gain:"<<gainInfo.gain<<" type:"<<gainInfo.writeFlashType<<" offsetAddr:"<<gainInfo.offsetAddr;
   }
   //读Imax的原始值
   Uint16 imaxValue;
   int16 ret=0;
   UserConfig *config=mp_mainWindow->getUserConfig();
-  ret=GTSD_CMD_Fram_Read16BitByAdr(m_axisNumber, (int16) imaxPrm.imaxInfo.offsetAddr, (int16*) &imaxValue, config->com.id, config->com.rnStation);
+  ret=GTSD_CMD_Fram_Read16BitByAdr(m_axisNumber, (int16) axisPrm.imaxInfo.offsetAddr, (int16*) &imaxValue, config->com.id, config->com.rnStation);
   if(ret!=0)
-     ret=GTSD_CMD_Fram_Read16BitByAdr(m_axisNumber, (int16) imaxPrm.imaxInfo.offsetAddr, (int16*) &imaxValue, config->com.id, config->com.rnStation);
+     ret=GTSD_CMD_Fram_Read16BitByAdr(m_axisNumber, (int16) axisPrm.imaxInfo.offsetAddr, (int16*) &imaxValue, config->com.id, config->com.rnStation);
   qDebug()<<"imax value:"<<imaxValue;
-  foreach (gainInfo, imaxPrm.gainInfoList)
+  if(ret!=0)
+    return;
+  bool isSmall=false;
+  foreach (gainInfo, axisPrm.gainInfoList)
   {
     double k=gainInfo.gain/imaxValue;
     if(k>32767)
     {
       k=32767;
 //      mp_mainWindow->setWarningMessage(tr("Imax is too small!"));
+      isSmall=true;
       emit showMessage(tr("Imax is too small!"));
     }
     int16 value=(int16)k;
@@ -87,6 +149,8 @@ void CfgMotor::onWriteFuncTreetoServoFlash()
     if(ret!=0)
       ret=GTSD_CMD_Fram_Write16BitByAdr(m_axisNumber,gainInfo.offsetAddr,value,config->com.id, config->com.rnStation);
   }
+  if(isSmall)
+    emit checkError();
 }
 
 //!-------------------------private function--------------------------
@@ -172,4 +236,9 @@ void CfgMotor::connectionSignalSlotHandler()
 {
   connect(this,SIGNAL(warningMessageChanged(QString&)),mp_mainWindow,SLOT(onWarningMessageChanged(QString&)));
   connect(this,SIGNAL(clearWarning()),mp_mainWindow,SLOT(onClearWarning()));
+  connect(this,SIGNAL(checkError()),this,SLOT(onCheckError()));
+}
+void CfgMotor::onCheckError()
+{
+  QMessageBox::information(0,tr("warnning"),tr("Imax value is too small"));
 }

@@ -8,9 +8,7 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Rectangle{
-    Component.onCompleted: {
-        console.log("cfgmotor on completed");
-    }
+
 
     id:root;
     color: "#F0F0F0";
@@ -20,6 +18,7 @@ Rectangle{
     property color pressColor: "#567DBC";
     property color frameColor: "#BBB9B9";
     property color backgroundColor: Qt.lighter(frameColor,1.2);
+    property var inputEditArray: null;//这个对应到树行的顺序
 
     function switchUi(isHome){
         if(isHome){
@@ -30,6 +29,35 @@ Rectangle{
             m_motorPrmUi.x=0;
             m_motorDataBaseUi.x=root.width+1000;
         }
+    }
+    function setEditSate(row,hasError)
+    {
+        if(hasError)
+            inputEditArray[row].setErrorState();
+        else
+            inputEditArray[row].resetbackground();
+    }
+
+    Component.onCompleted: {
+        console.log("cfgmotor on completed");
+        inputEditArray= [
+                         cur.irat_1,
+                         cur.imax_1,
+                         vel.sct_1,
+                         vel.srat_1,
+                         vel.nos_1,
+                         forprm.tqr_1,
+                         mecprm.ppn_1,
+                         forprm.vmax_1,
+                         forprm.phim_1,
+                         imp.ldm_1,
+                         imp.lqm_1,
+                         imp.rm_1,
+                         mecprm.jm_1,
+                         mecprm.jrat_1,
+                         mecprm.fm_1
+                         ];
+        driveMotor.qmlEditUiStateChanged.connect(setEditSate);
     }
 
 //    Item{
@@ -73,19 +101,19 @@ Rectangle{
                         Layout.fillWidth: true;
                         Layout.minimumWidth: 100;
                         Layout.minimumHeight: 80;
-                        color:motorCfgMouse.containsPress?root.pressColor:motorCfgMouse.containsMouse?root.hoverColor:"transparent";
-                        radius: 10;
-                        border.color: motorCfgMouse.containsMouse?"#BBB9B9":"transparent";
-                        border.width: 2;
-                        MouseArea{
-                            id:motorCfgMouse;
-                            anchors.fill: parent;
-                            hoverEnabled: true;
-                            onClicked: {
-                                console.log("on click .....");
-                                switchUi(true);
-                            }
-                        }
+                        color:"transparent";
+//                        radius: 10;
+//                        border.color: motorCfgMouse.containsMouse?"#BBB9B9":"transparent";
+//                        border.width: 2;
+//                        MouseArea{
+//                            id:motorCfgMouse;
+//                            anchors.fill: parent;
+//                            hoverEnabled: true;
+//                            onClicked: {
+//                                console.log("on click .....");
+//                                switchUi(true);
+//                            }
+//                        }
                         Image {
                             id: motorImg;
                             anchors.top: parent.top;
@@ -93,6 +121,27 @@ Rectangle{
                             height: parent.height*0.8;
                             width: height*1.5;
                             source: motorCfgMouse.containsMouse?"./components/CfgMotor/motor3d_hover.png":"./components/CfgMotor/motor3d.png";
+                            z:101;
+                            MouseArea{
+                                id:motorCfgMouse;
+                                anchors.fill: parent;
+                                hoverEnabled: true;
+                                onClicked: {
+                                    console.log("on click .....");
+                                    switchUi(true);
+                                }
+                            }
+                        }
+                        Rectangle{
+                            anchors.top: motorImg.top;
+                            anchors.left: motorImg.left;
+                            width: motorImg.width;
+                            height: motorImg.height;
+                            color:motorCfgMouse.containsPress?root.pressColor:motorCfgMouse.containsMouse?root.hoverColor:"transparent";
+                            radius: 10;
+                            border.color: motorCfgMouse.containsMouse?"#BBB9B9":"transparent";
+                            border.width: 2;
+                            z:0;
                         }
                         Text{
                             anchors.bottom: parent.bottom;
@@ -163,6 +212,7 @@ Rectangle{
     Item{
         Component.onCompleted: {
             console.log("m_motorDataBaseUi on completed");
+            m_listView_company.currentIndex=0;
         }
         id:m_motorDataBaseUi
         x:root.width+1000;
@@ -170,14 +220,14 @@ Rectangle{
         width: root.width;
         height: root.height;
         property var chineseNameMap: {
-            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"相电阻","Ldm":"D轴电感",
-            "Lqm":"Q轴电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
+            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"相电阻","Ldm":"D轴相电感",
+            "Lqm":"Q轴相电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
             "Tqr":"额定转矩","PHIm":"反电动势系数","Vmax":"最大电压"
         }
         property var unitNameMap: {
-            "Imax":"A","Irat":"A","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
-            "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"对",
-            "Tqr":"N.m","PHIm":"mV/rpm","Vmax":"V"
+            "Imax":"A(peak)","Irat":"A(rms)","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
+            "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"pair",
+            "Tqr":"N.m","PHIm":"mVpeak/rpm","Vmax":"V"
         }
         property var prmIndex: {
             "PRM_IMAX":0,"PRM_IRAT":1,"PRM_SCT":2,"PRM_SRAT":3,"PRM_NOS":4,"PRM_RM":5,"PRM_LDM":6,
@@ -341,7 +391,7 @@ Rectangle{
                         delegate: companyDelegate;
                         focus: true;
                         clip: true;
-                        currentIndex:0;
+                        currentIndex:-1;
                         highlight: Rectangle{
                             color:enabled?pressColor:backgroundColor;
                         }
@@ -788,15 +838,20 @@ Rectangle{
                             installProgressBar.value+=incValue;
 //                            console.log("progress bar value = "+installProgressBar.value);
                             inputTextArray[writeIndex].text=m_listModel_motorPrm.get(writeIndex).value;
+                            inputTextArray[writeIndex].setInnerUiTreeValue();
                             console.log(m_listModel_motorPrm.get(writeIndex).chineseName+"="+inputTextArray[writeIndex].text);
                             writeIndex++;
                             if(writeIndex>count-1){
                                 m_removeDialog.visible=false;
                                 m_normalDialog.visible=true;
                                 writeIndex=0;
-                                driveMotor.onWriteFuncTreetoServoFlash();
-                                driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
                                 stop();
+                                driveMotor.onWriteFuncTreetoServoFlash();
+                                if(driveMotor.passChecked())
+                                    driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
+                                else
+                                    driveMotor.showMessage(qsTr("电机安装失败，请返回检查输入参数！"));
+
                             }
                         }
                         Component.onCompleted: {
@@ -817,6 +872,7 @@ Rectangle{
                                             forprm.phim_1,
                                             forprm.vmax_1
                                             ];
+                            console.log("write timer completed");
                         }
                     }
                     Row{
@@ -1319,9 +1375,6 @@ Rectangle{
             vel.sct_1.text=factory.dataTree.textTopLevel(2,1);
             vel.srat_1.text=factory.dataTree.textTopLevel(3,1);
             vel.nos_1.text=factory.dataTree.textTopLevel(4,1);
-//            vel.sct_1.writeValue=parseFloat(vel.sct_1.text);
-//            vel.srat_1.writeValue=parseFloat(vel.srat_1.text);
-//            vel.nos_1.writeValue=parseFloat(vel.nos_1.text);
 
             forprm.tqr_1.text=factory.dataTree.textTopLevel(5,1);
             mecprm.ppn_1.text=factory.dataTree.textTopLevel(6,1);
@@ -1334,24 +1387,29 @@ Rectangle{
             mecprm.jrat_1.text=factory.dataTree.textTopLevel(13,1);
             mecprm.fm_1.text=factory.dataTree.textTopLevel(14,1);
 
-            cur.irat_1.textColor="black";
-            cur.imax_1.textColor="black";
+//            cur.irat_1.textColor="black";
+//            cur.imax_1.textColor="black";
+            cur.resetTextInputState();
 
-            vel.sct_1.textColor="black";
-            vel.srat_1.textColor="black";
-            vel.nos_1.textColor="black";
-//            vel.resetTextInputState();
+//            vel.sct_1.textColor="black";
+//            vel.srat_1.textColor="black";
+//            vel.nos_1.textColor="black";
+            vel.resetTextInputState();
 
-            forprm.tqr_1.textColor="black";
-            mecprm.ppn_1.textColor="black";
-            forprm.vmax_1.textColor="black";
-            forprm.phim_1.textColor="black";
-            imp.ldm_1.textColor="black";
-            imp.lqm_1.textColor="black";
-            imp.rm_1.textColor="black";
-            mecprm.jm_1.textColor="black";
-            mecprm.jrat_1.textColor="black";
-            mecprm.fm_1.textColor="black";
+//            forprm.tqr_1.textColor="black";
+//            mecprm.ppn_1.textColor="black";
+//            forprm.vmax_1.textColor="black";
+//            forprm.phim_1.textColor="black";
+//            imp.ldm_1.textColor="black";
+//            imp.lqm_1.textColor="black";
+//            imp.rm_1.textColor="black";
+//            mecprm.jm_1.textColor="black";
+//            mecprm.jrat_1.textColor="black";
+//            mecprm.fm_1.textColor="black";
+            forprm.resetTextInputState();
+            mecprm.resetTextInputState();
+            imp.resetTextInputState();
+
         }
     }
 

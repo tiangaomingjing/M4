@@ -13,11 +13,23 @@ Rectangle {
     height: 50;
     Layout.minimumWidth: m_text.width+pvalue.width+4*m_rowLayout.spacing+m_unit.width;
     Layout.minimumHeight: 50;
+
 //    signal valueChanged(string value);
     property alias title: m_text.text;
     property alias unit: m_unit.text;
     property alias editText: pvalue.text;
-    property alias editTextColor: pvalue.textColor;
+//    property alias editTextColor: pvalue.textColor;
+    property alias rowIndex: pvalue.row;
+    property alias tree: pvalue.tree;
+    function resetbackground(){
+        pvalue.resetbackground();
+    }
+    function setErrorState(){
+        pvalue.setErrorState();
+    }
+    function setReadyState(){
+        pvalue.setReadyState();
+    }
 
 
     RowLayout{
@@ -29,17 +41,28 @@ Rectangle {
             id:m_text;
             text: "abs";
         }
-        TextField{
+//        TextField{
+//            id:pvalue;
+//            text:"0";
+//            style:textStyle;
+//            Layout.fillWidth: true;
+//            Layout.minimumWidth: 60;
+//            onTextChanged: {pvalue.textColor="red";/*lineEdit.valueChanged(pvalue.text)*/}
+//            Component.onCompleted: {
+//                pvalue.textColor="black";
+//            }
+//        }
+        MyTextInput{
             id:pvalue;
-            text:"0";
-            style:textStyle;
             Layout.fillWidth: true;
-            Layout.minimumWidth: 60;
-            onTextChanged: {pvalue.textColor="red";/*lineEdit.valueChanged(pvalue.text)*/}
-            Component.onCompleted: {
-                pvalue.textColor="black";
+            Layout.minimumWidth: 30;
+            Layout.minimumHeight: 24;
+            column: 1;
+            onEditReturnPressed: {
+//                pEditReturnPressed();
             }
         }
+
         Text {
             id:m_unit;
             text: "xxx";
@@ -47,18 +70,18 @@ Rectangle {
 
     }
 
-    Component{
-        id:textStyle;
-        TextFieldStyle{
-            textColor: "black";
-            background: Rectangle{
-                radius: 6;
-                implicitWidth: 60;
-                implicitHeight: 24;
-                border.color: "#333";
-                border.width: 1;
-            }
-        }
-    }
+//    Component{
+//        id:textStyle;
+//        TextFieldStyle{
+//            textColor: "black";
+//            background: Rectangle{
+//                radius: 6;
+//                implicitWidth: 60;
+//                implicitHeight: 24;
+//                border.color: "#333";
+//                border.width: 1;
+//            }
+//        }
+//    }
 }
 

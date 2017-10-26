@@ -37,5 +37,5 @@ FORMS += \
     CfgSpeedLoop.ui
 
 DISTFILES += \
-    CfgSpeedLoop.qml \
-    components/CfgSpeedLoop/SpeedLimit.qml
+    V128/CfgSpeedLoop.qml \
+    V128/components/CfgSpeedLoop/SpeedLimit.qml

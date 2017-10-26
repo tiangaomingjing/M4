@@ -250,6 +250,12 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
+                    LedIndicator{
+                        id:led_IOerr;
+                        title: "IO故障";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
                 }
                 Item{
                     Layout.fillHeight: true;
@@ -258,12 +264,6 @@ Rectangle{
                 ColumnLayout{
                     spacing: 10;
 
-                    LedIndicator{
-                        id:led_IOerr;
-                        title: "IO故障";
-                        iconPath: root.iconPath;
-                        Layout.fillHeight: true;
-                    }
                     LedIndicator{
                         id:led_REG;
                         title: "寄存器故障";
@@ -300,14 +300,6 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
-
-                }
-                Item{
-                    Layout.fillHeight: true;
-                    Layout.fillWidth: true;
-                }
-                ColumnLayout{
-                    spacing: 10;
                     LedIndicator{
                         id:led_OBPH;
                         title: "输出断线";
@@ -320,6 +312,15 @@ Rectangle{
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
+
+                }
+                Item{
+                    Layout.fillHeight: true;
+                    Layout.fillWidth: true;
+                }
+                ColumnLayout{
+                    spacing: 10;
+
                     LedIndicator{
                         id:led_PTE;
                         title: "位置跟踪误差超限";
@@ -347,6 +348,24 @@ Rectangle{
                     LedIndicator{
                         id:led_SRF;
                         title: "安全继电器故障";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
+                    LedIndicator{
+                        id:led_OBP;
+                        title: "电机抱匣电源故障";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
+                    LedIndicator{
+                        id:led_rsv1;
+                        title: "保留";
+                        iconPath: root.iconPath;
+                        Layout.fillHeight: true;
+                    }
+                    LedIndicator{
+                        id:led_rsv2;
+                        title: "保留";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -380,6 +399,7 @@ Rectangle{
         led_OB_ERR.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,18,1)));
         led_FAN.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,19,1)));
         led_SRF.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,20,1)));
+        led_OBP.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,21,1)));
 
         m_allLedFlag.ledOn=!Boolean(parseInt(factory.dataTree.textTopLevel(2,1)));
 
@@ -417,7 +437,7 @@ Rectangle{
         target: driverStatus;
         onTimeOutToQml:{
             updateUiData();
-            console.log(qsTr("updata qml ui....")+axisIndex);
+            //console.log(qsTr("updata qml ui....")+axisIndex);
         }
     }
 }

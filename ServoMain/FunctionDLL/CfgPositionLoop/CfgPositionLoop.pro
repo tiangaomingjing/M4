@@ -40,13 +40,15 @@ FORMS += \
     CfgPositionLoop.ui
 
 DISTFILES += \
-    CfgPositionLoop.qml \
-    components/CfgPositionLoop/PositionLimit.qml \
-    components/FlowCommon/ChatDialog.qml \
-    components/FlowCommon/FilterBlock.qml \
-    components/FlowCommon/FlowNode.qml \
-    components/FlowCommon/HighlightComponent.qml \
-    components/FlowCommon/LineEditBlock.qml \
-    components/FlowCommon/PidControler.qml \
-    components/FlowCommon/Saturation.qml \
-    components/FlowCommon/SegmentArrow.qml
+    V128/CfgPositionLoop.qml \
+    V128/components/FlowCommon/ChatDialog.qml \
+    V128/components/FlowCommon/FilterBlock.qml \
+    V128/components/FlowCommon/FlowNode.qml \
+    V128/components/FlowCommon/HighlightComponent.qml \
+    V128/components/FlowCommon/LineEditBlock.qml \
+    V128/components/FlowCommon/MyTextInput.qml \
+    V128/components/FlowCommon/PidControler.qml \
+    V128/components/FlowCommon/Saturation.qml \
+    V128/components/FlowCommon/SegmentArrow.qml \
+    V128/components/CfgPositionLoop/PositionLimit.qml
+

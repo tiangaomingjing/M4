@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>715</width>
-    <height>508</height>
+    <width>799</width>
+    <height>477</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -242,7 +242,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>3221225.5</string>
+           <string/>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -291,13 +291,46 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>采样类型,根据刘超文PowerBoard树中的类型</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+            <property name="text">
+             <string>20132.66*320</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>3221225.5</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -346,13 +379,37 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>3221225.5</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -398,6 +455,30 @@
             </property>
             <property name="text">
              <string/>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
             </property>
            </item>
           </item>
@@ -452,7 +533,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>3221225.5</string>
+           <string/>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -501,13 +582,34 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>3221225.5</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -556,13 +658,37 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>3221225.5</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -608,6 +734,27 @@
             </property>
             <property name="text">
              <string/>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
             </property>
            </item>
           </item>
@@ -662,7 +809,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>1932735.3</string>
+           <string/>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -711,13 +858,34 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>1932735.3</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -766,13 +934,34 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>1932735.3</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -818,6 +1007,27 @@
             </property>
             <property name="text">
              <string/>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
             </property>
            </item>
           </item>
@@ -872,7 +1082,7 @@
            <string>GainIa</string>
           </property>
           <property name="text">
-           <string>1932735.3</string>
+           <string/>
           </property>
           <property name="text">
            <string>设备值，double型</string>
@@ -921,13 +1131,34 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIb</string>
           </property>
           <property name="text">
-           <string>1932735.3</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -976,13 +1207,34 @@
             </property>
            </item>
           </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+          </item>
          </item>
          <item>
           <property name="text">
            <string>GainIc</string>
           </property>
           <property name="text">
-           <string>1932735.3</string>
+           <string/>
           </property>
           <property name="text">
            <string/>
@@ -1028,6 +1280,27 @@
             </property>
             <property name="text">
              <string/>
+            </property>
+           </item>
+          </item>
+          <item>
+           <property name="text">
+            <string>SamplingType</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Hall</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>Shunt</string>
+            </property>
+            <property name="text">
+             <string>6442451.2</string>
             </property>
            </item>
           </item>
