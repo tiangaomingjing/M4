@@ -89,6 +89,8 @@ void CfgMotor::onWriteFuncTreetoServoFlash()
   QTreeWidgetItem *imaxInfoItem;// -->ImaxInfo
   QTreeWidgetItem *gainInfoItem;//  -->GainInfo
   AbstractFuncWidget::onWriteFuncTreetoServoFlash();//调用父类方法写FLASH
+  if(!m_passChecked)
+    return;
 
   emit clearWarning();
   imaxTreeItem=mp_mainWindow->getFunctionExtensionTree()\
@@ -111,7 +113,12 @@ void CfgMotor::onWriteFuncTreetoServoFlash()
 
     type=samplingData->types().at(m_axisNumber);
     rValue=samplingData->values().at(m_axisNumber);
-    gainInfo.gain=itemGainx->child(ROW_GAINIx_INX_SAMPLING_TYPE)->child(type)->text(COL_FUNC_EXTENSION_PARAMETER).toDouble()/(rValue+0.0);
+    //gain =shunt 64424512*dspversionfactor 2/电阻值rValue
+    double samplingValue;
+    double factor;
+    samplingValue=itemGainx->child(ROW_GAINIx_INX_SAMPLING_TYPE)->child(type)->text(COL_FUNC_EXTENSION_PARAMETER).toDouble();
+    factor=itemGainx->child(ROW_GAINIx_INX_SAMPLING_TYPE)->child(type)->child(0)->text(COL_FUNC_EXTENSION_PARAMETER).toDouble();
+    gainInfo.gain=samplingValue*factor/(rValue+0.0);
     gainInfo.writeFlashName=itemGainx->child(ROW_GAINIx_INX_WRITE_FLASH_INFO)->child(ROW_GAINWRFLASH_INDEX_NAME)->text(COL_FUNC_EXTENSION_PARAMETER);
     gainInfo.writeFlashType=itemGainx->child(ROW_GAINIx_INX_WRITE_FLASH_INFO)->child(ROW_GAINWRFLASH_INDEX_TYPE)->text(COL_FUNC_EXTENSION_PARAMETER);
     gainInfo.offsetAddr=itemGainx->child(ROW_GAINIx_INX_WRITE_FLASH_INFO)->child(ROW_GAINWRFLASH_INDEX_OFFSETADDR)->text(COL_FUNC_EXTENSION_PARAMETER).toUInt();

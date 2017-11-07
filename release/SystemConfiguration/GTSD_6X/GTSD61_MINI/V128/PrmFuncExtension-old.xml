@@ -1,0 +1,1481 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>715</width>
+    <height>508</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>parameter</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>introduction</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>offsetAddress</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>用于function的几个页面的fram加偏移地址，注意这里的名字不能改，同时有新增的，往后面加</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>axis0</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis1</string>
+       </property>
+       <property name="text">
+        <string>32768</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis2</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis3</string>
+       </property>
+       <property name="text">
+        <string>32768</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis4</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis5</string>
+       </property>
+       <property name="text">
+        <string>32768</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>device</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>用于DSP下载控制及复位控制</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>dsp</string>
+       </property>
+       <property name="text">
+        <string>3</string>
+       </property>
+       <property name="text">
+        <string>total number</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>dspAxis</string>
+        </property>
+        <property name="text">
+         <string>2</string>
+        </property>
+        <property name="text">
+         <string>每一个DSP管理两个轴</string>
+        </property>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>fpga</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="text">
+        <string>total number</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>fpgaAxis</string>
+        </property>
+        <property name="text">
+         <string>6</string>
+        </property>
+        <property name="text">
+         <string>第个fpga管理4个轴</string>
+        </property>
+       </item>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>advControlPrm</string>
+      </property>
+      <property name="text">
+       <string>NULL</string>
+      </property>
+      <property name="text">
+       <string>用于高级功能不同的节点传递不同的参数以及画图中填结构体</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>gSevDrv</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>gAuxFunc</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>ModulePrm</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>模块额外参数</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Motor</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string>电机参数模块,当在电机保存参数时，也要根据Imax改变下面的值</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>Axis0</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>ImaxInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="text">
+           <string>gSevDrv.sev_obj.cur.mot.Imax_1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MemberType</string>
+          </property>
+          <property name="text">
+           <string>Uint16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AddressOffset</string>
+          </property>
+          <property name="text">
+           <string>101</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>GainInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GainIa</string>
+          </property>
+          <property name="text">
+           <string>1610612.75</string>
+          </property>
+          <property name="text">
+           <string>设备值，double型</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>往这个Flash写数=GainIa/Imax(原始值)</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kia</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>200</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIb</string>
+          </property>
+          <property name="text">
+           <string>1610612.75</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kib</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>201</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIc</string>
+          </property>
+          <property name="text">
+           <string>1610612.75</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kic</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>202</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Axis1</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>ImaxInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="text">
+           <string>gSevDrv.sev_obj.cur.mot.Imax_1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MemberType</string>
+          </property>
+          <property name="text">
+           <string>Uint16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AddressOffset</string>
+          </property>
+          <property name="text">
+           <string>32869</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>GainInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GainIa</string>
+          </property>
+          <property name="text">
+           <string>1610612.75</string>
+          </property>
+          <property name="text">
+           <string>设备值，double型</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>往这个Flash写数=GainIa/Imax(原始值)</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kia</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32968</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIb</string>
+          </property>
+          <property name="text">
+           <string>1610612.75</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kib</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32969</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIc</string>
+          </property>
+          <property name="text">
+           <string>1610612.75</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kic</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32970</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Axis2</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>ImaxInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="text">
+           <string>gSevDrv.sev_obj.cur.mot.Imax_1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MemberType</string>
+          </property>
+          <property name="text">
+           <string>Uint16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AddressOffset</string>
+          </property>
+          <property name="text">
+           <string>101</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>GainInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GainIa</string>
+          </property>
+          <property name="text">
+           <string>966367.65</string>
+          </property>
+          <property name="text">
+           <string>设备值，double型</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>往这个Flash写数=GainIa/Imax(原始值)</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kia</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>200</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIb</string>
+          </property>
+          <property name="text">
+           <string>966367.65</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kib</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>201</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIc</string>
+          </property>
+          <property name="text">
+           <string>966367.65</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kic</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>202</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Axis3</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>ImaxInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="text">
+           <string>gSevDrv.sev_obj.cur.mot.Imax_1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MemberType</string>
+          </property>
+          <property name="text">
+           <string>Uint16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AddressOffset</string>
+          </property>
+          <property name="text">
+           <string>32869</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>GainInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GainIa</string>
+          </property>
+          <property name="text">
+           <string>966367.65</string>
+          </property>
+          <property name="text">
+           <string>设备值，double型</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>往这个Flash写数=GainIa/Imax(原始值)</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kia</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32968</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIb</string>
+          </property>
+          <property name="text">
+           <string>966367.65</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kib</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32969</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIc</string>
+          </property>
+          <property name="text">
+           <string>966367.65</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kic</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32970</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Axis4</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>ImaxInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="text">
+           <string>gSevDrv.sev_obj.cur.mot.Imax_1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MemberType</string>
+          </property>
+          <property name="text">
+           <string>Uint16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AddressOffset</string>
+          </property>
+          <property name="text">
+           <string>101</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>GainInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GainIa</string>
+          </property>
+          <property name="text">
+           <string>322122.55</string>
+          </property>
+          <property name="text">
+           <string>设备值，double型</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>往这个Flash写数=GainIa/Imax(原始值)</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kia</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>200</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIb</string>
+          </property>
+          <property name="text">
+           <string>322122.55</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kib</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>201</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIc</string>
+          </property>
+          <property name="text">
+           <string>322122.55</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kic</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>202</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>Axis5</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>ImaxInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>Name</string>
+          </property>
+          <property name="text">
+           <string>gSevDrv.sev_obj.cur.mot.Imax_1</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>MemberType</string>
+          </property>
+          <property name="text">
+           <string>Uint16</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>AddressOffset</string>
+          </property>
+          <property name="text">
+           <string>32869</string>
+          </property>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>GainInfo</string>
+         </property>
+         <item>
+          <property name="text">
+           <string>GainIa</string>
+          </property>
+          <property name="text">
+           <string>322122.55</string>
+          </property>
+          <property name="text">
+           <string>设备值，double型</string>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>往这个Flash写数=GainIa/Imax(原始值)</string>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kia</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32968</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIb</string>
+          </property>
+          <property name="text">
+           <string>322122.55</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kib</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32969</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>GainIc</string>
+          </property>
+          <property name="text">
+           <string>322122.55</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>WriteFlashInfo</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <item>
+            <property name="text">
+             <string>Name</string>
+            </property>
+            <property name="text">
+             <string>gSevDrv.sev_obj.cur.adc.prm.kic</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>MemberType</string>
+            </property>
+            <property name="text">
+             <string>int16</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>AddressOffset</string>
+            </property>
+            <property name="text">
+             <string>32970</string>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+          </item>
+         </item>
+        </item>
+       </item>
+      </item>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

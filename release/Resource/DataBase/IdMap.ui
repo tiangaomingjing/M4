@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>599</width>
+    <height>272</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>id</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>nickname</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>GTSD41</string>
+      </property>
+      <property name="text">
+       <string>21000509</string>
+      </property>
+      <property name="text">
+       <string>SD43P003</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>GTSD42</string>
+      </property>
+      <property name="text">
+       <string>21000509</string>
+      </property>
+      <property name="text">
+       <string>SD43P004</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>GTSD61</string>
+      </property>
+      <property name="text">
+       <string>21000541</string>
+      </property>
+      <property name="text">
+       <string>SD63P006</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>GTSD61_MINI</string>
+      </property>
+      <property name="text">
+       <string>21000595</string>
+      </property>
+      <property name="text">
+       <string>SD63P003</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

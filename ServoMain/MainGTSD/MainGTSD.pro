@@ -112,10 +112,13 @@ SOURCES += main.cpp\
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp \
     MotorSqlModel/motorsqlmodel.cpp \
     PrmCheck/prmcheck.cpp \
-    UserRole/userrole.cpp \
-    UserRole/logindialog.cpp \
     EpromManage/eprommanage.cpp \
-    PowerTreeManage/powertreemanage.cpp
+    PowerTreeManage/powertreemanage.cpp \
+    Option/ioptionitem.cpp \
+    Option/option.cpp \
+    Option/optionautoloaditem.cpp \
+    Option/optionuserloginitem.cpp \
+    Option/OptionDialog/optiondialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -147,10 +150,13 @@ HEADERS  += mainwindow.h \
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h \
     MotorSqlModel/motorsqlmodel.h \
     PrmCheck/prmcheck.h \
-    UserRole/userrole.h \
-    UserRole/logindialog.h \
     EpromManage/eprommanage.h \
-    PowerTreeManage/powertreemanage.h
+    PowerTreeManage/powertreemanage.h \
+    Option/ioptionitem.h \
+    Option/option.h \
+    Option/optionautoloaditem.h \
+    Option/optionuserloginitem.h \
+    Option/OptionDialog/optiondialog.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \
@@ -163,11 +169,11 @@ FORMS    += mainwindow.ui \
     FpgaDialogSetting/fpgadialogsetting.ui \
     Uboot/ubootdialog.ui \
     FpgaDialogSetting/fpgadialogsettingrnnet.ui \
-    UserRole/logindialog.ui
+    Option/OptionDialog/optiondialog.ui
 
 RESOURCES += \
     image.qrc \
-    UserRole/res.qrc
+    Option/OptionDialog/res.qrc
 RC_ICONS +=AppIco.ico
 
 TRANSLATIONS +=app_main_simplchinese.ts

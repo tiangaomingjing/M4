@@ -45,7 +45,7 @@ DownloadDialog::~DownloadDialog()
 
 void DownloadDialog::onBtnDspFileOpenClicked()
 {
-  QString path = QFileDialog::getOpenFileName(this, tr("Open File"), MainWindow::g_lastFilePath, tr("Hex Files( *.hex);;All Files( *.*)"));
+  QString path = QFileDialog::getOpenFileName(this, tr("Open File"), MainWindow::g_lastFilePath, tr("Hex Files( *.hex)"));
   if(path.isNull())
     return;
   QFileInfo fileInfo;
@@ -56,7 +56,7 @@ void DownloadDialog::onBtnDspFileOpenClicked()
 
 void DownloadDialog::onBtnFpgaFileOpenClicked()
 {
-  QString path = QFileDialog::getOpenFileName(this, tr("Open File"), MainWindow::g_lastFilePath, tr("Rpd Files( *.rpd);;All Files( *.*)"));
+  QString path = QFileDialog::getOpenFileName(this, tr("Open File"), MainWindow::g_lastFilePath, tr("Rpd Files( *.rpd)"));
   if(path.isNull())
     return;
   QFileInfo fileInfo;

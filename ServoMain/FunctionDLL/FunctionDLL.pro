@@ -1,7 +1,10 @@
 TEMPLATE = subdirs
-
-SUBDIRS +=CfgDriverPower\
-          AbstractFuncWidget \
+#按照输写顺序来编绎
+CONFIG +=ordered
+SUBDIRS +=AbstractFuncWidget \
+          QmlPluginLibrary\
+          ServoGeneralCmd \
+          CfgDriverPower\
           CfgMotor \
           CfgEncoder \
           CfgCurrentLoop \
@@ -14,9 +17,7 @@ SUBDIRS +=CfgDriverPower\
           AdvRAM \
           AdvFLASH \
           PlotWave\
-          QmlPluginLibrary\
-          ServoGeneralCmd \
           ModuleIO \
-    PlotWaveUi \
-    ModuleIoNew
+          PlotWaveUi \
+          ModuleIoNew
 

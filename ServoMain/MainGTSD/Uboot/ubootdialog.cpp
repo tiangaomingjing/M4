@@ -36,7 +36,7 @@ QString UbootDialog::xmlFilePath() const
 
 void UbootDialog::onBtnLineEditHexFilePathClicked()
 {
-  QString path = QFileDialog::getOpenFileName(this, tr("Open"), ".", tr("Hex Files( *.hex);;All Files( *.*)"));
+  QString path = QFileDialog::getOpenFileName(this, tr("Open"), ".", tr("Hex Files( *.hex)"));
   if(path.isNull())
     return;
   ui->lineEdit_hexFileName->setText(path);
@@ -48,7 +48,7 @@ void UbootDialog::onBtnLineEditHexFilePathClicked()
 
 void UbootDialog::onBtnLineEditXmlFilePathClicked()
 {
-  QString path = QFileDialog::getOpenFileName(this, tr("Open"), ".", tr("Xml Files( *.xml);;All Files( *.*)"));
+  QString path = QFileDialog::getOpenFileName(this, tr("Open"), ".", tr("Xml Files( *.xml)"));
   if(path.isNull())
     return;
   ui->lineEdit_xmlFileName->setText(path);

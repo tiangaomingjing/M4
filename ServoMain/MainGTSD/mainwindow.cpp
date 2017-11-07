@@ -29,10 +29,12 @@
 #include "../FunctionDLL/ServoGeneralCmd/servogeneralcmd.h"
 #include "moduleionew.h"
 #include "PrmCheck/prmcheck.h"
-#include "UserRole/userrole.h"
-#include "UserRole/logindialog.h"
 #include "PowerTreeManage/powertreemanage.h"
 #include "EpromManage/eprommanage.h"
+#include "Option/option.h"
+#include "Option/optionautoloaditem.h"
+#include "Option/optionuserloginitem.h"
+#include "Option/OptionDialog/optiondialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -107,12 +109,11 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_fpgaDialogSettingRnNet(NULL),
   m_quickView(NULL),
   m_userConfigProxyQml(NULL),
-  m_userRole(new UserRole(UserRole::USER_GENERAL,parent)),
+  m_option(new Option(this)),
   m_gPtyLimitTree(NULL),
   m_versionNeedCheck(false)
 {
   ui->setupUi(this);
-  qRegisterMetaType<UserRole::UserRoleType>("UserRoleType");//信号与槽发送自己定义的数据
   m_moduleShareData.clear();
   ui->dock_navigation->setMinimumSize(50,120);
   ui->progressBar->hide();
@@ -163,8 +164,10 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   setWidgetStyleSheet();
 
   ui->treeWidget->topLevelItem(2)->setHidden(true);
-  connect(m_userRole,SIGNAL(userTypeChanged(UserRole::UserRoleType&)),this,SLOT(onUserRoleChanged()));
+  connect(m_option->m_userLoginItem,SIGNAL(userTypeChanged(int)),this,SLOT(onUserRoleChanged(int)));
+  connect(m_option->m_userLoginItem,SIGNAL(errorPassWord()),this,SLOT(onErrorPassWord()));
   readSettings();
+  onUserRoleChanged(m_option->m_userLoginItem->userType());
 }
 
 MainWindow::~MainWindow()
@@ -744,18 +747,10 @@ void MainWindow::onActionFile2ServoClicked()
       delete tree;
       return;
     }
-//    else if(dspVersion<xmlVersion)
-//    {
-//      QString msg=tr("current dsp version_%1 is not equal to xml version_%2\ndo you still want to continue to download file to servo?").arg(dspVersion).arg(xmlVersion);
-//      bool ret=MessageBoxAsk(msg);
-//      if(ret==false)
-//      {
-//        tree->clear();
-//        delete tree;
-//        return;
-//      }
-//    }
-    if((m_userRole->userType()==UserRole::USER_GENERAL))
+
+    if((m_option->m_userLoginItem->userType()==OptionUserLoginItem::USER_GENERAL)||\
+       ((m_option->m_userLoginItem->userType()==OptionUserLoginItem::USER_ADMIN)&&\
+        m_option->m_userLoginItem->adminNeedChecked()))
     {
       //检查属性表
       PrmCheck check;
@@ -1468,19 +1463,12 @@ void MainWindow::onActionAboutSDTClicked()
   mess.setIconPixmap(QPixmap(ICON_FILE_PATH+ICON_SDT_LOGO));
   mess.exec();
 }
-void MainWindow::onActionUserLoginClicked()
+
+void MainWindow::onActionOptionClicked()
 {
-//  static bool checked=false;
-//  checked=!checked;
-//  ui->treeWidget->topLevelItem(2)->setHidden(checked);
-  LoginDialog dialog(m_userRole);
-  qDebug()<<dialog.exec();
-  qDebug()<<"preference ";
-}
-void MainWindow::onActionAutoLoadClicked(bool checked)
-{
-  m_autoLoad=checked;
-  qDebug()<<"auto load clicked "<<m_autoLoad;
+  OptionDialog dia(m_option);
+  dia.exec();
+  qDebug()<<"option clicked ";
 }
 
 void MainWindow::onNewConfigurationActived(UserConfig *config)
@@ -1740,17 +1728,23 @@ void MainWindow::onCheckingProgress(QString &name,int value)
 //  }
 }
 
-void MainWindow::onUserRoleChanged()
+void MainWindow::onUserRoleChanged(int user)
 {
-  switch(m_userRole->userType())
+  OptionUserLoginItem::UserRoleType userType=(OptionUserLoginItem::UserRoleType)user;
+  switch(userType)
   {
-  case UserRole::USER_GENERAL:
+  case OptionUserLoginItem::USER_GENERAL:
     ui->treeWidget->topLevelItem(2)->setHidden(true);
     break;
-  case UserRole::USER_ADMIN:
+  case OptionUserLoginItem::USER_ADMIN:
     ui->treeWidget->topLevelItem(2)->setHidden(false);
     break;
   }
+}
+void MainWindow::onErrorPassWord()
+{
+  qDebug()<<"--->mainwindow error password";
+  QMessageBox::information(0,tr("Warnning"),tr("password error occur !"));
 }
 
 //-------------protected function-------------------------
@@ -1812,11 +1806,12 @@ void MainWindow::createMenus(void)
   m_menuTool->addAction(m_actFPGAControl);
   m_menuTool->addSeparator();
   //增加首选项
-  m_menuPreference=new QMenu(tr("Preference..."),this);
-  m_menuPreference->setIcon(QIcon(ICON_FILE_PATH+ICON_CHILD));
-  m_menuPreference->addAction(m_actUserLogin);
-  m_menuPreference->addAction(m_actAutoLoad);
-  m_menuTool->addMenu(m_menuPreference);
+  m_menuTool->addAction(m_actOption);
+//  m_menuPreference=new QMenu(tr("Preference..."),this);
+//  m_menuPreference->setIcon(QIcon(ICON_FILE_PATH+ICON_CHILD));
+//  m_menuPreference->addAction(m_actUserLogin);
+//  m_menuPreference->addAction(m_actAutoLoad);
+//  m_menuTool->addMenu(m_menuPreference);
 
   //--------------help menu-------------------
   m_menuHelp=menuBar()->addMenu(tr("Help(&H)"));
@@ -1994,19 +1989,25 @@ void MainWindow::createActions(void)
   m_actAboutSDT->setStatusTip(tr("About SDT version"));
   connect(m_actAboutSDT,SIGNAL(triggered(bool)),this,SLOT(onActionAboutSDTClicked()));
 
-  m_actUserLogin=new QAction(this);
-  m_actUserLogin->setText(tr("UserRole"));
-  m_actUserLogin->setToolTip(tr("UserRole setting"));
-  m_actUserLogin->setStatusTip(tr("UserRole setting"));
-  m_actUserLogin->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_USER_LOGIN));
-  connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
+//  m_actUserLogin=new QAction(this);
+//  m_actUserLogin->setText(tr("UserRole"));
+//  m_actUserLogin->setToolTip(tr("UserRole setting"));
+//  m_actUserLogin->setStatusTip(tr("UserRole setting"));
+//  m_actUserLogin->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_USER_LOGIN));
+//  connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
 
-  m_actAutoLoad=new QAction(this);
-  m_actAutoLoad->setCheckable(true);
-  m_actAutoLoad->setText(tr("AutoLoad"));
-  m_actAutoLoad->setToolTip(tr("AutoLoad By ID"));
-  m_actAutoLoad->setStatusTip(tr("AutoLoad By ID"));
-  connect(m_actAutoLoad,SIGNAL(triggered(bool)),this,SLOT(onActionAutoLoadClicked(bool)));
+//  m_actAutoLoad=new QAction(this);
+//  m_actAutoLoad->setCheckable(true);
+//  m_actAutoLoad->setText(tr("AutoLoad"));
+//  m_actAutoLoad->setToolTip(tr("AutoLoad By ID"));
+//  m_actAutoLoad->setStatusTip(tr("AutoLoad By ID"));
+//  connect(m_actAutoLoad,SIGNAL(triggered(bool)),this,SLOT(onActionAutoLoadClicked(bool)));
+
+  m_actOption=new QAction(this);
+  m_actOption->setText(tr("Option..."));
+  m_actOption->setToolTip(tr("set option"));
+  m_actOption->setStatusTip(tr("set option"));
+  connect(m_actOption,SIGNAL(triggered(bool)),this,SLOT(onActionOptionClicked()));
 }
 
 void MainWindow::createToolBars(void)
@@ -2400,7 +2401,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   DownloadDialog::delayms(20);
   ui->progressBar->hide();
   updateStartUpMessage(tr(">>finish update"));
-  onUserRoleChanged();
+  onUserRoleChanged((int)m_option->m_userLoginItem->userType());
 }
 
 void MainWindow::createHistoryAction()
@@ -2623,39 +2624,63 @@ void MainWindow::readSettings()
                      QSettings::IniFormat);
 
   settings.beginGroup("UserRole");
-  UserRole::UserRoleType type;
-  type=(UserRole::UserRoleType)(settings.value("userType",0).toInt());
-  m_userRole->setUserType(type);
+  OptionUserLoginItem::UserRoleType type;
+  bool needCheck;
+  type=(OptionUserLoginItem::UserRoleType)settings.value("userType",0).toInt();
+  m_option->m_userLoginItem->setUserType(type);
+  needCheck=settings.value("needCheck",true).toBool();
+  m_option->m_userLoginItem->setAdminNeedChecked(needCheck);
   settings.endGroup();
-  qDebug()<<"read type="<<type;
 
   settings.beginGroup("AutoLoadById");
-  m_autoLoad=settings.value("Auto",false).toBool();
+  bool avalue=settings.value("auto",false).toBool();
+  m_option->m_autoLoadItem->setAutoLoadById(avalue);
   settings.endGroup();
-  qDebug()<<"auto load :"<<m_autoLoad;
-  m_actAutoLoad->setChecked(m_autoLoad);
+  qDebug()<<"auto load :"<<avalue;
 }
-
-//bool MainWindow::prmNeedChecked()
-//{
-//  return (m_versionNeedCheck&&(m_userRole->userType()==UserRole::USER_GENERAL));
-//}
 
 bool MainWindow::readPowerId()
 {
   //目前先根据配置来决定ID
-  if(m_autoLoad==false)
+  if(m_option->m_autoLoadItem->autoLoadById()==false)
   {
     QString modelName=mp_userConfig->model.modelName;
     qDebug()<<"model name ="<<modelName;
-    if((modelName=="GTSD41")||(modelName=="GTSD42"))
+    QString idMapFileName=RESOURCE_FILE_PATH+"DataBase/IdMap.ui";
+    QTreeWidget *mapTree=QtTreeManager::createTreeWidgetFromXmlFile(idMapFileName);
+    bool isFindId=false;
     {
-      m_powerId=21000509;
+      QTreeWidgetItemIterator it(mapTree);
+      QTreeWidgetItem *item;
+
+      while(*it)
+      {
+        item=(*it);
+        if(item->text(COL_NAME)==modelName)
+        {
+          isFindId=true;
+          m_powerId=item->text(COL_VALUE).toUInt();
+          qDebug()<<"find id "<<item->text(COL_NAME)<<" id="<<m_powerId;
+          break;
+        }
+        it++;
+      }
     }
-    else if(modelName=="GTSD61")
-    {
-      m_powerId=21000510;
-    }
+    mapTree->clear();
+    delete mapTree;
+    return isFindId;
+//    if((modelName=="GTSD41")||(modelName=="GTSD42"))
+//    {
+//      m_powerId=21000509;
+//    }
+//    else if(modelName=="GTSD61")
+//    {
+//      m_powerId=21000510;
+//    }
+//    else if(modelName=="GTSD61_MIN")
+//    {
+//      m_powerId=21000511;
+//    }
   }
   else//根据实际硬件读ID
   {
@@ -2671,7 +2696,7 @@ bool MainWindow::readPowerId()
 bool MainWindow::readControlId()
 {
   //目前先根据配置来决定ID
-  if(m_autoLoad==false)
+  if(m_option->m_autoLoadItem->autoLoadById()==false)
   {
     m_controlId=1000;
   }
