@@ -8,4 +8,6 @@ SUBDIRS += \
     MainWidget \
     QmlProject \
     NavigationBar \
-    FillLimit
+    FillLimit \
+    option \
+    CustomPlot

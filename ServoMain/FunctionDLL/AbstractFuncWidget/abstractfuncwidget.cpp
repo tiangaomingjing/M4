@@ -16,7 +16,8 @@
 #include "MainGTSD/mainwindow.h"
 #include "ServoDriverComDll.h"
 #include "QmlFactory/qmlregisterincludes.h"
-#include "userrole.h"
+#include "option.h"
+#include "optionuserloginitem.h"
 
 #define OFFSETADDRESS  "offsetAddress"
 
@@ -187,9 +188,24 @@ void AbstractFuncWidget::createUiByQml()
 bool AbstractFuncWidget::prmNeedChecked()
 {
   bool checked=mp_mainWindow->prmNeedChecked();
-  bool isGeneralUser=(mp_mainWindow->getUserRole()->userType()==UserRole::USER_GENERAL)?true:false;
+//  bool isGeneralUser=(mp_mainWindow->getUserRole()->userType()==UserRole::USER_GENERAL)?true:false;
+  OptionUserLoginItem *userItem=mp_mainWindow->getOption()->m_userLoginItem;
+  bool isGeneralUser=(userItem->userType()==OptionUserLoginItem::USER_GENERAL)?true:false;
   qDebug()<<"checked="<<checked<<"isGeneralUser="<<isGeneralUser;
-  return checked&&isGeneralUser;
+  if(checked)
+  {
+    if(isGeneralUser)//普通用户需要检查
+      return true;
+    else//高级能户
+    {
+      if(userItem->adminNeedChecked())
+        return true;
+      else
+        return false;
+    }
+  }
+  else
+    return false;
 }
 
 //!-------------------------------private function---------------------------------

@@ -33,7 +33,7 @@ class ConnectDataBase;
 class FpgaDialogSettingRnNet;
 class AbstractFuncWidget;
 class MotorSqlModel;
-class UserRole;
+class Option;
 
 class MainWindow : public QMainWindow
 {
@@ -51,7 +51,7 @@ public:
   QTreeWidget *getPtyLimitTree(){return m_gPtyLimitTree;}
   MotorSqlModel *getMotorSqlModel(void){return m_motorSqlModel;}
   bool prmNeedChecked(){return m_versionNeedCheck;}
-  UserRole *getUserRole(){ return m_userRole;}
+  Option *getOption(){return m_option;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
   const QList<QMap<QString ,PowerBoardLimit>> *getPowerBoardLimitMapList(void) const {return &m_powerLimitMapList;}
@@ -113,8 +113,7 @@ private slots:
   void onActionAboutConfigClicked();
   void onActionAboutSDTClicked();
   //preference
-  void onActionUserLoginClicked();
-  void onActionAutoLoadClicked(bool checked);
+  void onActionOptionClicked();
   //-----------新建配置--------------
   void onNewConfigurationActived(UserConfig *config);//槽连接到新建窗口发射的信号,响应新建配置
 
@@ -140,7 +139,8 @@ private slots:
   void onXmlServoToPrm(int axis,int value);
   void onCheckingProgress(QString &name, int value);
 
-  void onUserRoleChanged(void);
+  void onUserRoleChanged(int user);
+  void onErrorPassWord();
 
 protected:
   void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
@@ -223,6 +223,7 @@ private:
   //------configuration action-------
   QAction *m_actUserLogin;
   QAction *m_actAutoLoad;
+  QAction *m_actOption;
 
   //--------菜单--------------
   QMenu *m_menuConfig;
@@ -269,8 +270,8 @@ private:
   MotorSqlModel *m_motorSqlModel;
 
   //首选项配置参数
-  UserRole *m_userRole;
   bool m_autoLoad;
+  Option *m_option;
 
   QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
   bool m_versionNeedCheck;//硬件与软件 比127版本大，用于判断是否要作参数范围检查

@@ -58,6 +58,9 @@
 		<FirmWare name="V127"/>
 		<FirmWare name="V128"/>
 	</Model>
+	<Model name="GTSD61_MINI" axisCount ="6">
+		<FirmWare name="V128"/>
+	</Model>
     <Tree>
       <Root name="参数配置">
 		<Child name="电机参数" classname="CfgMotor" PrmFuncFile="PrmFuncMotor"/>

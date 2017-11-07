@@ -3,6 +3,7 @@
 #include "userrole.h"
 #include <QMessageBox>
 #include <QDebug>
+#include <QKeyEvent>
 
 LoginDialog::LoginDialog(UserRole *role, QWidget *parent) :
   QDialog(parent),
@@ -13,6 +14,7 @@ LoginDialog::LoginDialog(UserRole *role, QWidget *parent) :
 //  this->setAttribute(Qt::WA_DeleteOnClose);
   UserRole::UserRoleType type=m_userRole->userType();
   setCurrentUser(type);
+  setWindowTitle(tr("user login"));
   connect(ui->btn_cancel,SIGNAL(clicked(bool)),this,SLOT(onBtnCancelClicked()));
   connect(ui->btn_login,SIGNAL(clicked(bool)),this,SLOT(onBtnLoginClicked()));
 }
@@ -21,6 +23,44 @@ LoginDialog::~LoginDialog()
 {
   delete ui;
 }
+void LoginDialog::keyPressEvent(QKeyEvent *keyEvent)
+{
+  if(keyEvent->key()==Qt::Key_Enter)
+  {
+    qDebug()<<"enter key event ";
+    return ;
+  }
+  else if(keyEvent->key()==Qt::Key_Return)
+  {
+    qDebug()<<"return key event ";
+    return ;
+  }
+  else if(keyEvent->key()==Qt::Key_Escape)
+  {
+    qDebug()<<"escape key event ";
+    return ;
+  }
+  QWidget::keyPressEvent(keyEvent);
+}
+
+//bool LoginDialog::event(QEvent *event)Q_DECL_OVERRIDE
+//{
+//  if(event->type()==QEvent::KeyPress)
+//  {
+//    if(keyEvent->key()==Qt::Key_Enter)
+//    {
+//      qDebug()<<"enter key event ";
+//      return true;
+//    }
+//    else if(keyEvent->key()==Qt::Key_Return)
+//    {
+//      qDebug()<<"return key event ";
+//      return true;
+//    }
+//  }
+//  return QWidget::event(event);
+//}
+
 void LoginDialog::setCurrentUser(UserRole::UserRoleType &userType)
 {
   switch (userType)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>799</width>
-    <height>459</height>
+    <width>591</width>
+    <height>475</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -327,6 +327,14 @@
             <property name="text">
              <string/>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -338,6 +346,17 @@
             <property name="text">
              <string>20132.66*320</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+             <property name="text">
+              <string>以V128为准，在这个基础上乘以一个系数</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -409,6 +428,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -417,6 +444,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -488,6 +523,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -496,6 +539,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -609,6 +660,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -617,6 +676,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -688,6 +755,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -696,6 +771,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -764,6 +847,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -772,6 +863,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -885,6 +984,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -893,6 +1000,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -961,6 +1076,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -969,6 +1092,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1037,6 +1168,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1045,6 +1184,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1158,6 +1305,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1166,6 +1321,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1234,6 +1397,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1242,6 +1413,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1310,6 +1489,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1318,6 +1505,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1431,6 +1626,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1439,6 +1642,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1507,6 +1718,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1515,6 +1734,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1583,6 +1810,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1591,6 +1826,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1704,6 +1947,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1712,6 +1963,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1780,6 +2039,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1788,6 +2055,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
@@ -1856,6 +2131,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
            <item>
             <property name="text">
@@ -1864,6 +2147,14 @@
             <property name="text">
              <string>6442451.2</string>
             </property>
+            <item>
+             <property name="text">
+              <string>DspVersionFactor</string>
+             </property>
+             <property name="text">
+              <string>1</string>
+             </property>
+            </item>
            </item>
           </item>
          </item>
