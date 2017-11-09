@@ -86,12 +86,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbsCom\include\AbsCom.h" />
+    <ClInclude Include="AdminstratorComDll.h" />
     <ClInclude Include="Cmd\include\ST_GTSD_Cmd.h" />
     <ClInclude Include="ComBase.h" />
+    <ClInclude Include="CpldCom.h" />
     <ClInclude Include="DeviceDataBase.h" />
+    <ClInclude Include="driver_command.h" />
+    <ClInclude Include="Eeprom.h" />
     <ClInclude Include="eeprom\include\eepromOpt.h" />
     <ClInclude Include="FirmwareDL\include\FirmwareDl.h" />
     <ClInclude Include="FPGAUpdate.h" />
+    <ClInclude Include="GTCmdCtrl.h" />
+    <ClInclude Include="GTDriverCmd.h" />
     <ClInclude Include="MotionControlComDll.h" />
     <ClInclude Include="MotionCtrlCom.h" />
     <ClInclude Include="NetCom\include\BaseReturn_def.h" />
@@ -123,6 +129,7 @@
     <ClInclude Include="SocketCom\include\SocketCom.h" />
     <ClInclude Include="SocketCom\include\SocketInterface.h" />
     <ClInclude Include="SocketCom\include\SocketPacket.h" />
+    <ClInclude Include="SPLine.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="StRingNetComUser.h" />
     <ClInclude Include="StRingNetRegDef.h" />
@@ -134,8 +141,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbsCom\src\AbsCom.cpp" />
+    <ClCompile Include="AdminstratorComDll.cpp" />
     <ClCompile Include="Cmd\src\ST_GTSD_Cmd.cpp" />
     <ClCompile Include="ComBase.cpp" />
+    <ClCompile Include="CpldCom.cpp" />
     <ClCompile Include="DeviceDataBase.cpp" />
     <ClCompile Include="dllmain.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
@@ -145,9 +154,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
       </PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Eeprom.cpp" />
     <ClCompile Include="eeprom\src\eepromOpt.cpp" />
     <ClCompile Include="FirmwareDL\src\FirmwareDl.cpp" />
     <ClCompile Include="FPGAUpdate.cpp" />
+    <ClCompile Include="GTCmdCtrl.cpp" />
+    <ClCompile Include="GTDriverCmd.cpp" />
     <ClCompile Include="MotionControlComDll.cpp" />
     <ClCompile Include="MotionCtrlCom.cpp" />
     <ClCompile Include="NetCom\src\Net.cpp" />
@@ -175,6 +187,7 @@
     <ClCompile Include="SocketCom\src\SocketCom.cpp" />
     <ClCompile Include="SocketCom\src\SocketInterface.cpp" />
     <ClCompile Include="SocketCom\src\SocketPacket.cpp" />
+    <ClCompile Include="SPLine.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -187,10 +200,13 @@
   <ItemGroup>
     <Library Include="NetCom\wpcap\lib\wpcap.lib" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Network.def" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-  <ProjectExtensions>
+    <ProjectExtensions>
 	<VisualStudio>
 	  <UserProperties UicDir=".\GeneratedFiles" RccDir=".\GeneratedFiles" Qt5Version_x0020_Win32="Qt5.5.1x86" />
 	</VisualStudio>

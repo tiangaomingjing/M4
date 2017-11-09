@@ -43,9 +43,10 @@ public:
 	CRingNetInterface();
 	~CRingNetInterface();
 
+protected:
+	Uint16 m_com_dsp_check_mode;
 
-
-
+public:
 	const int COM_DSP_TRY_TIME = 1000;
 	const int COM_FPGA_TRY_TIME = 200;
 	/*******************************************************************************************
@@ -89,9 +90,14 @@ public:
 	static const int32			NET_COM_EXECUTE_SUCCESS = 1;							// 命令执行成功
 	static const int32			NET_COM_PARAMETER_INVALID = 2;							// 无效参数
 	static const int32			NET_COM_INSTRUCTION_INVALID = 3;							// 非法指令
+	static const Uint16			COM_DSP_CHEKC_NORMAL = 0;//check_en ctrl by the input param
+	static const Uint16			COM_DSP_CHEKC_FORCE_ON = 1;//check_en don't ctrl by the input param, and force to on
+	static const Uint16			COM_DSP_CHEKC_FORCE_OFF = 2;//check_en don't ctrl by the input param, and force to on
 	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 addr, int16* pData, int16 word_num, int16 des_id);
-	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, Uint8 des_id, Uint8 des_ch);
-	int16 RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_c, Uint8 needReq = TRUE, Uint8 addr_mod = RN_ADDR_INC, Uint8 wait_level = RN_OP_WAIT_DEFAULT, Uint8 dsitance = 0xf0);
+	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 check_en = TRUE);
+
+	int16 RnNetCom_DSP_FroceCheckMode(int mode);
+	int16 RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 needReq = TRUE, Uint8 addr_mod = RN_ADDR_INC, Uint8 wait_level = RN_OP_WAIT_DEFAULT, Uint8 dsitance = 0xf0);
 	int16 RnNetCom(Uint8 com_mode, Uint8 cmd, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 needReq = TRUE, Uint8 addr_mod = RN_ADDR_INC, Uint8 wait_level = RN_OP_WAIT_DEFAULT, Uint8 dsitance = 0xf0);
 	int16 RnNetGetCns(COMMON_NET_STATUS* pCns, Uint8 dsitance);
 public:

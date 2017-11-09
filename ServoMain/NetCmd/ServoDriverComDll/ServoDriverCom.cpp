@@ -1,12 +1,14 @@
 #include "stdafx.h"
 #include "ServoDriverCom.h"
 
+
+
 CServoDriverCom::CServoDriverCom()
 {
 	m_pDriver = NULL;
 	m_pPlot = NULL;
 	m_pMapping = NULL;
-	
+	m_pEeprom = NULL;
 }
 
 
@@ -21,6 +23,17 @@ CServoDriverCom::~CServoDriverCom()
 	{
 		delete m_pMapping;
 	}
+}
+short CServoDriverCom::InitialEeprom(CEeprom* pEeprom)
+{
+	if (pEeprom == NULL)
+	{
+		return RTN_NULL_POINT;
+	}
+	
+	m_pEeprom = pEeprom;
+	
+	return RTN_SUCCESS;
 }
 
 short CServoDriverCom::Initial(CRingNetInterface* pDriver)
@@ -2194,7 +2207,7 @@ int16 CServoDriverCom::GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ver)
 	dspdata[2] = 0;												//返回值																		
 
 	int16 dsp_comNum = 15;
-	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF);
+	short rtn = m_pDriver->RnNetCom_DSP_ComHandler(GTSD_COM_MODE_READ, dsp_comAddr, dspdata, dsp_comNum, station_id >> 8, station_id & 0xFF, FALSE);
 	if (rtn != RTN_SUCCESS)
 	{
 		return rtn;
@@ -2410,4 +2423,114 @@ int16 CServoDriverCom::GTSD_CMD_ReadLogAlarmTimes(int16 axis, Uint16* alarmTimes
 		}
 		return RTN_SUCCESS;
 	}
+}
+int16 CServoDriverCom::GTSD_CMD_ReadEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num)
+{
+	if (axis >= COM_AXIS_MAX)
+	{
+		return RTN_PARAM_OVERFLOW;
+	}
+
+	int16 dspdata[64] = { 0 };											//通信数组
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//轴号
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//地址
+	if (m_pDriver == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	if (NULL == m_pEeprom)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+	
+	m_pEeprom->m_des_id = station_id >> 8;
+	return m_pEeprom->EepromRead(ofst, value, num);
+}
+
+int16 CServoDriverCom::GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num)
+{
+	if (axis >= COM_AXIS_MAX)
+	{
+		return RTN_PARAM_OVERFLOW;
+	}
+
+	int16 dspdata[64] = { 0 };											//通信数组
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//轴号
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//地址
+	if (m_pDriver == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	if (NULL == m_pEeprom)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	m_pEeprom->m_des_id = station_id >> 8;
+	return m_pEeprom->EepromWrite(ofst, value, num);
+}
+
+int16 CServoDriverCom::GTSD_CMD_ReadEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num)
+{
+	if (axis >= COM_AXIS_MAX)
+	{
+		return RTN_PARAM_OVERFLOW;
+	}
+
+	int16 dspdata[64] = { 0 };											//通信数组
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//轴号
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//地址
+	if (m_pDriver == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	if (NULL == m_pEeprom)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	m_pEeprom->m_des_id = station_id >> 8;
+	m_pEeprom->m_eeprom_id = FPGA_EXT_EEPROM;
+	short rtn = m_pEeprom->EepromRead(ofst, value, num);
+	m_pEeprom->m_eeprom_id = FPGA_NORMAL_EEPROM;
+	return rtn;
+}
+
+int16 CServoDriverCom::GTSD_CMD_WriteEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num)
+{
+	if (axis >= COM_AXIS_MAX)
+	{
+		return RTN_PARAM_OVERFLOW;
+	}
+
+	int16 dspdata[64] = { 0 };											//通信数组
+	Uint16 station_id = m_pMapping->ConvertAxiToStationId(axis); 													//轴号
+	int16 dsp_comAddr = RN_USER_PROTOCOL_DRIVER;										//地址
+	if (m_pDriver == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	if (NULL == m_pEeprom)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+
+	m_pEeprom->m_des_id = station_id >> 8;
+	m_pEeprom->m_eeprom_id = FPGA_EXT_EEPROM;
+	short rtn = m_pEeprom->EepromWrite(ofst, value, num);
+	m_pEeprom->m_eeprom_id = FPGA_NORMAL_EEPROM;
+	return rtn;
+}
+
+int16 CServoDriverCom::GTSD_CMD_FroceCheckMode(int16 mode)
+{
+	if (m_pDriver == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+	return m_pDriver->RnNetCom_DSP_FroceCheckMode(mode);
 }

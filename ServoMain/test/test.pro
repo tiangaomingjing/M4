@@ -10,4 +10,5 @@ SUBDIRS += \
     NavigationBar \
     FillLimit \
     option \
-    CustomPlot
+    CustomPlot \
+    SingleApplication

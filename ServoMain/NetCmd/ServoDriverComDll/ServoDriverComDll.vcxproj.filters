@@ -258,6 +258,27 @@
     <ClInclude Include="ComBase.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CpldCom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GTCmdCtrl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="driver_command.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GTDriverCmd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SPLine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="AdminstratorComDll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Eeprom.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -380,10 +401,33 @@
     <ClCompile Include="ComBase.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CpldCom.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GTCmdCtrl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GTDriverCmd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SPLine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AdminstratorComDll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Eeprom.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Library Include="NetCom\wpcap\lib\wpcap.lib">
       <Filter>NetCom\lib</Filter>
     </Library>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Network.def">
+      <Filter>源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

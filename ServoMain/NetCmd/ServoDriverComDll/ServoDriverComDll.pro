@@ -13,7 +13,6 @@ CONFIG(debug, debug|release){
     LIBS +=$${PWD}/NetCom/wpcap/lib/wpcap.lib
     DESTDIR =$${PWD}/../../../release/Bin
 }
-
 DEFINES += _WINDOWS _USRDLL SERVODRIVERCOMDLL_EXPORTS
 INCLUDEPATH += ./NetCom/include \
     ./NetCom/wpcap/Include/pcap \

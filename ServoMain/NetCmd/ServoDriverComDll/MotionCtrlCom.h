@@ -13,6 +13,15 @@ typedef struct
 	short data[32];
 } TPci;
 
+typedef struct
+{
+	short dataLen;
+	short data[32];
+
+	short resultLen;
+	short result[32];
+	short resultIndex;
+}TCommand;
 
 #endif
 
@@ -38,6 +47,7 @@ public:
 
 	short PostPcie(TPci* gPci, Uint8 core_index, Uint8 station_id = 0xf0);
 	short SendPcie(TPci* gPci, Uint8 core_index, Uint8 station_id = 0xf0);
+	virtual short GetComProtocolType(){ return m_pDriver->GetComProtocolType(); };
 
 };
 

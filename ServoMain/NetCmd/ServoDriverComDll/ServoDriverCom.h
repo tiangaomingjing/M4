@@ -1,9 +1,11 @@
-ï»¿#pragma once
+#pragma once
 #include "Basetype_def.h"
 #include "RingNetInterface.h"
 #include "RnServoAxiMapping.h"
 #include "RnDriverPlot.h"
 #include "ServoDriverComDef.h"
+#include "Eeprom.h"
+
 class CServoDriverCom
 {
 public:
@@ -13,8 +15,10 @@ protected:
 	CRingNetInterface * m_pDriver;
 	CRnServoAxiMapping*	m_pMapping;
 	CRnDriverPlot*		m_pPlot;
+	CEeprom* m_pEeprom;
 public:
 	short Initial(CRingNetInterface* pDriver);
+	short InitialEeprom(CEeprom* pEeprom);
 	Uint16 ConvertAxiToStationId(int16 axi_id){ return m_pMapping->ConvertAxiToStationId(axi_id); };
 private:
 	 const int32	 OUTPUT_LIMIT_SCALE = 4096;
@@ -22,15 +26,14 @@ private:
 	 const int32	 MAX_SPD_SCALE = 16777216;   //2^24
 	 const int32	 MAX_VOL_SCALE = 16384;
 protected:
-	const int16						GTSD_DSP_WRITE = 0;					  //dspå®šä¹‰çš„è¯»å†™	
+	const int16						GTSD_DSP_WRITE = 0;					  //dsp¶¨ÒåµÄ¶ÁÐ´	
 	const int16						GTSD_DSP_READ = 1;
 
-  const int16						COM_AXIS_MAX = 240;					//è½´æœ€å¤§ä¸ªæ•°ä¸º4
+	const int16						COM_AXIS_MAX = 240;					//Öá×î´ó¸öÊýÎª4	
 
-//	const Uint16					FPGA_VERSION = (0x0007<<1);
-  const Uint16					FPGA_VERSION = (0xFF02);
+	const Uint16					FPGA_VERSION = (0x0007<<1);
 protected:
-	int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);////å°†å‘½ä»¤IDå’Œè½´å·åˆå¹¶æˆä¸€ä¸ªshortï¼Œå…¶ä¸­bit[0-11]ä¸ºå‘½ä»¤ID, bit[12 - 15]ä¸ºè½´å·
+	int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);////½«ÃüÁîIDºÍÖáºÅºÏ²¢³ÉÒ»¸öshort£¬ÆäÖÐbit[0-11]ÎªÃüÁîID, bit[12 - 15]ÎªÖáºÅ
 public:
 	/////////////////////////////////com vs dsp/////////////////////////////////////////
 	int16 GTSD_CMD_SetServoOn(int16 axis);
@@ -118,9 +121,9 @@ public:
 	int16 GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value);
 
 	/////////////////////////////////plot  vs dsp/////////////////////////////////////////
-	int16 GTSD_CMD_StartPlot(int16 axis, WAVE_BUF_PRM& wave);						//å¯åŠ¨ARMç”»å›¾
-	int16 GTSD_CMD_StopPlot(int16 axis, WAVE_BUF_PRM& wave);							//åœæ­¢ARMç”»å›¾
-	int16 GTSD_CMD_PcGetWaveData(int16 axis, double** data, int32& number);			//ä»ŽARMèŽ·å–æ•°æ®
+	int16 GTSD_CMD_StartPlot(int16 axis, WAVE_BUF_PRM& wave);						//Æô¶¯ARM»­Í¼
+	int16 GTSD_CMD_StopPlot(int16 axis, WAVE_BUF_PRM& wave);							//Í£Ö¹ARM»­Í¼
+	int16 GTSD_CMD_PcGetWaveData(int16 axis, double** data, int32& number);			//´ÓARM»ñÈ¡Êý¾Ý
 	bool GTSD_CMD_CheckPlotState(int16 axis);
 	/////////////////////////////////com vs dsp burn the dsp program/////////////////////////////////////////
 	int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& filePath, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv);
@@ -150,10 +153,10 @@ public:
 
 	//-----------------------------------------------------------------------------------------------------
 // 
-// 	//use for uart boot .out è½¬åŒ–ä¸º .ldr
+// 	//use for uart boot .out ×ª»¯Îª .ldr
 // 	int16 GTSD_CMD_Hex2Ldr(wstring& HexFile, wstring& LdrFile);
 // 
-// 	//å¯ä»¥ä½¿ç”¨hexæ–‡ä»¶æˆ–è€…æ˜¯.outè½¬åŒ–çš„ldræ–‡ä»¶ï¼Œldræœ¬èº«å·²ç»æ˜¯äºŒè¿›åˆ¶çš„æ–‡ä»¶äº†ï¼Œhexè¿˜éœ€è¦å•ç‹¬æå–äºŒè¿›åˆ¶ä¿¡æ¯ã€‚
+// 	//¿ÉÒÔÊ¹ÓÃhexÎÄ¼þ»òÕßÊÇ.out×ª»¯µÄldrÎÄ¼þ£¬ldr±¾ÉíÒÑ¾­ÊÇ¶þ½øÖÆµÄÎÄ¼þÁË£¬hex»¹ÐèÒªµ¥¶ÀÌáÈ¡¶þ½øÖÆÐÅÏ¢¡£
 // 	int16 GTSD_CMD_OpenSerialPort(int16 axis, int32 baudRate);
 // 	int16 GTSD_CMD_CloseSerialPort(int16 axis);
 // 	int16 GTSD_CMD_ReadSerialPort(int16 axis, Uint8 *buf, int32 length, int32 *length_read);
@@ -163,9 +166,12 @@ public:
 // 	int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstring& filePath, int32 baudRate, int16 cmd, string& inputKey, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv);
 
 // 	/////////////////////////////////com vs fppa eeprom/////////////////////////////////////////
-// 	//EEPROM è¯»å†™,æ“¦é™¤
-// 	int16 GTSD_CMD_ReadEEPROM(int16 axis, int32& ofst, int8* value, int16& num);
-// 	int16 GTSD_CMD_WriteEEPROM(int16 axis, int32& ofst, int8* value, int16& num);
+// 	//EEPROM ¶ÁÐ´,²Á³ý
+	int16 GTSD_CMD_ReadEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_ReadEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_WriteEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_FroceCheckMode(int16 mode);
 // 	int16 GTSD_CMD_ClearEEPROM(int16 axis);
 // 
 // 	int16 GTSD_CMD_ResetFPGA(int16 axis);
