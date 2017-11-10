@@ -3,10 +3,18 @@
 #include <QSplashScreen>
 #include "globaldef.h"
 #include <QTranslator>
+#include "singleapplication.h"
 
 int main(int argc, char *argv[])
 {
-  QApplication a(argc, argv);
+//  QApplication a(argc, argv);
+
+  SingleApplication a(argc, argv, "googoltech-sdt-software");
+  if (a.isRunning())
+  {
+    a.sendMessage("message from other instance.");
+    return 0;
+  }
 
   QSplashScreen *splashScreen = new QSplashScreen;
   splashScreen->setPixmap(QPixmap(ICON_FILE_PATH+ICON_STARTUP));
@@ -28,6 +36,9 @@ int main(int argc, char *argv[])
   a.installTranslator(&trans4);
 
   MainWindow *w=new MainWindow(splashScreen,0);
+  // connect message queue to the main window.
+  QObject::connect(&a, SIGNAL(messageAvailable(QString)), w, SLOT(onApplicationRevMessage(QString)));
+
   w->show();
 
   //关闭启动画面

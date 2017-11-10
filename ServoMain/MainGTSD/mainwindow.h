@@ -142,6 +142,9 @@ private slots:
   void onUserRoleChanged(int user);
   void onErrorPassWord();
 
+  //两个程序运行时，提示信息
+  void onApplicationRevMessage(QString msg);
+
 protected:
   void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
   void closeEvent(QCloseEvent *event)Q_DECL_OVERRIDE;

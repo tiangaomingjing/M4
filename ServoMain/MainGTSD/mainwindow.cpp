@@ -481,6 +481,9 @@ void MainWindow::onActionConnectClicked()
       qDebug()<<"compare";
     }
     bool hardIsBigger127=version>=128?true:false;
+    //指令要不要加校验 127以下的不用加crc校验,128要加
+    ServoControl::setCmdWithCRC(hardIsBigger127);
+
     bool softIsBigger127=(currentVersion.remove(0,1).toInt())>=128?true:false;
     m_versionNeedCheck=(softIsBigger127&&hardIsBigger127);
     qDebug()<<"hbiger"<<hardIsBigger127<<"sbigger"<<softIsBigger127<<"need check"<<m_versionNeedCheck;
@@ -1746,6 +1749,11 @@ void MainWindow::onErrorPassWord()
   qDebug()<<"--->mainwindow error password";
   QMessageBox::information(0,tr("Warnning"),tr("password error occur !"));
 }
+void MainWindow::onApplicationRevMessage(QString msg)
+{
+  QMessageBox::warning(0,tr("warnning"),tr("Application SDT is already running...."));
+  qDebug()<<msg;
+}
 
 //-------------protected function-------------------------
 void MainWindow::keyPressEvent(QKeyEvent *keyEvent)
@@ -2669,18 +2677,6 @@ bool MainWindow::readPowerId()
     mapTree->clear();
     delete mapTree;
     return isFindId;
-//    if((modelName=="GTSD41")||(modelName=="GTSD42"))
-//    {
-//      m_powerId=21000509;
-//    }
-//    else if(modelName=="GTSD61")
-//    {
-//      m_powerId=21000510;
-//    }
-//    else if(modelName=="GTSD61_MIN")
-//    {
-//      m_powerId=21000511;
-//    }
   }
   else//根据实际硬件读ID
   {

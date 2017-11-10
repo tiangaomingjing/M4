@@ -171,7 +171,7 @@ public:
 	int16 GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
 	int16 GTSD_CMD_ReadEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
 	int16 GTSD_CMD_WriteEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
-	int16 GTSD_CMD_FroceCheckMode(int16 mode);
+	Uint16 GTSD_CMD_FroceCheckMode(Uint16 mode);
 // 	int16 GTSD_CMD_ClearEEPROM(int16 axis);
 // 
 // 	int16 GTSD_CMD_ResetFPGA(int16 axis);

@@ -462,7 +462,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClearEEPROM(int16 axis, int16 com_type = GT
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ResetFPGA(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ConfigEEPROM(int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
-SERVODRIVERCOMDLL_API int16 GTSD_CMD_FroceCheckMode(Uint16 mode);
+SERVODRIVERCOMDLL_API Uint16 GTSD_CMD_FroceCheckMode(Uint16 mode);
 //通信连接后，需扫描网络结构，通过发送广播消息给FPGA，通过返回的数据包中的站号和设备类型来判断网络结构
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ScanRnTopology(int16 com_type = GTSD_COM_TYPE_RNNET, int16 stationId = 0xff);
 

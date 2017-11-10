@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui designer qml quick sql
+QT       += core gui designer qml quick sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = app
@@ -118,7 +118,8 @@ SOURCES += main.cpp\
     Option/option.cpp \
     Option/optionautoloaditem.cpp \
     Option/optionuserloginitem.cpp \
-    Option/OptionDialog/optiondialog.cpp
+    Option/OptionDialog/optiondialog.cpp \
+    singleapplication.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -156,7 +157,8 @@ HEADERS  += mainwindow.h \
     Option/option.h \
     Option/optionautoloaditem.h \
     Option/optionuserloginitem.h \
-    Option/OptionDialog/optiondialog.h
+    Option/OptionDialog/optiondialog.h \
+    singleapplication.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

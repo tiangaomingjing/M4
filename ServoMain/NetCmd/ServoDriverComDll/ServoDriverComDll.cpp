@@ -1219,6 +1219,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	progress = 0;
 	(*tpfUpdataProgressPt)(ptr,&progress);
 
+	Uint16 pre_mode = GTSD_CMD_FroceCheckMode(CRingNetInterface::COM_DSP_CHEKC_FORCE_OFF);
 	//复位变量
 	g_hex->ResetVar();
 
@@ -1227,13 +1228,15 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	rtn = GTSD_CMD_InterruptSwitch(axis, 0, com_type, stationId);
 	if (rtn!=0)
 	{
-		return -1;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
 
 	rtn = g_hex->ParseHex(ws2s(filePath));
 	if (rtn != 0)
 	{
-		return -2;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
 	//百分比进度
 	progress = 10;
@@ -1248,7 +1251,8 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	rtn = GTSD_CMD_FlashErase(axis, block, com_type, stationId);
 	if (rtn != 0)
 	{
-		return -3;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
 	//百分比进度
 	progress = 30;
@@ -1257,7 +1261,8 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	rtn = g_hex->WriteFlash(axis, &(g_hex->m_hex_frame_write),tpfUpdataProgressPt,ptr,com_type,stationId);
 	if (rtn != 0)
 	{
-		return -4;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
 
 	//百分比进度
@@ -1268,7 +1273,8 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	rtn = g_hex->ReadFlash(axis, &(g_hex->m_hex_frame_write),tpfUpdataProgressPt, ptr, com_type,stationId);
 	if (rtn != 0)
 	{
-		return -5;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
 
 	//百分比进度
@@ -1278,20 +1284,24 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	rtn = g_hex->CompareFlash(&(g_hex->m_hex_frame_write), &(g_hex->m_hex_frame_read));
 	if (rtn != 0)
 	{
-		return -6;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
 
 	//开中断
 	rtn = GTSD_CMD_InterruptSwitch(axis, 1, com_type, stationId);
 	if (rtn != 0)
 	{
-		return -7;
+		GTSD_CMD_FroceCheckMode(pre_mode);
+		return rtn;
 	}
-	//百分比进度
+	//百分比进度s
 	progress = 100;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
-	return 0;
+	GTSD_CMD_FroceCheckMode(pre_mode);
+
+	return RTN_SUCCESS;
 }
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
@@ -2209,7 +2219,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ConfigEEPROM(int16 com_type /*= GTSD_COM_TY
 	return Unlock(GTSD_CMD_ST_ConfigEEPROM(com_type, stationId));
 }
 
-SERVODRIVERCOMDLL_API int16 GTSD_CMD_FroceCheckMode(Uint16 mode)
+SERVODRIVERCOMDLL_API Uint16 GTSD_CMD_FroceCheckMode(Uint16 mode)
 {
 	if (g_RnServoCom == NULL) 
 		return RTN_OBJECT_UNCREATED; 

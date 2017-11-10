@@ -25,6 +25,15 @@ private slots:
 
   void on_btn_ok_clicked();
 
+  void on_btn_src_clicked();
+
+  void on_btn_target_clicked();
+
+  void on_btn_update_clicked();
+
+private:
+  void updataPtytree(const QString &srcFileName,const QString &targetFileName);
+
 private:
   Ui::FillLimitPtyWidget *ui;
   QString m_filePath;

@@ -215,10 +215,11 @@ int16 CRingNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 byte_addr, i
 	return RTN_SUCCESS;
 }
 
-int16 CRingNetInterface::RnNetCom_DSP_FroceCheckMode(int mode)
+Uint16 CRingNetInterface::RnNetCom_DSP_FroceCheckMode(Uint16 mode)
 { 
+	Uint16 pre_mode = m_com_dsp_check_mode;
 	m_com_dsp_check_mode = mode; 
-	return RTN_SUCCESS;
+	return pre_mode;
 }
 /*******************************************************************************************
 功能：dsp数据通信交互函数
@@ -435,6 +436,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	{
 		check_en = 1;
 	}
+  check_en = 0;
 
 	EnterCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
 	int16 length = (word_num << 1) + 4;

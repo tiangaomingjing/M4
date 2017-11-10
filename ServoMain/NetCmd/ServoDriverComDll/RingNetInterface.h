@@ -96,7 +96,7 @@ public:
 	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 addr, int16* pData, int16 word_num, int16 des_id);
 	int16 RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 check_en = TRUE);
 
-	int16 RnNetCom_DSP_FroceCheckMode(int mode);
+	Uint16 RnNetCom_DSP_FroceCheckMode(Uint16 mode);
 	int16 RnNetComHandler(Uint8 mode, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 needReq = TRUE, Uint8 addr_mod = RN_ADDR_INC, Uint8 wait_level = RN_OP_WAIT_DEFAULT, Uint8 dsitance = 0xf0);
 	int16 RnNetCom(Uint8 com_mode, Uint8 cmd, Uint16 byte_addr, int16* pData, Uint16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 needReq = TRUE, Uint8 addr_mod = RN_ADDR_INC, Uint8 wait_level = RN_OP_WAIT_DEFAULT, Uint8 dsitance = 0xf0);
 	int16 RnNetGetCns(COMMON_NET_STATUS* pCns, Uint8 dsitance);
