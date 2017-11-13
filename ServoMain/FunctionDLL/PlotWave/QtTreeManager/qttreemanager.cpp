@@ -179,7 +179,7 @@ void QtTreeManager::writeStructXmlFile(QTreeWidgetItem *item,QXmlStreamWriter *w
     itemChild = item->child(i);
     writer->writeStartElement("item");
 
-    for(int j=0;j<item->columnCount();j++)
+    for(int j=0;j<itemChild->columnCount();j++)
     {
       writer->writeStartElement("property");
       writer->writeAttribute("name","text");

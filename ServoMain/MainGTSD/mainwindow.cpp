@@ -63,7 +63,7 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.5"
+#define SDT_VERSION "1.1.6"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -480,13 +480,13 @@ void MainWindow::onActionConnectClicked()
       //版本的一致
       qDebug()<<"compare";
     }
-    bool hardIsBigger127=version>=128?true:false;
+    bool hardIsBigger128=version>128?true:false;
     //指令要不要加校验 127以下的不用加crc校验,128要加
-    ServoControl::setCmdWithCRC(hardIsBigger127);
+    ServoControl::setCmdWithCRC(hardIsBigger128);
 
-    bool softIsBigger127=(currentVersion.remove(0,1).toInt())>=128?true:false;
-    m_versionNeedCheck=(softIsBigger127&&hardIsBigger127);
-    qDebug()<<"hbiger"<<hardIsBigger127<<"sbigger"<<softIsBigger127<<"need check"<<m_versionNeedCheck;
+    bool softIsBigger128=(currentVersion.remove(0,1).toInt())>128?true:false;
+    m_versionNeedCheck=(softIsBigger128&&hardIsBigger128);
+    qDebug()<<"hbiger"<<hardIsBigger128<<"sbigger"<<softIsBigger128<<"need check"<<m_versionNeedCheck;
     //更新每一个页面的参数
     if(m_isOpenCom)
     {

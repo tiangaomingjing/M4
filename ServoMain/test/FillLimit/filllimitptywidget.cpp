@@ -200,3 +200,12 @@ void FillLimitPtyWidget::on_btn_update_clicked()
 {
     updataPtytree(ui->lineEdit_src->text(),ui->lineEdit_target->text());
 }
+
+void FillLimitPtyWidget::on_btn_test1_clicked()
+{
+    QTreeWidget *treesrc;
+    QString fileNamePath="D:/Smart/ServoMaster/git-project/servo-4/ServoMain/test/FillLimit/PowerBoard.ui";
+    QString fileNamePath2="D:/Smart/ServoMaster/git-project/servo-4/ServoMain/test/FillLimit/PowerBoard_2.ui";
+    treesrc=QtTreeManager::createTreeWidgetFromXmlFile(fileNamePath);
+    QtTreeManager::writeTreeWidgetToXmlFile(fileNamePath2,treesrc);
+}

@@ -7,7 +7,8 @@
 #include <QDebug>
 
 LockCheckBox::LockCheckBox(int axisNum,QWidget *parent) : QWidget(parent),
-  m_axisNum(axisNum)
+  m_axisNum(axisNum),
+  m_prevCheckState(false)
 {
   QVBoxLayout *vlayout=new QVBoxLayout(this);
   vlayout->setContentsMargins(0,0,0,0);
@@ -54,6 +55,16 @@ void LockCheckBox::setCheckStyleSheet()
   QString style="QCheckBox {spacing: 1px;}QCheckBox::indicator {width: 64px;height: 64px;}QCheckBox::indicator:unchecked {image: url(:/checkbox_unchecked.png);}QCheckBox::indicator:unchecked:hover {image: url(:/checkbox_unchecked_hover.png);}"
   "QCheckBox::indicator:checked:hover {image: url(:/checkbox_checked_hover.png);}QCheckBox::indicator:checked {image: url(:/checkbox_checked.png);}";
   m_box->setStyleSheet(style);
+}
+
+bool LockCheckBox::prevCheckState() const
+{
+  return m_prevCheckState;
+}
+
+void LockCheckBox::setPrevCheckState(bool prevCheckState)
+{
+  m_prevCheckState = prevCheckState;
 }
 
 int LockCheckBox::axisNum() const
