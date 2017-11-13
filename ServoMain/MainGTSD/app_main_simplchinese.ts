@@ -631,26 +631,26 @@ file download unsuccessful !</source>
         <translation type="unfinished">XML配置文件不存在</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="566"/>
-        <location filename="mainwindow.cpp" line="896"/>
-        <location filename="mainwindow.cpp" line="909"/>
-        <location filename="mainwindow.cpp" line="1202"/>
-        <location filename="mainwindow.cpp" line="2559"/>
+        <location filename="mainwindow.cpp" line="569"/>
+        <location filename="mainwindow.cpp" line="899"/>
+        <location filename="mainwindow.cpp" line="912"/>
+        <location filename="mainwindow.cpp" line="1205"/>
+        <location filename="mainwindow.cpp" line="2567"/>
         <source>connect</source>
         <translation type="unfinished">连接</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1747"/>
+        <location filename="mainwindow.cpp" line="1750"/>
         <source>Warnning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1747"/>
+        <location filename="mainwindow.cpp" line="1750"/>
         <source>password error occur !</source>
         <translation type="unfinished">输入密码错误 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2559"/>
+        <location filename="mainwindow.cpp" line="2567"/>
         <source>com connect error:%1</source>
         <translation type="unfinished">通信端口连接错误：%1</translation>
     </message>
@@ -666,60 +666,60 @@ do you still want to use version:%3?</source>
 你是否使用当前软件的版本：%3？</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="523"/>
-        <location filename="mainwindow.cpp" line="552"/>
-        <location filename="mainwindow.cpp" line="563"/>
-        <location filename="mainwindow.cpp" line="2516"/>
+        <location filename="mainwindow.cpp" line="526"/>
+        <location filename="mainwindow.cpp" line="555"/>
+        <location filename="mainwindow.cpp" line="566"/>
+        <location filename="mainwindow.cpp" line="2524"/>
         <source>com ok</source>
         <translation type="unfinished">成功连接</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="604"/>
-        <location filename="mainwindow.cpp" line="2061"/>
-        <location filename="mainwindow.cpp" line="2522"/>
+        <location filename="mainwindow.cpp" line="607"/>
+        <location filename="mainwindow.cpp" line="2069"/>
+        <location filename="mainwindow.cpp" line="2530"/>
         <source>com error</source>
         <translation type="unfinished">连接错误</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="677"/>
-        <location filename="mainwindow.cpp" line="695"/>
-        <location filename="mainwindow.cpp" line="737"/>
-        <location filename="mainwindow.cpp" line="745"/>
-        <location filename="mainwindow.cpp" line="766"/>
-        <location filename="mainwindow.cpp" line="819"/>
-        <location filename="mainwindow.cpp" line="926"/>
-        <location filename="mainwindow.cpp" line="956"/>
-        <location filename="mainwindow.cpp" line="1101"/>
-        <location filename="mainwindow.cpp" line="2437"/>
-        <location filename="mainwindow.cpp" line="2594"/>
+        <location filename="mainwindow.cpp" line="680"/>
+        <location filename="mainwindow.cpp" line="698"/>
+        <location filename="mainwindow.cpp" line="740"/>
+        <location filename="mainwindow.cpp" line="748"/>
+        <location filename="mainwindow.cpp" line="769"/>
+        <location filename="mainwindow.cpp" line="822"/>
+        <location filename="mainwindow.cpp" line="929"/>
+        <location filename="mainwindow.cpp" line="959"/>
+        <location filename="mainwindow.cpp" line="1104"/>
+        <location filename="mainwindow.cpp" line="2445"/>
+        <location filename="mainwindow.cpp" line="2602"/>
         <source>Warring</source>
         <translation type="unfinished">警告</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="677"/>
-        <location filename="mainwindow.cpp" line="819"/>
-        <location filename="mainwindow.cpp" line="926"/>
-        <location filename="mainwindow.cpp" line="1101"/>
+        <location filename="mainwindow.cpp" line="680"/>
+        <location filename="mainwindow.cpp" line="822"/>
+        <location filename="mainwindow.cpp" line="929"/>
+        <location filename="mainwindow.cpp" line="1104"/>
         <source>please open the com first !</source>
         <translation type="unfinished">请先连接设备!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="682"/>
+        <location filename="mainwindow.cpp" line="685"/>
         <source>Open XML File</source>
         <translation type="unfinished">打开配置文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="682"/>
+        <location filename="mainwindow.cpp" line="685"/>
         <source>XML Files(*.xml)</source>
         <translation type="unfinished">xml 文件(*.xml)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="825"/>
+        <location filename="mainwindow.cpp" line="828"/>
         <source>Save XML</source>
         <translation type="unfinished">保存xml文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="825"/>
+        <location filename="mainwindow.cpp" line="828"/>
         <source>xml file (*.xml)</source>
         <translation type="unfinished">xml 文件 (*.xml)</translation>
     </message>
@@ -728,36 +728,36 @@ do you still want to use version:%3?</source>
         <translation type="obsolete">成功复位伺服!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1118"/>
-        <location filename="mainwindow.cpp" line="1144"/>
+        <location filename="mainwindow.cpp" line="1121"/>
+        <location filename="mainwindow.cpp" line="1147"/>
         <source>file open error</source>
         <translation type="unfinished">文件打开错误</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1118"/>
-        <location filename="mainwindow.cpp" line="1144"/>
+        <location filename="mainwindow.cpp" line="1121"/>
+        <location filename="mainwindow.cpp" line="1147"/>
         <source>open file error:%1</source>
         <translation type="unfinished">文件打开错误:%1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1125"/>
-        <location filename="mainwindow.cpp" line="1151"/>
+        <location filename="mainwindow.cpp" line="1128"/>
+        <location filename="mainwindow.cpp" line="1154"/>
         <source>file load error</source>
         <translation type="unfinished">文件加载错误</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1125"/>
-        <location filename="mainwindow.cpp" line="1151"/>
+        <location filename="mainwindow.cpp" line="1128"/>
+        <location filename="mainwindow.cpp" line="1154"/>
         <source>load file error:%1</source>
         <translation type="unfinished">加载文件错误:%1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1180"/>
+        <location filename="mainwindow.cpp" line="1183"/>
         <source>uboot starting......</source>
         <translation type="unfinished">恢复出厂设置 开始......</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1192"/>
+        <location filename="mainwindow.cpp" line="1195"/>
         <source>servo connecting......</source>
         <translation type="unfinished">设置连接中......</translation>
     </message>
@@ -766,33 +766,33 @@ do you still want to use version:%3?</source>
         <translation type="obsolete">网络通信连接错误:%1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1212"/>
+        <location filename="mainwindow.cpp" line="1215"/>
         <source>servo ubooting......</source>
         <translation type="unfinished">恢复出厂设置进行中......</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1257"/>
+        <location filename="mainwindow.cpp" line="1260"/>
         <source>Warring :Causes of exceptions maybe  1.Boot Switch 2.FPGA FirmWare 3.Boot File </source>
         <translation type="unfinished">提示:异常原因可能是  1 DSP_BOOT开关 2 FPGA固件 3.out文件 4其它</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1264"/>
-        <location filename="mainwindow.cpp" line="1336"/>
+        <location filename="mainwindow.cpp" line="1267"/>
+        <location filename="mainwindow.cpp" line="1339"/>
         <source>uboot complete successfully ,please power off to restart servo and change the boot-switch......</source>
         <translation type="unfinished">恢复出厂设置完成！请关闭设备并改变DSP_BOOT开关......</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1280"/>
+        <location filename="mainwindow.cpp" line="1283"/>
         <source>download hex-file to servo flash......</source>
         <translation type="unfinished">正在下载.hex文件到设备......</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1304"/>
+        <location filename="mainwindow.cpp" line="1307"/>
         <source>download hex-file to servo complete !</source>
         <translation type="unfinished">成功下载hex到设备!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1377"/>
+        <location filename="mainwindow.cpp" line="1380"/>
         <source>Warring : convert .out file to .ldr faild !</source>
         <translation type="unfinished">警告:转化.out文件到.ldr文件失败!</translation>
     </message>
@@ -841,36 +841,36 @@ comName:%6
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1551"/>
-        <location filename="mainwindow.cpp" line="2550"/>
+        <location filename="mainwindow.cpp" line="1554"/>
+        <location filename="mainwindow.cpp" line="2558"/>
         <source>ARM OUT OFF TIME !</source>
         <translation type="unfinished">DSP固件响应超时!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1552"/>
-        <location filename="mainwindow.cpp" line="2551"/>
+        <location filename="mainwindow.cpp" line="1555"/>
+        <location filename="mainwindow.cpp" line="2559"/>
         <source>COM NET OK !</source>
         <translation type="unfinished">通信正常 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1553"/>
-        <location filename="mainwindow.cpp" line="2552"/>
+        <location filename="mainwindow.cpp" line="1556"/>
+        <location filename="mainwindow.cpp" line="2560"/>
         <source>COM NET ERROR !</source>
         <translation type="unfinished">通信错误 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1554"/>
-        <location filename="mainwindow.cpp" line="2553"/>
+        <location filename="mainwindow.cpp" line="1557"/>
+        <location filename="mainwindow.cpp" line="2561"/>
         <source>COM NOT FINISH !</source>
         <translation type="unfinished">通信未完成 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="554"/>
+        <location filename="mainwindow.cpp" line="557"/>
         <source>you are working in the uboot mode ,after reboot system,please power off and change boot-switch</source>
         <translation type="unfinished">你正工作在Uboot模式，当重新Boot固件后，请掉电重启并将boot开关打到正确的位置</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="498"/>
         <source>read powerboard id error
 1.check powerboard 
 or
@@ -881,57 +881,57 @@ or
 2.去掉勾选 工具-&gt;选项-&gt;自动加载</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="565"/>
-        <location filename="mainwindow.cpp" line="566"/>
+        <location filename="mainwindow.cpp" line="568"/>
+        <location filename="mainwindow.cpp" line="569"/>
         <source>DSP respond error!</source>
         <translation type="unfinished">设备软件响应错误!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="896"/>
-        <location filename="mainwindow.cpp" line="909"/>
+        <location filename="mainwindow.cpp" line="899"/>
+        <location filename="mainwindow.cpp" line="912"/>
         <source>please open com first !</source>
         <translation type="unfinished">请先连接设备!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="930"/>
+        <location filename="mainwindow.cpp" line="933"/>
         <source>Do you want to reset device ?</source>
         <translation type="unfinished">确认是否复位?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="950"/>
+        <location filename="mainwindow.cpp" line="953"/>
         <source>axis_%1 servo is on 
 </source>
         <translation type="unfinished">轴_%1 伺服正在工作中</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="956"/>
+        <location filename="mainwindow.cpp" line="959"/>
         <source>refuse to reset :%1</source>
         <translation type="unfinished">拒绝软复位 :%1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1202"/>
+        <location filename="mainwindow.cpp" line="1205"/>
         <source>FPGA comunication connect error:%1
 or software configuration is wrong</source>
         <translation type="unfinished">通信端口异常:%1
 或是软件当前配置与连接端口不匹配</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1308"/>
+        <location filename="mainwindow.cpp" line="1311"/>
         <source>download xml parameters file to servo ......</source>
         <translation type="unfinished">正在下载驱动器参数......</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1333"/>
+        <location filename="mainwindow.cpp" line="1336"/>
         <source>download xml parameters file to servo complete successfully!</source>
         <translation type="unfinished">成功更新驱动器参数!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1361"/>
+        <location filename="mainwindow.cpp" line="1364"/>
         <source>information:uboot donot finish ! you need to do: 1 do not poweroff . 2 download DSP (.hex) file  3 download parameters(.xml) file </source>
         <translation type="unfinished">信息：Uboot还没完成!请你 1 不要断电 2 下载hex文件到DSP固件 3 读取xml文件更新驱动器参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1460"/>
+        <location filename="mainwindow.cpp" line="1463"/>
         <source>Version:%1
 
 get more help from:
@@ -947,42 +947,53 @@ get more help from:
 http://www.googoltech.com</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1558"/>
+        <location filename="mainwindow.cpp" line="1561"/>
         <source>***************************com disconnect*********************</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1762"/>
+        <location filename="mainwindow.cpp" line="1562"/>
+        <source>
+ error type:%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1754"/>
+        <source>Application SDT is already running....</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="1770"/>
         <source>Config(&amp;C)</source>
         <translation type="unfinished">配置(&amp;C)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1769"/>
+        <location filename="mainwindow.cpp" line="1777"/>
         <source>recentFiles</source>
         <translation type="unfinished">近期打开文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1776"/>
+        <location filename="mainwindow.cpp" line="1784"/>
         <source>View(&amp;V)</source>
         <translation type="unfinished">视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1782"/>
+        <location filename="mainwindow.cpp" line="1790"/>
         <source>Tool(&amp;T)</source>
         <translation type="unfinished">工具(&amp;T)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1785"/>
+        <location filename="mainwindow.cpp" line="1793"/>
         <source>File2Servo</source>
         <translation type="unfinished">从文件到伺服</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1787"/>
+        <location filename="mainwindow.cpp" line="1795"/>
         <source>Servo2File</source>
         <translation type="unfinished">从伺服到文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1800"/>
+        <location filename="mainwindow.cpp" line="1808"/>
         <source>DSPUpdate</source>
         <translation type="unfinished">DSP固件更新</translation>
     </message>
@@ -991,151 +1002,151 @@ http://www.googoltech.com</translation>
         <translation type="obsolete">选项...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1817"/>
+        <location filename="mainwindow.cpp" line="1825"/>
         <source>Help(&amp;H)</source>
         <translation type="unfinished">帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1826"/>
+        <location filename="mainwindow.cpp" line="1834"/>
         <source>&amp;New</source>
         <translation type="unfinished">&amp;N 新建</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1827"/>
-        <location filename="mainwindow.cpp" line="1828"/>
+        <location filename="mainwindow.cpp" line="1835"/>
+        <location filename="mainwindow.cpp" line="1836"/>
         <source>create a new configration file</source>
         <translation type="unfinished">创建新的配置文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1831"/>
+        <location filename="mainwindow.cpp" line="1839"/>
         <source>&amp;Open</source>
         <translation type="unfinished">&amp;O 打开文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1832"/>
-        <location filename="mainwindow.cpp" line="1833"/>
+        <location filename="mainwindow.cpp" line="1840"/>
+        <location filename="mainwindow.cpp" line="1841"/>
         <source>open a new configration file</source>
         <translation type="unfinished">打开新的配置文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1836"/>
+        <location filename="mainwindow.cpp" line="1844"/>
         <source>&amp;Save</source>
         <translation type="unfinished">&amp;S 保存</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1837"/>
-        <location filename="mainwindow.cpp" line="1838"/>
+        <location filename="mainwindow.cpp" line="1845"/>
+        <location filename="mainwindow.cpp" line="1846"/>
         <source>save a configration file</source>
         <translation type="unfinished">保存配置文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1841"/>
+        <location filename="mainwindow.cpp" line="1849"/>
         <source>&amp;SaveAs</source>
         <translation type="unfinished">&amp;S 另存为</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1842"/>
-        <location filename="mainwindow.cpp" line="1843"/>
+        <location filename="mainwindow.cpp" line="1850"/>
+        <location filename="mainwindow.cpp" line="1851"/>
         <source>save another configration file</source>
         <translation type="unfinished">另存配置文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1846"/>
+        <location filename="mainwindow.cpp" line="1854"/>
         <source>&amp;Exit</source>
         <translation type="unfinished">&amp;E 退出</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1847"/>
-        <location filename="mainwindow.cpp" line="1848"/>
+        <location filename="mainwindow.cpp" line="1855"/>
+        <location filename="mainwindow.cpp" line="1856"/>
         <source>exit the application</source>
         <translation type="unfinished">退出应用</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1852"/>
+        <location filename="mainwindow.cpp" line="1860"/>
         <source>&amp;Connect</source>
         <translation type="unfinished">&amp;C 连接</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1853"/>
-        <location filename="mainwindow.cpp" line="1854"/>
+        <location filename="mainwindow.cpp" line="1861"/>
+        <location filename="mainwindow.cpp" line="1862"/>
         <source>connect the servo</source>
         <translation type="unfinished">连接设备</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1859"/>
+        <location filename="mainwindow.cpp" line="1867"/>
         <source>&amp;Disconnect</source>
         <translation type="unfinished">&amp;D 断开连接</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1860"/>
-        <location filename="mainwindow.cpp" line="1861"/>
+        <location filename="mainwindow.cpp" line="1868"/>
+        <location filename="mainwindow.cpp" line="1869"/>
         <source>disconnect the servo</source>
         <translation type="unfinished">断开设备连接</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1873"/>
+        <location filename="mainwindow.cpp" line="1881"/>
         <source>&amp;Navigation</source>
         <translation type="unfinished">&amp;N 导航</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1874"/>
-        <location filename="mainwindow.cpp" line="1875"/>
+        <location filename="mainwindow.cpp" line="1882"/>
+        <location filename="mainwindow.cpp" line="1883"/>
         <source>show or hide navigation tree</source>
         <translation type="unfinished">显示或隐藏导航栏</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1878"/>
+        <location filename="mainwindow.cpp" line="1886"/>
         <source>&amp;Plot</source>
         <translation type="unfinished">&amp;P 绘图</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1879"/>
-        <location filename="mainwindow.cpp" line="1880"/>
+        <location filename="mainwindow.cpp" line="1887"/>
+        <location filename="mainwindow.cpp" line="1888"/>
         <source>show or hide plot view</source>
         <translation type="unfinished">显示或隐藏绘图</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1883"/>
+        <location filename="mainwindow.cpp" line="1891"/>
         <source>&amp;Full</source>
         <translation type="unfinished">&amp;F 全屏</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1884"/>
-        <location filename="mainwindow.cpp" line="1885"/>
+        <location filename="mainwindow.cpp" line="1892"/>
+        <location filename="mainwindow.cpp" line="1893"/>
         <source>show or hide full view</source>
         <translation type="unfinished">全屏控制</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1888"/>
+        <location filename="mainwindow.cpp" line="1896"/>
         <source>Reset</source>
         <translation type="unfinished">默认布局</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1889"/>
-        <location filename="mainwindow.cpp" line="1890"/>
+        <location filename="mainwindow.cpp" line="1897"/>
+        <location filename="mainwindow.cpp" line="1898"/>
         <source>reset main view</source>
         <translation type="unfinished">恢复默认布局</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1895"/>
+        <location filename="mainwindow.cpp" line="1903"/>
         <source>xmlupdate</source>
         <translation type="unfinished">更新XML</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1896"/>
-        <location filename="mainwindow.cpp" line="1897"/>
+        <location filename="mainwindow.cpp" line="1904"/>
+        <location filename="mainwindow.cpp" line="1905"/>
         <source>update xml file</source>
         <translation type="unfinished">更新XML文件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1901"/>
-        <location filename="mainwindow.cpp" line="1902"/>
+        <location filename="mainwindow.cpp" line="1909"/>
+        <location filename="mainwindow.cpp" line="1910"/>
         <source>file update to servo</source>
         <translation type="unfinished">文件更新到驱动器</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1906"/>
-        <location filename="mainwindow.cpp" line="1907"/>
+        <location filename="mainwindow.cpp" line="1914"/>
+        <location filename="mainwindow.cpp" line="1915"/>
         <source>save sevo file</source>
         <translation type="unfinished">保存驱动器设置到文件</translation>
     </message>
@@ -1148,144 +1159,144 @@ http://www.googoltech.com</translation>
         <translation type="obsolete">直接克隆轴参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1918"/>
+        <location filename="mainwindow.cpp" line="1926"/>
         <source>file copy</source>
         <translation type="unfinished">文件复制</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1919"/>
-        <location filename="mainwindow.cpp" line="1920"/>
+        <location filename="mainwindow.cpp" line="1927"/>
+        <location filename="mainwindow.cpp" line="1928"/>
         <source>copy one axis&apos;parameters to another and save file</source>
         <translation type="unfinished">复制轴参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1926"/>
-        <location filename="mainwindow.cpp" line="1927"/>
+        <location filename="mainwindow.cpp" line="1934"/>
+        <location filename="mainwindow.cpp" line="1935"/>
         <source>Config</source>
         <translation type="unfinished">临时保存修改参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1933"/>
+        <location filename="mainwindow.cpp" line="1941"/>
         <source>Save</source>
         <translation type="unfinished">永久保存修改参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1940"/>
+        <location filename="mainwindow.cpp" line="1948"/>
         <source>FPGA</source>
         <translation type="unfinished">固件配置</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1942"/>
-        <location filename="mainwindow.cpp" line="1943"/>
+        <location filename="mainwindow.cpp" line="1950"/>
+        <location filename="mainwindow.cpp" line="1951"/>
         <source>FPGA configuration</source>
         <translation type="unfinished">固件参数配置</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1963"/>
+        <location filename="mainwindow.cpp" line="1971"/>
         <source>RestoreSetting</source>
         <translation type="unfinished">恢复烧写功能</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1965"/>
-        <location filename="mainwindow.cpp" line="1966"/>
+        <location filename="mainwindow.cpp" line="1973"/>
+        <location filename="mainwindow.cpp" line="1974"/>
         <source>Restore Factory setting</source>
         <translation type="unfinished">恢复烧写功能</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1979"/>
+        <location filename="mainwindow.cpp" line="1987"/>
         <source>AboutConfiguration</source>
         <translation type="unfinished">配置信息查询</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1981"/>
-        <location filename="mainwindow.cpp" line="1982"/>
+        <location filename="mainwindow.cpp" line="1989"/>
+        <location filename="mainwindow.cpp" line="1990"/>
         <source>About Current Configuration</source>
         <translation type="unfinished">当前配置信息查询</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1986"/>
+        <location filename="mainwindow.cpp" line="1994"/>
         <source>AboutSDT</source>
         <translation type="unfinished">关于软件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1988"/>
-        <location filename="mainwindow.cpp" line="1989"/>
+        <location filename="mainwindow.cpp" line="1996"/>
+        <location filename="mainwindow.cpp" line="1997"/>
         <source>About SDT version</source>
         <translation type="unfinished">关于软件版本</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2007"/>
+        <location filename="mainwindow.cpp" line="2015"/>
         <source>Option...</source>
         <translation type="unfinished">选项...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2008"/>
-        <location filename="mainwindow.cpp" line="2009"/>
+        <location filename="mainwindow.cpp" line="2016"/>
+        <location filename="mainwindow.cpp" line="2017"/>
         <source>set option</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2064"/>
+        <location filename="mainwindow.cpp" line="2072"/>
         <source>ERROR</source>
         <translation type="unfinished">伺服报警</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2065"/>
+        <location filename="mainwindow.cpp" line="2073"/>
         <source>servo_error</source>
         <translation type="unfinished">伺服报警</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2153"/>
+        <location filename="mainwindow.cpp" line="2161"/>
         <source>Axis_%1</source>
         <translation type="unfinished">轴_%1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2238"/>
+        <location filename="mainwindow.cpp" line="2246"/>
         <source>initial ui......</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2252"/>
+        <location filename="mainwindow.cpp" line="2260"/>
         <source>Global</source>
         <translation type="unfinished">专家分析</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2255"/>
+        <location filename="mainwindow.cpp" line="2263"/>
         <source>PlotAnalyses</source>
         <translation type="unfinished">示波图</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2264"/>
+        <location filename="mainwindow.cpp" line="2272"/>
         <source>General</source>
         <translation type="unfinished">通用</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2267"/>
+        <location filename="mainwindow.cpp" line="2275"/>
         <source>IOModule</source>
         <translation type="unfinished">I O</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2299"/>
+        <location filename="mainwindow.cpp" line="2307"/>
         <source>clear the tree data......</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2381"/>
+        <location filename="mainwindow.cpp" line="2389"/>
         <source>Key:%1 Value:%2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2403"/>
+        <location filename="mainwindow.cpp" line="2411"/>
         <source>&gt;&gt;finish update</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2437"/>
+        <location filename="mainwindow.cpp" line="2445"/>
         <source>Do you want to close?</source>
         <translation type="unfinished">你是否想关闭软件?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1928"/>
+        <location filename="mainwindow.cpp" line="1936"/>
         <source>set parameters to func_RAM</source>
         <translation type="unfinished">临时保存修改参数到设备</translation>
     </message>
@@ -1295,42 +1306,42 @@ http://www.googoltech.com</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2558"/>
+        <location filename="mainwindow.cpp" line="2566"/>
         <source>FPGA error or disconnect</source>
         <translation type="unfinished">通信端口异常</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2569"/>
+        <location filename="mainwindow.cpp" line="2577"/>
         <source>1000M ETH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2570"/>
+        <location filename="mainwindow.cpp" line="2578"/>
         <source>FUNCTION ADDRESS ERROR</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2571"/>
+        <location filename="mainwindow.cpp" line="2579"/>
         <source>NOT 1000M ETH</source>
         <translation type="unfinished">不是千兆网络</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2572"/>
+        <location filename="mainwindow.cpp" line="2580"/>
         <source>NO ETH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2574"/>
+        <location filename="mainwindow.cpp" line="2582"/>
         <source>net error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2574"/>
+        <location filename="mainwindow.cpp" line="2582"/>
         <source>com net error information:%1</source>
         <translation type="unfinished">端口连接错误信息:%1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1083"/>
+        <location filename="mainwindow.cpp" line="1086"/>
         <source>Error</source>
         <translation type="unfinished">异常</translation>
     </message>
@@ -1345,90 +1356,91 @@ http://www.googoltech.com</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="495"/>
+        <location filename="mainwindow.cpp" line="498"/>
+        <location filename="mainwindow.cpp" line="1754"/>
         <source>warnning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="695"/>
+        <location filename="mainwindow.cpp" line="698"/>
         <source>xml file error !</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="717"/>
+        <location filename="mainwindow.cpp" line="720"/>
         <source>current dsp version_%1 is not equal to xml version_%2
 do you still want to continue to download file to servo?</source>
         <translation type="unfinished">当前设备软件版本_%1不匹配参数文件版本_%2
 是否继续烧写参数文件到设备?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="737"/>
+        <location filename="mainwindow.cpp" line="740"/>
         <source>refuse to download file
  dsp version_%1 is not equal to xml version_%2!</source>
         <translation type="unfinished">禁止烧写参数到驱动器
 设备软件版本_%1与参数文件版本_%2 不匹配!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="745"/>
+        <location filename="mainwindow.cpp" line="748"/>
         <source>refuse to download file
  dsp version_%1 &gt;xml version_%2!</source>
         <translation type="unfinished">禁止烧写参数到驱动器
 设备软件版本_%1 &gt; 参数文件版本_%2!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="766"/>
+        <location filename="mainwindow.cpp" line="769"/>
         <source>can not load ptryTree!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1078"/>
+        <location filename="mainwindow.cpp" line="1081"/>
         <source>soft reset successfully</source>
         <translation type="unfinished">设备软复位成功</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1083"/>
+        <location filename="mainwindow.cpp" line="1086"/>
         <source>ERROR
 reset system error!</source>
         <translation type="unfinished">异常
 软复位系统失败 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1169"/>
+        <location filename="mainwindow.cpp" line="1172"/>
         <source>information</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1169"/>
+        <location filename="mainwindow.cpp" line="1172"/>
         <source>make sure your device is in the uboot mode and disconnet the device !</source>
         <translation type="unfinished">请确保设备设置在uboot模式!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1173"/>
+        <location filename="mainwindow.cpp" line="1176"/>
         <source>do you want to uboot?</source>
         <translation type="unfinished">是否恢复设备烧写功能?</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1294"/>
+        <location filename="mainwindow.cpp" line="1297"/>
         <source>download</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1294"/>
+        <location filename="mainwindow.cpp" line="1297"/>
         <source>download hex-file to servo not complete</source>
         <translation type="unfinished">hex文件程序烧写失败</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1295"/>
+        <location filename="mainwindow.cpp" line="1298"/>
         <source>error:download hex-file to servo not complete !</source>
         <translation type="unfinished">错误:hex文件程序烧写失败 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1368"/>
+        <location filename="mainwindow.cpp" line="1371"/>
         <source>Uboot .out file error !Maybe you are not in the uboot or hardwares have some problems </source>
         <translation type="unfinished">下载Uboot.out文件错误 !异常可能原因：1 设备不处于uboot模式 2 DSP硬件故障</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1404"/>
+        <location filename="mainwindow.cpp" line="1407"/>
         <source>SDT setting info:
 model:%1
 version:%2
@@ -1451,7 +1463,7 @@ SDT版本:%2
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1428"/>
+        <location filename="mainwindow.cpp" line="1431"/>
         <source>SDT setting info:
  model:%1
 version:%2
@@ -1473,7 +1485,7 @@ SDT版本:%2
 固件版本:%6</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1439"/>
+        <location filename="mainwindow.cpp" line="1442"/>
         <source>SDT setting info:
  model:%1
 version:%2
@@ -1490,35 +1502,27 @@ SDT版本:%2
 </translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1559"/>
-        <source>
- error type:%1</source>
-        <oldsource>
- error type:%1</oldsource>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="mainwindow.cpp" line="1702"/>
+        <location filename="mainwindow.cpp" line="1705"/>
         <source>axis:%1   writing xml parameters to servo....</source>
         <translation type="unfinished">轴:%1  烧写参数进行中......</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1706"/>
+        <location filename="mainwindow.cpp" line="1709"/>
         <source>write xml parameters to servo successfully !</source>
         <translation type="unfinished">成功烧写参数 !</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1712"/>
+        <location filename="mainwindow.cpp" line="1715"/>
         <source>axis:%1   writing servo parameters to xml file....</source>
         <translation type="unfinished">轴:%1  正在保存参数...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1715"/>
+        <location filename="mainwindow.cpp" line="1718"/>
         <source>write servo parameters to xml file successfully !</source>
         <translation type="unfinished">成功保存当前驱动器参数到xml文件!</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1721"/>
+        <location filename="mainwindow.cpp" line="1724"/>
         <source>checking parameters :%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1527,34 +1531,34 @@ SDT版本:%2
         <translation type="obsolete">选项</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1935"/>
+        <location filename="mainwindow.cpp" line="1943"/>
         <source>Save FLASH</source>
         <translation type="unfinished">永久保存修改参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1936"/>
+        <location filename="mainwindow.cpp" line="1944"/>
         <source>download parameters to func_FLASH</source>
         <translation type="unfinished">永久保存修改参数</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1949"/>
+        <location filename="mainwindow.cpp" line="1957"/>
         <source>Download</source>
         <translation type="unfinished">固件烧写</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1951"/>
-        <location filename="mainwindow.cpp" line="1952"/>
+        <location filename="mainwindow.cpp" line="1959"/>
+        <location filename="mainwindow.cpp" line="1960"/>
         <source>Download program</source>
         <translation type="unfinished">烧写程序到固件</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1956"/>
+        <location filename="mainwindow.cpp" line="1964"/>
         <source>RESETDSP</source>
         <translation type="unfinished">复位DSP</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="1958"/>
-        <location filename="mainwindow.cpp" line="1959"/>
+        <location filename="mainwindow.cpp" line="1966"/>
+        <location filename="mainwindow.cpp" line="1967"/>
         <source>Reset DSP</source>
         <translation type="unfinished">复位DSP</translation>
     </message>
@@ -1583,37 +1587,37 @@ SDT版本:%2
         <translation type="obsolete">通过硬件ID自动加载</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2028"/>
+        <location filename="mainwindow.cpp" line="2036"/>
         <source>ViewControl</source>
         <translation type="unfinished">视图控制</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2035"/>
+        <location filename="mainwindow.cpp" line="2043"/>
         <source>Tool</source>
         <translation type="unfinished">工具</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2107"/>
+        <location filename="mainwindow.cpp" line="2115"/>
         <source>config guide</source>
         <translation type="unfinished">配置向导</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2119"/>
+        <location filename="mainwindow.cpp" line="2127"/>
         <source>navigation tree</source>
         <translation type="unfinished">导航树</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2120"/>
+        <location filename="mainwindow.cpp" line="2128"/>
         <source>plot wave</source>
         <translation type="unfinished">绘图</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2417"/>
+        <location filename="mainwindow.cpp" line="2425"/>
         <source>open file %1</source>
         <translation type="unfinished">打开文件 %1</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="2424"/>
+        <location filename="mainwindow.cpp" line="2432"/>
         <source>&gt;&gt; GOOGOLTECH Servo Debug Assistant 
 </source>
         <translation type="unfinished"></translation>
@@ -1903,7 +1907,7 @@ is out of range (%4~%5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="14"/>
+        <location filename="main.cpp" line="22"/>
         <source>GOOGOLTECH servo application initialing......</source>
         <translation type="unfinished"></translation>
     </message>
