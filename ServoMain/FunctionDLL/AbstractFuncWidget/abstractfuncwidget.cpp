@@ -488,7 +488,7 @@ bool AbstractFuncWidget::checkPrm()
       max=item->text(COL_FUNC_UPLIMIT).toDouble();
       min=item->text(COL_FUNC_DOWNLIMIT).toDouble();
       //发送消息到qml，还原颜色
-      emit qmlEditUiStateChanged(i,false);
+//      emit qmlEditUiStateChanged(i,false);
       if(!(value>=min&&value<=max))
       {
         ok=false;

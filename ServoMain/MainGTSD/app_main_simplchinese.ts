@@ -1813,7 +1813,7 @@ axisCount:%4
     <message>
         <location filename="Option/OptionDialog/optiondialog.ui" line="281"/>
         <source>need check</source>
-        <translation type="unfinished">是否检查参数</translation>
+        <translation type="unfinished">约束参数输入</translation>
     </message>
     <message>
         <location filename="Option/OptionDialog/optiondialog.ui" line="313"/>

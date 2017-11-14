@@ -2,4 +2,5 @@ TEMPLATE = subdirs
 
 SUBDIRS+=encoder \
     motor \
-    ToolBox
+    ToolBox \
+    brake

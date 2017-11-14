@@ -1,273 +1,273 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Form</class>
- <widget class="QWidget" name="Form">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>400</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Form</string>
-  </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
-   <item>
-    <widget class="QTreeWidget" name="treeWidget">
-     <column>
-      <property name="text">
-       <string>memberName</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>value</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>memberType</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>unit</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>downlimit</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>uplimit</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>introduction</string>
-      </property>
-     </column>
-     <column>
-      <property name="text">
-       <string>framAddr</string>
-      </property>
-     </column>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.dyn_brak_wait_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>32767</string>
-      </property>
-      <property name="text">
-       <string>动态制动器等待时间</string>
-      </property>
-      <property name="text">
-       <string>606</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.dyn_brak_hold_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>2147483647</string>
-      </property>
-      <property name="text">
-       <string>动态制动器保持时间 </string>
-      </property>
-      <property name="text">
-       <string>607</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.out_brak_delay_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>-2147483647</string>
-      </property>
-      <property name="text">
-       <string>2147483647</string>
-      </property>
-      <property name="text">
-       <string>外部制动器延迟时间</string>
-      </property>
-      <property name="text">
-       <string>608</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.out_brak_wait_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-      <property name="text">
-       <string>外部制动器等待时间</string>
-      </property>
-      <property name="text">
-       <string>609</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.out_brake_hold_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-      <property name="text">
-       <string>外部制动器保持时间</string>
-      </property>
-      <property name="text">
-       <string>610</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.dyn_brake_lag_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-      <property name="text">
-       <string>动态制动器滞后时间</string>
-      </property>
-      <property name="text">
-       <string>611</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.cur.pwr.prm.out_brake_lag_tim</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int16</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-      <property name="text">
-       <string>外部制动器滞后时间</string>
-      </property>
-      <property name="text">
-       <string>612</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.sev_obj.vel.vrf.prm.tf_rmp</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>int32</string>
-      </property>
-      <property name="text">
-       <string>ms</string>
-      </property>
-      <property name="text">
-       <string>0</string>
-      </property>
-      <property name="text">
-       <string>1</string>
-      </property>
-      <property name="text">
-       <string>紧急停止减速时间</string>
-      </property>
-      <property name="text">
-       <string>5100</string>
-      </property>
-     </item>
+    <class>Form</class>
+    <widget class="QWidget" name="Form">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>400</width>
+                <height>400</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Form</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+                <widget class="QTreeWidget" name="treeWidget">
+                    <column>
+                        <property name="text">
+                            <string>memberName</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>value</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>memberType</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>unit</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>downlimit</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>uplimit</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>introduction</string>
+                        </property>
+                    </column>
+                    <column>
+                        <property name="text">
+                            <string>framAddr</string>
+                        </property>
+                    </column>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.dyn_brak_wait_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>动态制动器等待时间</string>
+                        </property>
+                        <property name="text">
+                            <string>606</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.dyn_brak_hold_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>动态制动器保持时间 </string>
+                        </property>
+                        <property name="text">
+                            <string>607</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.out_brak_delay_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>外部制动器延迟时间</string>
+                        </property>
+                        <property name="text">
+                            <string>608</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.out_brak_wait_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>外部制动器等待时间</string>
+                        </property>
+                        <property name="text">
+                            <string>609</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.out_brake_hold_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>外部制动器保持时间</string>
+                        </property>
+                        <property name="text">
+                            <string>610</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.dyn_brake_lag_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>动态制动器滞后时间</string>
+                        </property>
+                        <property name="text">
+                            <string>611</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.cur.pwr.prm.out_brake_lag_tim</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int16</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>32767</string>
+                        </property>
+                        <property name="text">
+                            <string>外部制动器滞后时间</string>
+                        </property>
+                        <property name="text">
+                            <string>612</string>
+                        </property>
+                    </item>
+                    <item>
+                        <property name="text">
+                            <string>gSevDrv.sev_obj.vel.vrf.prm.tf_rmp</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>int32</string>
+                        </property>
+                        <property name="text">
+                            <string>ms</string>
+                        </property>
+                        <property name="text">
+                            <string>0</string>
+                        </property>
+                        <property name="text">
+                            <string>2147483647</string>
+                        </property>
+                        <property name="text">
+                            <string>紧急停止减速时间</string>
+                        </property>
+                        <property name="text">
+                            <string>5100</string>
+                        </property>
+                    </item>
+                </widget>
+            </item>
+        </layout>
     </widget>
-   </item>
-  </layout>
- </widget>
- <resources/>
- <connections/>
+    <resources/>
+    <connections/>
 </ui>

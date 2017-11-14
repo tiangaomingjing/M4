@@ -19,8 +19,12 @@
 		<FirmWare name="V123"/>
 	</Model>
 	<Model name="GTSD42" axisCount ="4">
+		<FirmWare name="V122"/>
 		<FirmWare name="V123"/>
+		<FirmWare name="V124"/>
+		<FirmWare name="V125"/>
 		<FirmWare name="V126"/>
+		<FirmWare name="V127"/>
 		<FirmWare name="V128"/>
 		<FirmWare name="V129"/>
 	</Model>
@@ -32,7 +36,6 @@
         <Child name="电流控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
         <Child name="速度控制器" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
         <Child name="位置控制器" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
-		<Child name="制动" classname="CfgBrake" PrmFuncFile="PrmFuncBrake"/>
         <!--Child name="阈值设定" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" /-->
         <!--Child name="运动规划" classname="CfgMoveProfile" PrmFuncFile="PrmFuncPositionloop"/-->
         <!--Child name="输入输出" classname="CfgIO" PrmFuncFile="PrmFuncPositionloop"/-->
@@ -52,6 +55,8 @@
   
   <Type id="1" name="GTSD_6X">
     <Model name="GTSD61" axisCount ="6">
+		<FirmWare name="V123"/>
+		<FirmWare name="V127"/>
 		<FirmWare name="V128"/>
 		<FirmWare name="V129"/>
 	</Model>
@@ -67,7 +72,6 @@
         <Child name="电流控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
         <Child name="速度控制器" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
         <Child name="位置控制器" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
-		<Child name="制动" classname="CfgBrake" PrmFuncFile="PrmFuncBrake"/>
         <!--Child name="阈值设定" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" /-->
         <!--Child name="运动规划" classname="CfgMoveProfile" PrmFuncFile="PrmFuncPositionloop"/-->
         <!--Child name="输入输出" classname="CfgIO" PrmFuncFile="PrmFuncPositionloop"/-->

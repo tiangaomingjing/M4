@@ -30,7 +30,8 @@ INCLUDEPATH +=$${PWD}/..\
                 $${PWD}/../FunctionDLL/PlotWave\
                 $${PWD}/../FunctionDLL/ModuleIO\
                 $${PWD}/../FunctionDLL/PlotWaveUi\
-                $${PWD}/../FunctionDLL/ModuleIoNew
+                $${PWD}/../FunctionDLL/ModuleIoNew\
+                $${PWD}/../FunctionDLL/CfgBrake
 
 
 CONFIG(debug, debug|release){
@@ -56,6 +57,7 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/PlotWaveUid.lib\
             $${LIB_PATH}/ServoGeneralCmdd.lib\
             $${LIB_PATH}/ModuleIoNewd.lib
+            $${LIB_PATH}/CfgBraked.lib
 
 } else{
     TARGET = SDT
@@ -79,7 +81,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/ModuleIO.lib\
             $${LIB_PATH}/PlotWaveUi.lib\
             $${LIB_PATH}/ServoGeneralCmd.lib\
-            $${LIB_PATH}/ModuleIoNew.lib
+            $${LIB_PATH}/ModuleIoNew.lib\
+            $${LIB_PATH}/CfgBrake.lib
 }
 
 DESTDIR =$${OUT_ROOT}/Bin

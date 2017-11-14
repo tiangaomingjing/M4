@@ -2280,7 +2280,8 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   AbstractFuncWidget *ioWidget;
   QString version=theconfig->model.version.at(0);
   version=version.remove(0,1);
-  if(version.toInt()<128)
+  int currentVersion=version.toInt();
+  if(currentVersion<128)
     ioWidget=new ModuleIO(0);//这个已经在进来时释放空间了，所以不用释放
   else
     ioWidget=new ModuleIoNew(0);//这个已经在进来时释放空间了，所以不用释放
@@ -2373,13 +2374,20 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
     m_gPtyLimitTree=NULL;
   }
 
-  if(version.toInt()>=128)
+  if(currentVersion>128)
   {
     qDebug()<<"curent version "<<theconfig->model.version.at(0);
     QString limitFileName;
     limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
     m_gPtyLimitTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
 //    m_gPtyLimitTree->show();
+    //将制动页面放出来
+    ui->treeWidget->topLevelItem(0)->child(6)->setHidden(false);
+  }
+  else
+  {
+    //制动页面收起来
+    ui->treeWidget->topLevelItem(0)->child(6)->setHidden(true);
   }
 
 #if TEST_DEBUG

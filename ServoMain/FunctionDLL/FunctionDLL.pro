@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
-#按照输写顺序来编绎
-CONFIG +=ordered
+#按照输写顺序来编�CONFIG +=ordered
 SUBDIRS +=AbstractFuncWidget \
           QmlPluginLibrary\
           ServoGeneralCmd \
@@ -19,5 +18,6 @@ SUBDIRS +=AbstractFuncWidget \
           PlotWave\
           ModuleIO \
           PlotWaveUi \
-          ModuleIoNew
+          ModuleIoNew \
+    CfgBrake
 
