@@ -32,6 +32,11 @@ protected:
 	const int16						COM_AXIS_MAX = 240;					//轴最大个数为4	
 
   const Uint16					FPGA_VERSION = (0xFF00 + (0x0001<<1));
+	const Uint16					FPGA_YEAR		= (0xFF00 + (0x0003 << 1));
+	const Uint16					FPGA_MD			= (0xFF00 + (0x0004 << 1));
+	const Uint16					FPGA_ADD_A	= (0xFF00 + (0x0006 << 1));
+	const Uint16					FPGA_ADD_B		= (0xFF00 + (0x0006 << 1));
+
 protected:
 	int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);////将命令ID和轴号合并成一个short，其中bit[0-11]为命令ID, bit[12 - 15]为轴号
 public:
@@ -144,6 +149,8 @@ public:
 	int16 GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ver);
 	int16 GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver);
 
+	///add by luo.mj
+	int16 GTSD_CMD_ReadFPGAVersion(int16 axis, VERSION* ver);
 	int16 GTSD_CMD_ClrAlarm(int16 axis);
 
 	//----------------------------------------------------------------------------------------------------------------

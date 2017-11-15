@@ -5,12 +5,13 @@
 #include "ServoDriverComDll.h"
 #include <iostream>
 #include <windows.h>
+#define qDebug() std::cout
 using namespace std;
 void updateProgress(void *arg, int16 *value);
 #define TEST_UBOOT 0
 #define  TEST_PLOT 0
 #define TEST_FPGA 0
-#define TEST_NEW_COMUNICATION_CRC 1
+#define TEST_NEW_COMUNICATION_CRC 0
 #define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/GTSD42_VA_V0_0922.rpd")
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -108,7 +109,14 @@ int _tmain(int argc, _TCHAR* argv[])
 #endif
 //	result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(4, &func, comType, 0xf0);
 //	result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(5, &func, comType, 0xf0);
-
+	Uint16 v;
+	GTSD_CMD_ReadFirmwareVersion(0, v, comType, 0xf0);
+	VERSION fpagVersion;
+	qDebug() << "read version";
+	if (0 == GTSD_CMD_ReadFpgaVersion(0, &fpagVersion, comType, 0xf0))
+	{
+		qDebug() << fpagVersion.usAddInfA << fpagVersion.usAddInfB << fpagVersion.usDeviceMesg << fpagVersion.usMonthDay << fpagVersion.usVersion << fpagVersion.usYear;
+	}
 	while (true)
 	{
 

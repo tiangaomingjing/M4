@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     Option/optionuserloginitem.cpp \
     Option/optionautoloaditem.cpp \
     ../../MainGTSD/UserRole/userrole.cpp \
-    Option/OptionDialog/optiondialog.cpp
+    Option/OptionDialog/optiondialog.cpp \
+    Option/optionplotitem.cpp
 
 HEADERS  += mainwindow.h \
     Option/option.h \
@@ -28,7 +29,8 @@ HEADERS  += mainwindow.h \
     Option/optionuserloginitem.h \
     Option/optionautoloaditem.h \
     ../../MainGTSD/UserRole/userrole.h \
-    Option/OptionDialog/optiondialog.h
+    Option/OptionDialog/optiondialog.h \
+    Option/optionplotitem.h
 
 FORMS    += mainwindow.ui \
     Option/OptionDialog/optiondialog.ui

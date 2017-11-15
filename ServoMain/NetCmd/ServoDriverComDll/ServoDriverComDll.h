@@ -6,7 +6,7 @@
 //																						//
 //======================================================================================//
 //		programmer:		|	date:		|	Corporation:	|		copyright(C):		//
-//--------------------------------------------------------------------------------------//
+//-------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
 //--------------------------------------------------------------------------------------//
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -428,6 +428,8 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_fin
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ver,int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+//add bu luo.mj
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFpgaVersion(int16 axis, VERSION* ver, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClrAlarm(int16 axis,int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
@@ -451,7 +453,9 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteSerialPort(int16 axis, Uint8 *buf, int
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstring& filePath, int32 baudRate, int16 cmd, string& inputKey, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
 /////////////////////////////////com vs fppa eeprom/////////////////////////////////////////
+
 //EEPROM 读写,擦除
+
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
@@ -463,7 +467,9 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClearEEPROM(int16 axis, int16 com_type = GT
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ResetFPGA(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ConfigEEPROM(int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 SERVODRIVERCOMDLL_API Uint16 GTSD_CMD_FroceCheckMode(Uint16 mode);
+
 //通信连接后，需扫描网络结构，通过发送广播消息给FPGA，通过返回的数据包中的站号和设备类型来判断网络结构
+
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ScanRnTopology(int16 com_type = GTSD_COM_TYPE_RNNET, int16 stationId = 0xff);
 
 

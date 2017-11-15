@@ -64,7 +64,8 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.7"
+
+#define SDT_VERSION "1.1.8"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -727,6 +728,15 @@ void MainWindow::onActionFile2ServoClicked()
         return;
       }
     }
+  }
+  //检查参数的轴数与软件版本的轴数是否一致
+  if(tree->topLevelItemCount()!=mp_userConfig->model.axisCount)
+  {
+    QString msg=tr("axis number of current xml file is not equal to the device");
+    QMessageBox::information(0,tr("warnning"),msg);
+    tree->clear();
+    delete tree;
+    return;
   }
 
   QString currentVersion=mp_userConfig->model.version.at(0);
@@ -1418,6 +1428,15 @@ void MainWindow::onActionAboutConfigClicked()
                               .arg(mp_userConfig->com.comName)
                               .arg((QString::number(pVersion)+"-"+minVersion))
                               .arg(hexFVersion);
+
+    VERSION fpagVersion;
+    qDebug()<<"read version";
+    if(0==GTSD_CMD_ReadFpgaVersion(0,&fpagVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation))
+    {
+      qDebug("fa=0x%X,fb=0x%X,msg=0x%X,day=0x%X,ver=0x%X,year=0x%X",fpagVersion.usAddInfA\
+             ,fpagVersion.usAddInfB,fpagVersion.usDeviceMesg,fpagVersion.usMonthDay,fpagVersion.usVersion,fpagVersion.usYear);
+      info+=tr("firmware date:%1-%2").arg(QString::asprintf("%04X",fpagVersion.usYear)).arg(QString::asprintf("%04X",fpagVersion.usMonthDay));
+    }
   }
 
   else//还示连接
@@ -1442,6 +1461,14 @@ void MainWindow::onActionAboutConfigClicked()
                                 .arg(mp_userConfig->com.comName)
                                 .arg((QString::number(pVersion)+"-"+minVersion))
                                 .arg(hexFVersion);
+      VERSION fpagVersion;
+      qDebug()<<"read version";
+      if(0==GTSD_CMD_ReadFpgaVersion(0,&fpagVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation))
+      {
+        qDebug("fa=0x%X,fb=0x%X,msg=0x%X,day=0x%X,ver=0x%X,year=0x%X",fpagVersion.usAddInfA\
+               ,fpagVersion.usAddInfB,fpagVersion.usDeviceMesg,fpagVersion.usMonthDay,fpagVersion.usVersion,fpagVersion.usYear);
+        info+=tr("\nfirmware date:%1-%2").arg(QString::asprintf("%04X",fpagVersion.usYear)).arg(QString::asprintf("%04X",fpagVersion.usMonthDay));
+      }
     }
     else
     {

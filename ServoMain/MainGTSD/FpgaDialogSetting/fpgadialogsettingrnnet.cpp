@@ -48,6 +48,7 @@ FpgaDialogSettingRnNet::FpgaDialogSettingRnNet(QTreeWidget *tree, MainWindow *ma
   connect(ui->treeWidget,SIGNAL(itemSelectionChanged()),this,SLOT(onItemSelectionChanged()));
   connect(ui->rbtn_dec,SIGNAL(clicked(bool)),this,SLOT(onDecHexRadioClicked()));
   connect(ui->rbtn_hex,SIGNAL(clicked(bool)),this,SLOT(onDecHexRadioClicked()));
+  connect(ui->btn_exit,SIGNAL(clicked(bool)),this,SLOT(onBtnExitClicked()));
 
 }
 
@@ -325,6 +326,10 @@ void FpgaDialogSettingRnNet::onExecuteEnterKey()
     m_hightlightText->resetTextColor();
   }
 
+}
+void FpgaDialogSettingRnNet::onBtnExitClicked()
+{
+  this->hide();
 }
 
 void FpgaDialogSettingRnNet::setTreeWidgetStyleSheet()

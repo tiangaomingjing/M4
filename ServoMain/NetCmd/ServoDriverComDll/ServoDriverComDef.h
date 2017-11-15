@@ -26,7 +26,7 @@ typedef enum _servoTaskMode
 	SERTASKMODE_POS_FIXED = 9,
 	SERTASKMODE_POS_SYNC = 10,
 	SERTASKMODE_DB_BRAKE = 11,
-	SERTASKMODE_CURRENT_SYNC = 12,
+  SERTASKMODE_CURRENT_SYNC = 12,
 
 	SERTASKMODE_COUNT
 }ServoTaskMode;
@@ -259,6 +259,16 @@ typedef enum
 	SEV_SECTION = 0,
 	AUX_SECTION = 1
 }tRwRamPrm;
-//≤Œ ˝£¨0£∫sev£¨ 1£∫aux
+
+//ÂèÇÊï∞Ôºå0ÔºösevÔºå 1Ôºöaux
+typedef struct
+{
+  Uint16 usDeviceMesg;
+  Uint16 usVersion;
+  Uint16 usYear;
+  Uint16 usMonthDay;
+  Uint16 usAddInfA;
+  Uint16 usAddInfB;
+}VERSION;
 
 #endif

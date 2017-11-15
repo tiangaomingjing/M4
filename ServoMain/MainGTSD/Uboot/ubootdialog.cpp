@@ -2,13 +2,15 @@
 #include "ui_ubootdialog.h"
 #include <QFileDialog>
 #include <QDebug>
+#include <QFileInfo>
 #define RECORD_HEX 0x01
 #define RECORD_XML 0x02
 
 UbootDialog::UbootDialog(QWidget *parent) :
   QDialog(parent),
   ui(new Ui::UbootDialog),
-  m_recordClickedStatus(0)
+  m_recordClickedStatus(0),
+  m_currentFilePath(".")
 {
   ui->setupUi(this);
   ui->btn_ok->setEnabled(false);
@@ -36,9 +38,13 @@ QString UbootDialog::xmlFilePath() const
 
 void UbootDialog::onBtnLineEditHexFilePathClicked()
 {
-  QString path = QFileDialog::getOpenFileName(this, tr("Open"), ".", tr("Hex Files( *.hex)"));
+  QString path = QFileDialog::getOpenFileName(this, tr("Open"), m_currentFilePath, tr("Hex Files( *.hex)"));
   if(path.isNull())
     return;
+  QFileInfo fileInfo;
+  fileInfo.setFile(path);
+  m_currentFilePath=fileInfo.filePath()+"/";
+
   ui->lineEdit_hexFileName->setText(path);
   m_hexFilePath=path;
   m_recordClickedStatus|=RECORD_HEX;
@@ -48,9 +54,13 @@ void UbootDialog::onBtnLineEditHexFilePathClicked()
 
 void UbootDialog::onBtnLineEditXmlFilePathClicked()
 {
-  QString path = QFileDialog::getOpenFileName(this, tr("Open"), ".", tr("Xml Files( *.xml)"));
+  QString path = QFileDialog::getOpenFileName(this, tr("Open"), m_currentFilePath, tr("Xml Files( *.xml)"));
   if(path.isNull())
     return;
+  QFileInfo fileInfo;
+  fileInfo.setFile(path);
+  m_currentFilePath=fileInfo.filePath()+"/";
+
   ui->lineEdit_xmlFileName->setText(path);
   m_xmlFilePath=path;
   m_recordClickedStatus|=RECORD_XML;

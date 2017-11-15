@@ -8,8 +8,8 @@
 //		programmer:		|	date:		|	Corporation:	|		copyright(C):		//
 //-------------------------------------------------------------------------------------//
 //		wang.bin(1420)  |	2016/1/20	|	googoltech		|		2016 - 2019			//
-//--------------------------------------------------------------------------------------//
-//////////////////////////////////////////////////////////////////////////////////////////
+//-------------------------------------------------------------------------------------//
+/////////////////////////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
 #include <conio.h>
 #include "ST_GTSD_Cmd.h"
@@ -1574,7 +1574,8 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ve
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ReadFirmwareVersion(axis, ver);
+  if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+  if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ReadFirmwareVersion(axis, ver);
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1582,6 +1583,22 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver
 	if (com_type == GTSD_COM_TYPE_RNNET)  stationId = GTSD_Convert_axi(axis);
 	return Unlock(GTSD_CMD_ST_ReadFirmwareVersion(axis, ver, com_type, stationId));
 }
+//add bu luo.mj
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFpgaVersion(int16 axis, VERSION* ver, int16 com_type, int16 stationId)
+{
+  if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL)
+    return RTN_OBJECT_UNCREATED;
+  if (com_type == GTSD_COM_TYPE_RNNET)
+    return g_RnServoCom->GTSD_CMD_ReadFPGAVersion(axis, ver);
+
+  if (Net_Rt_Lock_Err == TryLock())
+  {
+    return Net_Rt_Lock_Err;
+  }
+  if (com_type == GTSD_COM_TYPE_RNNET)  stationId = GTSD_Convert_axi(axis);
+  return Unlock(CMD_ERROR_UNKNOWN);//pcdebug return error
+}
+
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClrAlarm(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {

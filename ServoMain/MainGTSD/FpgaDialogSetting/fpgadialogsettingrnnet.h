@@ -30,6 +30,7 @@ private slots:
   void onTreeItemChanged(QTreeWidgetItem *item,int column);
   void onItemSelectionChanged();
   void onExecuteEnterKey(void);
+  void onBtnExitClicked();
 private:
   void setTreeWidgetStyleSheet();
   quint32 operationValue(quint32 bitstart, quint32 bitwidth);

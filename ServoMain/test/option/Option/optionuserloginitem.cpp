@@ -1,5 +1,4 @@
 ﻿#include "optionuserloginitem.h"
-#include "userrole.h"
 #include <QDebug>
 #define USER_ADMIN_PASSWD "googol123"
 OptionUserLoginItem::OptionUserLoginItem(QObject *parent) : IOptionItem(parent),
