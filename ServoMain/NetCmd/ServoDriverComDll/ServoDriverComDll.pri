@@ -7,14 +7,21 @@
 #message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./ComBase.h \
+HEADERS += ./AdminstratorComDll.h \
+    ./ComBase.h \
+    ./CpldCom.h \
+    ./driver_command.h \
+    ./Eeprom.h \
     ./FPGAUpdate.h \
+    ./GTCmdCtrl.h \
+    ./GTDriverCmd.h \
     ./MotionControlComDll.h \
     ./MotionCtrlCom.h \
     ./RnSerialPort.h \
     ./ServoDriverCom.h \
     ./ServoDriverComDef.h \
     ./ServoDriverComDll.h \
+    ./SPLine.h \
     ./stdafx.h \
     ./targetver.h \
     ./NetCom/include/BaseReturn_def.h \
@@ -53,14 +60,20 @@ HEADERS += ./ComBase.h \
     ./StRingNetComUser.h \
     ./StRingNetRegDef.h \
     ./UserResp.h
-SOURCES += ./ComBase.cpp \
+SOURCES += ./AdminstratorComDll.cpp \
+    ./ComBase.cpp \
+    ./CpldCom.cpp \
     ./dllmain.cpp \
+    ./Eeprom.cpp \
     ./FPGAUpdate.cpp \
+    ./GTCmdCtrl.cpp \
+    ./GTDriverCmd.cpp \
     ./MotionControlComDll.cpp \
     ./MotionCtrlCom.cpp \
     ./RnSerialPort.cpp \
     ./ServoDriverCom.cpp \
     ./ServoDriverComDll.cpp \
+    ./SPLine.cpp \
     ./stdafx.cpp \
     ./NetCom/src/Net.cpp \
     ./NetCom/src/NetCommunication.cpp \

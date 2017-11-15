@@ -12,6 +12,11 @@
 #include <QToolButton>
 
 #include "./ServoGeneralCmd/servogeneralcmd.h"
+#include "MainGTSD/PowerTreeManage/powertreemanage.h"
+
+#define USE_CLEAR_TREE_NULL 0
+#define USE_SINGLETON_TEST 0
+#define USE_FIND_ID_TEST 1
 
 MainWindow::MainWindow(QWidget *parent) :
   QMainWindow(parent),
@@ -30,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     m_datas.append(dat);
   }
 //  ui->comboBox->setFixedHeight(50);
+//----------------------QComboBox样式测试-----------------------------------------
   QString style="\
       QComboBox{\
         border-radius: 3px;\
@@ -82,32 +88,72 @@ MainWindow::MainWindow(QWidget *parent) :
       ui->comboBox->setStyleSheet(style);
     QStyledItemDelegate* itemDelegate = new QStyledItemDelegate(ui->comboBox);
     ui->comboBox->setItemDelegate(itemDelegate);
+
+//----------------------------单例测试----------------------------------------------------------
+#if USE_SINGLETON_TEST
     QString fileName="D:/Smart/ServoMaster/git-project/servo-4/release/SystemConfiguration/GTSD_6X/GTSD61/V127/PrmFuncCmd.xml";
     QTreeWidget *treeWidget=QtTreeManager::createTreeWidgetFromXmlFile(fileName);
     ServoGeneralCmd *cmd1=ServoGeneralCmd::instance(treeWidget,0,0);
     ServoGeneralCmd *cmd2=ServoGeneralCmd::instance(treeWidget,0,0);
     qDebug()<<"cmd1="<<(quint64)cmd1;
     qDebug()<<"cmd2="<<(quint64)cmd2;
-
-    QToolButton *tbtn;
-    tbtn=new QToolButton();
-
-//    tbtn->setPopupMode(QToolButton::MenuButtonPopup);
-
-    QImage ima(":/menu_servo2file.png");
-    tbtn->setIconSize(QSize(128, 64));
-    tbtn->setMinimumSize(QSize(128, 64));
-    QIcon icon;
-    icon.addFile(QStringLiteral(":/menu_servo2file.png"), QSize(128,64), QIcon::Normal, QIcon::Off);
-    tbtn->setIcon(icon);
+#endif
 
 
-    ui->mainToolBar->addWidget(tbtn);
-    ui->mainToolBar->setMinimumHeight(64);
+#if USE_CLEAR_TREE_NULL
+//-----------------------将硬件功率模块controlname清null------------------------------------------
+    QTreeWidget *tree=QtTreeManager::createTreeWidgetFromXmlFile(tr("D:/Smart/ServoMaster/git-project/servo-4/SD41P003_1017.ui"));
+    qDebug()<<"-----------------------------------";
+    qDebug()<<tree->topLevelItem(0)->text(7);
+    if(tree->topLevelItem(0)->text(7)=="")
+      qDebug()<<"*********************";
+    QTreeWidgetItemIterator it(tree);
+    QTreeWidgetItem *item;
+    while (*it)
+    {
+      item=(*it);
+      if(item->text(7)=="")
+      {
+        item->setText(7,"null");
+      }
+      else
+        qDebug()<<item->text(7);
+      it++;
+    }
+    QtTreeManager::writeTreeWidgetToXmlFile("D:/Smart/ServoMaster/git-project/servo-4/SD41P003.ui",tree);
+#endif
+//----------------------PowerBoardTree 找到ID树节点-------------------------------
 
+#if USE_FIND_ID_TEST
+  QTreeWidget *powerTree=QtTreeManager::createTreeWidgetFromXmlFile(tr("D:/Smart/ServoMaster/git-project/servo-4/release/Resource/DataBase/PowerBoard.ui"));
+  powerTree->show();
+  quint32 id=21000509;
+  bool isOK;
+  PowerTreeManage *pwrManage=new PowerTreeManage(powerTree);
+  QList<QMap<QString ,PowerBoardLimit>>powerLimitMapList;
+  QList<QMap<QString ,PowerBoardLimit>>powerLimitMapList2;
+  SamplingDataInfo samplingData;
 
+  pwrManage->updatePowerLimitMapList(id,powerLimitMapList);
+  samplingData=pwrManage->samplingDataInfo(id,&isOK);
 
+  powerLimitMapList2=powerLimitMapList;
+  for(int i=0;i<samplingData.types().count();i++)
+  {
+    qDebug()<<"axis:"<<i+1<<"type="<<samplingData.types().at(i)<<" value="<<samplingData.values().at(i);
+  }
 
+  qDebug()<<"-----------------get data--------------------";
+  for(int i=0;i<powerLimitMapList2.count();i++)
+  {
+    qDebug()<<"axis="<<i;
+    QMapIterator<QString ,PowerBoardLimit> mapIt(powerLimitMapList2.at(i));
+    while (mapIt.hasNext()) {
+      mapIt.next();
+      qDebug()<<mapIt.key()<<" max="<<mapIt.value().max<<" min="<<mapIt.value().min;
+    }
+  }
+#endif
 
 //    QAction *act=new QAction("hello",this);
 //    act->setToolTip("aaaaaaaa");
@@ -127,6 +173,7 @@ MainWindow::~MainWindow()
   delete ui;
 }
 
+//-------------------------------格式化数据输出测试-------------------------------------------------------
 void MainWindow::on_pushButton_clicked()
 {
   QFileInfo fileInfo;
@@ -185,6 +232,7 @@ typedef enum{
   COL_PRTYTREE_PARENT,
   COL_PRTYTREE_INTRODUCTION
 }ColPrtyTreeIndex;
+
 void MainWindow::on_pushButton_2_clicked()
 {
   QString fileName="D:/PrmPrtyTree.xml";

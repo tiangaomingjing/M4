@@ -17,6 +17,9 @@ public:
   int axisNum() const;
   void setAxisNum(int axisNum);
 
+  bool prevCheckState() const;
+  void setPrevCheckState(bool prevCheckState);
+
 signals:
   void lockClicked(bool checked);
 
@@ -29,6 +32,7 @@ private:
   QLabel*m_image;
   QCheckBox *m_box;
   int m_axisNum;
+  bool m_prevCheckState;
 };
 
 #endif // LOCKCHECKBOX_H

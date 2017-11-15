@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="gb2312" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
     <class>Form</class>
     <widget class="QWidget" name="Form">
@@ -7,7 +7,7 @@
                 <x>0</x>
                 <y>0</y>
                 <width>400</width>
-                <height>438</height>
+                <height>400</height>
             </rect>
         </property>
         <property name="windowTitle">
@@ -70,10 +70,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -96,10 +96,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -122,10 +122,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -148,10 +148,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -174,10 +174,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -200,10 +200,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -226,10 +226,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -252,10 +252,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -278,10 +278,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -304,10 +304,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -330,10 +330,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -356,10 +356,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -382,10 +382,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>2147483647</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -411,7 +411,7 @@
                             <string>0</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -434,10 +434,10 @@
                             <string>NULL</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>1</string>
                         </property>
                         <property name="text">
-                            <string>0</string>
+                            <string>32767</string>
                         </property>
                         <property name="text">
                             <string>NULL</string>
@@ -450,6 +450,6 @@
             </item>
         </layout>
     </widget>
-    <resources />
-    <connections />
+    <resources/>
+    <connections/>
 </ui>

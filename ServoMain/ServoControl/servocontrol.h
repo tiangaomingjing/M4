@@ -41,6 +41,8 @@ public:
 
   static bool checkServoIsReady(int axis, int16 com_type = GTSD_COM_TYPE_NET, short comStation = 0xf0);
   static qint16 servoCurrentUserTaskMode(int axis, int16 com_type = GTSD_COM_TYPE_NET, short comStation  = 0xf0);
+
+  static void setCmdWithCRC(bool on);
 signals:
   void progressValue(int axis,int value);
 

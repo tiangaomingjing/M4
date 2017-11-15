@@ -7,6 +7,8 @@
 
 #include "ServoDriverComDll.h"
 #include "xmlbuilder.h"
+#include "PrmCheck/prmcheck.h"
+#include "PowerTreeManage/powertreemanage.h"
 
 namespace Ui {
 class MainWindow;
@@ -31,7 +33,7 @@ class ConnectDataBase;
 class FpgaDialogSettingRnNet;
 class AbstractFuncWidget;
 class MotorSqlModel;
-class UserRole;
+class Option;
 
 class MainWindow : public QMainWindow
 {
@@ -46,9 +48,14 @@ public:
   QTreeWidget *getRamAllAxisTree(void){return mp_ramAllTreeWidget;}
   QTreeWidget *getFunctionCmdTree(void){return mp_functionCmdTreeWidget;}
   QTreeWidget *getFunctionExtensionTree(void){return mp_funcExtension;}
+  QTreeWidget *getPtyLimitTree(){return m_gPtyLimitTree;}
   MotorSqlModel *getMotorSqlModel(void){return m_motorSqlModel;}
+  bool prmNeedChecked(){return m_versionNeedCheck;}
+  Option *getOption(){return m_option;}
 
   QMap<QString,QVariant> * getModuleShareMapData(void){return &m_moduleShareData;}
+  const QList<QMap<QString ,PowerBoardLimit>> *getPowerBoardLimitMapList(void) const {return &m_powerLimitMapList;}
+  const SamplingDataInfo *getPowerBoardLimitSamplingData(void) const{return &m_samplingData;}
   bool getComOpenState(void){return m_isOpenCom;}
   void stopTimer(){m_timer->stop();}
   void startTimer(){m_timer->start();}
@@ -102,11 +109,12 @@ private slots:
   void onActionNormalizeTreeClicked();
   void onActionFPGAConfigurationClicked();
   void onActionRestoreFactorySettingClicked(void);
+  void onActionWrite2EEpromClicked();
   //help
   void onActionAboutConfigClicked();
   void onActionAboutSDTClicked();
   //preference
-  void onActionUserLoginClicked();
+  void onActionOptionClicked();
   //-----------新建配置--------------
   void onNewConfigurationActived(UserConfig *config);//槽连接到新建窗口发射的信号,响应新建配置
 
@@ -132,7 +140,11 @@ private slots:
   void onXmlServoToPrm(int axis,int value);
   void onCheckingProgress(QString &name, int value);
 
-  void onUserRoleChanged(void);
+  void onUserRoleChanged(int user);
+  void onErrorPassWord();
+
+  //两个程序运行时，提示信息
+  void onApplicationRevMessage(QString msg);
 
 protected:
   void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
@@ -164,6 +176,11 @@ private:
   void setWidgetStyleSheet(void);
   QString minorVersion();
   void readSettings();
+
+  bool readPowerId();
+  bool readControlId();
+  bool setPowerLimitMap(quint32 id);
+
 
 private:
   Ui::MainWindow *ui;
@@ -197,18 +214,21 @@ private:
   QAction *m_actFPGAControl;
   QAction *m_actFuncConfig;
   QAction *m_actFuncSave;
+  QAction *m_write2EEprom;
   //程序烧写
   QAction *m_actProgramUpdate;
   QAction *m_actResetServo;
   QAction *m_actRestoreFactorySetting;
 
-  QAction *m_actNormalizeTree;
+//  QAction *m_actNormalizeTree;
 
   //--------help action------
   QAction *m_actAboutConfig;
   QAction *m_actAboutSDT;
   //------configuration action-------
   QAction *m_actUserLogin;
+  QAction *m_actAutoLoad;
+  QAction *m_actOption;
 
   //--------菜单--------------
   QMenu *m_menuConfig;
@@ -254,6 +274,15 @@ private:
   QMap<QString,QVariant> m_moduleShareData;//多个dll模块中的共享数据
   MotorSqlModel *m_motorSqlModel;
 
-  UserRole *m_userRole;
+  //首选项配置参数
+  bool m_autoLoad;
+  Option *m_option;
+
+  QTreeWidget *m_gPtyLimitTree;//全局属性表,用于写参数到flash时作约束
+  bool m_versionNeedCheck;//硬件与软件 比127版本大，用于判断是否要作参数范围检查
+  QList<QMap<QString ,PowerBoardLimit>>m_powerLimitMapList;//功率板的约束 连机时读取ID更新
+  SamplingDataInfo m_samplingData;//每一个轴的采样电阻信息
+  quint32 m_powerId;
+  quint32 m_controlId;
 };
 #endif // MAINWINDOW_H

@@ -24,6 +24,9 @@
 // #include "RingNetInterface.h"
 #include "MotionControlComDll.h"
 #include "MotionCtrlCom.h"
+#include "GTDriverCmd.h"
+#include "CpldCom.h"
+#include "Eeprom.h"
 
 //为了获取网卡连接的状态和速率，因为等环网不支持百兆，现在只支持千兆，如果是百兆，
 #include <winsock2.h>
@@ -34,7 +37,9 @@ int16 TryLock(void);
 int16 Unlock(int16 error);
 
 CMotionCtrlCom* g_RnMotionCom = NULL;
+CGTDriverCmd*	g_GTDriver = NULL;
 extern CRingNetInterface* g_RnInterface;
+CEeprom* g_Eeprom = NULL;
 
 //////////////////////////////////////////////////////////////////////////
 //多线程保护
@@ -79,6 +84,30 @@ SERVODRIVERCOMDLL_API int16 GT_RN_Open(void(*tpfUpdataProgressPt)(void*, int16*)
 		{
 			return Unlock(rtn);
 		}
+		g_GTDriver = new CGTDriverCmd;
+		if (g_GTDriver == NULL)
+		{
+			return Unlock(RTN_MALLOC_FAIL);
+		}
+		rtn = g_GTDriver->Initial(g_RnMotionCom);
+		if (rtn != RTN_SUCCESS)
+		{
+			return Unlock(rtn);
+		}
+	}
+	if (g_Eeprom == NULL)
+	{
+//		CComBase* pComBase = g_RnInterface;
+		g_Eeprom = new CEeprom;
+		if (g_Eeprom == NULL)
+		{
+			return Unlock(RTN_MALLOC_FAIL);
+		}
+		rtn = g_Eeprom->Initial(g_RnInterface);
+		if (rtn != RTN_SUCCESS)
+		{
+			return Unlock(rtn);
+		}
 	}
 
 	return Unlock(RTN_SUCCESS);
@@ -90,6 +119,11 @@ SERVODRIVERCOMDLL_API int16 GT_RN_Close()
 	{
 		return Net_Rt_Lock_Err;
 	}
+	if (g_GTDriver)
+	{
+		delete g_GTDriver;
+		g_GTDriver = NULL;
+	}
 	if (g_RnMotionCom)
 	{
 		delete g_RnMotionCom;
@@ -100,7 +134,11 @@ SERVODRIVERCOMDLL_API int16 GT_RN_Close()
 		delete g_RnInterface;
 		g_RnInterface = NULL;
 	}
-
+	if (g_Eeprom)
+	{
+		delete g_Eeprom;
+		g_Eeprom = NULL;
+	}
 	return Unlock(RTN_SUCCESS);
 }
 
@@ -182,6 +220,156 @@ SERVODRIVERCOMDLL_API short RN_FpgaUpate(char* filePath, void(*tpfUpdataProgress
 	//百分比进度
 	progress = 100;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	return Unlock(rtn);
+}
+
+SERVODRIVERCOMDLL_API short RN_CpldUpate(char* filePath, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 stationId /*= 0xf0*/)
+{
+	int16 progress;
+	void* ptr = ptrv;
+	if (Net_Rt_Lock_Err == TryLock())
+	{
+		return Net_Rt_Lock_Err;
+	}
+	CFPGAUpdate firmware;
+	if (g_RnMotionCom == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+	CCpldCom cpld_com;
+	cpld_com.Initial(g_GTDriver);
+	CComBase* pComBase = &cpld_com;
+	firmware.m_pCom = &pComBase;
+	firmware.m_des_id = stationId;
+	//百分比进度
+	progress = 0;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	int16 rtn = 0;
+	//复位变量
+
+	//百分比进度
+	progress = 5;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	rtn = firmware.WriteFPGAFileToFlash(filePath, tpfUpdataProgressPt, ptr, progress);
+
+	if (rtn != 0)
+	{
+		return Unlock(rtn);
+	}
+
+	//百分比进度
+	progress = 100;
+	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
+
+	return Unlock(rtn);
+}
+
+SERVODRIVERCOMDLL_API short RN_EepromWrite(Uint16 byte_addr, Uint8* byte_data, Uint16 byte_num, int16 stationId)
+{
+	if (Net_Rt_Lock_Err == TryLock())
+	{
+		return Net_Rt_Lock_Err;
+	}
+
+	int16 rtn = 0;
+
+	if (g_RnMotionCom == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+//	CComBase* pComBase = g_RnInterface;
+//	g_Eeprom.m_pCom = &pComBase;
+	g_Eeprom->m_des_id = stationId;
+
+	rtn = g_Eeprom->EepromWrite(byte_addr, byte_data, byte_num);
+	if (rtn != 0)
+	{
+		return Unlock(rtn);
+	}
+
+	return Unlock(rtn);
+}
+
+SERVODRIVERCOMDLL_API short RN_EepromRead(Uint16 byte_addr, Uint8* byte_data, Uint16 byte_num, int16 stationId)
+{
+	if (Net_Rt_Lock_Err == TryLock())
+	{
+		return Net_Rt_Lock_Err;
+	}
+
+	int16 rtn = 0;
+//	CEeprom eeprom;
+	if (g_RnMotionCom == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+//	CComBase* pComBase = g_RnInterface;
+//	eeprom.m_pCom = &pComBase;
+	g_Eeprom->m_des_id = stationId;
+
+	rtn = g_Eeprom->EepromRead(byte_addr, byte_data, byte_num);
+	if (rtn != 0)
+	{
+		return Unlock(rtn);
+	}
+
+	return Unlock(rtn);
+}
+
+
+SERVODRIVERCOMDLL_API short RN_EepromWriteExt(Uint16 byte_addr, Uint8* byte_data, Uint16 byte_num, int16 stationId)
+{
+	if (Net_Rt_Lock_Err == TryLock())
+	{
+		return Net_Rt_Lock_Err;
+	}
+
+	int16 rtn = 0;
+
+	if (g_RnMotionCom == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+	//	CComBase* pComBase = g_RnInterface;
+	//	g_Eeprom.m_pCom = &pComBase;
+	g_Eeprom->m_des_id = stationId;
+	g_Eeprom->m_eeprom_id = FPGA_EXT_EEPROM;
+	rtn = g_Eeprom->EepromWrite(byte_addr, byte_data, byte_num);
+	g_Eeprom->m_eeprom_id = FPGA_NORMAL_EEPROM;
+	if (rtn != 0)
+	{
+		return Unlock(rtn);
+	}
+
+	return Unlock(rtn);
+}
+
+SERVODRIVERCOMDLL_API short RN_EepromReadExt(Uint16 byte_addr, Uint8* byte_data, Uint16 byte_num, int16 stationId)
+{
+	if (Net_Rt_Lock_Err == TryLock())
+	{
+		return Net_Rt_Lock_Err;
+	}
+
+	int16 rtn = 0;
+	//	CEeprom eeprom;
+	if (g_RnMotionCom == NULL)
+	{
+		return RTN_OBJECT_UNCREATED;
+	}
+	//	CComBase* pComBase = g_RnInterface;
+	//	eeprom.m_pCom = &pComBase;
+	g_Eeprom->m_des_id = stationId;
+	g_Eeprom->m_eeprom_id = FPGA_EXT_EEPROM;
+	rtn = g_Eeprom->EepromRead(byte_addr, byte_data, byte_num);
+	g_Eeprom->m_eeprom_id = FPGA_NORMAL_EEPROM;
+	if (rtn != 0)
+	{
+		return Unlock(rtn);
+	}
 
 	return Unlock(rtn);
 }

@@ -4,6 +4,7 @@
 #
 #-------------------------------------------------
 include($$PWD/../FuncCommon.pri)
+INCLUDEPATH+=../../MainGTSD/Option
 
 QT       += core widgets xml designer qml
 
@@ -35,7 +36,9 @@ SOURCES += abstractfuncwidget.cpp \
     QmlFactory/qformlayoutproxy.cpp \
     QmlFactory/qspaceritemproxy.cpp \
     QmlFactory/DeviceStatus/treedatadevicestatus.cpp \
-    QmlFactory/qtreewidgetproxy.cpp
+    QmlFactory/qtreewidgetproxy.cpp \
+    ../../MainGTSD/Option/optionuserloginitem.cpp \
+    ../../MainGTSD/Option/ioptionitem.cpp
 
 HEADERS += abstractfuncwidget.h\
         abstractfuncwidget_global.h \
@@ -52,7 +55,9 @@ HEADERS += abstractfuncwidget.h\
     QmlFactory/qformlayoutproxy.h \
     QmlFactory/qspaceritemproxy.h \
     QmlFactory/DeviceStatus/treedatadevicestatus.h \
-    QmlFactory/qtreewidgetproxy.h
+    QmlFactory/qtreewidgetproxy.h \
+    ../../MainGTSD/Option/optionuserloginitem.h \
+    ../../MainGTSD/Option/ioptionitem.h
 
 unix {
     target.path = /usr/lib

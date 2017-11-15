@@ -7,9 +7,10 @@
 #include <windows.h>
 using namespace std;
 void updateProgress(void *arg, int16 *value);
-#define TEST_UBOOT 1
+#define TEST_UBOOT 0
 #define  TEST_PLOT 0
-#define TEST_FPGA 1
+#define TEST_FPGA 0
+#define TEST_NEW_COMUNICATION_CRC 1
 #define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/GTSD42_VA_V0_0922.rpd")
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -37,12 +38,13 @@ int _tmain(int argc, _TCHAR* argv[])
 	int16 axisNum = 0;
 	double *ppValue = NULL;
 	int32 retPointCount = 0;
+	int16 rvalue;
 
 	GTSD_CMD_StartPlot(axisNum, buf_prm, comType, 0xf0);
 
 	for (int i = 0; i < 1000;i++)
 	{
-		GTSD_CMD_PcGetWaveData(axisNum, &ppValue, retPointCount, comType, 0xf0);
+		rvalue=GTSD_CMD_PcGetWaveData(axisNum, &ppValue, retPointCount, comType, 0xf0);
 		Sleep(80);
 	}
 	
@@ -73,7 +75,9 @@ int _tmain(int argc, _TCHAR* argv[])
 		cout << "ret=" << ret;
 	}
 #endif
-	for (int i = 0; i < 4;i++)
+
+#if TEST_NEW_COMUNICATION_CRC 
+	for (int i = 0; i < 6;i++)
 	{
 		GENERALFUNCTION func;
 		COM_ERROR result;
@@ -100,6 +104,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(i, &func, comType, 0xf0);
 		std::cout << result;
 	}
+
+#endif
 //	result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(4, &func, comType, 0xf0);
 //	result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(5, &func, comType, 0xf0);
 

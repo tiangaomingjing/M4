@@ -43,3 +43,5 @@ FORMS += \
 
 RESOURCES += \
     res.qrc
+
+TRANSLATIONS +=app_IO_new_simplchinese.ts

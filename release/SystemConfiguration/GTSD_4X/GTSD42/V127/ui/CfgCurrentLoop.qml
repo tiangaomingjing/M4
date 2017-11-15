@@ -81,18 +81,29 @@ Rectangle {
         anchors.horizontalCenterOffset: 60;
         anchors.verticalCenter: parent.verticalCenter;
         iUnitStr: qsTr("us");
-        onPEditTextChanged: {
-            console.log("PPPPP edit changed ....");
-            //factory.dataTree.setTopLevelText(0,1,pEditText);
+
+        iRowIndex:0;
+        pRowIndex:2;
+        dataTree:factory.dataTree;
+        onPEditReturnPressed:{
             factory.dataTree.setTopLevelText(3,1,pEditText);
-            factory.dataTree.setTopLevelText(2,1,pEditText);
         }
-        onIEditTextChanged: {
-            console.log("IIII edit changed ....");
-            //factory.dataTree.setTopLevelText(1,1,iEditText);
+        onIEditReturnPressed:{
             factory.dataTree.setTopLevelText(1,1,iEditText);
-            factory.dataTree.setTopLevelText(0,1,iEditText);
         }
+
+//        onPEditTextChanged: {
+//            console.log("PPPPP edit changed ....");
+//            //factory.dataTree.setTopLevelText(0,1,pEditText);
+//            factory.dataTree.setTopLevelText(3,1,pEditText);
+//            factory.dataTree.setTopLevelText(2,1,pEditText);
+//        }
+//        onIEditTextChanged: {
+//            console.log("IIII edit changed ....");
+//            //factory.dataTree.setTopLevelText(1,1,iEditText);
+//            factory.dataTree.setTopLevelText(1,1,iEditText);
+//            factory.dataTree.setTopLevelText(0,1,iEditText);
+//        }
     }
     SegmentArrow{
         id:arrow4;
@@ -239,9 +250,27 @@ Rectangle {
 
             m_currentLoopPID.pEditText=factory.dataTree.textTopLevel(3,1);
             m_currentLoopPID.iEditText=factory.dataTree.textTopLevel(1,1);
-            m_currentLoopPID.pEditTextColor="black";
-            m_currentLoopPID.iEditTextColor="black";
+//            m_currentLoopPID.pEditTextColor="black";
+//            m_currentLoopPID.iEditTextColor="black";
+            m_currentLoopPID.resetEditBackground();
         }
+        onQmlEditUiStateChanged:{
+            switch(row){
+            case 0:
+                if(hasError)
+                    m_currentLoopPID.iEdit.setErrorState();
+                else
+                    m_currentLoopPID.iEdit.resetbackground();
+                break;
+            case 2:
+                if(hasError)
+                    m_currentLoopPID.pEdit.setErrorState();
+                else
+                    m_currentLoopPID.pEdit.resetbackground();
+                break;
+            }
+        }
+
         onActiveNow:{
             console.log("cfgcurrentLoop activenow:"+actived);
             replot();

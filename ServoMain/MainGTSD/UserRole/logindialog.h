@@ -23,7 +23,10 @@ private slots:
   void onBtnLoginClicked(void);
 
 private:
+  void keyPressEvent(QKeyEvent *keyEvent)Q_DECL_OVERRIDE;
+//  bool event(QEvent *event)Q_DECL_OVERRIDE;
   void setCurrentUser(UserRole::UserRoleType &userType);
+
 private:
   Ui::LoginDialog *ui;
   UserRole *m_userRole;

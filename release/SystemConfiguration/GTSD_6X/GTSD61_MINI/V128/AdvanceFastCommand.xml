@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>962</width>
+    <height>559</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>defaultValue</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>type</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>address</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>note</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>BASEADDRESS</string>
+      </property>
+      <property name="text">
+       <string>-1</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string>第一个字节点用于存每一个轴的偏移地址(此文件用于读写Flash),这个文件只用于QML读写铁电</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>axis0</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis1</string>
+       </property>
+       <property name="text">
+        <string>32768</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis2</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis3</string>
+       </property>
+       <property name="text">
+        <string>32768</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis4</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>axis5</string>
+       </property>
+       <property name="text">
+        <string>32768</string>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.rsv.prm.pos_ofst_3</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int32</string>
+      </property>
+      <property name="text">
+       <string>310</string>
+      </property>
+      <property name="text">
+       <string>初相角 SEV_OBJ_CUR_RSV_PRM_POS_OFST</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.pos.ctl.prm.fn_fst_6</string>
+      </property>
+      <property name="text">
+       <string>10</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>13389</string>
+      </property>
+      <property name="text">
+       <string>位置环P SEV_OBJ_POS_CTL_PRM_FN_FST_6</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.vel.ctl.prm.fn_fst_5</string>
+      </property>
+      <property name="text">
+       <string>50</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>5197</string>
+      </property>
+      <property name="text">
+       <string>速度环P SEV_OBJ_VEL_CTL_PRM_FN_FST_5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>FPGA.prm.ABS_ENC_CFG.all</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>Uint16</string>
+      </property>
+      <property name="text">
+       <string>28672</string>
+      </property>
+      <property name="text">
+       <string>用于编码器类型选择及波特率设置</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.rsv.prm.line_num_3</string>
+      </property>
+      <property name="text">
+       <string>131072</string>
+      </property>
+      <property name="text">
+       <string>int32</string>
+      </property>
+      <property name="text">
+       <string>312</string>
+      </property>
+      <property name="text">
+       <string>编码器分辨率</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>gSevDrv.sev_obj.cur.rsv.prm.seq_dir</string>
+      </property>
+      <property name="text">
+       <string>0</string>
+      </property>
+      <property name="text">
+       <string>int16</string>
+      </property>
+      <property name="text">
+       <string>302</string>
+      </property>
+      <property name="text">
+       <string>电机相序</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

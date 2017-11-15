@@ -1,7 +1,11 @@
 TEMPLATE = subdirs
+#按照输写顺序来编绎
+CONFIG +=ordered
 INCLUDEPATH +=$${PWD}
-SUBDIRS += FunctionDLL \
-            MainGTSD\
-            NetCmd/ServoDriverComDll\
-            ServoDriverAlgorithmDll \
-    test
+
+SUBDIRS += \
+          NetCmd/ServoDriverComDll\
+          ServoDriverAlgorithmDll \
+          FunctionDLL \
+          MainGTSD\
+          test

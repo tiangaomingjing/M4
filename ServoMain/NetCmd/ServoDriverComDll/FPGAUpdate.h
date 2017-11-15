@@ -28,18 +28,18 @@ public:
 	static const Uint16		RN_REMOTE_FPGA_DATA_START = (0x00);
 	static const Uint16		RN_REMOTE_FPGA_DATA_END = (0x7C * 2);
 
-
 	Uint32 m_byte_write;
 public:
 	// pcdebug 地址为dsp与fpga之间通信的fpga地址，不同的dsp对应不同的fpga地址。
-	const Uint16						DSPA_COMADDR = 0x0400;				 //地址为short地址
-	const Uint16						DSPB_COMADDR = 0x8400;
+	static const Uint16						DSPA_COMADDR = 0x0400;				 //地址为short地址
+	static const Uint16						DSPB_COMADDR = 0x8400;
 
-	const Uint16						FPGA_DSPA_BASEADDR = 0;
-	const Uint16						FPGA_DSPB_BASEADDR = 0x8000;				//short地址
+	static const Uint16						FPGA_DSPA_BASEADDR = 0;
+	static const Uint16						FPGA_DSPB_BASEADDR = 0x8000;				//short地址
 
-	const Uint16						FPGA_RN_RMT_START_OFST = 0x600;
-	const Uint16						FPGA_RN_RMT_END_OFST = 0x6FF;
+	static const Uint16						FPGA_RN_RMT_START_OFST = 0x600;
+	static const Uint16						FPGA_RN_RMT_END_OFST = 0x6FF;
+
 
 	CComBase**		m_pCom;
 	Uint16			m_des_id;

@@ -4,6 +4,8 @@
 #include "RnServoAxiMapping.h"
 #include "RnDriverPlot.h"
 #include "ServoDriverComDef.h"
+#include "Eeprom.h"
+
 class CServoDriverCom
 {
 public:
@@ -13,8 +15,10 @@ protected:
 	CRingNetInterface * m_pDriver;
 	CRnServoAxiMapping*	m_pMapping;
 	CRnDriverPlot*		m_pPlot;
+	CEeprom* m_pEeprom;
 public:
 	short Initial(CRingNetInterface* pDriver);
+	short InitialEeprom(CEeprom* pEeprom);
 	Uint16 ConvertAxiToStationId(int16 axi_id){ return m_pMapping->ConvertAxiToStationId(axi_id); };
 private:
 	 const int32	 OUTPUT_LIMIT_SCALE = 4096;
@@ -27,8 +31,7 @@ protected:
 
 	const int16						COM_AXIS_MAX = 240;					//轴最大个数为4	
 
-//	const Uint16					FPGA_VERSION = (0x0007<<1);
-  const Uint16					FPGA_VERSION = (0xFF02);
+  const Uint16					FPGA_VERSION = (0xFF00 + (0x0001<<1));
 protected:
 	int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);////将命令ID和轴号合并成一个short，其中bit[0-11]为命令ID, bit[12 - 15]为轴号
 public:
@@ -164,8 +167,11 @@ public:
 
 // 	/////////////////////////////////com vs fppa eeprom/////////////////////////////////////////
 // 	//EEPROM 读写,擦除
-// 	int16 GTSD_CMD_ReadEEPROM(int16 axis, int32& ofst, int8* value, int16& num);
-// 	int16 GTSD_CMD_WriteEEPROM(int16 axis, int32& ofst, int8* value, int16& num);
+	int16 GTSD_CMD_ReadEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_ReadEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	int16 GTSD_CMD_WriteEEPROMExt(int16 axis, Uint16 ofst, Uint8* value, Uint16 num);
+	Uint16 GTSD_CMD_FroceCheckMode(Uint16 mode);
 // 	int16 GTSD_CMD_ClearEEPROM(int16 axis);
 // 
 // 	int16 GTSD_CMD_ResetFPGA(int16 axis);

@@ -50,7 +50,7 @@ short CMotionCtrlCom::PostPci(TPci* gPci, Uint8 station_id)
 	int16 pData[250];
 	memcpy(pData, gPci, byte_num);
 
-	rtn = m_pDriver->RnNetComHandler(RN_PACKET_MAIL_WR_ASK, RN_USER_PROTOCOL_DRIVER, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 0, RN_ADDR_SAME);
+	rtn = m_pDriver->RnNetComHandler(RN_PACKET_PDU_WR_ASK, RN_USER_PROTOCOL_MOTION, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 0, RN_ADDR_SAME);
 	return rtn;
 }
 short CMotionCtrlCom::SendPci(TPci* gPci, Uint8 station_id)
@@ -73,7 +73,7 @@ short CMotionCtrlCom::SendPci(TPci* gPci, Uint8 station_id)
 
 	int16 pData[250];
 	memcpy(pData, gPci, byte_num);
-	rtn = m_pDriver->RnNetComHandler(RN_PACKET_MAIL_WR_ASK, RN_USER_PROTOCOL_DRIVER, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 1, RN_ADDR_SAME);
+	rtn = m_pDriver->RnNetComHandler(RN_PACKET_PDU_WR_ASK, RN_USER_PROTOCOL_MOTION, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 1, RN_ADDR_SAME);
 	/////////////////////////////////////////////////
 	memcpy(gPci, pData, 4);
 	if (PCI_DSP_FINISH != gPci->flag)
@@ -149,7 +149,7 @@ short CMotionCtrlCom::PostPcie(TPci* gPci, Uint8 core_index, Uint8 station_id)
 	int16 pData[250];
 	memcpy(pData, gPci, byte_num);
 
-	rtn = m_pDriver->RnNetComHandler(RN_PACKET_MAIL_WR_ASK, RN_USER_PROTOCOL_DRIVER, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 0, RN_ADDR_SAME);
+	rtn = m_pDriver->RnNetComHandler(RN_PACKET_MAIL_WR_ASK, RN_USER_PROTOCOL_MOTION, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 0, RN_ADDR_SAME);
 	return rtn;
 }
 short CMotionCtrlCom::SendPcie(TPci* gPci, Uint8 core_index, Uint8 station_id)
@@ -172,7 +172,7 @@ short CMotionCtrlCom::SendPcie(TPci* gPci, Uint8 core_index, Uint8 station_id)
 
 	int16 pData[250];
 	memcpy(pData, gPci, byte_num);
-	rtn = m_pDriver->RnNetComHandler(RN_PACKET_MAIL_WR_ASK, RN_USER_PROTOCOL_DRIVER, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 1, RN_ADDR_SAME);
+	rtn = m_pDriver->RnNetComHandler(RN_PACKET_MAIL_WR_ASK, RN_USER_PROTOCOL_MOTION, (int16*)pData, dword_num << 1, station_id, RN_DSP_CH_ID, 1, RN_ADDR_SAME);
 	/////////////////////////////////////////////////
 	memcpy(gPci, pData, 4);
 	if (PCI_DSP_FINISH != gPci->flag)

@@ -1,0 +1,2775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>639</width>
+    <height>537</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTreeWidget" name="treeWidget">
+     <column>
+      <property name="text">
+       <string>title</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>parameter</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>className</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>xmlName</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>index</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>isGlobal</string>
+      </property>
+     </column>
+     <item>
+      <property name="text">
+       <string>Communication</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <item>
+       <property name="text">
+        <string>PcDebug</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>RnNet</string>
+       </property>
+       <property name="text">
+        <string>1</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+     </item>
+     <item>
+      <property name="text">
+       <string>Device</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <item>
+       <property name="text">
+        <string>GTSD_4X</string>
+       </property>
+       <property name="text">
+        <string>0</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <item>
+        <property name="text">
+         <string>GTSD41</string>
+        </property>
+        <property name="text">
+         <string>NULL</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>V122</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>V123</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>GTSD42</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>V123</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>V126</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>V129</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+       </item>
+      </item>
+      <item>
+       <property name="text">
+        <string>GTSD_6X</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <item>
+        <property name="text">
+         <string>GTSD61</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>V128</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>V129</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+       </item>
+       <item>
+        <property name="text">
+         <string>GTSD61_MINI</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <item>
+         <property name="text">
+          <string>V128</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+        <item>
+         <property name="text">
+          <string>V129</string>
+         </property>
+         <property name="text">
+          <string>NULL</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <item>
+          <property name="text">
+           <string>Axis</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Motor</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgMotor</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncMotor</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Encoder</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgEncoder</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncEncoder</string>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Power</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgDriverPower</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPower</string>
+           </property>
+           <property name="text">
+            <string>2</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Current</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgCurrentLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncCurrentloop</string>
+           </property>
+           <property name="text">
+            <string>3</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Velocity</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgSpeedLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncSpeedloop</string>
+           </property>
+           <property name="text">
+            <string>4</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Position</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>CfgPositionLoop</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncPositionloop</string>
+           </property>
+           <property name="text">
+            <string>5</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>Status</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>DeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>PrmFuncDeviceStatus</string>
+           </property>
+           <property name="text">
+            <string>6</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>RAM</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvRAM</string>
+           </property>
+           <property name="text">
+            <string>PrmRAMAxis</string>
+           </property>
+           <property name="text">
+            <string>7</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>FLASH</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>AdvFLASH</string>
+           </property>
+           <property name="text">
+            <string>PrmFlashAxis</string>
+           </property>
+           <property name="text">
+            <string>8</string>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </item>
+         </item>
+         <item>
+          <property name="text">
+           <string>Global</string>
+          </property>
+          <property name="text">
+           <string>NULL</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <item>
+           <property name="text">
+            <string>Plot</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>PlotWaveUi</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>IO</string>
+           </property>
+           <property name="text">
+            <string>NULL</string>
+           </property>
+           <property name="text">
+            <string>ModuleIO</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="text">
+            <string>1</string>
+           </property>
+          </item>
+         </item>
+        </item>
+       </item>
+      </item>
+     </item>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

@@ -14,6 +14,7 @@
 #include "cfgspeedloop.h"
 #include "devicestatus.h"
 #include "cfgpositionloop.h"
+#include "cfgbrake.h"
 
 namespace RegisterFunction
 {
@@ -31,6 +32,8 @@ namespace RegisterFunction
     Factory::registerClass<CfgPositionLoop>();
     Factory::registerClass<CfgSpeedLoop>();
     Factory::registerClass<DeviceStatus>();
+    Factory::registerClass<CfgBrake>();
+
   }
 
 }

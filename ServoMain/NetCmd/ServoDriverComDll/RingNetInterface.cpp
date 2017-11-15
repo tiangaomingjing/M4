@@ -33,6 +33,7 @@ static const int32			VIRTUAL_DSPB_COMADDR = 0x8400;
 CRingNetInterface::CRingNetInterface()
 {
 	m_protocol_type = COM_PROTOCO_RINGNET;
+	m_com_dsp_check_mode = COM_DSP_CHEKC_NORMAL;
 }
 
 
@@ -214,6 +215,12 @@ int16 CRingNetInterface::RnNetCom_FPGA_ComHandler(int16 mode, int16 byte_addr, i
 	return RTN_SUCCESS;
 }
 
+Uint16 CRingNetInterface::RnNetCom_DSP_FroceCheckMode(Uint16 mode)
+{ 
+	Uint16 pre_mode = m_com_dsp_check_mode;
+	m_com_dsp_check_mode = mode; 
+	return pre_mode;
+}
 /*******************************************************************************************
 功能：dsp数据通信交互函数
 输入：
@@ -416,11 +423,20 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	return RTN_SUCCESS;
 }
 
-int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, Uint8 des_id, Uint8 des_ch)
+int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, int16* pData, int16 word_num, Uint8 des_id, Uint8 des_ch, Uint8 check_en)
 {
 	//////////////////////////////////////////////////////////////////////////
 	StRnPacket packet;
 	short rtn;
+	if (m_com_dsp_check_mode == COM_DSP_CHEKC_FORCE_OFF)
+	{
+		check_en = 0;
+	}
+	else if (m_com_dsp_check_mode == COM_DSP_CHEKC_FORCE_ON)
+	{
+		check_en = 1;
+	}
+  check_en = 0;
 
 	EnterCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
 	int16 length = (word_num << 1) + 4;
@@ -459,6 +475,12 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 		needReq = RN_NEED_REQ;
 	}
 
+	//  [10/9/2017 googol]
+	if (check_en)
+	{
+		word_num = word_num + 1;
+	}
+	//////////////////////////////////////////////////////////////////////////
 	rtn = FormatRingNetUserPakcet(&packet, (Uint8)des_id, des_ch,
 		length, cmd, com_mode, RN_USER_PROTOCOL_DRIVER, word_num << 1,
 		needReq, IsResp, 0, RN_ADDR_SAME, 0xF0);
@@ -481,7 +503,26 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 		break;
 	}
 
-	memcpy(pUser_Tx_data, pData, pUser_Tx_payload_head->num_low + (pUser_Tx_payload_head->num_bit8 << 8));
+	/////////////////////////////////////////////////////
+	//  [10/9/2017 googol]
+	if (check_en)
+	{
+		Uint16 check_sum = 0xFFFF;
+		pData[1] = pData[1] | 0x8;//enable checksum
+		for (int i = 0; i < word_num - 1; i++)
+		{
+			check_sum = check_sum - pData[i];
+		}
+	
+		memcpy(pUser_Tx_data, pData, (word_num-1)<<1);
+		((Uint16*)pUser_Tx_data)[word_num - 1] = check_sum;
+	}
+	//////////////////////////////////////////////////////////////////////////
+	else
+	{
+		memcpy(pUser_Tx_data, pData, pUser_Tx_payload_head->num_low + (pUser_Tx_payload_head->num_bit8 << 8));
+	}
+	
 
 	if (needReq == RN_NEED_REQ)
 		CloseThreadRx();//close the rx thread, and open it after the work finish. 
@@ -545,6 +586,26 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 				{
 					continue;
 				}
+				//////////////////////////////////////////////////////////////////////////
+				//  [10/9/2017 googol]
+				if (check_en)
+				{
+					Uint16 dword_num = ((pUser_payload_head->num_bit8 << 8) + pUser_payload_head->num_low)>>1;
+					Uint16 check_sum = 0;
+					for (int i = 0; i < dword_num;i++)
+					{
+						check_sum += ((Uint16*)pUser_data)[i];
+					}
+					if (check_sum != 0xFFFF)
+					{
+						CNetDriver::OpenThreadRx();
+						LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+						return Net_Rt_Other_Error;
+					}
+				}
+				//////////////////////////////////////////////////////////////////////////
+				//////////////////////////////////////////////////////////////////////////
+
 				//查询返回信息是否正确
 				switch (pUser_data[4])
 				{
@@ -574,7 +635,15 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 				if (pUser_payload_head->cmd == RN_ARD)
 				{
 //the function need return user data only, the cmd head take 6bytes.
-					memcpy(pData, pUser_data + 6, pUser_payload_head->num_low + (pUser_payload_head->num_bit8 << 8) - 6);
+					if (check_en)
+					{
+						memcpy(pData, pUser_data + 6, pUser_payload_head->num_low + (pUser_payload_head->num_bit8 << 8) - 6 - 2);
+					}
+					else
+					{
+						memcpy(pData, pUser_data + 6, pUser_payload_head->num_low + (pUser_payload_head->num_bit8 << 8) - 6);
+					}
+					
 					CNetDriver::OpenThreadRx();
 					LeaveCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
 					return RTN_SUCCESS;;

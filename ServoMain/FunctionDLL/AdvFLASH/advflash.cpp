@@ -88,6 +88,11 @@ void AdvFLASH::onItemSelecttionChangedHighlight()
 void AdvFLASH::onEnterKeyPress()
 {
 
+  if(!mp_mainWindow->getComOpenState())
+  {
+    QMessageBox::information(0,tr("connect"),tr("please open com first !"));
+    return;
+  }
   QTreeWidgetItem *item=NULL;
   item=ui->treeWidget->currentItem();
   if(item!=NULL)

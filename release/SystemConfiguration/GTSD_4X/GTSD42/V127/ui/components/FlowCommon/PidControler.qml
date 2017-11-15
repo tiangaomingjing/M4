@@ -16,12 +16,23 @@ Rectangle {
     //暴露给外界的接口
     property alias pEditText: pvalue.text;
     property alias iEditText: ivalue.text;
-    property alias pEditTextColor: pvalue.textColor;
-    property alias iEditTextColor: ivalue.textColor;
+    property alias pEdit: pvalue;
+    property alias iEdit: ivalue;
     property alias pBlockVisible: m_columnLayout.pVisible;
     property alias iBlockVisible: m_columnLayout.iVisible;
     property alias pUnitStr: punit.text;
     property alias iUnitStr: iunit.text;
+    property int pRowIndex:0;
+    property int iRowIndex: 0;
+    property var dataTree:null;
+
+    signal pEditReturnPressed();
+    signal iEditReturnPressed();
+
+    function resetEditBackground(){
+        pvalue.resetbackground();
+        ivalue.resetbackground();
+    }
 
     ColumnLayout{
         id:m_columnLayout;
@@ -43,15 +54,27 @@ Rectangle {
             Text {
                 text: qsTr("增益系数:")
             }
-            TextField{
+//            TextField{
+//                id:pvalue;
+//                text:"0";
+//                style:textStyle;
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 100;
+//                validator: DoubleValidator{}
+//                onTextChanged: {pvalue.textColor="red";/*pidControler.pValueChanged(pvalue.text)*/}
+//                Component.onCompleted: {textColor="black";}
+//            }
+            MyTextInput{
                 id:pvalue;
-                text:"0";
-                style:textStyle;
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 100;
-                validator: DoubleValidator{}
-                onTextChanged: {pvalue.textColor="red";/*pidControler.pValueChanged(pvalue.text)*/}
-                Component.onCompleted: {textColor="black";}
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:pRowIndex;
+                column: 1;
+                tree: pidControler.dataTree;
+                onEditReturnPressed: {
+                    pEditReturnPressed();
+                }
             }
             Text {
                 id:punit;
@@ -66,15 +89,27 @@ Rectangle {
             Text {
                 text: qsTr("积分常数:")
             }
-            TextField{
+//            TextField{
+//                id:ivalue;
+//                text:"0";
+//                style:textStyle;
+//                validator: DoubleValidator{}
+//                Layout.fillWidth: true;
+//                Layout.minimumWidth: 100;
+//                onTextChanged: {ivalue.textColor="red";/*pidControler.iValueChanged(ivalue.text)*/}
+//                Component.onCompleted: {textColor="black";}
+//            }
+            MyTextInput{
                 id:ivalue;
-                text:"0";
-                style:textStyle;
-                validator: DoubleValidator{}
                 Layout.fillWidth: true;
-                Layout.minimumWidth: 100;
-                onTextChanged: {ivalue.textColor="red";/*pidControler.iValueChanged(ivalue.text)*/}
-                Component.onCompleted: {textColor="black";}
+                Layout.minimumWidth: 30;
+                Layout.minimumHeight: 24;
+                row:iRowIndex;
+                column: 1;
+                tree: pidControler.dataTree;
+                onEditReturnPressed: {
+                    iEditReturnPressed();
+                }
             }
             Text {
                 id:iunit;
@@ -84,18 +119,18 @@ Rectangle {
         }
 
     }
-    Component{
-        id:textStyle;
-        TextFieldStyle{
-            textColor: "black";
-            background: Rectangle{
-                radius: 6;
-                implicitWidth: 100;
-                implicitHeight: 24;
-                border.color: "#333";
-                border.width: 1;
-            }
-        }
-    }
+//    Component{
+//        id:textStyle;
+//        TextFieldStyle{
+//            textColor: "black";
+//            background: Rectangle{
+//                radius: 6;
+//                implicitWidth: 100;
+//                implicitHeight: 24;
+//                border.color: "#333";
+//                border.width: 1;
+//            }
+//        }
+//    }
 }
 

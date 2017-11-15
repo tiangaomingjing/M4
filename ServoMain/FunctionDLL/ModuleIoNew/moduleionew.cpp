@@ -12,7 +12,7 @@ ModuleIoNew::ModuleIoNew(QWidget *parent):AbstractFuncWidget(parent),
 }
 ModuleIoNew::~ModuleIoNew()
 {
-
+  qDebug()<<"module io new release -->";
 }
 
 void ModuleIoNew::createUiByQml()
@@ -31,10 +31,19 @@ void ModuleIoNew::onLockCheckBoxClicked(bool checked)
 {
   if(mp_mainWindow->getComOpenState()!=true)
     return;
-  ServoGeneralCmd *cmd;
   LockCheckBox* box;
-  int axisNum;
   box=qobject_cast<LockCheckBox *>(sender());
+
+  QMessageBox::StandardButton rb = QMessageBox::question(this, tr("Warring"), tr("do you want to reverse io polarity ?"), QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+  if (rb != QMessageBox::Yes)
+  {
+    box->setChecked(box->prevCheckState());
+    return;
+  }
+
+  ServoGeneralCmd *cmd;
+
+  int axisNum;
   axisNum=box->axisNum();
   cmd=ServoGeneralCmd::instance(mp_mainWindow->getFunctionCmdTree(),\
                                 mp_mainWindow->getUserConfig()->com.id,\
@@ -49,4 +58,5 @@ void ModuleIoNew::onLockCheckBoxClicked(bool checked)
     cmd->write(CMD_SET_BRK_OUT_POLARITY,0,axisNum);
     qDebug()<<"write 0 "<<axisNum;
   }
+  box->setPrevCheckState(checked);
 }

@@ -1,0 +1,12 @@
+;LIBRARY
+EXPORTS
+
+;GTSD_CMD_Open=
+GT_RN_Open
+GT_RN_Close
+RN_ComHandler
+RN_GetCns
+RN_EepromWrite
+RN_EepromRead
+RN_EepromWriteExt
+RN_EepromReadExt

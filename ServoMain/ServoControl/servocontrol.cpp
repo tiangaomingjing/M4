@@ -937,6 +937,14 @@ quint32 ServoControl::totalItemCount(QTreeWidget*tree)
   }
   return count;
 }
-
+void ServoControl::setCmdWithCRC(bool on)
+{
+  //mode :1 force to on
+  //mode: 2 force to off
+  if(on)
+    GTSD_CMD_FroceCheckMode(1);
+  else
+    GTSD_CMD_FroceCheckMode(2);
+}
 
 

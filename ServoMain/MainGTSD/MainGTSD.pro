@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui designer qml quick sql
+QT       += core gui designer qml quick sql network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = app
@@ -30,7 +30,9 @@ INCLUDEPATH +=$${PWD}/..\
                 $${PWD}/../FunctionDLL/PlotWave\
                 $${PWD}/../FunctionDLL/ModuleIO\
                 $${PWD}/../FunctionDLL/PlotWaveUi\
-                $${PWD}/../FunctionDLL/ModuleIoNew
+                $${PWD}/../FunctionDLL/ModuleIoNew\
+                $${PWD}/../FunctionDLL/CfgBrake\
+                $${PWD}/../test/Write2EEprom\
 
 
 CONFIG(debug, debug|release){
@@ -56,6 +58,7 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/PlotWaveUid.lib\
             $${LIB_PATH}/ServoGeneralCmdd.lib\
             $${LIB_PATH}/ModuleIoNewd.lib
+            $${LIB_PATH}/CfgBraked.lib
 
 } else{
     TARGET = SDT
@@ -79,7 +82,8 @@ CONFIG(debug, debug|release){
             $${LIB_PATH}/ModuleIO.lib\
             $${LIB_PATH}/PlotWaveUi.lib\
             $${LIB_PATH}/ServoGeneralCmd.lib\
-            $${LIB_PATH}/ModuleIoNew.lib
+            $${LIB_PATH}/ModuleIoNew.lib\
+            $${LIB_PATH}/CfgBrake.lib
 }
 
 DESTDIR =$${OUT_ROOT}/Bin
@@ -112,8 +116,20 @@ SOURCES += main.cpp\
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.cpp \
     MotorSqlModel/motorsqlmodel.cpp \
     PrmCheck/prmcheck.cpp \
+    EpromManage/eprommanage.cpp \
+    PowerTreeManage/powertreemanage.cpp \
+    Option/ioptionitem.cpp \
+    Option/option.cpp \
+    Option/optionautoloaditem.cpp \
+    Option/optionuserloginitem.cpp \
+    Option/OptionDialog/optiondialog.cpp \
+    singleapplication.cpp \
+    NavigationConfig/main.cpp \
+    NavigationConfig/treeitem.cpp \
+    NavigationConfig/treemodel.cpp \
+    UserRole/logindialog.cpp \
     UserRole/userrole.cpp \
-    UserRole/logindialog.cpp
+    ../test/Write2EEprom/dialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -145,8 +161,19 @@ HEADERS  += mainwindow.h \
     ../FunctionDLL/PlotWave/QtTreeManager/qttreemanager.h \
     MotorSqlModel/motorsqlmodel.h \
     PrmCheck/prmcheck.h \
+    EpromManage/eprommanage.h \
+    PowerTreeManage/powertreemanage.h \
+    Option/ioptionitem.h \
+    Option/option.h \
+    Option/optionautoloaditem.h \
+    Option/optionuserloginitem.h \
+    Option/OptionDialog/optiondialog.h \
+    singleapplication.h \
+    NavigationConfig/treeitem.h \
+    NavigationConfig/treemodel.h \
+    UserRole/logindialog.h \
     UserRole/userrole.h \
-    UserRole/logindialog.h
+    ../test/Write2EEprom/dialog.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \
@@ -159,11 +186,13 @@ FORMS    += mainwindow.ui \
     FpgaDialogSetting/fpgadialogsetting.ui \
     Uboot/ubootdialog.ui \
     FpgaDialogSetting/fpgadialogsettingrnnet.ui \
+    Option/OptionDialog/optiondialog.ui \
+    ../test/Write2EEprom/dialog.ui \
     UserRole/logindialog.ui
 
 RESOURCES += \
     image.qrc \
-    UserRole/res.qrc
+    Option/OptionDialog/res.qrc
 RC_ICONS +=AppIco.ico
 
 TRANSLATIONS +=app_main_simplchinese.ts

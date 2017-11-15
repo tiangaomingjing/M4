@@ -7,4 +7,9 @@ SUBDIRS += \
     TreeWidgetSync \
     MainWidget \
     QmlProject \
-    NavigationBar
+    NavigationBar \
+    FillLimit \
+    option \
+    CustomPlot \
+    SingleApplication \
+    Write2EEprom

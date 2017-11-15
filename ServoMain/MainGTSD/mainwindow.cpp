@@ -29,8 +29,13 @@
 #include "../FunctionDLL/ServoGeneralCmd/servogeneralcmd.h"
 #include "moduleionew.h"
 #include "PrmCheck/prmcheck.h"
-#include "UserRole/userrole.h"
-#include "UserRole/logindialog.h"
+#include "PowerTreeManage/powertreemanage.h"
+#include "EpromManage/eprommanage.h"
+#include "Option/option.h"
+#include "Option/optionautoloaditem.h"
+#include "Option/optionuserloginitem.h"
+#include "Option/OptionDialog/optiondialog.h"
+#include "../test/Write2EEprom/dialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -59,7 +64,7 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.4"
+#define SDT_VERSION "1.1.7"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -105,10 +110,11 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_fpgaDialogSettingRnNet(NULL),
   m_quickView(NULL),
   m_userConfigProxyQml(NULL),
-  m_userRole(new UserRole(UserRole::USER_GENERAL,parent))
+  m_option(new Option(this)),
+  m_gPtyLimitTree(NULL),
+  m_versionNeedCheck(false)
 {
   ui->setupUi(this);
-  qRegisterMetaType<UserRole::UserRoleType>("UserRoleType");//信号与槽发送自己定义的数据
   m_moduleShareData.clear();
   ui->dock_navigation->setMinimumSize(50,120);
   ui->progressBar->hide();
@@ -158,8 +164,11 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   m_actFullScreen->setVisible(false);
   setWidgetStyleSheet();
 
-  connect(m_userRole,SIGNAL(userTypeChanged(UserRole::UserRoleType&)),this,SLOT(onUserRoleChanged()));
+  ui->treeWidget->topLevelItem(2)->setHidden(true);
+  connect(m_option->m_userLoginItem,SIGNAL(userTypeChanged(int)),this,SLOT(onUserRoleChanged(int)));
+  connect(m_option->m_userLoginItem,SIGNAL(errorPassWord()),this,SLOT(onErrorPassWord()));
   readSettings();
+  onUserRoleChanged(m_option->m_userLoginItem->userType());
 }
 
 MainWindow::~MainWindow()
@@ -217,6 +226,11 @@ MainWindow::~MainWindow()
     mp_functionCmdTreeWidget->clear();
     delete mp_functionCmdTreeWidget;
     mp_functionCmdTreeWidget=NULL;
+  }
+  if(m_gPtyLimitTree!=NULL)
+  {
+    m_gPtyLimitTree->clear();
+    delete m_gPtyLimitTree;
   }
   qDebug()<<"manwidow release ->";
   delete ui;
@@ -418,49 +432,6 @@ void MainWindow::onActionConfigExitClicked()
 void MainWindow::onActionConnectClicked()
 {
   COM_ERROR error=COM_OK;
-//  m_isOpenCom=false;
-//  ui->progressBar->setVisible(true);
-//  enableAllUi(false);
-//  error=static_cast<COM_ERROR>(GTSD_CMD_Open(updateProgessBarWhenConnectClicked,(void*)ui->progressBar,static_cast<COM_TYPE>(mp_userConfig->com.id)));
-//  if(error!=COM_OK)
-//  {
-//    QMap<COM_ERROR ,QString>warningMap;
-//    warningMap.insert(COM_ARM_OUT_TIME,tr("ARM OUT OFF TIME !"));
-//    warningMap.insert(COM_OK,tr("COM NET OK !"));
-//    warningMap.insert(COM_NET_ERROR,tr("COM NET ERROR !"));
-//    warningMap.insert(COM_NOT_FINISH,tr("COM NOT FINISH !"));
-//    QString eMsg;
-//    if(warningMap.contains(error))
-//      eMsg=warningMap.value(error);
-//    else
-//      eMsg=tr("FPGA error or disconnect");
-//    QMessageBox::information(0,tr("connect"),tr("com connect error:%1").arg(eMsg));
-//    m_actConnect->setChecked(false);
-//    m_actDisConnect->setChecked(true);
-//    m_isOpenCom=false;
-//    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-//    ui->progressBar->setVisible(false);
-//    enableAllUi(true);
-//    return;
-//  }
-//  //判断是不是千兆网络，提示相关信息后返回
-//  short netCarMsg=GTSD_CMD_GetNetCardMsg();
-//  QMap<int ,QString>netCarInfoMap;
-//  netCarInfoMap.insert(0,tr("1000M ETH"));
-//  netCarInfoMap.insert(1,tr("FUNCTION ADDRESS ERROR"));
-//  netCarInfoMap.insert(2,tr("NOT 1000M ETH"));
-//  netCarInfoMap.insert(3,tr("NO ETH"));
-//  if(netCarMsg!=0){
-//    QMessageBox::information(0,tr("net error"),tr("com net error information:%1").arg(netCarInfoMap.value(netCarMsg)));
-//    m_actConnect->setChecked(false);
-//    m_actDisConnect->setChecked(true);
-//    m_isOpenCom=false;
-//    error=static_cast<COM_ERROR>(GTSD_CMD_Close(static_cast<COM_TYPE>(mp_userConfig->com.id)));
-//    ui->progressBar->setVisible(false);
-//    enableAllUi(true);
-//    return;
-//  }
-//  m_isOpenCom=true;
 
   m_isOpenCom=openNetCom();
   if(m_isOpenCom==false)
@@ -468,11 +439,10 @@ void MainWindow::onActionConnectClicked()
     closeNetCom();
     return;
   }
-
+  enableAllUi(false);
   //查询一下所连接的固件版本，与当前设置的版本对比
   //提示用户版本信息
   //当version=0时，说明是uboot程序
-
 
   quint16 version=0xffff;
   ServoControl::readDeviceVersion(0,version,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
@@ -482,32 +452,78 @@ void MainWindow::onActionConnectClicked()
   {
     QString verStr=QString::number(version);
     QString currentVersion=mp_userConfig->model.version.at(0);
+    qDebug()<<"currentVersion ="<<currentVersion;
 
-    if(currentVersion.contains(verStr))
+    if(currentVersion.contains(verStr)==false)
+    {
+      //版本的不一致
+      qDebug()<<"not compare";
+      QMessageBox::StandardButton rb;
+      rb = QMessageBox::question(this, "Warring",\
+                                 tr("current version:%1\n"\
+                                    "device version :%2\n"\
+                                    "the current version which you select is not matching\n"\
+                                    "do you still want to use version:%3?")\
+                                 .arg(currentVersion)\
+                                 .arg("V"+verStr)\
+                                 .arg(currentVersion),\
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
+      if (rb == QMessageBox::No)
+      {
+        closeNetCom();
+        enableAllUi(true);
+        return ;
+      }
+
+    }
+    else
     {
       //版本的一致
       qDebug()<<"compare";
     }
-    else
-    {
-      //版本的不一致
-      qDebug()<<"not compare";
-      QMessageBox::StandardButton rb = QMessageBox::question(this, "Warring",
-                                                             tr("current version:%1\n"
-                                                                "device version :%2\n"
-                                                                "the current version which you select is not matching\n"
-                                                                "do you still want to use version:%3?").arg(currentVersion).arg("V"+verStr).arg(currentVersion),
-                                                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
-      if (rb == QMessageBox::No)
-      {
-        closeNetCom();
-        return ;
-      }
-    }
+    bool hardIsBigger128=version>128?true:false;
+    //指令要不要加校验 127以下的不用加crc校验,128要加
+    ServoControl::setCmdWithCRC(hardIsBigger128);
+
+    bool softIsBigger128=(currentVersion.remove(0,1).toInt())>128?true:false;
+    m_versionNeedCheck=(softIsBigger128&&hardIsBigger128);
+    qDebug()<<"hbiger"<<hardIsBigger128<<"sbigger"<<softIsBigger128<<"need check"<<m_versionNeedCheck;
     //更新每一个页面的参数
     if(m_isOpenCom)
     {
       qDebug()<<"connect return value:"<<error;
+
+      //读硬件ID
+      if(readPowerId()==false)//读power id没有成功
+      {
+        QMessageBox::information(0,tr("warnning"),tr("read powerboard id error\n1.check powerboard \nor\n2 set menu->autoload false"));
+        enableAllUi(true);
+        closeNetCom();
+        return;
+      }
+      readControlId();
+      if(setPowerLimitMap(m_powerId)==false)
+      {
+        enableAllUi(true);
+        closeNetCom();
+        qDebug()<<"cannot set power limit map";
+        return;
+      }
+      qDebug()<<"-----------------get data--------------------";
+      for(int i=0;i<m_powerLimitMapList.count();i++)
+      {
+        qDebug()<<"axis="<<i;
+        QMapIterator<QString ,PowerBoardLimit> mapIt(m_powerLimitMapList.at(i));
+        while (mapIt.hasNext()) {
+          mapIt.next();
+          qDebug()<<mapIt.key()<<" max="<<mapIt.value().max<<" min="<<mapIt.value().min;
+        }
+      }
+      for(int i=0;i<m_samplingData.types().count();i++)
+      {
+        qDebug()<<"axis:"<<i+1<<"type="<<m_samplingData.types().at(i)<<" value="<<m_samplingData.values().at(i);
+      }
+
       uiStatus->btn_connect->setToolTip(tr("com ok"));
       uiStatus->btn_connect->setIcon(QIcon(ICON_FILE_PATH+ICON_STATUS_CONNECT));
 
@@ -515,27 +531,22 @@ void MainWindow::onActionConnectClicked()
       onTreeWidgetItemClicked(ui->treeWidget->currentItem(),0);
       uiStatus->warningMessge->setText(tr(""));
 
-//      //读伺服状态，更新到绘图中的控件
-//      QList<ServoStatus>statusList;
-//      ServoStatus sta;
-//      for(int i=0;i<mp_userConfig->model.axisCount;i++)
-//      {
-//        sta.currentModeIndex=ServoControl::servoCurrentUserTaskMode(i,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
-//        sta.isOn=ServoControl::checkServoIsReady(i,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);//读是否上伺服
-//        statusList.append(sta);
-//      }
       m_plotWave->updateCurrentServoStatus();
       enableAllUi(true);
 
       //开启定时器定时检查状态及断线情况
       qDebug()<<"timer start";
       m_timer->start();
-      for(int i=0;i<ui->stackedWidget->count();i++)
-      {
-        AbstractFuncWidget *absWidget;
-        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
-        absWidget->onActionReadFuncValueFromRam();
-      }
+//      for(int i=0;i<ui->stackedWidget->count();i++)
+//      {
+//        AbstractFuncWidget *absWidget;
+//        absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->widget(i));
+//        absWidget->onActionReadFuncValueFromRam();
+//      }
+//      AbstractFuncWidget *absWidget;
+//      absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->currentWidget());
+//      absWidget->onActionReadFuncValueFromRam();
+
       m_actConfigNew->setEnabled(false);//禁用新建版本
     }
 
@@ -560,6 +571,7 @@ void MainWindow::onActionConnectClicked()
     closeNetCom();
     setComConnectStatus(false);
     m_actConfigNew->setEnabled(true);//使能新建版本
+    enableAllUi(true);
     return;
   }
   ui->progressBar->setVisible(false);
@@ -608,6 +620,7 @@ void MainWindow::onActionDisConnectClicked()
   m_actConfigSave->setEnabled(true);
   m_actConfigSaveAs->setEnabled(true);
   m_menuConfigRecent->setEnabled(true);
+  m_versionNeedCheck=false;
 }
 void MainWindow::onActionViewNavigation(void)
 {
@@ -693,7 +706,7 @@ void MainWindow::onActionFile2ServoClicked()
   qDebug()<<"dsp version="<<dspVersion;
   QString xmlNodeName=tree->topLevelItem(XMLFILE_ROW_INDEX)->text(COL_NAME);
   quint16 xmlVersion;
-  //先拿掉xml记录头
+  //如果能检查到有xml的记录，说明是128之后的版本，先拿掉tree xml记录头
   if(xmlNodeName==XMLFILE_NODE_NAME)
   {
     QTreeWidgetItem *versionNodeItem;
@@ -716,7 +729,9 @@ void MainWindow::onActionFile2ServoClicked()
     }
   }
 
-  if((dspVersion>=SPLIT_VERSION)&&(m_userRole->userType()==UserRole::USER_GENERAL))
+  QString currentVersion=mp_userConfig->model.version.at(0);
+  bool softIsBigger127=(currentVersion.remove(0,1).toInt())>127?true:false;
+  if((dspVersion>=SPLIT_VERSION)&&softIsBigger127)//软件与硬件版本都大于127
   {
     //按128之后处理
     //判断第一个节点是否有xmlversion记录(128之后才有)
@@ -736,55 +751,51 @@ void MainWindow::onActionFile2ServoClicked()
       delete tree;
       return;
     }
-//    else if(dspVersion<xmlVersion)
-//    {
-//      QString msg=tr("current dsp version_%1 is not equal to xml version_%2\ndo you still want to continue to download file to servo?").arg(dspVersion).arg(xmlVersion);
-//      bool ret=MessageBoxAsk(msg);
-//      if(ret==false)
-//      {
-//        tree->clear();
-//        delete tree;
-//        return;
-//      }
-//    }
-    //检查属性表
-    PrmCheck check;
 
-    bool ptyValid;
-    bool hardwareValid;
-    QMap<QString,double> valueMap;
-    QString limitFileName;
-    limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
-    QTreeWidget  *ptyTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
-    if(ptyTree==NULL)
+    if((m_option->m_userLoginItem->userType()==OptionUserLoginItem::USER_GENERAL)||\
+       ((m_option->m_userLoginItem->userType()==OptionUserLoginItem::USER_ADMIN)&&\
+        m_option->m_userLoginItem->adminNeedChecked()))
     {
-      QMessageBox::information(0,tr("Warring"),tr("can not load ptryTree!"));
-      tree->clear();
-      delete tree;
-      return;
-    }
-    ui->progressBar->show();
-    connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
-    ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
-    ptyTree->clear();
-    delete ptyTree;
-    if(ptyValid==false)
-    {
-      tree->clear();
-      delete tree;
-      ui->progressBar->hide();
-      return;
-    }
+      //检查属性表
+      PrmCheck check;
 
-    hardwareValid=check.checkHardwareValid(NULL,valueMap);
-    if(hardwareValid==false)
-    {
-      tree->clear();
-      delete tree;
-      ui->progressBar->hide();
-      return;
-    }
+      bool ptyValid;
+      bool hardwareValid;
 
+      QString limitFileName;
+      limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
+      QTreeWidget  *ptyTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
+      if(ptyTree==NULL)
+      {
+        QMessageBox::information(0,tr("Warring"),tr("can not load ptryTree!"));
+        tree->clear();
+        delete tree;
+        return;
+      }
+      ui->progressBar->show();
+      connect(&check,SIGNAL(checkingProgress(QString&,int)),this,SLOT(onCheckingProgress(QString&,int)));
+      ptyValid=check.checkXmlFilePropertyValid(tree,ptyTree);
+
+      ptyTree->clear();
+      delete ptyTree;
+      if(ptyValid==false)
+      {
+        tree->clear();
+        delete tree;
+        ui->progressBar->hide();
+        return;
+      }
+
+      qDebug()<<"begin hardware checked.....";
+      hardwareValid=check.checkHardwareValid(tree,m_powerLimitMapList);
+      if(hardwareValid==false)
+      {
+        tree->clear();
+        delete tree;
+        ui->progressBar->hide();
+        return;
+      }
+    }
   }
 
   ui->progressBar->show();
@@ -1079,6 +1090,7 @@ void MainWindow::onActionResetDSPClicked()
   //使当前的窗口生效
   absWidget=static_cast<AbstractFuncWidget *>(ui->stackedWidget->currentWidget());
   absWidget->setActiveNow(true);
+  absWidget->onActionReadFuncValueFromRam();
 }
 
 void MainWindow::onActionNormalizeTreeClicked()
@@ -1377,6 +1389,11 @@ void MainWindow::onActionRestoreFactorySettingClicked()
   ui->progressBar->hide();
 }
 
+void MainWindow::onActionWrite2EEpromClicked() {
+    Dialog w;
+    w.show();
+}
+
 void MainWindow::onActionAboutConfigClicked()
 {
   QMessageBox mess;
@@ -1455,14 +1472,12 @@ void MainWindow::onActionAboutSDTClicked()
   mess.setIconPixmap(QPixmap(ICON_FILE_PATH+ICON_SDT_LOGO));
   mess.exec();
 }
-void MainWindow::onActionUserLoginClicked()
+
+void MainWindow::onActionOptionClicked()
 {
-//  static bool checked=false;
-//  checked=!checked;
-//  ui->treeWidget->topLevelItem(2)->setHidden(checked);
-  LoginDialog dialog(m_userRole);
-  qDebug()<<dialog.exec();
-  qDebug()<<"preference ";
+  OptionDialog dia(m_option);
+  dia.exec();
+  qDebug()<<"option clicked ";
 }
 
 void MainWindow::onNewConfigurationActived(UserConfig *config)
@@ -1722,17 +1737,28 @@ void MainWindow::onCheckingProgress(QString &name,int value)
 //  }
 }
 
-void MainWindow::onUserRoleChanged()
+void MainWindow::onUserRoleChanged(int user)
 {
-  switch(m_userRole->userType())
+  OptionUserLoginItem::UserRoleType userType=(OptionUserLoginItem::UserRoleType)user;
+  switch(userType)
   {
-  case UserRole::USER_GENERAL:
+  case OptionUserLoginItem::USER_GENERAL:
     ui->treeWidget->topLevelItem(2)->setHidden(true);
     break;
-  case UserRole::USER_ADMIN:
+  case OptionUserLoginItem::USER_ADMIN:
     ui->treeWidget->topLevelItem(2)->setHidden(false);
     break;
   }
+}
+void MainWindow::onErrorPassWord()
+{
+  qDebug()<<"--->mainwindow error password";
+  QMessageBox::information(0,tr("Warnning"),tr("password error occur !"));
+}
+void MainWindow::onApplicationRevMessage(QString msg)
+{
+  QMessageBox::warning(0,tr("warnning"),tr("Application SDT is already running...."));
+  qDebug()<<msg;
 }
 
 //-------------protected function-------------------------
@@ -1768,7 +1794,7 @@ void MainWindow::createMenus(void)
   m_menuView->addAction(m_actResetView);
   //--------------tool menu-------------------
   m_menuTool=menuBar()->addMenu(tr("Tool(&T)"));
-  m_menuTool->addAction(m_actXmUpdate);
+
 
   m_actFileservo=new QAction(QIcon(ICON_FILE_PATH+ICON_MENU_FILE2SERVO),tr("File2Servo"),this);
   connect(m_actFileservo,SIGNAL(triggered(bool)),this,SLOT(onActionFile2ServoClicked()));
@@ -1776,21 +1802,34 @@ void MainWindow::createMenus(void)
   connect(m_actServofile,SIGNAL(triggered(bool)),this,SLOT(onActionServo2FileClicked()));
   m_menuTool->addAction(m_actFileservo);
   m_menuTool->addAction(m_actServofile);
-  m_menuTool->addAction(m_actFPGAControl);
+  m_menuTool->addSeparator();
 //  m_menuTool->addAction(m_actAxisClone);
+  m_menuTool->addAction(m_actXmUpdate);
   m_menuTool->addAction(m_actAxisFileClone);
   m_menuTool->addSeparator();
   m_menuTool->addAction(m_actFuncConfig);
   m_menuTool->addAction(m_actFuncSave);
-  m_menuTool->addAction(m_actNormalizeTree);
+  m_menuTool->addSeparator();
+//  m_menuTool->addAction(m_actNormalizeTree);
   QMenu *menuDsp=new QMenu(tr("DSPUpdate"),this);
+  menuDsp->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_DSP_UPDATE));
   m_menuTool->addMenu(menuDsp);
   menuDsp->addAction(m_actProgramUpdate);
   menuDsp->addAction(m_actResetServo);
   menuDsp->addAction(m_actRestoreFactorySetting);
-  //-------------Preference----------------------------
-  m_menuPreference=menuBar()->addMenu(tr("Preference"));
-  m_menuPreference->addAction(m_actUserLogin);
+  m_menuTool->addAction(m_actFPGAControl);
+  m_write2EEprom = new QAction(tr("Write to EEprom"), this);
+  connect(m_write2EEprom, SIGNAL(triggered()), this, SLOT(onActionWrite2EEpromClicked()));
+  m_menuTool->addAction(m_write2EEprom);
+  m_menuTool->addSeparator();
+  //增加首选项
+  m_menuTool->addAction(m_actOption);
+//  m_menuPreference=new QMenu(tr("Preference..."),this);
+//  m_menuPreference->setIcon(QIcon(ICON_FILE_PATH+ICON_CHILD));
+//  m_menuPreference->addAction(m_actUserLogin);
+//  m_menuPreference->addAction(m_actAutoLoad);
+//  m_menuTool->addMenu(m_menuPreference);
+
   //--------------help menu-------------------
   m_menuHelp=menuBar()->addMenu(tr("Help(&H)"));
   m_menuHelp->addAction(m_actAboutConfig);
@@ -1944,12 +1983,12 @@ void MainWindow::createActions(void)
   m_actRestoreFactorySetting->setStatusTip(tr("Restore Factory setting"));
   connect(m_actRestoreFactorySetting,SIGNAL(triggered(bool)),this,SLOT(onActionRestoreFactorySettingClicked()));
 
-  m_actNormalizeTree=new QAction(this);
-  m_actNormalizeTree->setText(tr("NormalizeTree"));
-//  m_actNormalizeTree->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_RESETSERVO));
-  m_actNormalizeTree->setToolTip(tr("Normalize Tree Content"));
-  m_actNormalizeTree->setStatusTip(tr("Normalize Tree Content"));
-  connect(m_actNormalizeTree,SIGNAL(triggered(bool)),this,SLOT(onActionNormalizeTreeClicked()));
+//  m_actNormalizeTree=new QAction(this);
+//  m_actNormalizeTree->setText(tr("NormalizeTree"));
+////  m_actNormalizeTree->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_RESETSERVO));
+//  m_actNormalizeTree->setToolTip(tr("Normalize Tree Content"));
+//  m_actNormalizeTree->setStatusTip(tr("Normalize Tree Content"));
+//  connect(m_actNormalizeTree,SIGNAL(triggered(bool)),this,SLOT(onActionNormalizeTreeClicked()));
 
 
   //help action
@@ -1967,11 +2006,25 @@ void MainWindow::createActions(void)
   m_actAboutSDT->setStatusTip(tr("About SDT version"));
   connect(m_actAboutSDT,SIGNAL(triggered(bool)),this,SLOT(onActionAboutSDTClicked()));
 
-  m_actUserLogin=new QAction(this);
-  m_actUserLogin->setText(tr("UserRole"));
-  m_actUserLogin->setToolTip(tr("UserRole setting"));
-  m_actUserLogin->setStatusTip(tr("UserRole setting"));
-  connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
+//  m_actUserLogin=new QAction(this);
+//  m_actUserLogin->setText(tr("UserRole"));
+//  m_actUserLogin->setToolTip(tr("UserRole setting"));
+//  m_actUserLogin->setStatusTip(tr("UserRole setting"));
+//  m_actUserLogin->setIcon(QIcon(ICON_FILE_PATH+ICON_MENU_USER_LOGIN));
+//  connect(m_actUserLogin,SIGNAL(triggered(bool)),this,SLOT(onActionUserLoginClicked()));
+
+//  m_actAutoLoad=new QAction(this);
+//  m_actAutoLoad->setCheckable(true);
+//  m_actAutoLoad->setText(tr("AutoLoad"));
+//  m_actAutoLoad->setToolTip(tr("AutoLoad By ID"));
+//  m_actAutoLoad->setStatusTip(tr("AutoLoad By ID"));
+//  connect(m_actAutoLoad,SIGNAL(triggered(bool)),this,SLOT(onActionAutoLoadClicked(bool)));
+
+  m_actOption=new QAction(this);
+  m_actOption->setText(tr("Option..."));
+  m_actOption->setToolTip(tr("set option"));
+  m_actOption->setStatusTip(tr("set option"));
+  connect(m_actOption,SIGNAL(triggered(bool)),this,SLOT(onActionOptionClicked()));
 }
 
 void MainWindow::createToolBars(void)
@@ -2111,7 +2164,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   emit updateProgressBar(10);
 
   //初始化combobox
-  QString strmodel=theconfig->model.modelName;
+//  QString strmodel=theconfig->model.modelName;
   for(int i=0;i<axisCount;i++)
   {
     ui->combo_axis->addItem(QIcon(ICON_FILE_PATH+ICON_MOTOR),tr("Axis_%1").arg(i+1));
@@ -2236,7 +2289,8 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   AbstractFuncWidget *ioWidget;
   QString version=theconfig->model.version.at(0);
   version=version.remove(0,1);
-  if(version.toInt()<128)
+  int currentVersion=version.toInt();
+  if(currentVersion<128)
     ioWidget=new ModuleIO(0);//这个已经在进来时释放空间了，所以不用释放
   else
     ioWidget=new ModuleIoNew(0);//这个已经在进来时释放空间了，所以不用释放
@@ -2310,6 +2364,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   QTreeWidgetItem *treeExtensionItem,*treeExtensionItemChild;
   QString key;
   int value;
+  //gSevDrv 0 gAuxFunc 1
   treeExtensionItem=mp_funcExtension->topLevelItem(ROW_FUNC_EXT_INDEX_ADVCONTROLPRM);
   treeExtensionItemChild=treeExtensionItem->child(ROW_ADVCTLPRM_INDEX_SERDRV);
   key=treeExtensionItemChild->text(COL_FUNC_EXTENSION_NAME);
@@ -2320,27 +2375,30 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   value=treeExtensionItemChild->text(COL_FUNC_EXTENSION_PARAMETER).toInt();
   m_moduleShareData.insert(key,value);
 
-//  for(int i=0;i<mp_funcExtension->topLevelItemCount();i++)
-//  {
-//    treeExtensionItem=mp_funcExtension->topLevelItem(i);
-//    if(treeExtensionItem->text(COL_FUNC_EXTENSION_NAME).contains(EXTENSION_ADVCONTROLPRM))
-//    {
-//      for(int j=0;j<treeExtensionItem->childCount();j++)
-//      {
-//        treeExtensionItemChild=treeExtensionItem->child(j);
-//        int value=treeExtensionItemChild->text(COL_FUNC_EXTENSION_PARAMETER).toInt();
-//        if(treeExtensionItemChild->text(COL_FUNC_EXTENSION_NAME).contains(EXTENSION_ADVCONTROLPRM_GSERVDRV))
-//        {
-//          m_moduleShareData.insert(EXTENSION_ADVCONTROLPRM_GSERVDRV,value);
-//        }
-//        else if(treeExtensionItemChild->text(COL_FUNC_EXTENSION_NAME).contains(EXTENSION_ADVCONTROLPRM_GAUXFUNC))
-//        {
-//          m_moduleShareData.insert(EXTENSION_ADVCONTROLPRM_GAUXFUNC,value);
-//        }
-//      }
-//      break;
-//    }
-//  }
+  //V128之后增加全局属性表
+  if(m_gPtyLimitTree!=NULL)
+  {
+    m_gPtyLimitTree->clear();
+    delete m_gPtyLimitTree;
+    m_gPtyLimitTree=NULL;
+  }
+
+  if(currentVersion>128)
+  {
+    qDebug()<<"curent version "<<theconfig->model.version.at(0);
+    QString limitFileName;
+    limitFileName=SYSCONFIG_FILE_PATH+mp_userConfig->typeName+"/"+mp_userConfig->model.modelName+"/"+mp_userConfig->model.version.at(0)+"/"+FILENAME_PRTYTREE+".xml";
+    m_gPtyLimitTree=QtTreeManager::createTreeWidgetFromXmlFile(limitFileName);
+//    m_gPtyLimitTree->show();
+    //将制动页面放出来
+    ui->treeWidget->topLevelItem(0)->child(6)->setHidden(false);
+  }
+  else
+  {
+    //制动页面收起来
+    ui->treeWidget->topLevelItem(0)->child(6)->setHidden(true);
+  }
+
 #if TEST_DEBUG
   QMapIterator<QString ,QVariant> imap(m_moduleShareData);
   while(imap.hasNext()){
@@ -2348,18 +2406,6 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
     qDebug()<<tr("Key:%1 Value:%2").arg(imap.key()).arg(imap.value().toInt());
   }
 #endif
-
-//  qDebug()<<"mp_funcExtension  update";
-//  m_xml->ramFlashTreeWidgetNormalization(mp_ramAllTreeWidget);
-//  QWidget *mwidget=new QWidget();
-//  QHBoxLayout *hLayout=new QHBoxLayout(mwidget);
-//  hLayout->addWidget(mp_functionCmdTreeWidget);
-//  mwidget->show();
-//  QWidget *mwidget2=new QWidget();
-//  QHBoxLayout *hLayout2=new QHBoxLayout(mwidget2);
-//  hLayout2->addWidget(mp_ramAllTreeWidget);
-//  mwidget2->show();
-
 
   //因为RnNet与PcDebug的FPGA不一样，所以要从新更新
   if(m_fpgaDialogSetting!=NULL)
@@ -2380,8 +2426,7 @@ void MainWindow::updateUiByUserConfig(UserConfig *theconfig, SysConfig *srcConfi
   DownloadDialog::delayms(20);
   ui->progressBar->hide();
   updateStartUpMessage(tr(">>finish update"));
-
-  ui->treeWidget->topLevelItem(2)->setHidden(true);
+  onUserRoleChanged((int)m_option->m_userLoginItem->userType());
 }
 
 void MainWindow::createHistoryAction()
@@ -2480,7 +2525,7 @@ void MainWindow::setUbootModeUi(bool sta)
 
   //程序烧写
   m_actResetServo->setEnabled(state);
-  m_actNormalizeTree->setEnabled(state);
+//  m_actNormalizeTree->setEnabled(state);
 
   m_menuHelp->setEnabled(state);
   m_menuConfigRecent->setEnabled(state);
@@ -2523,7 +2568,6 @@ bool MainWindow::openNetCom()
   COM_ERROR error=COM_OK;
   bool isOpenCom=true;
   ui->progressBar->setVisible(true);
-  enableAllUi(false);
   error=static_cast<COM_ERROR>(GTSD_CMD_Open(updateProgessBarWhenConnectClicked,(void*)ui->progressBar,static_cast<COM_TYPE>(mp_userConfig->com.id)));
   if(error!=COM_OK)//没有连上
   {
@@ -2595,17 +2639,105 @@ QString MainWindow::minorVersion()
     minV=" ";
   return minV;
 }
+/**
+ * @brief MainWindow::readSettings
+ * 读软件启动参数设置
+ */
 void MainWindow::readSettings()
 {
   QSettings settings(QApplication::applicationDirPath()+"/start.ini",
                      QSettings::IniFormat);
 
   settings.beginGroup("UserRole");
-  UserRole::UserRoleType type;
-
-  type=(UserRole::UserRoleType)settings.value("userType",0).toInt();
-
-  m_userRole->setUserType(type);
+  OptionUserLoginItem::UserRoleType type;
+  bool needCheck;
+  type=(OptionUserLoginItem::UserRoleType)settings.value("userType",0).toInt();
+  m_option->m_userLoginItem->setUserType(type);
+  needCheck=settings.value("needCheck",true).toBool();
+  m_option->m_userLoginItem->setAdminNeedChecked(needCheck);
   settings.endGroup();
-  qDebug()<<"read type="<<type;
+
+  settings.beginGroup("AutoLoadById");
+  bool avalue=settings.value("auto",false).toBool();
+  m_option->m_autoLoadItem->setAutoLoadById(avalue);
+  settings.endGroup();
+  qDebug()<<"auto load :"<<avalue;
+}
+
+bool MainWindow::readPowerId()
+{
+  //目前先根据配置来决定ID
+  if(m_option->m_autoLoadItem->autoLoadById()==false)
+  {
+    QString modelName=mp_userConfig->model.modelName;
+    qDebug()<<"model name ="<<modelName;
+    QString idMapFileName=RESOURCE_FILE_PATH+"DataBase/IdMap.ui";
+    QTreeWidget *mapTree=QtTreeManager::createTreeWidgetFromXmlFile(idMapFileName);
+    bool isFindId=false;
+    {
+      QTreeWidgetItemIterator it(mapTree);
+      QTreeWidgetItem *item;
+
+      while(*it)
+      {
+        item=(*it);
+        if(item->text(COL_NAME)==modelName)
+        {
+          isFindId=true;
+          m_powerId=item->text(COL_VALUE).toUInt();
+          qDebug()<<"find id "<<item->text(COL_NAME)<<" id="<<m_powerId;
+          break;
+        }
+        it++;
+      }
+    }
+    mapTree->clear();
+    delete mapTree;
+    return isFindId;
+  }
+  else//根据实际硬件读ID
+  {
+    EpromManage epromMaster;
+    bool isOK;
+    m_powerId=epromMaster.readId(EpromManage::EADD_POWER,&isOK);
+    if(!isOK)
+      return false;
+  }
+  return true;
+}
+
+bool MainWindow::readControlId()
+{
+  //目前先根据配置来决定ID
+  if(m_option->m_autoLoadItem->autoLoadById()==false)
+  {
+    m_controlId=1000;
+  }
+  else//根据实际硬件读ID
+  {
+    EpromManage epromMaster;
+    bool isOK;
+    m_controlId=epromMaster.readId(EpromManage::EADD_CONTROL,&isOK);
+    if(!isOK)
+      return false;
+  }
+  return true;
+}
+
+bool MainWindow::setPowerLimitMap(quint32 id)
+{
+  bool isOK;
+  QString powerFileName=RESOURCE_FILE_PATH+"DataBase/PowerBoard.ui";
+  QTreeWidget *powerTree=QtTreeManager::createTreeWidgetFromXmlFile(powerFileName);
+  {
+    PowerTreeManage treeManage(powerTree);
+    //更新硬件约束
+    treeManage.updatePowerLimitMapList(id,m_powerLimitMapList);
+    //更新电阻值
+    m_samplingData=treeManage.samplingDataInfo(id,&isOK);
+  }
+  powerTree->clear();
+  delete powerTree;
+  qDebug()<<"isOK "<<isOK;
+  return isOK;
 }
