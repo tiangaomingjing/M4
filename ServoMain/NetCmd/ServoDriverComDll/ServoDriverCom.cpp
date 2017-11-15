@@ -2218,6 +2218,55 @@ int16 CServoDriverCom::GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ver)
 		return RTN_SUCCESS;
 	}
 }
+///add by luo.mj
+int16 CServoDriverCom::GTSD_CMD_ReadFPGAVersion(int16 axis, VERSION* ver)
+{
+  if (axis >= COM_AXIS_MAX)
+  {
+    return RTN_PARAM_OVERFLOW;
+  }												//轴号
+  int16 dsp_id = m_pMapping->ConvertAxiToDspId(axis);;
+  int16 com_addr = (int16)FPGA_VERSION;
+
+
+  int16 rtn = GTSD_CMD_Get16bitFPGAByAddr(dsp_id, com_addr, (int16*)(&(ver->usVersion)));
+  if (rtn != RTN_SUCCESS)
+  {
+    return rtn;
+  }
+  ver->usDeviceMesg = ver->usVersion;
+
+  com_addr = (int16)FPGA_YEAR;
+  rtn = GTSD_CMD_Get16bitFPGAByAddr(dsp_id, com_addr, (int16*)(&(ver->usYear)));
+  if (rtn != RTN_SUCCESS)
+  {
+    return rtn;
+  }
+
+  com_addr = (int16)FPGA_MD;
+  rtn = GTSD_CMD_Get16bitFPGAByAddr(dsp_id, com_addr, (int16*)(&(ver->usMonthDay)));
+  if (rtn != RTN_SUCCESS)
+  {
+    return rtn;
+  }
+  com_addr = (int16)FPGA_ADD_A;
+  rtn = GTSD_CMD_Get16bitFPGAByAddr(dsp_id, com_addr, (int16*)(&(ver->usAddInfA)));
+  if (rtn != RTN_SUCCESS)
+  {
+    return rtn;
+  }
+  com_addr = (int16)FPGA_ADD_B;
+  rtn = GTSD_CMD_Get16bitFPGAByAddr(dsp_id, com_addr, (int16*)(&(ver->usAddInfB)));
+  if (rtn != RTN_SUCCESS)
+  {
+    return rtn;
+  }
+  else
+  {
+    return RTN_SUCCESS;
+  }
+}
+
 
 int16 CServoDriverCom::GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver)
 {

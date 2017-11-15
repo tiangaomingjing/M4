@@ -17,7 +17,7 @@ bool OptionAutoLoadItem::autoLoadById() const
   return m_autoLoadById;
 }
 
-void OptionAutoLoadItem::setAutoLoadById(bool autoLoadById)
+void OptionAutoLoadItem::setAutoLoadById(bool autoLoad)
 {
-  m_autoLoadById = autoLoadById;
+  m_autoLoadById = autoLoad;
 }

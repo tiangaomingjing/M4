@@ -30,6 +30,7 @@ private:
   QString m_hexFilePath;
   QString m_xmlFilePath;
   quint8 m_recordClickedStatus;//_ _ _ _ | _ _ 1 0 ( 0:位记录选了hex 文件 1:记录选了xml文件)
+  QString m_currentFilePath;
 };
 
 #endif // UBOOTDIALOG_H

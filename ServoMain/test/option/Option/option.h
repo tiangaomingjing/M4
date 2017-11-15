@@ -5,6 +5,7 @@
 class OptionAutoLoadItem;
 class OptionUserLoginItem;
 class IOptionItem;
+class OptionPlotItem;
 
 class Option : public QObject
 {
@@ -15,6 +16,7 @@ public:
 
   OptionUserLoginItem *m_userLoginItem;
   OptionAutoLoadItem *m_autoLoadItem;
+  OptionPlotItem *m_plotItem;
   QList<IOptionItem*> mp_optionItemList;
 
 };

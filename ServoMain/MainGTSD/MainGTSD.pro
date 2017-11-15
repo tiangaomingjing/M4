@@ -122,7 +122,8 @@ SOURCES += main.cpp\
     Option/optionautoloaditem.cpp \
     Option/optionuserloginitem.cpp \
     Option/OptionDialog/optiondialog.cpp \
-    singleapplication.cpp
+    singleapplication.cpp \
+    Option/optionplotitem.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -161,7 +162,8 @@ HEADERS  += mainwindow.h \
     Option/optionautoloaditem.h \
     Option/optionuserloginitem.h \
     Option/OptionDialog/optiondialog.h \
-    singleapplication.h
+    singleapplication.h \
+    Option/optionplotitem.h
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \

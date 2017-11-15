@@ -436,7 +436,6 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	{
 		check_en = 1;
 	}
-  check_en = 0;
 
 	EnterCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
 	int16 length = (word_num << 1) + 4;
