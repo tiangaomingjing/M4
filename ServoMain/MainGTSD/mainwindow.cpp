@@ -34,6 +34,7 @@
 #include "Option/option.h"
 #include "Option/optionautoloaditem.h"
 #include "Option/optionuserloginitem.h"
+#include "Option/optionplotitem.h"
 #include "Option/OptionDialog/optiondialog.h"
 
 #include <QFileDialog>
@@ -145,6 +146,7 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   ui->verticalLayout_plot->addWidget(m_plotWave);
   connect(m_plotWave,SIGNAL(showMax(bool)),this,SLOT(onPlotWaveFloatingShow(bool)));
   connect(this,SIGNAL(stopThreadSampling()),m_plotWave,SLOT(onStopThreadSampling()));
+
   ui->dock_wave->hide();
   uiStatus->btn_warring->hide();
 
@@ -166,12 +168,15 @@ MainWindow::MainWindow(QSplashScreen *screen,QWidget *parent) :
   ui->treeWidget->topLevelItem(2)->setHidden(true);
   connect(m_option->m_userLoginItem,SIGNAL(userTypeChanged(int)),this,SLOT(onUserRoleChanged(int)));
   connect(m_option->m_userLoginItem,SIGNAL(errorPassWord()),this,SLOT(onErrorPassWord()));
+  connect(m_option->m_plotItem,SIGNAL(updateOption()),m_plotWave,SLOT(onOptionChanged()));
   readSettings();
   onUserRoleChanged(m_option->m_userLoginItem->userType());
 }
 
 MainWindow::~MainWindow()
 {
+  writeSettings();
+
   QString str=CUSTOM_USER_FILE_PATH+mp_userConfig->model.modelName+tr("config_%1%2").arg(QDateTime::currentDateTime().toString("yyyyMMddhhmmss")).arg(".xml");
   m_xml->saveUserConfigXml(str,mp_fileRecent,mp_userConfig);
 
@@ -2679,6 +2684,30 @@ void MainWindow::readSettings()
   m_option->m_autoLoadItem->setAutoLoadById(avalue);
   settings.endGroup();
   qDebug()<<"auto load :"<<avalue;
+
+  settings.beginGroup("PlotWidget");
+  quint16 delay=settings.value("delayTime",100).toUInt();
+  m_option->m_plotItem->setDelayTime(delay);
+  settings.endGroup();
+}
+
+void MainWindow::writeSettings()
+{
+  QSettings settings("./start.ini",
+                     QSettings::IniFormat);
+//  settings.beginGroup("UserRole");
+//  settings.setValue("userType",QVariant((int)option->m_userLoginItem->userType()));
+//  settings.setValue("needCheck",option->m_userLoginItem->adminNeedChecked());
+//  settings.endGroup();
+
+//  settings.beginGroup("AutoLoadById");
+//  settings.setValue("auto", option->m_autoLoadItem->autoLoadById());
+//  settings.endGroup();
+
+  settings.beginGroup("PlotWidget");
+  settings.setValue("delayTime", m_option->m_plotItem->delayTime());
+  settings.endGroup();
+
 }
 
 bool MainWindow::readPowerId()

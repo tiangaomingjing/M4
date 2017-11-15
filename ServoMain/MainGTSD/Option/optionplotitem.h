@@ -10,9 +10,15 @@ class OptionPlotItem : public IOptionItem
 public:
   explicit OptionPlotItem(QObject *parent = 0);
 
-signals:
+  quint16 delayTime() const;
+  void setDelayTime(const quint16 delayTime);
 
+signals:
+  void updateOption();
 public slots:
+  void onApply()Q_DECL_OVERRIDE;
+private:
+  quint16 m_delayTime;
 };
 
 #endif // OPTIONPLOTITEM_H

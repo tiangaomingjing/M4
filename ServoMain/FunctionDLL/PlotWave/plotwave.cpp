@@ -20,6 +20,8 @@
 #include "muParserDef.h"
 #include "DialogPickCurve/usrcurvetreemanager.h"
 #include "wheelwidget/rollboxwidget.h"
+#include "MainGTSD/Option/option.h"
+#include "MainGTSD/Option/optionplotitem.h"
 
 #include <QXmlAttributes>
 #include <QXmlStreamReader>
@@ -56,6 +58,7 @@ PlotWave::PlotWave(QWidget *parnet):
 {
   ui->setupUi(this);
   mp_mainWindow=static_cast<MainWindow*>(parnet);
+  mp_option=mp_mainWindow->getOption()->m_plotItem;
   mp_userConfig=NULL;
   m_dlgSetting=NULL;
   m_dlgSelectCurve=NULL;
@@ -489,6 +492,10 @@ void PlotWave::onStopThreadSampling()
     }
   }
   ui->btn_motionRun->setChecked(false);
+}
+void PlotWave::onOptionChanged()
+{
+
 }
 
 //----------------slots function--------------------
@@ -4550,7 +4557,7 @@ void PlotWave::onBtnMotionRunClicked(bool run)
         m_motionStatusPtrList.at(i)->setServoOn(true);
       }
     }
-    m_motionStatusPtrList.at(0)->delayms(100);
+    m_motionStatusPtrList.at(0)->delayms(mp_option->delayTime());
 
     //开始跑：设置伺服速度，开定时器
     bool servoAllSelectOn=true;

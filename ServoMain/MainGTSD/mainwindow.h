@@ -175,6 +175,7 @@ private:
   void setWidgetStyleSheet(void);
   QString minorVersion();
   void readSettings();
+  void writeSettings();
 
   bool readPowerId();
   bool readControlId();

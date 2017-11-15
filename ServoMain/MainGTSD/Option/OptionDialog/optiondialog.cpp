@@ -4,6 +4,7 @@
 #include "Option/option.h"
 #include "Option/optionuserloginitem.h"
 #include "Option/optionautoloaditem.h"
+#include "Option/optionplotitem.h"
 
 OptionDialog::OptionDialog(Option *option, QWidget *parent) :
   QDialog(parent),
@@ -15,6 +16,8 @@ OptionDialog::OptionDialog(Option *option, QWidget *parent) :
   QListWidgetItem *item=new QListWidgetItem(QIcon(":/menu_user_login.png"),tr("UserLogin"),ui->listWidget);
   ui->listWidget->addItem(item);
   item=new QListWidgetItem(QIcon(":/menu_auto.png"),tr("AutoLoad"),ui->listWidget);
+  ui->listWidget->addItem(item);
+  item=new QListWidgetItem(QIcon(":/menu_plotview.png"),tr("PlotWidget"),ui->listWidget);
   ui->listWidget->addItem(item);
   connect(ui->listWidget,SIGNAL(currentRowChanged(int)),this,SLOT(onListWidgetCurrentRowChanged(int)));
 
@@ -28,6 +31,9 @@ OptionDialog::OptionDialog(Option *option, QWidget *parent) :
 
   //autoload
   connect(ui->checkBox_autoLoad,SIGNAL(clicked(bool)),this,SLOT(onCheckBoxAutoLoadClicked(bool)));
+
+  //plotWidget
+  connect(ui->spinBox_delayTime,SIGNAL(valueChanged(int)),this,SLOT(onDelayTimeValueChanged(int)));
 
   ui->listWidget->setCurrentRow(0);
   connect(ui->btn_apply,SIGNAL(clicked(bool)),this,SLOT(onBtnApplyClicked()));
@@ -60,8 +66,11 @@ void OptionDialog::initialUiByOptionData()
   //autoload
   ui->checkBox_autoLoad->setChecked(m_option->m_autoLoadItem->autoLoadById());
 
+  ui->spinBox_delayTime->setValue(m_option->m_plotItem->delayTime());
+
   m_option->m_userLoginItem->setModify(false);
   m_option->m_autoLoadItem->setModify(false);
+  m_option->m_plotItem->setModify(false);
 }
 
 //-------------------------private slots----------------------
@@ -96,12 +105,18 @@ void OptionDialog::onCheckBoxAutoLoadClicked(bool checked)
   qDebug()<<checked;
   m_option->m_autoLoadItem->setModify(true);
 }
+void OptionDialog::onDelayTimeValueChanged(int v)
+{
+  m_option->m_plotItem->setModify(true);
+  Q_UNUSED(v)
+}
 
 void OptionDialog::onBtnApplyClicked()
 {
   //先判断哪一个被修改过了
   //修改过了的更新数据,并执行操作
   m_accept=true;
+  //userlogin
   if(m_option->m_userLoginItem->modify())
   {
     if(ui->radioButton_admin->isChecked())
@@ -129,12 +144,21 @@ void OptionDialog::onBtnApplyClicked()
     qDebug()<<"update Option userLoginItem...";
   }
 
+  //autoLoad
   if(m_option->m_autoLoadItem->modify())
   {
     m_option->m_autoLoadItem->setAutoLoadById(ui->checkBox_autoLoad->isChecked());
     m_option->m_autoLoadItem->onApply();
     m_option->m_autoLoadItem->setModify(false);
     qDebug()<<"update Option autoLoadItem...";
+  }
+
+  //plotWidget
+  if(m_option->m_plotItem->modify())
+  {
+    m_option->m_plotItem->setDelayTime(ui->spinBox_delayTime->value());
+    m_option->m_plotItem->onApply();
+    m_option->m_plotItem->setModify(false);
   }
 
 }

@@ -70,7 +70,9 @@ SOURCES += plotwave.cpp \
     DialogPickCurve/customcurvepage.cpp \
     DialogPickCurve/utreewidget.cpp \
     wheelwidget/wheelwidget.cpp \
-    wheelwidget/rollboxwidget.cpp
+    wheelwidget/rollboxwidget.cpp \
+    ../../MainGTSD/Option/optionplotitem.cpp \
+    ../../MainGTSD/Option/ioptionitem.cpp
 
 HEADERS += plotwave.h\
         plotwave_global.h \
@@ -111,7 +113,9 @@ HEADERS += plotwave.h\
     DialogPickCurve/customcurvepage.h \
     DialogPickCurve/utreewidget.h \
     wheelwidget/wheelwidget.h \
-    wheelwidget/rollboxwidget.h
+    wheelwidget/rollboxwidget.h \
+    ../../MainGTSD/Option/optionplotitem.h \
+    ../../MainGTSD/Option/ioptionitem.h
 
 unix {
     target.path = /usr/lib
