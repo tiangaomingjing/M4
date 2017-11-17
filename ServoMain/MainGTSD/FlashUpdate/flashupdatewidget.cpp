@@ -13,6 +13,8 @@
 #include<QAbstractScrollArea>
 #include <QScrollBar>
 #include <QAbstractSlider>
+#define XMLFILE_NODE_NAME "XmlFileInformation"
+#define ROW_XML_NODE 0
 
 
 FlashUpdateWidget::FlashUpdateWidget(QWidget *parent) :
@@ -121,6 +123,19 @@ void FlashUpdateWidget::onBtnUpdateXML()
   {
     ui->progressBar->show();
     this->update();
+    //检查是否有xml的头，有的话先拿掉
+    QTreeWidgetItem *oldXmlNode=NULL;
+    QTreeWidgetItem *newXmlNode=NULL;
+
+    if(XMLFILE_NODE_NAME==ui->treeOld->topLevelItem(ROW_XML_NODE)->text(0))
+    {
+      oldXmlNode=ui->treeOld->takeTopLevelItem(ROW_XML_NODE);
+    }
+    if(XMLFILE_NODE_NAME==ui->treeNew->topLevelItem(ROW_XML_NODE)->text(0))
+    {
+      newXmlNode=ui->treeNew->takeTopLevelItem(ROW_XML_NODE);
+    }
+
     //将每一个轴的树分配到一个list容器中
     QList<QTreeWidget*> old_treeWidgetList;
     QList<QTreeWidget*> new_treeWidgetList;
@@ -166,17 +181,13 @@ void FlashUpdateWidget::onBtnUpdateXML()
       while (*itOld)
       {
         oldName=(*itOld)->text(COL_NAME_INDEX);
-        oldName=oldName.trimmed();
         oldValue=(*itOld)->text(COL_VALUE_INDEX);
-        oldValue=oldValue.trimmed();
 
         QTreeWidgetItemIterator itNew(*new_treeIt);
         while(*itNew)
         {
           newName=(*itNew)->text(COL_NAME_INDEX);
-          newName=newName.trimmed();
           newValue=(*itNew)->text(COL_VALUE_INDEX);
-          newValue=newValue.trimmed();
 
           if(0==oldName.compare(newName))
           {
@@ -207,6 +218,11 @@ void FlashUpdateWidget::onBtnUpdateXML()
       ui->treeNew->addTopLevelItem(top);
 //      qDebug()<<new_treeWidgetList.at(i)->topLevelItem(0)->text(0);
     }
+    if(newXmlNode!=NULL)
+      ui->treeNew->insertTopLevelItem(0,newXmlNode);
+    if(oldXmlNode!=NULL)
+      ui->treeOld->insertTopLevelItem(0,oldXmlNode);
+
     ui->progressBar->setValue(100);
     ui->treeNew->expandAll();
     ui->treeNew->resizeColumnToContents(COL_VALUE_INDEX);
@@ -233,6 +249,19 @@ void FlashUpdateWidget::onBtnCompareClicked()
     return;
   ui->progressBar->show();
   this->update();
+  //检查是否有xml的头，有的话先拿掉
+  QTreeWidgetItem *oldXmlNode=NULL;
+  QTreeWidgetItem *newXmlNode=NULL;
+
+  if(XMLFILE_NODE_NAME==ui->treeOld->topLevelItem(ROW_XML_NODE)->text(0))
+  {
+    oldXmlNode=ui->treeOld->takeTopLevelItem(ROW_XML_NODE);
+  }
+  if(XMLFILE_NODE_NAME==ui->treeNew->topLevelItem(ROW_XML_NODE)->text(0))
+  {
+    newXmlNode=ui->treeNew->takeTopLevelItem(ROW_XML_NODE);
+  }
+
   //将每一个轴的树分配到一个list容器中
   QList<QTreeWidget*> old_treeWidgetList;
   QList<QTreeWidget*> new_treeWidgetList;
@@ -280,17 +309,13 @@ void FlashUpdateWidget::onBtnCompareClicked()
     while (*itOld)
     {
       oldName=(*itOld)->text(COL_NAME_INDEX);
-      oldName=oldName.trimmed();
       oldValue=(*itOld)->text(COL_VALUE_INDEX);
-      oldValue=oldValue.trimmed();
 
       QTreeWidgetItemIterator itNew(*new_treeIt);
       while(*itNew)
       {
         newName=(*itNew)->text(COL_NAME_INDEX);
-        newName=newName.trimmed();
         newValue=(*itNew)->text(COL_VALUE_INDEX);
-        newValue=newValue.trimmed();
 
         if(0==oldName.compare(newName))
         {
@@ -330,6 +355,8 @@ void FlashUpdateWidget::onBtnCompareClicked()
     ui->treeOld->addTopLevelItem(top);
 //      qDebug()<<new_treeWidgetList.at(i)->topLevelItem(0)->text(0);
   }
+  if(oldXmlNode!=NULL)
+    ui->treeOld->insertTopLevelItem(0,oldXmlNode);
 
   ui->treeNew->clear();
   ui->progressBar->setValue(90);
@@ -341,6 +368,9 @@ void FlashUpdateWidget::onBtnCompareClicked()
     ui->treeNew->addTopLevelItem(top);
 //      qDebug()<<new_treeWidgetList.at(i)->topLevelItem(0)->text(0);
   }
+  if(newXmlNode!=NULL)
+    ui->treeNew->insertTopLevelItem(0,newXmlNode);
+
   ui->progressBar->setValue(100);
   ui->treeOld->expandAll();
   ui->treeNew->expandAll();

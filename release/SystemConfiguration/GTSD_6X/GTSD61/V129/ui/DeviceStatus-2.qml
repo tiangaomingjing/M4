@@ -335,7 +335,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_OB_ERR;
-                        title: "电机抱匣故障";
+                        title: "电机抱闸故障";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -353,13 +353,13 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_OBP;
-                        title: "电机抱匣电源故障";
+                        title: "电机抱闸电源故障";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
                     LedIndicator{
-                        id:led_com;
-                        title: "GLINK_2通信异常";
+                        id:led_rsv1;
+                        title: "保留";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -400,7 +400,6 @@ Rectangle{
         led_FAN.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,19,1)));
         led_SRF.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,20,1)));
         led_OBP.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,21,1)));
-        led_com.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,22,1)));
 
         m_allLedFlag.ledOn=!Boolean(parseInt(factory.dataTree.textTopLevel(2,1)));
 
@@ -438,7 +437,7 @@ Rectangle{
         target: driverStatus;
         onTimeOutToQml:{
             updateUiData();
-            console.log(qsTr("updata qml ui....")+axisIndex);
+            //console.log(qsTr("updata qml ui....")+axisIndex);
         }
     }
 }

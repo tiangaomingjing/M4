@@ -64,7 +64,7 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.8"
+#define SDT_VERSION "1.1.9"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -255,7 +255,10 @@ void MainWindow::onClearWarning()
 }
 void MainWindow::onQmlUiShowMessage(QString msg)
 {
-  ui->statusBar->showMessage(msg,2000);
+  ui->statusBar->showMessage(msg,5000);
+  //暂时这样处理11-17
+//  if(ui->stackedWidget->currentWidget()->objectName()=="CfgMotor")
+//    QMessageBox::information(0,tr("warnning"),msg);
 }
 
 
@@ -486,7 +489,7 @@ void MainWindow::onActionConnectClicked()
       qDebug()<<"compare";
     }
     bool hardIsBigger128=version>128?true:false;
-    //指令要不要加校验 127以下的不用加crc校验,128要加
+    //指令要不要加校验 128以下的不用加crc校验,129要加
     ServoControl::setCmdWithCRC(hardIsBigger128);
 
     bool softIsBigger128=(currentVersion.remove(0,1).toInt())>128?true:false;
@@ -744,31 +747,31 @@ void MainWindow::onActionFile2ServoClicked()
 
   QString currentVersion=mp_userConfig->model.version.at(0);
   bool softIsBigger127=(currentVersion.remove(0,1).toInt())>127?true:false;
+
   if((dspVersion>=SPLIT_VERSION)&&softIsBigger127)//软件与硬件版本都大于127
   {
-    //按128之后处理
-    //判断第一个节点是否有xmlversion记录(128之后才有)
-
-    if(xmlNodeName!=XMLFILE_NODE_NAME)
-    {
-      QMessageBox::information(0,tr("Warring"),tr("refuse to download file\n dsp version_%1 is not equal to xml version_%2!").arg(dspVersion).arg("none"));
-      tree->clear();
-      delete tree;
-      return;
-    }
-
-    if(dspVersion>xmlVersion)
-    {
-      QMessageBox::information(0,tr("Warring"),tr("refuse to download file\n dsp version_%1 >xml version_%2!").arg(dspVersion).arg(xmlVersion));
-      tree->clear();
-      delete tree;
-      return;
-    }
-
+    //再判断一下角色
     if((m_option->m_userLoginItem->userType()==OptionUserLoginItem::USER_GENERAL)||\
        ((m_option->m_userLoginItem->userType()==OptionUserLoginItem::USER_ADMIN)&&\
         m_option->m_userLoginItem->adminNeedChecked()))
     {
+      //判断第一个节点是否有xmlversion记录(128之后才有)
+      if(xmlNodeName!=XMLFILE_NODE_NAME)
+      {
+        QMessageBox::information(0,tr("Warring"),tr("refuse to download file\n dsp version_%1 is not equal to xml version_%2!").arg(dspVersion).arg("none"));
+        tree->clear();
+        delete tree;
+        return;
+      }
+
+      if(dspVersion>xmlVersion)
+      {
+        QMessageBox::information(0,tr("Warring"),tr("refuse to download file\n dsp version_%1 >xml version_%2!").arg(dspVersion).arg(xmlVersion));
+        tree->clear();
+        delete tree;
+        return;
+      }
+
       //检查属性表
       PrmCheck check;
 
@@ -1407,25 +1410,26 @@ void MainWindow::onActionAboutConfigClicked()
   QMessageBox mess;
   mess.setIcon(QMessageBox::NoIcon);
   QString info;
+
+  quint16 pVersion;
+  QString minVersion;
+  quint16 fVersion;
+  QString hexFVersion;
+
+  info=tr("SDT setting info:\nmodel:%1\nversion:%2\naxisCount:%3\ncomName:%4\n")
+        .arg(mp_userConfig->model.modelName)
+        .arg(mp_userConfig->model.version.at(0))
+        .arg(mp_userConfig->model.axisCount)
+        .arg(mp_userConfig->com.comName);
   if(m_isOpenCom)//已经连接
   {
-    quint16 pVersion;
-    QString minVersion;
-    quint16 fVersion;
-    QString hexFVersion;
     ServoControl::readDeviceVersion(0,pVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
     ServoControl::readDeviceFirmwareVersion(0,fVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
     minVersion=minorVersion();
     qDebug()<<"minVersion="<<minVersion;
     hexFVersion=QString::asprintf("%#04X",fVersion);
-    info=tr("SDT setting info:\nmodel:%1\nversion:%2\naxisCount:%3\ncomName:%4"
-                          "\n\nDevice info:\nprocessor version:%5\nfirmware version:%6\n")
-                              .arg(mp_userConfig->model.modelName)
-                              .arg(mp_userConfig->model.version.at(0))
-                              .arg(mp_userConfig->model.axisCount)
-                              .arg(mp_userConfig->com.comName)
-                              .arg((QString::number(pVersion)+"-"+minVersion))
-                              .arg(hexFVersion);
+    info+=tr("\n\nDevice info:\nprocessor version:%1\nfirmware version:%2\n").arg((QString::number(pVersion)+"-"+minVersion))
+        .arg(hexFVersion);
 
     VERSION fpagVersion;
     qDebug()<<"read version";
@@ -1443,39 +1447,23 @@ void MainWindow::onActionAboutConfigClicked()
     openOk=openNetCom();
     if(openOk)
     {
-      quint16 pVersion;
-      quint16 fVersion;
-      QString hexFVersion;
-      QString minVersion;
-      minVersion=minorVersion();
+
       ServoControl::readDeviceVersion(0,pVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
       ServoControl::readDeviceFirmwareVersion(0,fVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation);
+      minVersion=minorVersion();
+      qDebug()<<"minVersion="<<minVersion;
       hexFVersion=QString::asprintf("%#04X",fVersion);
-      info=tr("SDT setting info:\n model:%1\nversion:%2\naxisCount:%3\ncomName:%4"
-                            "\n\nDevice info:\nprocessor version:%5\nfirmware version:%6\n")
-                                .arg(mp_userConfig->model.modelName)
-                                .arg(mp_userConfig->model.version.at(0))
-                                .arg(mp_userConfig->model.axisCount)
-                                .arg(mp_userConfig->com.comName)
-                                .arg((QString::number(pVersion)+"-"+minVersion))
-                                .arg(hexFVersion);
+      info+=tr("\n\nDevice info:\nprocessor version:%1\nfirmware version:%2\n").arg((QString::number(pVersion)+"-"+minVersion))
+          .arg(hexFVersion);
+
       VERSION fpagVersion;
       qDebug()<<"read version";
       if(0==GTSD_CMD_ReadFpgaVersion(0,&fpagVersion,(quint16)mp_userConfig->com.id,mp_userConfig->com.rnStation))
       {
         qDebug("fa=0x%X,fb=0x%X,msg=0x%X,day=0x%X,ver=0x%X,year=0x%X",fpagVersion.usAddInfA\
                ,fpagVersion.usAddInfB,fpagVersion.usDeviceMesg,fpagVersion.usMonthDay,fpagVersion.usVersion,fpagVersion.usYear);
-        info+=tr("\nfirmware date:%1-%2").arg(QString::asprintf("%04X",fpagVersion.usYear)).arg(QString::asprintf("%04X",fpagVersion.usMonthDay));
+        info+=tr("firmware date:%1-%2").arg(QString::asprintf("%04X",fpagVersion.usYear)).arg(QString::asprintf("%04X",fpagVersion.usMonthDay));
       }
-    }
-    else
-    {
-      info=tr("SDT setting info:\n model:%1\nversion:%2\naxisCount:%3\ncomName:%4"
-                            "\n\n")
-                                .arg(mp_userConfig->model.modelName)
-                                .arg(mp_userConfig->model.version.at(0))
-                                .arg(mp_userConfig->model.axisCount)
-                                .arg(mp_userConfig->com.comName);
     }
     closeNetCom();
   }

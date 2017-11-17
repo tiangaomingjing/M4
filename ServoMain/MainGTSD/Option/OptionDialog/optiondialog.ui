@@ -141,7 +141,7 @@ QListView::item:selected:!active#listWidget{
        </size>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="userlogin">
        <layout class="QVBoxLayout" name="verticalLayout_2" stretch="2,1">
@@ -310,7 +310,7 @@ QListView::item:selected:!active#listWidget{
         <item>
          <widget class="QCheckBox" name="checkBox_autoLoad">
           <property name="text">
-           <string>AutoLoad</string>
+           <string>AutoLoadById</string>
           </property>
          </widget>
         </item>

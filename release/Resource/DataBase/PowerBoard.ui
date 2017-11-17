@@ -616,7 +616,7 @@
                <string>Input capacity</string>
               </property>
               <property name="text">
-               <string>3</string>
+               <string>3.0</string>
               </property>
               <property name="text">
                <string>KVA</string>
@@ -645,7 +645,7 @@
                <string>input voltage</string>
               </property>
               <property name="text">
-               <string>311</string>
+               <string>311.0</string>
               </property>
               <property name="text">
                <string>VDC</string>
@@ -676,7 +676,7 @@
                 <string>maximum</string>
                </property>
                <property name="text">
-                <string>373</string>
+                <string>373.0</string>
                </property>
                <property name="text">
                 <string>VDC</string>
@@ -705,7 +705,7 @@
                 <string>minimum</string>
                </property>
                <property name="text">
-                <string>248</string>
+                <string>248.0</string>
                </property>
                <property name="text">
                 <string>VDC</string>
@@ -1239,7 +1239,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Uint16</string>
+                <string>Uint32</string>
                </property>
                <property name="text">
                 <string>0x0026</string>
@@ -1268,7 +1268,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int16</string>
                </property>
                <property name="text">
                 <string>0x0028</string>
@@ -1799,7 +1799,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -1828,7 +1828,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -1889,7 +1889,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -1918,7 +1918,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -2584,7 +2584,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2613,7 +2613,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2642,7 +2642,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2671,7 +2671,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2700,7 +2700,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2758,7 +2758,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2787,7 +2787,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2816,7 +2816,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2839,13 +2839,13 @@
                  <string>resistance at 90℃</string>
                 </property>
                 <property name="text">
-                 <string>0.83228</string>
+                 <string>0.832</string>
                 </property>
                 <property name="text">
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2874,7 +2874,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2904,7 +2904,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>1</string>
+                <string/>
                </property>
                <property name="text">
                 <string>PTC电阻</string>
@@ -2932,7 +2932,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2961,7 +2961,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -2990,7 +2990,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3019,7 +3019,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3106,7 +3106,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3135,7 +3135,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3164,7 +3164,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3193,7 +3193,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3222,7 +3222,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -3252,7 +3252,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>1</string>
+                <string/>
                </property>
                <property name="text">
                 <string>数字IO量形式</string>
@@ -3548,7 +3548,7 @@
                 <string>低温报警检出温度值</string>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x004a</string>
@@ -3577,7 +3577,7 @@
                 <string>低温报警故障恢复温度点</string>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x004b</string>
@@ -3716,7 +3716,7 @@
                 <string>kW</string>
                </property>
                <property name="text">
-                <string>10</string>
+                <string>100</string>
                </property>
                <property name="text">
                 <string/>
@@ -3760,11 +3760,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>55</string>
+                <string>80</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -4154,7 +4206,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4183,7 +4235,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4212,7 +4264,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4241,7 +4293,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4270,7 +4322,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4328,7 +4380,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4357,7 +4409,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4386,7 +4438,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4409,13 +4461,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4444,7 +4496,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4474,7 +4526,7 @@
                   <string/>
                  </property>
                  <property name="text">
-                  <string>1</string>
+                  <string/>
                  </property>
                  <property name="text">
                   <string>PTC电阻</string>
@@ -4502,7 +4554,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4531,7 +4583,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4560,7 +4612,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4589,7 +4641,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4618,7 +4670,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4676,7 +4728,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4705,7 +4757,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4734,7 +4786,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4763,7 +4815,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -4792,7 +4844,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -5118,7 +5170,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0060</string>
@@ -5147,7 +5199,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0061</string>
@@ -8215,11 +8267,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>55</string>
+                <string>80</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -8609,7 +8713,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8638,7 +8742,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8667,7 +8771,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8696,7 +8800,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8725,7 +8829,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8783,7 +8887,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8812,7 +8916,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8841,7 +8945,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8864,13 +8968,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8899,7 +9003,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8957,7 +9061,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -8986,7 +9090,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9015,7 +9119,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9044,7 +9148,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9073,7 +9177,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9131,7 +9235,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9160,7 +9264,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9189,7 +9293,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9218,7 +9322,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9247,7 +9351,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -9573,7 +9677,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0087</string>
@@ -9602,7 +9706,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0088</string>
@@ -12670,11 +12774,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>55</string>
+                <string>80</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -13064,7 +13220,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13093,7 +13249,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13122,7 +13278,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13151,7 +13307,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13180,7 +13336,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13238,7 +13394,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13267,7 +13423,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13296,7 +13452,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13319,13 +13475,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13354,7 +13510,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13412,7 +13568,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13441,7 +13597,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13470,7 +13626,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13499,7 +13655,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -13528,7 +13684,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -14028,7 +14184,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00ae</string>
@@ -14057,7 +14213,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00af</string>
@@ -17125,11 +17281,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>55</string>
+                <string>80</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -17519,7 +17727,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17548,7 +17756,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17577,7 +17785,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17606,7 +17814,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17635,7 +17843,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17693,7 +17901,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17722,7 +17930,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17751,7 +17959,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17774,13 +17982,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17809,7 +18017,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17867,7 +18075,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17896,7 +18104,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17925,7 +18133,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17954,7 +18162,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -17983,7 +18191,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -18041,7 +18249,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -18070,7 +18278,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -18099,7 +18307,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -18128,7 +18336,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -18157,7 +18365,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -18483,7 +18691,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00d5</string>
@@ -18512,7 +18720,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00d6</string>
@@ -22499,7 +22707,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Uint16</string>
+                <string>Uint32</string>
                </property>
                <property name="text">
                 <string>0x0026</string>
@@ -22528,7 +22736,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x0028</string>
@@ -23375,7 +23583,7 @@
                 <string>numbers</string>
                </property>
                <property name="text">
-                <string>4</string>
+                <string>6</string>
                </property>
                <property name="text">
                 <string/>
@@ -23844,7 +24052,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -23873,7 +24081,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -23902,7 +24110,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -23931,7 +24139,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -23960,7 +24168,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24018,7 +24226,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24047,7 +24255,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24076,7 +24284,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24099,13 +24307,13 @@
                  <string>resistance at 90℃</string>
                 </property>
                 <property name="text">
-                 <string>0.83228</string>
+                 <string>0.832</string>
                 </property>
                 <property name="text">
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24134,7 +24342,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24192,7 +24400,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24221,7 +24429,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24250,7 +24458,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24279,7 +24487,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24308,7 +24516,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24366,7 +24574,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24395,7 +24603,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24424,7 +24632,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24453,7 +24661,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24482,7 +24690,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -24808,7 +25016,7 @@
                 <string>低温报警检出温度值</string>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x004a</string>
@@ -24837,7 +25045,7 @@
                 <string>低温报警故障恢复温度点</string>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x004b</string>
@@ -25020,11 +25228,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>55</string>
+                <string>80</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -25179,7 +25439,7 @@
                 <string>Model</string>
                </property>
                <property name="text">
-                <string>PSS30S92F6-AG</string>
+                <string>IKCM30F60GD</string>
                </property>
                <property name="text">
                 <string/>
@@ -25208,7 +25468,7 @@
                 <string>Manufacturer</string>
                </property>
                <property name="text">
-                <string>Mitsubishi</string>
+                <string>Infineon</string>
                </property>
                <property name="text">
                 <string/>
@@ -25414,7 +25674,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25443,7 +25703,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25472,7 +25732,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25501,7 +25761,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25530,7 +25790,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25588,7 +25848,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25617,7 +25877,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25646,7 +25906,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25669,13 +25929,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25704,7 +25964,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25762,7 +26022,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25791,7 +26051,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25820,7 +26080,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25849,7 +26109,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25878,7 +26138,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25936,7 +26196,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25965,7 +26225,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -25994,7 +26254,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -26023,7 +26283,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -26052,7 +26312,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -26378,7 +26638,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0060</string>
@@ -26407,7 +26667,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0061</string>
@@ -28001,7 +28261,7 @@
                    <string>Reserve3</string>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>0</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -29475,11 +29735,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>55</string>
+                <string>80</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>8</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -29634,7 +29946,7 @@
                 <string>Model</string>
                </property>
                <property name="text">
-                <string>PSS30S92F6-AG</string>
+                <string>IKCM30F60GD</string>
                </property>
                <property name="text">
                 <string/>
@@ -29663,7 +29975,7 @@
                 <string>Manufacturer</string>
                </property>
                <property name="text">
-                <string>Mitsubishi</string>
+                <string>Infineon</string>
                </property>
                <property name="text">
                 <string/>
@@ -29869,7 +30181,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -29898,7 +30210,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -29927,7 +30239,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -29956,7 +30268,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -29985,7 +30297,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30043,7 +30355,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30072,7 +30384,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30101,7 +30413,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30124,13 +30436,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30159,7 +30471,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30217,7 +30529,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30246,7 +30558,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30275,7 +30587,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30304,7 +30616,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30333,7 +30645,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30391,7 +30703,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30420,7 +30732,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30449,7 +30761,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30478,7 +30790,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30507,7 +30819,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -30833,7 +31145,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0087</string>
@@ -30862,7 +31174,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0088</string>
@@ -33930,11 +34242,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>35</string>
+                <string>70</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>7</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -34089,7 +34453,7 @@
                 <string>Model</string>
                </property>
                <property name="text">
-                <string>PSS30S92F6-AG</string>
+                <string>IKCM30F60GD</string>
                </property>
                <property name="text">
                 <string/>
@@ -34118,7 +34482,7 @@
                 <string>Manufacturer</string>
                </property>
                <property name="text">
-                <string>Mitsubishi</string>
+                <string>Infineon</string>
                </property>
                <property name="text">
                 <string/>
@@ -34324,7 +34688,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34353,7 +34717,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34382,7 +34746,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34411,7 +34775,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34440,7 +34804,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34498,7 +34862,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34527,7 +34891,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34556,7 +34920,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34579,13 +34943,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34614,7 +34978,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34672,7 +35036,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34701,7 +35065,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34730,7 +35094,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34759,7 +35123,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34788,7 +35152,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34846,7 +35210,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34875,7 +35239,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34904,7 +35268,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34933,7 +35297,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -34962,7 +35326,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -35288,7 +35652,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00ae</string>
@@ -35317,7 +35681,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00af</string>
@@ -38385,11 +38749,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>35</string>
+                <string>70</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>7</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -38779,7 +39195,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -38808,7 +39224,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -38837,7 +39253,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -38866,7 +39282,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -38895,7 +39311,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -38953,7 +39369,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -38982,7 +39398,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39011,7 +39427,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39034,13 +39450,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39069,7 +39485,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39127,7 +39543,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39156,7 +39572,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39185,7 +39601,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39214,7 +39630,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39243,7 +39659,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39301,7 +39717,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39330,7 +39746,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39359,7 +39775,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39388,7 +39804,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39417,7 +39833,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -39743,7 +40159,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00d5</string>
@@ -39772,7 +40188,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00d6</string>
@@ -42840,11 +43256,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>20</string>
+                <string>50</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>5</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -42999,7 +43467,7 @@
                 <string>Model</string>
                </property>
                <property name="text">
-                <string>PSS30S92F6-AG</string>
+                <string>IKCM30F60GD</string>
                </property>
                <property name="text">
                 <string/>
@@ -43028,7 +43496,7 @@
                 <string>Manufacturer</string>
                </property>
                <property name="text">
-                <string>Mitsubishi</string>
+                <string>Infineon</string>
                </property>
                <property name="text">
                 <string/>
@@ -43234,7 +43702,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43263,7 +43731,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43292,7 +43760,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43321,7 +43789,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43408,7 +43876,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43437,7 +43905,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43466,7 +43934,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43489,13 +43957,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43524,7 +43992,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43582,7 +44050,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43611,7 +44079,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43640,7 +44108,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43669,7 +44137,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43698,7 +44166,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43756,7 +44224,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43785,7 +44253,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43814,7 +44282,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43843,7 +44311,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -43872,7 +44340,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -44198,7 +44666,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00fc</string>
@@ -44227,7 +44695,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00fd</string>
@@ -47295,11 +47763,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>20</string>
+                <string>50</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>5</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -47454,7 +47974,7 @@
                 <string>Model</string>
                </property>
                <property name="text">
-                <string>PSS30S92F6-AG</string>
+                <string>IKCM30F60GD</string>
                </property>
                <property name="text">
                 <string/>
@@ -47483,7 +48003,7 @@
                 <string>Manufacturer</string>
                </property>
                <property name="text">
-                <string>Mitsubishi</string>
+                <string>Infineon</string>
                </property>
                <property name="text">
                 <string/>
@@ -47689,7 +48209,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47718,7 +48238,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47747,7 +48267,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47776,7 +48296,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47805,7 +48325,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47863,7 +48383,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47892,7 +48412,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47921,7 +48441,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47944,13 +48464,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -47979,7 +48499,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48037,7 +48557,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48066,7 +48586,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48095,7 +48615,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48124,7 +48644,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48153,7 +48673,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48211,7 +48731,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48240,7 +48760,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48269,7 +48789,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48298,7 +48818,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48327,7 +48847,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -48653,7 +49173,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0123</string>
@@ -48682,7 +49202,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0124</string>
@@ -52585,7 +53105,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Uint16</string>
+                <string>Uint32</string>
                </property>
                <property name="text">
                 <string>0x0026</string>
@@ -52614,7 +53134,7 @@
                 <string/>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int16</string>
                </property>
                <property name="text">
                 <string>0x0028</string>
@@ -52668,7 +53188,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>10</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -52697,7 +53217,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>10</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -52758,7 +53278,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>10</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -52787,7 +53307,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>10</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -52907,7 +53427,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -52936,7 +53456,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -52997,7 +53517,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -53026,7 +53546,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -53057,7 +53577,7 @@
               <string/>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>10</string>
              </property>
              <property name="text">
               <string/>
@@ -53085,7 +53605,7 @@
                <string>Ω</string>
               </property>
               <property name="text">
-               <string>1</string>
+               <string>10</string>
               </property>
               <property name="text">
                <string/>
@@ -53145,7 +53665,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -53174,7 +53694,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -53235,7 +53755,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -53264,7 +53784,7 @@
                 <string>V</string>
                </property>
                <property name="text">
-                <string>1</string>
+                <string>10</string>
                </property>
                <property name="text">
                 <string/>
@@ -53930,7 +54450,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -53959,7 +54479,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -53988,7 +54508,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54017,7 +54537,7 @@
                  <string>V</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54046,7 +54566,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string/>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54104,7 +54624,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54133,7 +54653,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54162,7 +54682,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54185,13 +54705,13 @@
                  <string>resistance at 90℃</string>
                 </property>
                 <property name="text">
-                 <string>0.83228</string>
+                 <string>0.832</string>
                 </property>
                 <property name="text">
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54220,7 +54740,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54278,7 +54798,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54307,7 +54827,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54336,7 +54856,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54365,7 +54885,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54394,7 +54914,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>100</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54452,7 +54972,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54481,7 +55001,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54510,7 +55030,7 @@
                  <string>kΩ</string>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54539,7 +55059,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54568,7 +55088,7 @@
                  <string/>
                 </property>
                 <property name="text">
-                 <string>1</string>
+                 <string>1000</string>
                 </property>
                 <property name="text">
                  <string/>
@@ -54894,7 +55414,7 @@
                 <string>低温报警检出温度值</string>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x004a</string>
@@ -54923,7 +55443,7 @@
                 <string>低温报警故障恢复温度点</string>
                </property>
                <property name="text">
-                <string>Uint8</string>
+                <string>int8</string>
                </property>
                <property name="text">
                 <string>0x004b</string>
@@ -55106,11 +55626,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>150</string>
+                <string>220</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>22</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -55500,7 +56072,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55529,7 +56101,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55558,7 +56130,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55587,7 +56159,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55674,7 +56246,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55703,7 +56275,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55732,7 +56304,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55755,13 +56327,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55790,7 +56362,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55848,7 +56420,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55877,7 +56449,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55906,7 +56478,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55935,7 +56507,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -55964,7 +56536,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -56022,7 +56594,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -56051,7 +56623,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -56080,7 +56652,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -56109,7 +56681,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -56138,7 +56710,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -56464,7 +57036,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0060</string>
@@ -56493,7 +57065,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0061</string>
@@ -59561,11 +60133,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>150</string>
+                <string>220</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>22</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -59955,7 +60579,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -59984,7 +60608,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60013,7 +60637,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60042,7 +60666,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60071,7 +60695,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60129,7 +60753,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60158,7 +60782,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60187,7 +60811,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60210,13 +60834,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60245,7 +60869,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60303,7 +60927,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60332,7 +60956,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60361,7 +60985,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60390,7 +61014,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60419,7 +61043,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60477,7 +61101,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60506,7 +61130,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60535,7 +61159,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60564,7 +61188,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60593,7 +61217,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -60919,7 +61543,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0087</string>
@@ -60948,7 +61572,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0088</string>
@@ -64016,11 +64640,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>100</string>
+                <string>150</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>15</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -64410,7 +65086,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64439,7 +65115,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64468,7 +65144,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64497,7 +65173,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64526,7 +65202,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64584,7 +65260,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64613,7 +65289,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64642,7 +65318,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64665,13 +65341,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64700,7 +65376,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64758,7 +65434,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64787,7 +65463,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64816,7 +65492,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64845,7 +65521,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64874,7 +65550,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64932,7 +65608,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64961,7 +65637,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -64990,7 +65666,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -65019,7 +65695,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -65048,7 +65724,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -65374,7 +66050,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00ae</string>
@@ -65403,7 +66079,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00af</string>
@@ -66817,7 +67493,7 @@
                    <string>value</string>
                   </property>
                   <property name="text">
-                   <string>6.66667</string>
+                   <string>6.67</string>
                   </property>
                   <property name="text">
                    <string>mΩ</string>
@@ -68471,11 +69147,57 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>100</string>
+                <string>150</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>15</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -68865,7 +69587,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -68894,7 +69616,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -68923,7 +69645,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -68952,7 +69674,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -68981,7 +69703,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69039,7 +69761,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69068,7 +69790,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69097,7 +69819,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69120,13 +69842,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69155,7 +69877,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69213,7 +69935,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69242,7 +69964,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69271,7 +69993,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69300,7 +70022,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69329,7 +70051,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69387,7 +70109,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69416,7 +70138,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69445,7 +70167,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69474,7 +70196,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69503,7 +70225,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -69829,7 +70551,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00d5</string>
@@ -69858,7 +70580,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00d6</string>
@@ -71272,7 +71994,7 @@
                    <string>value</string>
                   </property>
                   <property name="text">
-                   <string>6.66667</string>
+                   <string>6.67</string>
                   </property>
                   <property name="text">
                    <string>mΩ</string>
@@ -72926,11 +73648,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>20</string>
+                <string>50</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>5</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -73320,7 +74094,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73349,7 +74123,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73378,7 +74152,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73407,7 +74181,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73436,7 +74210,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73494,7 +74268,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73523,7 +74297,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73552,7 +74326,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73575,13 +74349,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73668,7 +74442,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73697,7 +74471,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73726,7 +74500,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73755,7 +74529,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73784,7 +74558,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73842,7 +74616,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73871,7 +74645,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73900,7 +74674,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73929,7 +74703,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -73958,7 +74732,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -74284,7 +75058,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00fc</string>
@@ -74313,7 +75087,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x00fd</string>
@@ -77381,11 +78155,63 @@
                 <string>gSevDrv.sev_obj.cur.mot.Irat_1</string>
                </property>
                <property name="text">
-                <string>20</string>
+                <string>50</string>
                </property>
                <property name="text">
                 <string>0</string>
                </property>
+               <item>
+                <property name="text">
+                 <string>Maximum</string>
+                </property>
+                <property name="text">
+                 <string>5</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Minimum</string>
+                </property>
+                <property name="text">
+                 <string>0</string>
+                </property>
+                <property name="text">
+                 <string>A(RMS)</string>
+                </property>
+                <property name="text">
+                 <string>10</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="text">
+                 <string>Uint16</string>
+                </property>
+                <property name="text">
+                 <string>-1</string>
+                </property>
+                <property name="text">
+                 <string>null</string>
+                </property>
+               </item>
               </item>
               <item>
                <property name="text">
@@ -77775,7 +78601,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -77804,7 +78630,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -77833,7 +78659,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -77862,7 +78688,7 @@
                    <string>V</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -77891,7 +78717,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string/>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -77949,7 +78775,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -77978,7 +78804,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78007,7 +78833,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78030,13 +78856,13 @@
                    <string>resistance at 90℃</string>
                   </property>
                   <property name="text">
-                   <string>0.83228</string>
+                   <string>0.832</string>
                   </property>
                   <property name="text">
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78065,7 +78891,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78123,7 +78949,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78152,7 +78978,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78181,7 +79007,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78210,7 +79036,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78239,7 +79065,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>100</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78297,7 +79123,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78326,7 +79152,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78355,7 +79181,7 @@
                    <string>kΩ</string>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78384,7 +79210,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78413,7 +79239,7 @@
                    <string/>
                   </property>
                   <property name="text">
-                   <string>1</string>
+                   <string>1000</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -78739,7 +79565,7 @@
                   <string>低温报警检出温度值</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0123</string>
@@ -78768,7 +79594,7 @@
                   <string>低温报警故障恢复温度点</string>
                  </property>
                  <property name="text">
-                  <string>Uint8</string>
+                  <string>int8</string>
                  </property>
                  <property name="text">
                   <string>0x0124</string>

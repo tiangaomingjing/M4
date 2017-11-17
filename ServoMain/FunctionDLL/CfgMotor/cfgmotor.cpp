@@ -247,5 +247,5 @@ void CfgMotor::connectionSignalSlotHandler()
 }
 void CfgMotor::onCheckError()
 {
-  QMessageBox::information(0,tr("warnning"),tr("Imax value is too small"));
+  //QMessageBox::information(0,tr("warnning"),tr("Imax value is too small"));
 }
