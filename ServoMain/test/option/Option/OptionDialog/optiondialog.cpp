@@ -17,8 +17,10 @@ OptionDialog::OptionDialog(Option *option, QWidget *parent) :
   ui->listWidget->addItem(item);
   item=new QListWidgetItem(QIcon(":/menu_auto.png"),tr("AutoLoad"),ui->listWidget);
   ui->listWidget->addItem(item);
+
   item=new QListWidgetItem(QIcon(":/menu_plotview.png"),tr("PlotWidget"),ui->listWidget);
   ui->listWidget->addItem(item);
+
   connect(ui->listWidget,SIGNAL(currentRowChanged(int)),this,SLOT(onListWidgetCurrentRowChanged(int)));
 
   initialUiByOptionData();
@@ -105,6 +107,7 @@ void OptionDialog::onCheckBoxAutoLoadClicked(bool checked)
   qDebug()<<checked;
   m_option->m_autoLoadItem->setModify(true);
 }
+
 void OptionDialog::onDelayTimeValueChanged(int v)
 {
   m_option->m_plotItem->setModify(true);
@@ -116,6 +119,7 @@ void OptionDialog::onBtnApplyClicked()
   //先判断哪一个被修改过了
   //修改过了的更新数据,并执行操作
   m_accept=true;
+
   //userlogin
   if(m_option->m_userLoginItem->modify())
   {
@@ -153,6 +157,7 @@ void OptionDialog::onBtnApplyClicked()
     qDebug()<<"update Option autoLoadItem...";
   }
 
+
   //plotWidget
   if(m_option->m_plotItem->modify())
   {
@@ -160,7 +165,6 @@ void OptionDialog::onBtnApplyClicked()
     m_option->m_plotItem->onApply();
     m_option->m_plotItem->setModify(false);
   }
-
 }
 
 void OptionDialog::onBtnCancelClicked()

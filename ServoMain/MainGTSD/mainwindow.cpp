@@ -36,6 +36,7 @@
 #include "Option/optionuserloginitem.h"
 #include "Option/optionplotitem.h"
 #include "Option/OptionDialog/optiondialog.h"
+#include "../test/Write2EEprom/dialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -64,7 +65,9 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
+
 #define SDT_VERSION "1.1.9"
+
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -1405,6 +1408,11 @@ void MainWindow::onActionRestoreFactorySettingClicked()
   ui->progressBar->hide();
 }
 
+void MainWindow::onActionWrite2EEpromClicked() {
+    Dialog w;
+    w.show();
+}
+
 void MainWindow::onActionAboutConfigClicked()
 {
   QMessageBox mess;
@@ -1831,6 +1839,9 @@ void MainWindow::createMenus(void)
   menuDsp->addAction(m_actResetServo);
   menuDsp->addAction(m_actRestoreFactorySetting);
   m_menuTool->addAction(m_actFPGAControl);
+  m_write2EEprom = new QAction(tr("Write to EEprom"), this);
+  connect(m_write2EEprom, SIGNAL(triggered()), this, SLOT(onActionWrite2EEpromClicked()));
+  m_menuTool->addAction(m_write2EEprom);
   m_menuTool->addSeparator();
   //增加首选项
   m_menuTool->addAction(m_actOption);

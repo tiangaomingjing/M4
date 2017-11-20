@@ -31,7 +31,8 @@ INCLUDEPATH +=$${PWD}/..\
                 $${PWD}/../FunctionDLL/ModuleIO\
                 $${PWD}/../FunctionDLL/PlotWaveUi\
                 $${PWD}/../FunctionDLL/ModuleIoNew\
-                $${PWD}/../FunctionDLL/CfgBrake
+                $${PWD}/../FunctionDLL/CfgBrake\
+                $${PWD}/../test/Write2EEprom\
 
 
 CONFIG(debug, debug|release){
@@ -123,7 +124,16 @@ SOURCES += main.cpp\
     Option/optionuserloginitem.cpp \
     Option/OptionDialog/optiondialog.cpp \
     singleapplication.cpp \
+<<<<<<< HEAD
+    NavigationConfig/main.cpp \
+    NavigationConfig/treeitem.cpp \
+    NavigationConfig/treemodel.cpp \
+    UserRole/logindialog.cpp \
+    UserRole/userrole.cpp \
+    ../test/Write2EEprom/dialog.cpp
+=======
     Option/optionplotitem.cpp
+>>>>>>> upstream/develop
 
 
 HEADERS  += mainwindow.h \
@@ -163,7 +173,15 @@ HEADERS  += mainwindow.h \
     Option/optionuserloginitem.h \
     Option/OptionDialog/optiondialog.h \
     singleapplication.h \
+<<<<<<< HEAD
+    NavigationConfig/treeitem.h \
+    NavigationConfig/treemodel.h \
+    UserRole/logindialog.h \
+    UserRole/userrole.h \
+    ../test/Write2EEprom/dialog.h
+=======
     Option/optionplotitem.h
+>>>>>>> upstream/develop
 
 FORMS    += mainwindow.ui \
     NewConfigDialog/NewConfigDialog.ui \
@@ -176,7 +194,13 @@ FORMS    += mainwindow.ui \
     FpgaDialogSetting/fpgadialogsetting.ui \
     Uboot/ubootdialog.ui \
     FpgaDialogSetting/fpgadialogsettingrnnet.ui \
+<<<<<<< HEAD
+    Option/OptionDialog/optiondialog.ui \
+    ../test/Write2EEprom/dialog.ui \
+    UserRole/logindialog.ui
+=======
     Option/OptionDialog/optiondialog.ui
+>>>>>>> upstream/develop
 
 RESOURCES += \
     image.qrc \

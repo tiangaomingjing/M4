@@ -11,4 +11,5 @@ SUBDIRS += \
     FillLimit \
     option \
     CustomPlot \
-    SingleApplication
+    SingleApplication \
+    Write2EEprom

@@ -5,7 +5,9 @@
 class OptionAutoLoadItem;
 class OptionUserLoginItem;
 class IOptionItem;
+
 class OptionPlotItem;
+
 
 class Option : public QObject
 {

@@ -26,7 +26,6 @@
 #include <Qsci/qsciglobal.h>
 #include <Qsci/qsciscintillabase.h>
 
-
 class QsciScintilla;
 
 

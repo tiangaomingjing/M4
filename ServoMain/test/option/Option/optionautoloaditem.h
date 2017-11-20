@@ -10,6 +10,8 @@ public:
   virtual ~OptionAutoLoadItem();
 
   bool autoLoadById() const;
+
+
   void setAutoLoadById(bool autoLoad);
 
 private:

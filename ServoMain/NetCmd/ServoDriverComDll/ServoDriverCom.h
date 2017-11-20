@@ -36,6 +36,7 @@ protected:
 	const Uint16					FPGA_MD			= (0xFF00 + (0x0004 << 1));
 	const Uint16					FPGA_ADD_A	= (0xFF00 + (0x0006 << 1));
 	const Uint16					FPGA_ADD_B		= (0xFF00 + (0x0006 << 1));
+
 protected:
 	int16 GetCmdIDAndAxisNum(short cmdID, short motorNum);////将命令ID和轴号合并成一个short，其中bit[0-11]为命令ID, bit[12 - 15]为轴号
 public:

@@ -109,6 +109,7 @@ private slots:
   void onActionNormalizeTreeClicked();
   void onActionFPGAConfigurationClicked();
   void onActionRestoreFactorySettingClicked(void);
+  void onActionWrite2EEpromClicked();
   //help
   void onActionAboutConfigClicked();
   void onActionAboutSDTClicked();
@@ -214,6 +215,7 @@ private:
   QAction *m_actFPGAControl;
   QAction *m_actFuncConfig;
   QAction *m_actFuncSave;
+  QAction *m_write2EEprom;
   //程序烧写
   QAction *m_actProgramUpdate;
   QAction *m_actResetServo;

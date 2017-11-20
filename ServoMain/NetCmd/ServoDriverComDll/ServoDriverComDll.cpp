@@ -1,4 +1,4 @@
-ï»¿//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 //	summary				:	Communicaiton cmd layer Define		 						//
 //	file				:	ServoDriverComDll.cpp										//
 //	Description			:	use for cmd define											//
@@ -26,7 +26,7 @@
 #include "ServoDriverCom.h"
 #include "Eeprom.h"
 
-//ä¸ºäº†è·å–ç½‘å¡è¿æ¥çš„çŠ¶æ€å’Œé€Ÿç‡ï¼Œå› ä¸ºç­‰ç¯ç½‘ä¸æ”¯æŒç™¾å…†ï¼Œç°åœ¨åªæ”¯æŒåƒå…†ï¼Œå¦‚æœæ˜¯ç™¾å…†ï¼Œ
+//ÎªÁË»ñÈ¡Íø¿¨Á¬½ÓµÄ×´Ì¬ºÍËÙÂÊ£¬ÒòÎªµÈ»·Íø²»Ö§³Ö°ÙÕ×£¬ÏÖÔÚÖ»Ö§³ÖÇ§Õ×£¬Èç¹ûÊÇ°ÙÕ×£¬
 #include <winsock2.h>
 #include <ws2tcpip.h>
 
@@ -80,12 +80,12 @@ int16 GTSD_Convert_axi(int16& axis)
 	return (station_id>>8) & 0xFF;
 };
 //////////////////////////////////////////////////////////////////////////
-//å¤šçº¿ç¨‹ä¿æŠ¤
+//¶àÏß³Ì±£»¤
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type)
 {
 	int16 progress;
 	void* ptr = ptrv;
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 0;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 	////////////////////////if use the ring net way//////////////////////////////////////////////////
@@ -257,7 +257,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Open(void(*tpfUpdataProgressPt)(void*, int1
 			return RTN_MALLOC_FAIL;
 		}
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 5;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1215,16 +1215,16 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 	{
 		return -1;
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 0;
 	(*tpfUpdataProgressPt)(ptr,&progress);
 
 	Uint16 pre_mode = GTSD_CMD_FroceCheckMode(CRingNetInterface::COM_DSP_CHEKC_FORCE_OFF);
-	//å¤ä½å˜é‡
+	//¸´Î»±äÁ¿
 	g_hex->ResetVar();
 
 	int16 rtn;
-	//å…³ä¸­æ–­
+	//¹ØÖĞ¶Ï
 	rtn = GTSD_CMD_InterruptSwitch(axis, 0, com_type, stationId);
 	if (rtn!=0)
 	{
@@ -1238,12 +1238,12 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		GTSD_CMD_FroceCheckMode(pre_mode);
 		return rtn;
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 10;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
-	//è®¡ç®—éœ€è¦æ“¦å‡ºå¤šå°‘å—block,å…ˆå°†16bitæ•°æ®ä¸ªæ•°è½¬åŒ–ä¸ºbité•¿åº¦
-	//flash 2M byte 4kbyte ä¸º1ä¸ªblock 
+	//¼ÆËãĞèÒª²Á³ö¶àÉÙ¿éblock,ÏÈ½«16bitÊı¾İ¸öÊı×ª»¯Îªbit³¤¶È
+	//flash 2M byte 4kbyte Îª1¸öblock 
 	byteLenth = g_hex->dataLenth * 2;
 	block = (int16)(byteLenth / 4096.0);
 	block += 1;
@@ -1254,7 +1254,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		GTSD_CMD_FroceCheckMode(pre_mode);
 		return rtn;
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 30;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1265,7 +1265,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		return rtn;
 	}
 
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 50;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1277,7 +1277,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		return rtn;
 	}
 
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 90;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1288,14 +1288,14 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 		return rtn;
 	}
 
-	//å¼€ä¸­æ–­
+	//¿ªÖĞ¶Ï
 	rtn = GTSD_CMD_InterruptSwitch(axis, 1, com_type, stationId);
 	if (rtn != 0)
 	{
 		GTSD_CMD_FroceCheckMode(pre_mode);
 		return rtn;
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦s
+	//°Ù·Ö±È½ø¶Ès
 	progress = 100;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1335,7 +1335,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, 
 		return -2;
 	}
 
-	//è½´æ˜¯å¦è¶…é™
+	//ÖáÊÇ·ñ³¬ÏŞ
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return -1;
@@ -1358,7 +1358,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, 
 // 	default:
 // 		break;
 // 	}
-	//è®¾ç½®å¯åŠ¨æ ‡å¿—
+	//ÉèÖÃÆô¶¯±êÖ¾
 	g_plotWave->pw_RunFlag[axis_t] = true;
 
 	return 0;
@@ -1372,7 +1372,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 // 		{
 // 			return RTN_OBJECT_UNCREATED;
 // 		}
-// 		//åœæ­¢dspAå‘FPGAçš„FIFOä¸­å†™æ•°æ®
+// 		//Í£Ö¹dspAÏòFPGAµÄFIFOÖĞĞ´Êı¾İ
 // 		wave.cmd.bit.ENP = 0;
 // 		short rtn = GTSD_CMD_SetWaveBuf(axis>>1, wave, com_type, stationId);
 // 		if (rtn)
@@ -1383,7 +1383,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 	{
 		return -2;
 	}
-	//è½´æ˜¯å¦è¶…é™
+	//ÖáÊÇ·ñ³¬ÏŞ
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return -1;
@@ -1406,7 +1406,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 // 	default:
 // 		break;
 // 	}
-	//è®¾ç½®å¯åŠ¨æ ‡å¿—ä¸ºfalse
+	//ÉèÖÃÆô¶¯±êÖ¾Îªfalse
 	g_plotWave->pw_RunFlag[axis_t] = false;
 
 	return 0;
@@ -1426,7 +1426,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_PcGetWaveData(int16& axis, double** data, i
 	{
 		return -2;
 	}
-	//è½´æ˜¯å¦è¶…é™
+	//ÖáÊÇ·ñ³¬ÏŞ
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return -1;
@@ -1458,7 +1458,7 @@ SERVODRIVERCOMDLL_API bool GTSD_CMD_CheckPlotState(int16& axis, int16 stationId 
 	{
 		return false;
 	}
-	//è½´æ˜¯å¦è¶…é™
+	//ÖáÊÇ·ñ³¬ÏŞ
 	if ((axis < 0) || (axis >= CPlotWave::pw_MaxAxis))
 	{
 		return false;
@@ -1482,19 +1482,19 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
 	}
 	if (g_firmwareDl == NULL)
 	{
-    return Unlock(-1);//add by chenchao è¿”å›æ—¶å…ˆé‡Šæ”¾ä¿¡å·é‡ï¼Œç»™å…¶å®ƒä»»åŠ¡ä½¿ç”¨
+    return Unlock(-1);//add by chenchao ·µ»ØÊ±ÏÈÊÍ·ÅĞÅºÅÁ¿£¬¸øÆäËüÈÎÎñÊ¹ÓÃ
 	}
 
 	if (com_type == GTSD_COM_TYPE_RNNET)  stationId = GTSD_Convert_axi(axis);
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 0;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
 	int16 rtn = 0;
-	//å¤ä½å˜é‡
+	//¸´Î»±äÁ¿
 	g_firmwareDl->ResetVar();
 
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 5;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1505,7 +1505,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
     return Unlock(-2);
 	}
 
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 100;
 	if (tpfUpdataProgressPt) (*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1617,7 +1617,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Hex2Ldr(wstring& HexFile, wstring& LdrFile,
 	{
 		return -1;
 	}
-	//è¿™é‡Œåœ°å€å›ºå®šï¼Œå› ä¸ºä¸€èˆ¬ä¸ä¼šå˜åŠ¨ï¼Œ1000æ˜¯å› ä¸ºå‰é¢æœ‰åŠ å¯†çš„éƒ¨åˆ†
+	//ÕâÀïµØÖ·¹Ì¶¨£¬ÒòÎªÒ»°ã²»»á±ä¶¯£¬1000ÊÇÒòÎªÇ°ÃæÓĞ¼ÓÃÜµÄ²¿·Ö
 	string addr = "10000000";
 	g_hex2ldr->hex2ldr_execute(ws2s(HexFile), ws2s(LdrFile), addr);
 	
@@ -1673,18 +1673,18 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstrin
 	{
 		return -1;
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 0;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
 	int16 rtn;
-	//æ‰“å¼€ä¸²å£ï¼Œæ ¹æ®æ³¢ç‰¹ç‡
+	//´ò¿ª´®¿Ú£¬¸ù¾İ²¨ÌØÂÊ
 	rtn = GTSD_CMD_OpenSerialPort(axis, baudRate, com_type, stationId);
 	if (rtn != 0)
 	{
 		return -1;
 	}
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 10;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1695,7 +1695,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstrin
 		return -2;
 	}
 	
-	//ç™¾åˆ†æ¯”è¿›åº¦
+	//°Ù·Ö±È½ø¶È
 	progress = 100;
 	(*tpfUpdataProgressPt)(ptr, &progress);
 
@@ -1844,10 +1844,10 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void)
       printf("\tMtu[%d]:\t\t %ld\n", i, pIfRow->dwMtu);
       printf("\tSpeed[%d]:\t %ld\n", i, pIfRow->dwSpeed);
 
-      //åˆ¤æ–­ç½‘å¡åå­—æ˜¯å¦ä¸€è‡´ï¼Œä¸€è‡´å†åˆ¤æ–­é€Ÿåº¦ã€‚
+      //ÅĞ¶ÏÍø¿¨Ãû×ÖÊÇ·ñÒ»ÖÂ£¬Ò»ÖÂÔÙÅĞ¶ÏËÙ¶È¡£
       tmp = ((const char*)pIfRow->bDescr);
       tmpid = ws2s(pIfRow->wszName);
-      //æ‰¾åˆ°æ‹¬å·ä½ç½®
+      //ÕÒµ½À¨ºÅÎ»ÖÃ
       int16 pos_start;
       int16 pos_end;
       string tmpValue;
@@ -1855,7 +1855,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void)
       string brace_end = "}";
       pos_start = tmpid.find(brace_start.c_str());
       pos_end = tmpid.find(brace_end.c_str());
-      //æ²¡æ‰¾åˆ°æ‹¬å·
+      //Ã»ÕÒµ½À¨ºÅ
       if ((pos_start == -1) || (pos_end == -1))
       {
         return 1;
@@ -1939,7 +1939,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void)
 //  string tmpid = "";
 //  Uint32 i, j;
 
-//  //è¾“å‡ºè°ƒè¯•ä¿¡æ¯åˆ°æ§åˆ¶å°
+//  //Êä³öµ÷ÊÔĞÅÏ¢µ½¿ØÖÆÌ¨
 //  AllocConsole();
 
 //  if (NetCardName == L"")
@@ -2024,10 +2024,10 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void)
 //      _cprintf_s("\tMtu[%d]:\t\t %ld\n", i, pIfRow->dwMtu);
 //      _cprintf_s("\tSpeed[%d]:\t %ld\n", i, pIfRow->dwSpeed);
 
-//      //åˆ¤æ–­ç½‘å¡åå­—æ˜¯å¦ä¸€è‡´ï¼Œä¸€è‡´å†åˆ¤æ–­é€Ÿåº¦ã€‚
+//      //ÅĞ¶ÏÍø¿¨Ãû×ÖÊÇ·ñÒ»ÖÂ£¬Ò»ÖÂÔÙÅĞ¶ÏËÙ¶È¡£
 //      tmp = ((const char*)pIfRow->bDescr);
 //      tmpid = ws2s(pIfRow->wszName);
-//      //æ‰¾åˆ°æ‹¬å·ä½ç½®
+//      //ÕÒµ½À¨ºÅÎ»ÖÃ
 //      int16 pos_start;
 //      int16 pos_end;
 //      string tmpValue;
@@ -2035,7 +2035,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void)
 //      string brace_end = "}";
 //      pos_start = tmpid.find(brace_start.c_str());
 //      pos_end = tmpid.find(brace_end.c_str());
-//      //æ²¡æ‰¾åˆ°æ‹¬å·
+//      //Ã»ÕÒµ½À¨ºÅ
 //      if ((pos_start == -1) || (pos_end == -1))
 //      {
 //        return 1;

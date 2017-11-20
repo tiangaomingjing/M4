@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+
   writeSettings();
   delete ui;
 
@@ -52,6 +53,7 @@ void MainWindow::writeSettings()
 {
   QSettings settings("./start.ini",
                      QSettings::IniFormat);
+
 //  settings.beginGroup("UserRole");
 //  settings.setValue("userType",QVariant((int)option->m_userLoginItem->userType()));
 //  settings.setValue("needCheck",option->m_userLoginItem->adminNeedChecked());
@@ -97,4 +99,5 @@ void MainWindow::readSettings()
   option->m_plotItem->setDelayTime(delay);
   settings.endGroup();
   qDebug()<<"auto load :"<<avalue;
+
 }
