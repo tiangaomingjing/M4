@@ -18,11 +18,16 @@ private:
   void initialUiByOptionData();
 private slots:
   void onListWidgetCurrentRowChanged(int row);
+
+  //userLogin
   void onRadioBtnGeneralClicked(bool checked);
   void onRadioBtnAdminClicked(bool checked);
   void onCheckBoxAmdinNeedClicked(bool checked);
   void onLineEditPWTextChanged(QString pw);
+  //autoLoad
   void onCheckBoxAutoLoadClicked(bool checked);
+  //plotWidget
+  void onDelayTimeValueChanged(int v);
 
   void onBtnApplyClicked();
   void onBtnCancelClicked();

@@ -36,6 +36,7 @@ class QTableWidget;
 class QComboBox;
 class UsrCurveTreeManager;
 class RollBoxWidget;
+class OptionPlotItem;
 
 class TableParameters
 {
@@ -113,6 +114,8 @@ public slots:
   void onClearPlotWave(void);//连接到主窗口中新建版本的更新请求
 
   void onStopThreadSampling();//连接到主窗口中停止采样请求（发生断线时,如果现在正在采样的话）
+
+  void onOptionChanged();
 
 private slots:
 
@@ -280,7 +283,7 @@ private:
   RollBoxWidget *m_rollBoxUi;
   QStringList m_servoModeNameList;
 
-
+  OptionPlotItem  *mp_option;
 };
 
 #endif // PLOTWAVE_H

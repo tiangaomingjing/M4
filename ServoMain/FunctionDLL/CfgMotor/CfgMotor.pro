@@ -62,4 +62,5 @@ DISTFILES += \
     V128/components/CfgMotor/MyTextInput.qml \
     V128/components/CfgMotor/RollBarHorizontal.qml \
     V128/components/CfgMotor/Velocity.qml \
-    V128/components/CfgMotor/Velocity-old.qml
+    V128/components/CfgMotor/Velocity-old.qml \
+    V129/CfgMotor.qml
