@@ -3,7 +3,7 @@ import QtQuick.Layouts 1.1
 //import QtClass 1.0
 
 import "./components/CfgMotor"
-//import QmlGlobalClass 1.0
+import QmlGlobalClass 1.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
@@ -441,7 +441,7 @@ Rectangle{
             height: parent.height;
             Timer{
                 id:m_timerMsg;
-                interval: 1000;
+                interval: 2000;
                 repeat: false;
                 triggeredOnStart: false;
                 onTriggered: {
@@ -452,7 +452,7 @@ Rectangle{
             ColumnLayout{
                 anchors.fill: parent;
                 anchors.margins: 10;
-                spacing: 10;
+                spacing: 5;
                 //电机详细参数显示表
                 Rectangle{
                     color:backgroundColor;
@@ -461,6 +461,7 @@ Rectangle{
                     radius: 10;
                     border.color: frameColor;
                     border.width: 2;
+                    clip:true;
                     ListView{
                         id:m_listView_motorPrm;
                         anchors.fill: parent;
@@ -483,13 +484,60 @@ Rectangle{
                         highlightResizeDuration: 100;
                     }
                 }
-                Text{
+                Rectangle{
                     id:m_msgShow;
-                    text:qsTr("信息");
-                    visible: false;
                     Layout.fillWidth: true;
-                    horizontalAlignment: Text.AlignRight;
+                    property string text;
                     height: 40;
+                    color:"transparent";
+                    radius: 5;
+                    visible: false;
+                    function setCurrentState(state,text){
+                        m_msgShow.state=state;
+                        m_msgShow.text=text;
+                    }
+
+                    Text{
+                        id:m_msgText;
+                        anchors.fill: parent;
+                        anchors.margins: 5;
+                        text:parent.text;
+                        horizontalAlignment: Text.AlignLeft;
+                        verticalAlignment: Text.AlignVCenter;
+                        height: 40;
+                        font.pixelSize: 16;
+                    }
+                    state:"normal"
+                    states:[
+                        State{
+                            name:"normal";
+                            changes: [
+                                PropertyChanges {
+                                    target: m_msgShow;
+                                    color:"transparent";
+                                },
+                                PropertyChanges {
+                                    target: m_msgText;
+                                    color:"black";
+                                    font.bold: false;
+                                }
+                            ]
+                        },
+                        State{
+                            name:"error";
+                            changes: [
+                                PropertyChanges {
+                                    target: m_msgShow;
+                                    color:"red";
+                                },
+                                PropertyChanges {
+                                    target: m_msgText;
+                                    color:"white";
+                                    font.bold: true;
+                                }
+                            ]
+                        }
+                    ]
                 }
 
                 //按钮操作区
@@ -700,14 +748,14 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     if(motorInputName.text==""){
-                                        m_msgShow.text=qsTr("提示：电机名称不能为空!");
+                                        m_msgShow.setCurrentState("error",qsTr("提示：电机名称不能为空!"));
                                     }
                                     else{
                                         m_saveDialog.visible=false;
                                         m_normalDialog.visible=true;
                                         //写入数据库
                                         m_motorDataBaseUi.insertRecordData();
-                                        m_msgShow.text=qsTr("保存电机至用户库!");
+                                        m_msgShow.setCurrentState("error",qsTr("保存电机至用户库!"));
 
                                         if(m_listView_company.currentIndex==companyModel.rowCount()-1){
                                             motorModel.select();

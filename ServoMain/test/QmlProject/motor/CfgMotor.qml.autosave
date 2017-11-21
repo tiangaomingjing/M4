@@ -1,6 +1,6 @@
 ﻿import QtQuick 2.5
 import QtQuick.Layouts 1.1
-import QtClass 1.0
+//import QtClass 1.0
 
 import "./components/CfgMotor"
 import QmlGlobalClass 1.0
@@ -8,8 +8,6 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Rectangle{
-
-
     id:root;
     color: "#F0F0F0";
     width: 800;
@@ -18,8 +16,13 @@ Rectangle{
     property color pressColor: "#567DBC";
     property color frameColor: "#BBB9B9";
     property color backgroundColor: Qt.lighter(frameColor,1.2);
-    property var inputEditArray: null;//这个对应到树行的顺序
-
+//    QmlFactory{
+//        id:factory;
+//        property QTreeWidgetProxy dataTree: null;
+//        onInitialFactory:{
+//            dataTree=factory.createQTreeWidgetProxy(treeSource,driveMotor);
+//        }
+//    }
     function switchUi(isHome){
         if(isHome){
             m_motorPrmUi.x=-root.width-1000;
@@ -30,44 +33,12 @@ Rectangle{
             m_motorDataBaseUi.x=root.width+1000;
         }
     }
-    function setEditSate(row,hasError)
-    {
-        if(hasError)
-            inputEditArray[row].setErrorState();
-        else
-            inputEditArray[row].resetbackground();
-    }
 
-    Component.onCompleted: {
-        console.log("cfgmotor on completed");
-        inputEditArray= [
-                         cur.irat_1,
-                         cur.imax_1,
-                         vel.sct_1,
-                         vel.srat_1,
-                         vel.nos_1,
-                         forprm.tqr_1,
-                         mecprm.ppn_1,
-                         forprm.vmax_1,
-                         forprm.phim_1,
-                         imp.ldm_1,
-                         imp.lqm_1,
-                         imp.rm_1,
-                         mecprm.jm_1,
-                         mecprm.jrat_1,
-                         mecprm.fm_1
-                         ];
-        driveMotor.qmlEditUiStateChanged.connect(setEditSate);
-    }
-
-//    Item{
-//        id:factory
-//        property var dataTree: null;
-//    }
     Item{
-        Component.onCompleted: {
-            console.log("m_motorPrmUi on completed");
-        }
+        id:factory
+        property var dataTree: null;
+    }
+    Item{
         id:m_motorPrmUi
         x:0;
         y:0;
@@ -91,9 +62,6 @@ Rectangle{
                         Layout.fillWidth: true;
                         Layout.minimumWidth: 200;
                         Layout.minimumHeight: 80;
-                        Component.onCompleted: {
-                            console.log("Current on completed");
-                        }
                     }
                     Rectangle{
                         id:motorConfig;
@@ -114,6 +82,7 @@ Rectangle{
 //                                switchUi(true);
 //                            }
 //                        }
+
                         Image {
                             id: motorImg;
                             anchors.top: parent.top;
@@ -164,9 +133,6 @@ Rectangle{
                 Layout.fillHeight:true;
                 Layout.fillWidth: true;
                 Layout.minimumHeight: 80;
-                Component.onCompleted: {
-                    console.log("Velocity on completed");
-                }
             }
 
             Impedance{
@@ -175,9 +141,6 @@ Rectangle{
                 Layout.fillHeight:true;
                 Layout.fillWidth: true;
                 Layout.minimumHeight: 80;
-                Component.onCompleted: {
-                    console.log("Impedance on completed");
-                }
             }
 
             MechanicalParameter{
@@ -186,9 +149,6 @@ Rectangle{
                 Layout.fillHeight:true;
                 Layout.fillWidth: true;
                 Layout.minimumHeight: 80;
-                Component.onCompleted: {
-                    console.log("MechanicalParameter on completed");
-                }
             }
 
             ForceParameter{
@@ -197,9 +157,6 @@ Rectangle{
                 Layout.fillHeight:true;
                 Layout.fillWidth: true;
                 Layout.minimumHeight: 80;
-                Component.onCompleted: {
-                    console.log("ForceParameter on completed");
-                }
             }
         }
         Behavior on x {
@@ -210,33 +167,21 @@ Rectangle{
     }
 
     Item{
-        Component.onCompleted: {
-            console.log("m_motorDataBaseUi on completed");
-            m_listView_company.currentIndex=0;
-        }
         id:m_motorDataBaseUi
         x:root.width+1000;
         y:0;
         width: root.width;
         height: root.height;
         property var chineseNameMap: {
-            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"相电阻","Ldm":"D轴相电感",
-            "Lqm":"Q轴相电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
+            "Imax":"最大电流","Irat":"额定电流","Sct":"额定转速","Srat":"过速百分比","Nos":"最大转速","Rm":"电阻","Ldm":"D轴电感",
+            "Lqm":"Q轴电感","Jm":"电机转动惯量","Jrat":"惯量比","Fm":"摩擦系数","PPN":"极对数",
             "Tqr":"额定转矩","PHIm":"反电动势系数","Vmax":"最大电压"
         }
         property var unitNameMap: {
-            "Imax":"A(peak)","Irat":"A(rms)","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
+            "Imax":"A","Irat":"A","Sct":"rpm","Srat":"%","Nos":"rpm","Rm":"Ohm	","Ldm":"mH",
             "Lqm":"mH","Jm":"10^-6.kg.m^2","Jrat":"%","Fm":"10^-4.N.m/(rad/s)","PPN":"pair",
-            "Tqr":"N.m","PHIm":"mVpeak/rpm","Vmax":"V"
+            "Tqr":"N.m","PHIm":"mV/rpm","Vmax":"V"
         }
-        property var prmIndex: {
-            "PRM_IMAX":0,"PRM_IRAT":1,"PRM_SCT":2,"PRM_SRAT":3,"PRM_NOS":4,"PRM_RM":5,"PRM_LDM":6,
-            "PRM_LQM":7,"PRM_JM":8,"PRM_JRAT":9,"PRM_FM":10,"PRM_PPN":11,
-            "PRM_TQR":12,"PRM_PHIM":13,"PRM_VMAX":14
-        }
-        property var titleArray: ["Imax","Irat","Sct","Srat","Nos","Rm","Ldm",
-            "Lqm","Jm","Jrat","Fm","PPN","Tqr","PHIm","Vmax"];
-
         function fillPrmModel(keyId){
             prmModel.setFilter(qsTr("Id=%1").arg(keyId));
             prmModel.select();
@@ -256,7 +201,6 @@ Rectangle{
                 }
             }
         }
-
         function clearPrmModel(){
             var columnCount=prmModel.recordColumnCount();
             console.log(qsTr("rec:columnCount %1").arg(columnCount));
@@ -318,7 +262,6 @@ Rectangle{
             }
             totalModel.submitAll();
         }
-
         function updateRecordData(){
             var hasModified=false;
             if(prmModel.rowCount()===1){
@@ -391,7 +334,6 @@ Rectangle{
                         delegate: companyDelegate;
                         focus: true;
                         clip: true;
-                        currentIndex:-1;
                         highlight: Rectangle{
                             color:enabled?pressColor:backgroundColor;
                         }
@@ -411,15 +353,16 @@ Rectangle{
 //                        }
 
                         onCurrentIndexChanged: {
+                            //var selectCompanyName=currentItem.text;
+                            //var companyId=m_motorDataBaseUi.companyId(selectCompanyName);
                             var companyId=companyModel.recordValueAt(currentIndex,0);
                             motorModel.setFilter(qsTr("CompanyId=%1").arg(companyId));
                             motorModel.select();
                             m_listView_motorType.currentIndex=0;
                             var keyId;
                             keyId=motorModel.recordValueAt(0,0);
-                            console.log("公司选择 1");
                             m_motorDataBaseUi.fillPrmModel(keyId);
-                            console.log("公司选择 2");
+
                             //是否激活移除按钮
                             if((currentIndex==companyModel.rowCount()-1)&&motorModel.rowCount()>1){
                                 m_btnRemove.enabled=true;
@@ -466,7 +409,6 @@ Rectangle{
                         id:m_listView_motorType;
                         model:motorModel;
                         delegate: motorDelegate;
-                        currentIndex: 0;
                         clip:true;
                         highlight: Rectangle{
                             color:enabled?pressColor:"red";
@@ -474,16 +416,12 @@ Rectangle{
                         highlightMoveDuration: 500;
                         highlightResizeDuration: 100;
                         onCurrentIndexChanged: {
-                            console.log("onCurrentIndexChanged---");
-                            console.log("motorModel :"+motorModel);
                             var keyId;
                             keyId=motorModel.recordValueAt(currentIndex,0);
-                            console.log("motorModel :"+motorModel);
-                            console.log("电机选择 1");
                             m_motorDataBaseUi.fillPrmModel(keyId);
-                            console.log("电机选择 2");
                         }
                         Component.onCompleted:{
+                            currentIndex=0;
                         }
                         RollBarHorizontal{
                             listView: m_listView_motorType;
@@ -503,7 +441,7 @@ Rectangle{
             height: parent.height;
             Timer{
                 id:m_timerMsg;
-                interval: 3000;
+                interval: 2000;
                 repeat: false;
                 triggeredOnStart: false;
                 onTriggered: {
@@ -514,7 +452,7 @@ Rectangle{
             ColumnLayout{
                 anchors.fill: parent;
                 anchors.margins: 10;
-                spacing: 10;
+                spacing: 5;
                 //电机详细参数显示表
                 Rectangle{
                     color:backgroundColor;
@@ -523,6 +461,7 @@ Rectangle{
                     radius: 10;
                     border.color: frameColor;
                     border.width: 2;
+                    clip:true;
                     ListView{
                         id:m_listView_motorPrm;
                         anchors.fill: parent;
@@ -750,7 +689,6 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     switchUi(false);
-                                    m_msgShow.visible=false;
                                 }
                             }
                             Text{
@@ -769,25 +707,6 @@ Rectangle{
                     Layout.maximumHeight: 40;
                     Layout.minimumHeight: 35;
                     visible: false;
-                    Component{
-                        id:motorInputTextStyle;
-                        TextFieldStyle{
-                            textColor: "black";
-                            passwordCharacter: "0"
-                            placeholderTextColor:"lightgray"
-                            background: Rectangle{
-                                radius: 5;
-                                implicitWidth: 180;
-                                implicitHeight: 30;
-                                border.color: "#333";
-                                border.width: 1;
-                            }
-                            Component.onCompleted: {
-                                console.log("TextFieldStyle on completed");
-                            }
-                        }
-                    }
-
                     RowLayout{
                         anchors.fill: parent;
                         spacing: 15;
@@ -799,7 +718,17 @@ Rectangle{
                         TextField{
                             id:motorInputName;
                             placeholderText:"请输入你的电机名称......"
-                            style:motorInputTextStyle;
+                            style:TextFieldStyle{
+                                textColor: "black";
+                                placeholderTextColor:"lightgray"
+                                background: Rectangle{
+                                    radius: 5;
+                                    implicitWidth: 180;
+                                    implicitHeight: 30;
+                                    border.color: "#333";
+                                    border.width: 1;
+                                }
+                            }
                         }
                         Rectangle{
                             radius: 10;
@@ -866,7 +795,7 @@ Rectangle{
                         }
                     }
                 }
-                //移除对话框与安装电机确定对话框
+                //移除对话框
                 Item{
                     id:m_removeDialog;
                     Layout.fillHeight: true;
@@ -880,55 +809,14 @@ Rectangle{
                         repeat: true;
                         triggeredOnStart: false;
                         property int writeIndex: 0;
-                        property var inputTextArray:null;
                         onTriggered: {
-                            var count=m_listModel_motorPrm.count;
-                            var incValue=100/count;
-                            installProgressBar.value+=incValue;
-//                            console.log("progress bar value = "+installProgressBar.value);
-                            inputTextArray[writeIndex].text=m_listModel_motorPrm.get(writeIndex).value;
-                            inputTextArray[writeIndex].setInnerUiTreeValue();
-                            console.log(m_listModel_motorPrm.get(writeIndex).chineseName+"="+inputTextArray[writeIndex].text);
-                            writeIndex++;
-                            if(writeIndex>count-1){
+                            installProgressBar.value+=1;
+                            console.log("progress bar value = "+installProgressBar.value);
+                            if(installProgressBar.value>=100){
                                 m_removeDialog.visible=false;
                                 m_normalDialog.visible=true;
-                                writeIndex=0;
                                 stop();
-                                driveMotor.onWriteFuncTreetoServoFlash();
-                                m_msgShow.visible=true;
-                                if(driveMotor.passChecked()){
-                                    driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
-                                    m_msgShow.setCurrentState("normal",qsTr("电机安装成功，请复位设备，参数生效！"));
-                                    if(m_timerMsg.running==false)
-                                        m_timerMsg.start();
-                                }
-                                else{
-                                    m_msgShow.setCurrentState("error",qsTr("电机安装失败，请返回检查输入参数！"));
-                                    driveMotor.showMessage(qsTr("电机安装失败，请返回检查输入参数！")); 
-                                }
-
                             }
-                        }
-                        Component.onCompleted: {
-                           inputTextArray= [
-                                            cur.imax_1,
-                                            cur.irat_1,
-                                            vel.sct_1,
-                                            vel.srat_1,
-                                            vel.nos_1,
-                                            imp.rm_1,
-                                            imp.ldm_1,
-                                            imp.lqm_1,
-                                            mecprm.jm_1,
-                                            mecprm.jrat_1,
-                                            mecprm.fm_1,
-                                            mecprm.ppn_1,
-                                            forprm.tqr_1,
-                                            forprm.phim_1,
-                                            forprm.vmax_1
-                                            ];
-                            console.log("write timer completed");
                         }
                     }
                     Row{
@@ -1013,14 +901,6 @@ Rectangle{
                                     m_normalDialog.visible=true;
                                 }
                                 else{
-                                    var openState=driveMotor.getComConnectSatus();
-                                    if(openState===false){
-                                        m_msgShow.text=qsTr("请先打开通信端口");
-                                        m_msgShow.visible=true;
-                                        if(m_timerMsg.running==false)
-                                            m_timerMsg.start();
-                                        return;
-                                    }
                                     m_removeDialog.state="installing";
                                     m_writeTimer.start();
                                 }
@@ -1107,6 +987,7 @@ Rectangle{
                     ]
                 }
             }
+
         }
 
         Behavior on x {
@@ -1114,28 +995,32 @@ Rectangle{
                 duration: 500;
             }
         }
-
     }
 
 
     //--------------------数据模型----------------------------
+    //model company
+    ListModel{
+        id:m_listModelCompany;
+        ListElement{
+            name:"多摩川"
+        }
+        ListElement{
+            name:"安川"
+        }
+        ListElement{
+            name:"三菱"
+        }
+        ListElement{
+            name:"松下"
+        }
+        ListElement{
+            name:"用户库"
+        }
+    }
     //model motor
     ListModel{
         id:m_listModel_motorPrm;
-        Component.onCompleted: {
-            var columnCount = m_motorDataBaseUi.titleArray.length;
-            var name;
-            var unit;
-            var chineseName;
-            var val;
-            for(var j=0;j<columnCount;j++){
-                 name=m_motorDataBaseUi.titleArray[j];
-                 unit=m_motorDataBaseUi.unitNameMap[name];
-                 chineseName=m_motorDataBaseUi.chineseNameMap[name];
-                 val="0";
-                m_listModel_motorPrm.append({"chineseName":chineseName,"value":val,"unit":unit,"name":name});
-            }
-        }
     }
 
     //--------------------显示代理----------------------------
@@ -1229,7 +1114,6 @@ Rectangle{
             }
         }
     }
-
     //电机参数显示代理
     Component{
         id:motorPrmDelegate;
@@ -1419,39 +1303,30 @@ Rectangle{
         }
     }
 
-    Connections{
-        target: driveMotor;
-        onItemValueChanged:{
-            console.log("onItemValueChanged");
-            if(factory.dataTree===null)
-                return;
-            cur.irat_1.text=factory.dataTree.textTopLevel(0,1);
-            cur.imax_1.text=factory.dataTree.textTopLevel(1,1);
-
-            vel.sct_1.text=factory.dataTree.textTopLevel(2,1);
-            vel.srat_1.text=factory.dataTree.textTopLevel(3,1);
-            vel.nos_1.text=factory.dataTree.textTopLevel(4,1);
-
-            forprm.tqr_1.text=factory.dataTree.textTopLevel(5,1);
-            mecprm.ppn_1.text=factory.dataTree.textTopLevel(6,1);
-            forprm.vmax_1.text=factory.dataTree.textTopLevel(7,1);
-            forprm.phim_1.text=factory.dataTree.textTopLevel(8,1);
-            imp.ldm_1.text=factory.dataTree.textTopLevel(9,1);
-            imp.lqm_1.text=factory.dataTree.textTopLevel(10,1);
-            imp.rm_1.text=factory.dataTree.textTopLevel(11,1);
-            mecprm.jm_1.text=factory.dataTree.textTopLevel(12,1);
-            mecprm.jrat_1.text=factory.dataTree.textTopLevel(13,1);
-            mecprm.fm_1.text=factory.dataTree.textTopLevel(14,1);
+//    Connections{
+//        target: driveMotor;
+//        onItemValueChanged:{
+//            cur.irat_1.text=factory.dataTree.textTopLevel(0,1);
+//            cur.imax_1.text=factory.dataTree.textTopLevel(1,1);
+//            vel.sct_1.text=factory.dataTree.textTopLevel(2,1);
+//            vel.srat_1.text=factory.dataTree.textTopLevel(3,1);
+//            vel.nos_1.text=factory.dataTree.textTopLevel(4,1);
+//            forprm.tqr_1.text=factory.dataTree.textTopLevel(5,1);
+//            mecprm.ppn_1.text=factory.dataTree.textTopLevel(6,1);
+//            forprm.vmax_1.text=factory.dataTree.textTopLevel(7,1);
+//            forprm.phim_1.text=factory.dataTree.textTopLevel(8,1);
+//            imp.ldm_1.text=factory.dataTree.textTopLevel(9,1);
+//            imp.lqm_1.text=factory.dataTree.textTopLevel(10,1);
+//            imp.rm_1.text=factory.dataTree.textTopLevel(11,1);
+//            mecprm.jm_1.text=factory.dataTree.textTopLevel(12,1);
+//            mecprm.jrat_1.text=factory.dataTree.textTopLevel(13,1);
+//            mecprm.fm_1.text=factory.dataTree.textTopLevel(14,1);
 
 //            cur.irat_1.textColor="black";
 //            cur.imax_1.textColor="black";
-            cur.resetTextInputState();
-
 //            vel.sct_1.textColor="black";
 //            vel.srat_1.textColor="black";
 //            vel.nos_1.textColor="black";
-            vel.resetTextInputState();
-
 //            forprm.tqr_1.textColor="black";
 //            mecprm.ppn_1.textColor="black";
 //            forprm.vmax_1.textColor="black";
@@ -1462,25 +1337,8 @@ Rectangle{
 //            mecprm.jm_1.textColor="black";
 //            mecprm.jrat_1.textColor="black";
 //            mecprm.fm_1.textColor="black";
-            forprm.resetTextInputState();
-            mecprm.resetTextInputState();
-            imp.resetTextInputState();
 
-        }
-    }
-
-    QmlFactory{
-        id:factory;
-        property QTreeWidgetProxy dataTree: null;
-        onInitialFactory:{
-//            dataTree=factory.createQTreeWidgetProxy(treeSource,driveMotor);
-            console.log("factory.createQTreeWidgetProxy");
-        }
-        Component.onCompleted: {
-            dataTree=factory.createQTreeWidgetProxy(treeSource,driveMotor);
-            console.log("QmlFactory on completed");
-        }
-    }
-
+//        }
+//    }
 }
 

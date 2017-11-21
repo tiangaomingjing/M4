@@ -503,7 +503,7 @@ Rectangle{
             height: parent.height;
             Timer{
                 id:m_timerMsg;
-                interval: 1000;
+                interval: 3000;
                 repeat: false;
                 triggeredOnStart: false;
                 onTriggered: {
@@ -545,12 +545,60 @@ Rectangle{
                         highlightResizeDuration: 100;
                     }
                 }
-                Text{
+                Rectangle{
                     id:m_msgShow;
-                    text:qsTr("信息");
-                    visible: false;
                     Layout.fillWidth: true;
-                    horizontalAlignment: Text.AlignRight;
+                    property string text;
+                    height: 40;
+                    color:"transparent";
+                    radius: 5;
+                    visible: false;
+                    function setCurrentState(state,text){
+                        m_msgShow.state=state;
+                        m_msgShow.text=text;
+                    }
+
+                    Text{
+                        id:m_msgText;
+                        anchors.fill: parent;
+                        anchors.margins: 5;
+                        text:parent.text;
+                        horizontalAlignment: Text.AlignLeft;
+                        verticalAlignment: Text.AlignVCenter;
+                        height: 40;
+                        font.pixelSize: 16;
+                    }
+                    state:"normal"
+                    states:[
+                        State{
+                            name:"normal";
+                            changes: [
+                                PropertyChanges {
+                                    target: m_msgShow;
+                                    color:"transparent";
+                                },
+                                PropertyChanges {
+                                    target: m_msgText;
+                                    color:"black";
+                                    font.bold: false;
+                                }
+                            ]
+                        },
+                        State{
+                            name:"error";
+                            changes: [
+                                PropertyChanges {
+                                    target: m_msgShow;
+                                    color:"red";
+                                },
+                                PropertyChanges {
+                                    target: m_msgText;
+                                    color:"white";
+                                    font.bold: true;
+                                }
+                            ]
+                        }
+                    ]
                 }
 
                 //按钮操作区
@@ -702,6 +750,7 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     switchUi(false);
+                                    m_msgShow.visible=false;
                                 }
                             }
                             Text{
@@ -770,14 +819,14 @@ Rectangle{
                                 hoverEnabled: true;
                                 onClicked: {
                                     if(motorInputName.text==""){
-                                        m_msgShow.text=qsTr("提示：电机名称不能为空!");
+                                        m_msgShow.setCurrentState("error",qsTr("提示：电机名称不能为空!"));
                                     }
                                     else{
                                         m_saveDialog.visible=false;
                                         m_normalDialog.visible=true;
                                         //写入数据库
                                         m_motorDataBaseUi.insertRecordData();
-                                        m_msgShow.text=qsTr("保存电机至用户库!");
+                                        m_msgShow.setCurrentState("normal",qsTr("保存电机至用户库!"));
 
                                         if(m_listView_company.currentIndex==companyModel.rowCount()-1){
                                             motorModel.select();
@@ -847,10 +896,17 @@ Rectangle{
                                 writeIndex=0;
                                 stop();
                                 driveMotor.onWriteFuncTreetoServoFlash();
-                                if(driveMotor.passChecked())
+                                m_msgShow.visible=true;
+                                if(driveMotor.passChecked()){
                                     driveMotor.showMessage(qsTr("电机安装成功，请复位设备，参数生效！"));
-                                else
-                                    driveMotor.showMessage(qsTr("电机安装失败，请返回检查输入参数！"));
+                                    m_msgShow.setCurrentState("normal",qsTr("电机安装成功，请复位设备，参数生效！"));
+                                    if(m_timerMsg.running==false)
+                                        m_timerMsg.start();
+                                }
+                                else{
+                                    m_msgShow.setCurrentState("error",qsTr("电机安装失败，请返回检查输入参数！"));
+                                    driveMotor.showMessage(qsTr("电机安装失败，请返回检查输入参数！")); 
+                                }
 
                             }
                         }
