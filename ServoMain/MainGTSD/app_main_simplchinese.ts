@@ -1416,7 +1416,7 @@ do you still want to continue to download file to servo?</source>
     <message>
         <location filename="mainwindow.cpp" line="738"/>
         <source>axis number of current xml file is not equal to the device</source>
-        <translation>当前参数文件轴数与设备匹配</translation>
+        <translation type="unfinished">当前参数文件轴数与设备轴数不匹配</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="758"/>
