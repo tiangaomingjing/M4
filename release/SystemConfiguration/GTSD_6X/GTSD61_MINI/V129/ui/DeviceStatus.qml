@@ -335,7 +335,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_OB_ERR;
-                        title: "电机抱匣故障";
+                        title: "电机抱闸故障";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -353,7 +353,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_OBP;
-                        title: "电机抱匣电源故障";
+                        title: "电机抱闸电源故障";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }

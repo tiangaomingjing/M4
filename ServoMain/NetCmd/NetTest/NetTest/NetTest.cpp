@@ -9,7 +9,7 @@
 using namespace std;
 void updateProgress(void *arg, int16 *value);
 #define TEST_UBOOT 0
-#define  TEST_PLOT 0
+#define  TEST_PLOT 1
 #define TEST_FPGA 0
 #define TEST_NEW_COMUNICATION_CRC 0
 #define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/GTSD42_VA_V0_0922.rpd")
@@ -19,6 +19,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	int aa = 100;
 	int comType = 1;
 	ret = GTSD_CMD_Open(updateProgress, (void *)&aa, comType);
+	GTSD_CMD_FroceCheckMode(1);//加校验
+	//GTSD_CMD_FroceCheckMode(2);//不加校验
 	cout << "ret=" << ret;
 	//GTSD_CMD_Close(comType);
 #if TEST_FPGA
@@ -31,19 +33,69 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	WAVE_BUF_PRM buf_prm;
 	buf_prm.cmd.bit.ENP = 1;
-	buf_prm.cmd.bit.NUM = 1;
+	buf_prm.cmd.bit.NUM = 13;
 	buf_prm.cmd.bit.TIM = 1;
+
 	buf_prm.inf[0].base = 0;
-	buf_prm.inf[0].bytes = 2;
-	buf_prm.inf[0].ofst = 406;
-	int16 axisNum = 0;
+	buf_prm.inf[0].bytes = 4;
+	buf_prm.inf[0].ofst = 7244;
+
+	buf_prm.inf[1].base = 0;
+	buf_prm.inf[1].bytes = 4;
+	buf_prm.inf[1].ofst = 7248;
+
+	buf_prm.inf[2].base = 0;
+	buf_prm.inf[2].bytes = 2;
+	buf_prm.inf[2].ofst = 7252;
+
+	buf_prm.inf[3].base = 0;
+	buf_prm.inf[3].bytes = 2;
+	buf_prm.inf[3].ofst = 7254;
+
+	buf_prm.inf[4].base = 0;
+	buf_prm.inf[4].bytes = 8;
+	buf_prm.inf[4].ofst = 7256;
+
+	buf_prm.inf[5].base = 0;
+	buf_prm.inf[5].bytes = 8;
+	buf_prm.inf[5].ofst = 7264;
+
+	buf_prm.inf[6].base = 0;
+	buf_prm.inf[6].bytes = 8;
+	buf_prm.inf[6].ofst = 7272;
+
+	buf_prm.inf[7].base = 0;
+	buf_prm.inf[7].bytes = 4;
+	buf_prm.inf[7].ofst = 7248;
+
+	buf_prm.inf[8].base = 0;
+	buf_prm.inf[8].bytes = 2;
+	buf_prm.inf[8].ofst = 7252;
+
+	buf_prm.inf[9].base = 0;
+	buf_prm.inf[9].bytes = 2;
+	buf_prm.inf[9].ofst = 7254;
+
+	buf_prm.inf[10].base = 0;
+	buf_prm.inf[10].bytes = 8;
+	buf_prm.inf[10].ofst = 7256;
+
+	buf_prm.inf[11].base = 0;
+	buf_prm.inf[11].bytes = 8;
+	buf_prm.inf[11].ofst = 7264;
+
+	buf_prm.inf[12].base = 0;
+	buf_prm.inf[12].bytes = 8;
+	buf_prm.inf[12].ofst = 7272;
+
+	int16 axisNum = 5;
 	double *ppValue = NULL;
 	int32 retPointCount = 0;
 	int16 rvalue;
 
 	GTSD_CMD_StartPlot(axisNum, buf_prm, comType, 0xf0);
 
-	for (int i = 0; i < 1000;i++)
+	for (int i = 0; i < 1;i++)
 	{
 		rvalue=GTSD_CMD_PcGetWaveData(axisNum, &ppValue, retPointCount, comType, 0xf0);
 		Sleep(80);

@@ -126,6 +126,7 @@ void ThreadSample::run()
     dspIndex++;
   }
 
+  qDebug()<<"stop sampling......";
   for(int i=0;i<axisCount/2;i++)//先关闭采样连接（主要是因为非正常关闭时要点两次）
   {
     wavePrm=wavePrmList.at(i);
@@ -143,7 +144,7 @@ void ThreadSample::run()
       qDebug()<<" Tim="<<wavePrm.cmd.bit.TIM<<'\n'<<"Num="<<wavePrm.cmd.bit.NUM<<'\n'<<"ENP ="<<wavePrm.cmd.bit.ENP;
       qDebug()<<"CMD------>\n";
       for(int i=0;i<wavePrm.cmd.bit.NUM;i++)
-        qDebug()<<"curve :"<<i<<" bytes="<<wavePrm.inf[0].bytes<<" base="<<wavePrm.inf[0].base<<" ofst"<<wavePrm.inf[0].ofst<<"\n";
+        qDebug()<<"curve :"<<i<<" bytes="<<wavePrm.inf[i].bytes<<" base="<<wavePrm.inf[i].base<<" ofst"<<wavePrm.inf[i].ofst<<"\n";
     }
   }
 

@@ -438,6 +438,11 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	}
 
 	EnterCriticalSection((CRITICAL_SECTION*)m_com_tx_cs);
+	//  [10/9/2017 googol]
+	if (check_en)
+	{
+		word_num = word_num + 1;
+	}
 	int16 length = (word_num << 1) + 4;
 	if (length > RN_USER_TX_LEN_MAX)
 		return RTN_PARAM_OVERFLOW;
@@ -472,12 +477,6 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	{
 		cmd = RN_ARD;
 		needReq = RN_NEED_REQ;
-	}
-
-	//  [10/9/2017 googol]
-	if (check_en)
-	{
-		word_num = word_num + 1;
 	}
 	//////////////////////////////////////////////////////////////////////////
 	rtn = FormatRingNetUserPakcet(&packet, (Uint8)des_id, des_ch,
