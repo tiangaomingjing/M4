@@ -755,7 +755,7 @@ Rectangle{
                                         m_normalDialog.visible=true;
                                         //写入数据库
                                         m_motorDataBaseUi.insertRecordData();
-                                        m_msgShow.setCurrentState("error",qsTr("保存电机至用户库!"));
+                                        m_msgShow.setCurrentState("normal",qsTr("保存电机至用户库!"));
 
                                         if(m_listView_company.currentIndex==companyModel.rowCount()-1){
                                             motorModel.select();

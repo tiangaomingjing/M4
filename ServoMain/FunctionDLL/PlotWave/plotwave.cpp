@@ -3964,7 +3964,7 @@ void PlotWave::saveCurve(QString &fileName, QVector<quint16> &curveIndexVector)
     if (fdata.open(QFile::WriteOnly | QFile::Truncate|QIODevice::Text))
     {
         QTextStream out(&fdata);
-        out <<qSetFieldWidth(15) << left <<"time(s)";
+        out <<qSetFieldWidth(30) << left <<"time(s)";
         QStringList strList;
         foreach (PlotTablePrm prm, m_tablePlotPrmList)
         {
@@ -3975,10 +3975,10 @@ void PlotWave::saveCurve(QString &fileName, QVector<quint16> &curveIndexVector)
         quint64 length=m_tablePlotPrmList.at(0).data.curveKey.length();
         for(int i=0;i<length;i++)
         {
-          out<<qSetFieldWidth(15) << left<<m_tablePlotPrmList.at(0).data.curveKey.at(i);
+          out<<qSetFieldWidth(30) << left<<m_tablePlotPrmList.at(0).data.curveKey.at(i);
           foreach (PlotTablePrm prm, m_tablePlotPrmList)
           {
-            out<<prm.data.curveValue.at(i);
+            out<<QString::number(prm.data.curveValue.at(i),'f',10);
           }
           out<<qSetFieldWidth(0) << left<<endl;
         }

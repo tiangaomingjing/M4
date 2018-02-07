@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>799</width>
-    <height>477</height>
+    <width>786</width>
+    <height>476</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -316,7 +316,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -335,10 +335,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
-             </property>
-             <property name="text">
-              <string>以V128为准，在这个基础上乘以一个系数</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -417,7 +414,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -433,7 +430,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -512,7 +509,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -528,7 +525,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -649,7 +646,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -665,7 +662,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -744,7 +741,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -760,7 +757,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -836,7 +833,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -852,7 +849,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -973,7 +970,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -989,7 +986,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1065,7 +1062,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1081,7 +1078,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1157,7 +1154,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1173,7 +1170,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1294,7 +1291,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1310,7 +1307,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1386,7 +1383,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1402,7 +1399,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1478,7 +1475,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>
@@ -1494,7 +1491,7 @@
               <string>DspVersionFactor</string>
              </property>
              <property name="text">
-              <string>1</string>
+              <string>2</string>
              </property>
             </item>
            </item>

@@ -18,7 +18,6 @@ Rectangle {
     property double posAdjValue: 10;//寻相偏移角度
     property bool btnSearchIsClicked: false;//检测是否点击了寻相按钮
     property bool searchFinish: false;
-    property bool encLostFlag:false;
     property var errorCode: 0x0000;
     property int cmdSrcDefault: 1;
     property int currentTaskMode: 0;
@@ -56,7 +55,6 @@ Rectangle {
             if(searchFinish)
                 m_btnSavePhase.enabled=true;
 
-            //读取一次编码器当前设置
             var currentEncoderConfig=0x0000;
             currentEncoderConfig=m_cmd.readAdvanceFlash("FPGA.prm.ABS_ENC_CFG.all");
             console.log("currentConfig="+currentEncoderConfig.toString(2));
@@ -229,7 +227,7 @@ Rectangle {
                        RowLayout{
                            anchors.fill: parent;
                            Text{
-                               text:qsTr("编码器线数:")
+                               text:qsTr("编码器分辨率:")
                            }
                            TextField{
                                id:m_lineNumberInput;
@@ -356,7 +354,7 @@ Rectangle {
                 id:m_encoderWarnningMsg;
                 Layout.fillWidth: true;
                 horizontalAlignment: Text.AlignHCenter;
-                text:" "
+                text:m_encoderCfg.absEncoderItem.errorString(root.errorCode);
                 color: "red"
                 font.pixelSize: 12;
             }
@@ -383,7 +381,7 @@ Rectangle {
                 onClicked: {
                     var connected=driveEncoder.getComConnectSatus();
                     if(connected){
-                        if("NULL"===m_cmd.writeCommand("gSevDrv.sev_obj.cur.pro.enc_info.all",0))
+                        if("NULL"==m_cmd.writeCommand("gSevDrv.sev_obj.cur.pro.enc_info.all",0))
                             m_cmd.writeCommand("gSevDrv.sev_obj.cur.pro.enc_info.all",0)
                         m_encoderWarnningBlock.visible=false;
                         console.log("clear encoder alarm");
@@ -399,12 +397,6 @@ Rectangle {
         anchors.fill: parent;
         anchors.margins: 0;
         spacing: 10;
-
-        Item{
-            Layout.fillHeight: true;
-            Layout.fillWidth: true;
-            width: 100;
-        }
 
         CircularGauge {
             id: gauge;
@@ -566,11 +558,6 @@ Rectangle {
                 text:qsTr("电气角");
                 horizontalAlignment: Text.AlignHCenter;
             }
-        }
-        Item{
-            Layout.fillHeight: true;
-            Layout.fillWidth: true;
-            width: 100;
         }
     }
 
@@ -804,15 +791,10 @@ Rectangle {
             //读取编码器报警信息
             var errorCodeStr=m_cmd.readCommand("gSevDrv.sev_obj.cur.pro.enc_info.all");
 //            console.log("errorCodeStr="+errorCodeStr);
-            var lostenc=m_cmd.readCommand("gSevDrv.sev_obj.cur.rsv.prm.abs_type.all");
             if(errorCodeStr!=="NULL"){
                 root.errorCode=parseInt(errorCodeStr);
-                root.encLostFlag=m_encoderCfg.absEncoderItem.encoderLost(parseInt(lostenc));
-                if(m_encoderCfg.absEncoderItem.hasError(root.errorCode)||root.encLostFlag){
+                if(m_encoderCfg.absEncoderItem.hasError(root.errorCode))
                     m_encoderWarnningBlock.visible=true;
-                    m_encoderWarnningMsg.text=root.encLostFlag?"encoder lost":m_encoderCfg.absEncoderItem.errorString(root.errorCode);
-                }
-
                 else
                     m_encoderWarnningBlock.visible=false;
 //                console.log("errorCode:"+root.errorCode.toString(16));

@@ -6,6 +6,9 @@
 #include <QMapIterator>
 
 #include <iostream>
+#include <vector>
+#include <list>
+
 using namespace std;
 
 class parent
@@ -41,8 +44,22 @@ public:
 protected:
    something Mysometing;
 };
+int testV[10]={100};
+void readAddr(int *v)
+{
+  *v=testV[0];
+}
 
+void read(int &value)
+{
+  readAddr(&value);
+}
 
+int array[24][10];
+void getArray(int **p)
+{
+  *p=array[0];
+}
 
 int main(int argc, char *argv[])
 {
@@ -132,6 +149,99 @@ int main(int argc, char *argv[])
   {
     it.next();
     qDebug()<<it.key()<<" "<<it.value();
+  }
+
+  std::vector<double> stdvector;
+  stdvector.push_back(1.2);
+  stdvector.push_back(0.5);
+  stdvector.push_back(3.14);
+
+  QVector<double> vector = QVector<double>::fromStdVector(stdvector);
+//  stdvector.clear();
+  for(int i=0;i<vector.size();i++)
+    qDebug("%d=%f",i,vector.at(i));
+
+  std::list<std::vector<double>>curves;
+  curves.push_back(stdvector);
+  stdvector.clear();
+  stdvector.push_back(5);
+  stdvector.push_back(6);
+  stdvector.push_back(7);
+  curves.push_back(stdvector);
+  stdvector.clear();
+  stdvector.push_back(8);
+  stdvector.push_back(9);
+  stdvector.push_back(10);
+  curves.push_back(stdvector);
+  stdvector.clear();
+  stdvector.push_back(11);
+  stdvector.push_back(12);
+  stdvector.push_back(13);
+  curves.push_back(stdvector);
+  qDebug()<<"list size="<<curves.size();
+//  std::list<std::vector<double>>::iterator itvec=curves.begin();
+//  std::vector<double>::iterator it2;
+  std::list<std::vector<double>>::const_iterator itvec=curves.cbegin();
+  std::vector<double>::const_iterator it2;
+  for(;itvec!=curves.cend();++itvec)
+  {
+
+    for(it2=(*itvec).cbegin();it2!=(*itvec).cend();it2++)
+    {
+      qDebug()<<"send "<<(*it2);
+    }
+    qDebug()<<"------";
+//    qDebug()<<ii<<(*itvec).at(ii);
+//    ii++;
+  }
+  std::list<double>cur;
+  cur.push_back(1);
+  cur.push_back(2);
+  cur.push_back(3);
+  std::list<double>::iterator itlist=cur.begin();
+  for(;itlist!=cur.end();++itlist)
+  {
+    qDebug()<<"it="<<(*itlist);
+  }
+
+  int mv=0;
+  read(mv);
+  qDebug("mv=%d",mv);
+
+
+  int crow=0;
+  for(int row=0;row<24;row++)
+  {
+    crow=row;
+    for(int col=0;col<10;col++)
+    {
+      array[row][col]=crow;
+      printf("%4d",crow);
+      crow++;
+    }
+    printf("\r\n");
+  }
+
+  printf("\r\n");
+//  int (*ptr)[10];
+//  ptr=array;
+//  for(int row=0;row<24;row++)
+//  {
+//    for(int col=0;col<10;col++)
+//    {
+//      printf("%4d",*(*(ptr+row)+col));
+//    }
+//    printf("\r\n");
+//  }
+  int *ptr;
+  getArray(&ptr);
+  for(int row=0;row<24;row++)
+  {
+    for(int col=0;col<10;col++)
+    {
+      printf("%4d",*(ptr+row*10+col));
+    }
+    printf("\r\n");
   }
 
   return a.exec();

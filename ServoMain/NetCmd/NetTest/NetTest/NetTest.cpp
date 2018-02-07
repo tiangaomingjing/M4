@@ -9,9 +9,10 @@
 using namespace std;
 void updateProgress(void *arg, int16 *value);
 #define TEST_UBOOT 0
-#define  TEST_PLOT 1
+#define  TEST_PLOT 0
 #define TEST_FPGA 0
 #define TEST_NEW_COMUNICATION_CRC 0
+#define TEST_WRITEREAD 1
 #define FPGA_RPD_FILE (L"C:/Users/googol/Desktop/GTSD42_VA_V0_0922.rpd")
 int _tmain(int argc, _TCHAR* argv[])
 {
@@ -159,6 +160,25 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 #endif
+
+#if TEST_WRITEREAD
+	Uint8 value[4];
+	Uint8 result[4];
+	int16 axis = 0;
+	double v2 = 21000509;
+	Uint16 ofst = 9;
+	Uint16 num = 4;
+	value[0] = v2;
+	value[1] = int(v2) >> 8;
+	value[2] = int(v2) >> 16;
+	value[3] = int(v2) >> 24;
+	com_type type = GTSD_COM_TYPE_RNNET;
+	int16 ret1 = GTSD_CMD_WriteEEPROMExt(axis, ofst, value, num, type, 0xf0);
+	int16 ret2 = GTSD_CMD_ReadEEPROMExt(axis, ofst, result, num, type, 0xf0);
+	printf("ret1 = %d\n", ret1);
+	printf("ret2 = %d\n", ret2);
+#endif
+
 //	result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(4, &func, comType, 0xf0);
 //	result = (COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(5, &func, comType, 0xf0);
 	Uint16 v;

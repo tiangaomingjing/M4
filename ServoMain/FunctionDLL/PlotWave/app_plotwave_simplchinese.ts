@@ -1281,8 +1281,8 @@ const parameters has the same name</source>
         <location filename="plotwave.cpp" line="1646"/>
         <source>When add axis=%1 curve:%2
  The numbers of selected curve is too much</source>
-        <translation type="unfinished">轴=%1 曲线名称:%2
-增加曲线个数超出范围</translation>
+        <translation type="unfinished">当加轴=%1 曲线:%2
+曲线个数超出范围</translation>
     </message>
     <message>
         <location filename="plotwave.cpp" line="1720"/>

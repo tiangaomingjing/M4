@@ -92,4 +92,17 @@ DISTFILES += \
     V128/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
     V128/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
     V128/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
-    V128/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml
+    V128/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml \
+    V130/CfgEncoder.qml \
+    V130/components/CfgEncoder/ToolBox/AbsoluteEncoder.qml \
+    V130/components/CfgEncoder/ToolBox/IncrementalEncoder.qml \
+    V130/components/CfgEncoder/ToolBox/NoneEncoder.qml \
+    V130/components/CfgEncoder/ToolBox/ToolBox.qml \
+    V130/components/CfgEncoder/ToolBox/ToolItem.qml \
+    V130/components/CfgEncoder/EncoderItem/AbstractEncoderItem.qml \
+    V130/components/CfgEncoder/EncoderItem/DuoMoEncoderItem.qml \
+    V130/components/CfgEncoder/EncoderItem/HaiDeHanEncoderItem.qml \
+    V130/components/CfgEncoder/EncoderItem/NiKangEncoderItem.qml \
+    V130/components/CfgEncoder/EncoderItem/SanXieEncoderItem.qml \
+    V130/components/CfgEncoder/EncoderItem/SongXiaEncoderItem.qml \
+    V130/components/CfgEncoder/EncoderItem/YaskawaEncoderItem.qml

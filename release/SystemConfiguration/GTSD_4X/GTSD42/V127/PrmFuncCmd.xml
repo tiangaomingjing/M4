@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>732</width>
-    <height>386</height>
+    <width>719</width>
+    <height>517</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1423,35 +1423,6 @@
         <string>40</string>
        </property>
       </item>
-      <item>
-       <property name="text">
-        <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.all</string>
-       </property>
-       <property name="text">
-        <string>Uint16</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-       <property name="text">
-        <string>41</string>
-       </property>
-       <property name="text">
-        <string>5</string>
-       </property>
-       <property name="text">
-        <string>4</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>44</string>
-       </property>
-      </item>
      </item>
      <item>
       <property name="text">
@@ -1856,122 +1827,6 @@
        </property>
        <property name="text">
         <string>35</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>gSevDrv.sev_obj.dob.prm.jl_est</string>
-       </property>
-       <property name="text">
-        <string>Uint16</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-       <property name="text">
-        <string>41</string>
-       </property>
-       <property name="text">
-        <string>5</string>
-       </property>
-       <property name="text">
-        <string>4</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>41</string>
-       </property>
-      </item>
-     </item>
-     <item>
-      <property name="text">
-       <string>gSevDrv.no.prm</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <property name="text">
-       <string>-1</string>
-      </property>
-      <item>
-       <property name="text">
-        <string>gSevDrv.no.prm.soft_min_version</string>
-       </property>
-       <property name="text">
-        <string>Uint16</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-       <property name="text">
-        <string>41</string>
-       </property>
-       <property name="text">
-        <string>5</string>
-       </property>
-       <property name="text">
-        <string>4</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>42</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>gSevDrv.no.prm.mot_brk_out_polarity</string>
-       </property>
-       <property name="text">
-        <string>Uint16</string>
-       </property>
-       <property name="text">
-        <string>NULL</string>
-       </property>
-       <property name="text">
-        <string>41</string>
-       </property>
-       <property name="text">
-        <string>5</string>
-       </property>
-       <property name="text">
-        <string>4</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>1</string>
-       </property>
-       <property name="text">
-        <string>43</string>
        </property>
       </item>
      </item>

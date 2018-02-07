@@ -3138,7 +3138,7 @@
                                                         <string>1</string>
                                                     </property>
                                                     <property name="text">
-                                                        <string>9</string>
+                                                        <string>2</string>
                                                     </property>
                                                     <property name="text">
                                                         <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type</string>
@@ -3180,7 +3180,7 @@
                                                     </item>
                                                     <item>
                                                         <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.LOCK</string>
+                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.rsvd</string>
                                                         </property>
                                                         <property name="text">
                                                             <string>NULL</string>
@@ -3198,252 +3198,7 @@
                                                             <string>4</string>
                                                         </property>
                                                         <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.LOST</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>5</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.DATA</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>6</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.FISH</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>7</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.REV</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>8</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.BLK</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>9</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.CLS</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>10</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.rsv.prm.abs_type.bit.rsvd</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>11</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>5</string>
+                                                            <string>12</string>
                                                         </property>
                                                         <property name="text">
                                                             <string>0</string>
@@ -3701,7 +3456,7 @@
                                             <string>1</string>
                                         </property>
                                         <property name="text">
-                                            <string>18</string>
+                                            <string>14</string>
                                         </property>
                                         <property name="text">
                                             <string>gSevDrv.sev_obj.cur</string>
@@ -3735,7 +3490,7 @@
                                                 <string>1</string>
                                             </property>
                                             <property name="text">
-                                                <string>36</string>
+                                                <string>34</string>
                                             </property>
                                             <property name="text">
                                                 <string>gSevDrv.sev_obj.cur.pro</string>
@@ -3838,7 +3593,7 @@
                                                         <string>1</string>
                                                     </property>
                                                     <property name="text">
-                                                        <string>22</string>
+                                                        <string>18</string>
                                                     </property>
                                                     <property name="text">
                                                         <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag</string>
@@ -4440,7 +4195,7 @@
                                                     </item>
                                                     <item>
                                                         <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.STO</string>
+                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.rsvd</string>
                                                         </property>
                                                         <property name="text">
                                                             <string>NULL</string>
@@ -4458,147 +4213,7 @@
                                                             <string>17</string>
                                                         </property>
                                                         <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.OB_ERR</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint32</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>18</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.FAN</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint32</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>19</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.SRF</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint32</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>20</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.cur.pro.prm.alm_mask_flag.bit.rsvd</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint32</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>21</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>11</string>
+                                                            <string>15</string>
                                                         </property>
                                                         <property name="text">
                                                             <string>0</string>
@@ -5747,76 +5362,6 @@
                                                 </property>
                                                 <property name="text">
                                                     <string>538</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.cur.pro.prm</string>
-                                                </property>
-                                            </item>
-                                            <item>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.cur.pro.prm.sto_delay_tim</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>int16</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>540</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.cur.pro.prm</string>
-                                                </property>
-                                            </item>
-                                            <item>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.cur.pro.prm.pha_in_bk_lim</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>int16</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>541</string>
                                                 </property>
                                                 <property name="text">
                                                     <string>0</string>
@@ -22251,7 +21796,7 @@
                                             <string>1</string>
                                         </property>
                                         <property name="text">
-                                            <string>11</string>
+                                            <string>8</string>
                                         </property>
                                         <property name="text">
                                             <string>gSevDrv.sev_obj.pos</string>
@@ -22285,7 +21830,7 @@
                                                 <string>1</string>
                                             </property>
                                             <property name="text">
-                                                <string>13</string>
+                                                <string>9</string>
                                             </property>
                                             <property name="text">
                                                 <string>gSevDrv.sev_obj.pos.gear</string>
@@ -22423,7 +21968,7 @@
                                                         <string>1</string>
                                                     </property>
                                                     <property name="text">
-                                                        <string>5</string>
+                                                        <string>4</string>
                                                     </property>
                                                     <property name="text">
                                                         <string>gSevDrv.sev_obj.pos.gear.prm.mask_flag</string>
@@ -22535,7 +22080,7 @@
                                                     </item>
                                                     <item>
                                                         <property name="text">
-                                                            <string>gSevDrv.sev_obj.pos.gear.prm.mask_flag.bit.FB_DIR</string>
+                                                            <string>gSevDrv.sev_obj.pos.gear.prm.mask_flag.bit.rsvd</string>
                                                         </property>
                                                         <property name="text">
                                                             <string>NULL</string>
@@ -22553,42 +22098,7 @@
                                                             <string>3</string>
                                                         </property>
                                                         <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>0</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.pos.gear.prm.mask_flag.bit</string>
-                                                        </property>
-                                                    </item>
-                                                    <item>
-                                                        <property name="text">
-                                                            <string>gSevDrv.sev_obj.pos.gear.prm.mask_flag.bit.rsvd</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>NULL</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>Uint16</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>-1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>1</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>4</string>
-                                                        </property>
-                                                        <property name="text">
-                                                            <string>12</string>
+                                                            <string>13</string>
                                                         </property>
                                                         <property name="text">
                                                             <string>0</string>
@@ -22932,146 +22442,6 @@
                                                 </property>
                                                 <property name="text">
                                                     <string>13806</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm</string>
-                                                </property>
-                                            </item>
-                                            <item>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm.c</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>int32</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>13808</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm</string>
-                                                </property>
-                                            </item>
-                                            <item>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm.d</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>int32</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>13810</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm</string>
-                                                </property>
-                                            </item>
-                                            <item>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm.f1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>int32</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>13812</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>-1</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm</string>
-                                                </property>
-                                            </item>
-                                            <item>
-                                                <property name="text">
-                                                    <string>gSevDrv.sev_obj.pos.gear.prm.f2</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>0</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>int32</string>
-                                                </property>
-                                                <property name="text">
-                                                    <string>13814</string>
                                                 </property>
                                                 <property name="text">
                                                     <string>0</string>
@@ -25717,7 +25087,7 @@
                                         <string>1</string>
                                     </property>
                                     <property name="text">
-                                        <string>13</string>
+                                        <string>12</string>
                                     </property>
                                     <property name="text">
                                         <string>gSevDrv.sev_obj</string>
@@ -25751,7 +25121,7 @@
                                             <string>1</string>
                                         </property>
                                         <property name="text">
-                                            <string>18</string>
+                                            <string>16</string>
                                         </property>
                                         <property name="text">
                                             <string>gSevDrv.sev_obj.dob</string>
@@ -25854,7 +25224,7 @@
                                                     <string>1</string>
                                                 </property>
                                                 <property name="text">
-                                                    <string>4</string>
+                                                    <string>3</string>
                                                 </property>
                                                 <property name="text">
                                                     <string>gSevDrv.sev_obj.dob.prm.mask_flag</string>
@@ -25931,7 +25301,7 @@
                                                 </item>
                                                 <item>
                                                     <property name="text">
-                                                        <string>gSevDrv.sev_obj.dob.prm.mask_flag.bit.CKG</string>
+                                                        <string>gSevDrv.sev_obj.dob.prm.mask_flag.bit.rsvd</string>
                                                     </property>
                                                     <property name="text">
                                                         <string>NULL</string>
@@ -25949,42 +25319,7 @@
                                                         <string>2</string>
                                                     </property>
                                                     <property name="text">
-                                                        <string>1</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>0</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>0</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>0</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>gSevDrv.sev_obj.dob.prm.mask_flag.bit</string>
-                                                    </property>
-                                                </item>
-                                                <item>
-                                                    <property name="text">
-                                                        <string>gSevDrv.sev_obj.dob.prm.mask_flag.bit.rsvd</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>NULL</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>Uint16</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>-1</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>1</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>3</string>
-                                                    </property>
-                                                    <property name="text">
-                                                        <string>13</string>
+                                                        <string>14</string>
                                                     </property>
                                                     <property name="text">
                                                         <string>0</string>
@@ -26503,76 +25838,6 @@
                                             </property>
                                             <property name="text">
                                                 <string>25928</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>-1</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>-1</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>gSevDrv.sev_obj.dob.prm</string>
-                                            </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>gSevDrv.sev_obj.dob.prm.jl_est</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>int32</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>25930</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>-1</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>-1</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>gSevDrv.sev_obj.dob.prm</string>
-                                            </property>
-                                        </item>
-                                        <item>
-                                            <property name="text">
-                                                <string>gSevDrv.sev_obj.dob.prm.k_lpf_kg</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>0</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>int32</string>
-                                            </property>
-                                            <property name="text">
-                                                <string>25932</string>
                                             </property>
                                             <property name="text">
                                                 <string>0</string>

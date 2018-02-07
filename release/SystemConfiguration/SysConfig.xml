@@ -23,6 +23,7 @@
 		<FirmWare name="V126"/>
 		<FirmWare name="V128"/>
 		<FirmWare name="V129"/>
+		<FirmWare name="V130"/>
 	</Model>
     <Tree>
       <Root name="参数配置">
@@ -54,10 +55,12 @@
     <Model name="GTSD61" axisCount ="6">
 		<FirmWare name="V128"/>
 		<FirmWare name="V129"/>
+		<FirmWare name="V130"/>
 	</Model>
 	<Model name="GTSD61_MINI" axisCount ="6">
 		<FirmWare name="V128"/>
 		<FirmWare name="V129"/>
+		<FirmWare name="V130"/>
 	</Model>
     <Tree>
       <Root name="参数配置">

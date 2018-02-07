@@ -1,6 +1,7 @@
 ﻿#include "flashupdatewidget.h"
 #include "ui_flashupdatewidget.h"
 #include "xmlbuilder.h"
+#include "QtTreeManager/qttreemanager.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -440,7 +441,8 @@ bool FlashUpdateWidget::saveXMLFile(QTreeWidget *tree)
   if (fileNameXml.isNull()) return false;
   ui->progressBar->show();
   ui->progressBar->setValue(50);
-  XmlBuilder::saveFlashAllAxisTreeFile(fileNameXml,tree);
+//  XmlBuilder::saveFlashAllAxisTreeFile(fileNameXml,tree);
+  QtTreeManager::writeTreeWidgetToXmlFile(fileNameXml,tree);
   ui->progressBar->setValue(100);
   ui->progressBar->hide();
   return true;

@@ -12,4 +12,5 @@ SUBDIRS += \
     option \
     CustomPlot \
     SingleApplication \
-    Communication
+    Communication \
+    CommunicationTest

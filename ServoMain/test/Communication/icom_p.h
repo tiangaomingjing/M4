@@ -1,9 +1,8 @@
 ﻿#ifndef ICOM_P_H
 #define ICOM_P_H
 #include "comglobal.h"
-using namespace COM;
-namespace NetDriver
-{
+COM_NAMESPACE_BEGIN
+
 class ICom;
 class IComPrivate
 {
@@ -13,8 +12,11 @@ class IComPrivate
   virtual ~IComPrivate();
 protected:
   ICom *q_ptr;
+  std::string m_objectName;
+  IComType m_comType;
 };
-}
+
+COM_NAMESPACE_END
 
 #endif // ICOM_P_H
 

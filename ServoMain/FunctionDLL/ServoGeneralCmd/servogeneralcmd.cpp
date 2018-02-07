@@ -97,7 +97,7 @@ double ServoGeneralCmd::read(const QString &cmdReadName, qint16 axisIndex)
     {
       Uint32 value;
       Uint32 temp;
-      temp=funcRead.data[getIndex+1];//高位在前
+      temp=funcRead.data[getIndex+1];//低位在前
       temp=temp&0x0000ffff;
       temp=(temp<<16)&0xffff0000;
       value=temp+(funcRead.data[getIndex]&0x0000ffff);
