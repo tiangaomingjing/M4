@@ -2,7 +2,7 @@
 #include <QTreeWidgetItem>
 #include <QTreeWidget>
 
-#include "../../../NetCmd/ServoDriverComDll/ServoDriverComDll.h"
+#include "ServoDriverComDll.h"
 #include "../../XmlBuilder/xmlbuilder.h"
 
 #define DEBUG_TEST 0

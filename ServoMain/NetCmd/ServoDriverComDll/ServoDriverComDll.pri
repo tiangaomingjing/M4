@@ -4,26 +4,37 @@
 
 # This is a reminder that you are using a generated .pro file.
 # Remove it when you are finished editing this file.
-#message("You are running qmake on a generated .pro file. This may not work!")
+message("You are running qmake on a generated .pro file. This may not work!")
 
 
-HEADERS += ./AdminstratorComDll.h \
-    ./ComBase.h \
+HEADERS += ./ComBase.h \
     ./CpldCom.h \
+    ./DllCom/AdminstratorComDll.h \
+    ./DllCom/BaseReturn_def.h \
+    ./DllCom/Basetype_def.h \
+    ./DllCom/GTDriverCmd.h \
+    ./DllCom/MotionControlComDll.h \
+    ./DllCom/ServoDriverComDef.h \
+    ./DllCom/ServoDriverComDll.h \
     ./driver_command.h \
     ./Eeprom.h \
+    ./FileServer.h \
     ./FPGAUpdate.h \
     ./GTCmdCtrl.h \
-    ./GTDriverCmd.h \
-    ./MotionControlComDll.h \
+    ./Ilink.h \
+    ./IlinkDevice.h \
+    ./IlinkEnc.h \
     ./MotionCtrlCom.h \
+    ./PcCtrlCom.h \
     ./RnSerialPort.h \
     ./ServoDriverCom.h \
-    ./ServoDriverComDef.h \
-    ./ServoDriverComDll.h \
     ./SPLine.h \
     ./stdafx.h \
+    ./StFileOp.h \
+    ./StString.h \
     ./targetver.h \
+    ./XmlCode.h \
+    ./XmlCodeUpdate.h \
     ./NetCom/include/BaseReturn_def.h \
     ./NetCom/include/Basetype_def.h \
     ./NetCom/include/Net.h \
@@ -49,6 +60,7 @@ HEADERS += ./AdminstratorComDll.h \
     ./SocketCom/include/SocketPacket.h \
     ./eeprom/include/eepromOpt.h \
     ./DeviceDataBase.h \
+    ./DllCom/UserResp.h \
     ./NetDriver.h \
     ./RingNetDeviceDef.h \
     ./RingNetDriver.h \
@@ -56,25 +68,31 @@ HEADERS += ./AdminstratorComDll.h \
     ./RnServoAxiMapping.h \
     ./RnDeviceDataBase.h \
     ./RnDriverPlot.h \
-    ./RnDriverWave.h \
-    ./StRingNetComUser.h \
-    ./StRingNetRegDef.h \
-    ./UserResp.h
-SOURCES += ./AdminstratorComDll.cpp \
-    ./ComBase.cpp \
+    ./RnDriverWave.h
+SOURCES += ./ComBase.cpp \
     ./CpldCom.cpp \
+    ./DllCom/AdminstratorComDll.cpp \
+    ./DllCom/MotionControlComDll.cpp \
+    ./DllCom/ServoDriverComDll.cpp \
     ./dllmain.cpp \
     ./Eeprom.cpp \
+    ./FileServer.cpp \
     ./FPGAUpdate.cpp \
     ./GTCmdCtrl.cpp \
     ./GTDriverCmd.cpp \
-    ./MotionControlComDll.cpp \
+    ./Ilink.cpp \
+    ./IlinkDevice.cpp \
+    ./IlinkEnc.cpp \
     ./MotionCtrlCom.cpp \
+    ./PcCtrlCom.cpp \
     ./RnSerialPort.cpp \
     ./ServoDriverCom.cpp \
-    ./ServoDriverComDll.cpp \
     ./SPLine.cpp \
     ./stdafx.cpp \
+    ./StFileOp.cpp \
+    ./StString.cpp \
+    ./XmlCode.cpp \
+    ./XmlCodeUpdate.cpp \
     ./NetCom/src/Net.cpp \
     ./NetCom/src/NetCommunication.cpp \
     ./NetCom/src/Packet.cpp \
@@ -98,11 +116,11 @@ SOURCES += ./AdminstratorComDll.cpp \
     ./SocketCom/src/SocketPacket.cpp \
     ./eeprom/src/eepromOpt.cpp \
     ./DeviceDataBase.cpp \
+    ./DllCom/UserResp.cpp \
     ./NetDriver.cpp \
     ./RingNetDriver.cpp \
     ./RingNetInterface.cpp \
     ./RnServoAxiMapping.cpp \
     ./RnDeviceDataBase.cpp \
     ./RnDriverPlot.cpp \
-    ./RnDriverWave.cpp \
-    ./UserResp.cpp
+    ./RnDriverWave.cpp

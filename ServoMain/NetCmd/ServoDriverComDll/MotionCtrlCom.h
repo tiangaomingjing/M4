@@ -23,6 +23,19 @@ typedef struct
 	short resultIndex;
 }TCommand;
 
+
+#define MAX_DEBUG_CMD_SIZE (256)
+#define MAX_DEBUG_CMD_DATA_SIZE (252)
+
+typedef struct  
+{
+	uint16 cmd;
+	uint16 sLen;
+	uint16 param;
+	uint16 checksum;
+	uint16 pData[MAX_DEBUG_CMD_DATA_SIZE];
+}StUSER_PROTOCOL_DEBUG_CMD;
+
 #endif
 
 class CMotionCtrlCom
@@ -47,7 +60,14 @@ public:
 
 	short PostPcie(TPci* gPci, Uint8 core_index, Uint8 station_id = 0xf0);
 	short SendPcie(TPci* gPci, Uint8 core_index, Uint8 station_id = 0xf0);
+
+
 	virtual short GetComProtocolType(){ return m_pDriver->GetComProtocolType(); };
+protected:
+	short CheckUserProtocol(StUSER_PROTOCOL_DEBUG_CMD* cmd);
+	short CalcUserProtocol(StUSER_PROTOCOL_DEBUG_CMD* cmd);
+public:
+	short SendUserDebugCmd(StUSER_PROTOCOL_DEBUG_CMD* cmd, Uint8 station_id);
 
 };
 

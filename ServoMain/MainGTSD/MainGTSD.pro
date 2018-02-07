@@ -9,11 +9,12 @@ QT       += core gui designer qml quick sql network
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TEMPLATE = app
 
-INCLUDEPATH +=$${PWD}/../ServoControl
-INCLUDEPATH +=$${PWD}/../XmlBuilder
-INCLUDEPATH +=$${PWD}/../NetCmd/ServoDriverComDll
-INCLUDEPATH +=$${PWD}/../NetCmd/ServoDriverComDll/NetCom/include
-INCLUDEPATH +=$${PWD}/..\
+INCLUDEPATH +=$${PWD}/../ServoControl\
+                $${PWD}/../XmlBuilder\
+                $${PWD}/../NetCmd/ServoDriverComDll\
+                $${PWD}/../NetCmd/ServoDriverComDll/NetCom/include\
+                $${PWD}/../NetCmd/ServoDriverComDll/DllCom\
+                $${PWD}/..\
                 $${PWD}/../FunctionDLL/AbstractFuncWidget\
                 $${PWD}/../FunctionDLL/AdvFLASH\
                 $${PWD}/../FunctionDLL/AdvRAM\
@@ -32,6 +33,7 @@ INCLUDEPATH +=$${PWD}/..\
                 $${PWD}/../FunctionDLL/PlotWaveUi\
                 $${PWD}/../FunctionDLL/ModuleIoNew\
                 $${PWD}/../FunctionDLL/CfgBrake
+
 
 
 CONFIG(debug, debug|release){

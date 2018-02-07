@@ -86,7 +86,10 @@ typedef enum
 //------------------------------------------------------------------------------
 #define		RN_USER_PROTOCOL_DRIVER		0x0000		//gtsd41 and gtsd61 uesd the protocol cmd
 //0x10                                                    
-#define		RN_USER_PROTOCOL_MOTION		0x00FF		//0x0020  which kesai gtsd13 used                                               
+#define		RN_USER_PROTOCOL_MOTION		0x00FF		//0x0020  which kesai gtsd13 used  
+#define		RN_USER_PROTOCOL_DEBUG		0x0001
+#define		RN_USER_PROTOCOL_PLOT		0x0002
+
 #define		RN_USER_PROTOCOL_PC			0x0010
 //////////////////////////////////////////////////////////////////////////
 //this format is same as cm408 packet header struct ,except this do not need the first uint16 

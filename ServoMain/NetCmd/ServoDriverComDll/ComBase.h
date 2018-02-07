@@ -14,7 +14,13 @@ typedef enum
 	COM_PROTOCO_MAX			//×î´óÖµ
 }COM_PROTOCOL_TYPE;
 
-class CComBase
+#ifdef SERVODRIVERCOMDLL_EXPORTS
+#define SERVODRIVERCOMDLL_API __declspec(dllexport)
+#else
+#define SERVODRIVERCOMDLL_API __declspec(dllimport)
+#endif
+
+class SERVODRIVERCOMDLL_API CComBase
 {
 public:
 	CComBase();

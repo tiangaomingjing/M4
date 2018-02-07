@@ -5,11 +5,17 @@
 #include "StRingNetComUser.h"
 #include "UserResp.h"
 
-const Uint16 RN_PACKET_LEN_MAX = 510;
+//const Uint16 RN_PACKET_LEN_MAX = 510+8;// 510;
 const Uint16 RN_USER_TX_LEN_MIN = ((NET_PACKET_SIZE_MIN - 8 - 2 - 1)+1) & 0xFFFE;//(NET_PACKET_SIZE_MIN - sizeof(StRnHeadFormat) - sizeof_len - 0xff)
-const Uint16 RN_USER_TX_LEN_MAX = (RN_PACKET_LEN_MAX - 8 - 14 - 8 - 2 - 1 - 4) & 0xFFFE;//RN_PACKET_LEN_MAX - 8pre_code-14 ethernet head, 8 ringnet head, 2 length, 1 end flag, 4 crc
+const Uint16 RN_USER_TX_LEN_MAX = 510;// (RN_PACKET_LEN_MAX - 8 - 14 - 8 - 2 - 1 - 4) & 0xFFFE;//RN_PACKET_LEN_MAX - 8pre_code-14 ethernet head, 8 ringnet head, 2 length, 1 end flag, 4 crc
 
-class CRingNetDriver :
+#ifdef SERVODRIVERCOMDLL_EXPORTS
+#define SERVODRIVERCOMDLL_API __declspec(dllexport)
+#else
+#define SERVODRIVERCOMDLL_API __declspec(dllimport)
+#endif
+
+class SERVODRIVERCOMDLL_API CRingNetDriver :
 	public CNetDriver
 {
 public:

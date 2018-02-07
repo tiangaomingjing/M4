@@ -8,6 +8,7 @@ INCLUDEPATH += $${PWD}/..\
                $${PWD}/../ServoControl\
                $${PWD}/../NetCmd/ServoDriverComDll\
                $${PWD}/../NetCmd/ServoDriverComDll/NetCom/include\
+               $${PWD}/../NetCmd/ServoDriverComDll/DllCom\
                $${PWD}/AbstractFuncWidget/QmlFactory
 
 

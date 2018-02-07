@@ -4,7 +4,7 @@ DEFINES+=COM_SHARED_LIBRARY
 
 BUILD_PATH=$${PWD}/build
 LIB_SRC_PATH=$${PWD}/../../..
-LIB_INC_PATH=$${PWD}/../../NetCmd/ServoDriverComDll
+LIB_INC_PATH=$${PWD}/../../NetCmd/ServoDriverComDll/DllCom
 
 INCLUDEPATH+=$${LIB_INC_PATH}
 

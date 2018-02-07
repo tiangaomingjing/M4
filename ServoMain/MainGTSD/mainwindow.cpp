@@ -64,7 +64,7 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.11"
+#define SDT_VERSION "1.1.12"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;

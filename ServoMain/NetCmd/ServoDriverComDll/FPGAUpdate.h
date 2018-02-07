@@ -1,6 +1,10 @@
 #pragma once
 #include "Basetype_def.h"
 #include "ComBase.h"
+
+/*
+Head support epcs4/epcs16/epcs64/ only
+*/
 class CFPGAUpdate
 {
 public:
@@ -17,6 +21,10 @@ public:
 	static const int32		CMD_PRET_ON = 2;
 	static const int32		CMD_PRET_OFF = 3;
 	static const int32		CMD_ERASE = 4;
+	static const int32		CMD_SECTOR_ERASE = 5;
+
+	static const int32		SECTOR_SIZE = 1 << 16;// 2 ^ 16;// 64Kbyte
+	static const int16		MAX_OP_WORD_NUM = 120;
 
 	//pcdebug偏移地址，基地址是0
 	static const Uint16		REMOTE_FPGA_CTL = 0x37F;
@@ -28,7 +36,7 @@ public:
 	static const Uint16		RN_REMOTE_FPGA_DATA_START = (0x00);
 	static const Uint16		RN_REMOTE_FPGA_DATA_END = (0x7C * 2);
 
-	Uint32 m_byte_write;
+	uint32 m_byte_write;
 public:
 	// pcdebug 地址为dsp与fpga之间通信的fpga地址，不同的dsp对应不同的fpga地址。
 	static const Uint16						DSPA_COMADDR = 0x0400;				 //地址为short地址
@@ -50,6 +58,9 @@ protected:
 	int16 ProtectOff();
 	int16 ProtectOn();
 	int16 EraseData(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress);
+	int16 EraseFPGAData(uint32 byte_num, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress);
+	int16 GetFPGAByteNum(char* pFileName, uint32& byte_num);
+	int16 EraseSectorData(uint32 byte_address, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16& progress);
 	int16 GetFpgaFlashData(Uint32 flash_addr, int16 *Getbuf, Uint16 iLength);
 	int16 SendFpgaFlashData(Uint32 flash_addr, int16 *Sendbuf, Uint16 iLength);
 	int32 CheckFFNumber(short* buffer, int lenth);

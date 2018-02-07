@@ -3,7 +3,7 @@
 #include <QTreeWidget>
 
 #include "xmlbuilder.h"
-#include "ServoDriverComDll.h"
+#include "./DllCom/ServoDriverComDll.h"
 
 #define DEBUG_TEST 0
 

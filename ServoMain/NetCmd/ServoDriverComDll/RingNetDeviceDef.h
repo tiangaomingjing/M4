@@ -1,6 +1,7 @@
 #pragma once
 #define TB_GTSD21	0x8200 //
 #define TB_GTDS41	0x8400
+#define TB_GTDS42	0x8401
 #define TB_GTSD61	0x8600
 #define TB_GTSD13	0x8100
 #define TB_MC3		0x300	

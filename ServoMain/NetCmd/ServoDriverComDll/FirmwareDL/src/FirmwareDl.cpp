@@ -588,7 +588,7 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 
 	//打开文件
 	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
-	if (!file)
+	if (file.is_open() == NULL)
 	{
 //		ProtectOn(com_type, stationId);
 		return 4; //文件打开错误
@@ -642,7 +642,7 @@ int16 CFirmwareDL::WriteFPGAFileToFlash(int16 com_type, string pFileName, void(*
 	////读数数据进行校验
 	//打开文件
 	file.open(pFileName.c_str(), ios::in | ios::out | ios::binary);
-	if (!file)
+	if (file.is_open() == NULL)
 	{
 		//		ProtectOn(com_type, stationId);
 		return RTN_FILE_CREATE_FAIL; //文件打开错误

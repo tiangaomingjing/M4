@@ -850,7 +850,11 @@ Rectangle {
                     if(srcSelect!==0){
                         var ret="0";
                         ret=m_cmd.writeCommand(srcString,0);
-                        console.log("ret write value:"+ret);
+						console.log("-------------------------ret write value:"+ret);
+						ret=m_cmd.writeCommand(srcString,0);
+						console.log("-------------------------ret write value:"+ret);
+                        ret=m_cmd.writeCommand(srcString,0);
+                        console.log("-------------------------ret write value:"+ret);
                     }
                     root.currentTaskMode=m_cmd.currentServoTaskMode();//先保存当前伺服模式
                     m_cmd.setServoTaskMode(taskMode.TASKMODE_IPA);

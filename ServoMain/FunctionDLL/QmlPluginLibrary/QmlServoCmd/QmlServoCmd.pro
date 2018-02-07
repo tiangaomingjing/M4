@@ -5,6 +5,7 @@ CONFIG += qt plugin c++11
 
 INCLUDEPATH+= $${PWD}/../../../NetCmd/ServoDriverComDll\
               $${PWD}/../../../NetCmd/ServoDriverComDll/NetCom/include\
+              $${PWD}/../../../NetCmd/ServoDriverComDll/DllCom\
               $${PWD}/../../../MainGTSD\
               $${PWD}/../../../XmlBuilder\
               $${PWD}/../../../

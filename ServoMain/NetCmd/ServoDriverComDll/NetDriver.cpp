@@ -7,13 +7,16 @@
 using namespace std;
 
 #include "NetDriver.h"
-#include "pcap/pcap.h"
+//#include "pcap/pcap.h"
+#include "pcap.h"
+#include "Win32-Extensions.h"
 //#include <synchapi.h >
 
 #pragma comment(lib,"Iphlpapi.lib") //需要添加Iphlpapi.lib库  
 
 unsigned __stdcall NetReceiveThread(void *para);
 
+char		errbuf[PCAP_ERRBUF_SIZE];
 CNetDriver::CNetDriver()
 {
 	smac[0] = 0x55;
@@ -22,6 +25,10 @@ CNetDriver::CNetDriver()
 	smac[3] = 0x55;
 	smac[4] = 0x55;
 	smac[5] = 0x55;
+	
+	memset(filter, 0, 128);
+	sprintf_s(filter, sizeof(filter), "ether src %02lx:%02lx:%02lx:%02lx:%02lx:%02lx", smac[0], smac[1], smac[2], smac[3], smac[4], smac[5]);
+
 	receiveThread = NULL;
 //	m_com_tx_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 	m_adapter_inf = NULL;
@@ -64,7 +71,7 @@ short CNetDriver::ScanAdapterNun(Uint8& adapter_num)
 {
 	pcap_if_t*	alldevs;
 	pcap_if_t*	devs;
-	char		errbuf[PCAP_ERRBUF_SIZE];
+//	char		errbuf[PCAP_ERRBUF_SIZE];
 	adapter_num = 0;
 	if (pcap_findalldevs(&alldevs, errbuf) == -1)
 		return Net_Rt_Not_Get_Net_DevList;
@@ -177,7 +184,7 @@ short CNetDriver::OpenAdapter(Uint8 adapter_id)
 {
 	pcap_if_t*	alldevs;
 	pcap_if_t*	devs;
-	char		errbuf[PCAP_ERRBUF_SIZE];
+//	char		errbuf[PCAP_ERRBUF_SIZE];
 	if (m_adapter_handle)
 	{
 		CloseAdapter();
@@ -202,9 +209,9 @@ short CNetDriver::OpenAdapter(Uint8 adapter_id)
 		}
 	}
 
-	if ((m_adapter_handle = pcap_open_live(devs->name,		// name of the device
+	if ((m_adapter_handle = /*pcap_open(devs->name,*/pcap_open_live(devs->name,		// name of the device
 		65536,			// portion of the packet to capture. // 65536 grants that the whole packet will be captured on all the MACs.					
-		1,				// promiscuous mode (nonzero means promiscuous)
+		1,				//PCAP_OPENFLAG_PROMISCUOUS  promiscuous mode (nonzero means promiscuous)
 		-1,				// read timeout
 		errbuf			// error buffer
 		)) == NULL)
@@ -218,8 +225,41 @@ short CNetDriver::OpenAdapter(Uint8 adapter_id)
 
 	pcap_freealldevs(alldevs);
 
-	int8 filter[128] = { 0 };
-	sprintf_s(filter, sizeof(filter), "ether src %02lx:%02lx:%02lx:%02lx:%02lx:%02lx", smac[0], smac[1], smac[2], smac[3], smac[4], smac[5]);
+
+// 	/*设置用户层缓冲*/
+// 	if (pcap_setuserbuffer((pcap_t*)m_adapter_handle, 1 * 1024 * 1024/*500000000*/) == -1)
+// 	{
+// 		printf("Can't set up the user buffer!");
+// 		return -1;
+// 	}
+// 
+// 	/*设置从内核缓冲区到用户缓冲区的最小传递量*/
+// 	if (pcap_setmintocopy((pcap_t*)m_adapter_handle, 25600/*3840000*/) == -1)
+// 	{
+// 		printf("Can,t set the transmition between the kernel buffer and user buffer!");
+// 		return -1;
+// 	}
+// 
+// 	/*设置内核缓冲*/
+// 	if (pcap_setbuff((pcap_t*)m_adapter_handle, 20 * 1024 * 1024/*100000000*/) == -1)
+// 	{
+// 		printf("Can't set up the kernel buffer!");
+// 		return -1;
+// 	}
+
+// 	if (pcap_setbuff((pcap_t*)m_adapter_handle, 1 * 1024 * 1024) == -1)
+// 	{
+// 		return RTN_MALLOC_FAIL;
+// //		TRACE("-------ERROR: 设置内核缓冲区大小失败---------------\n");
+// 	}
+// 
+// 	if (pcap_setuserbuffer((pcap_t*)m_adapter_handle, 1 * 1024 * 1024) == -1)
+// 	{
+// 		return RTN_MALLOC_FAIL;
+// 		//		TRACE("-------ERROR: 设置内核缓冲区大小失败---------------\n");
+// 	}
+
+// 	sprintf_s(filter, sizeof(filter), "ether dst %02lx:%02lx:%02lx:%02lx:%02lx:%02lx", smac[0], smac[1], smac[2], smac[3], smac[4], smac[5]);
 
 	//compile the filter
 	bpf_u_int32			NetMask;
@@ -228,11 +268,13 @@ short CNetDriver::OpenAdapter(Uint8 adapter_id)
 	if (pcap_compile((pcap_t*)m_adapter_handle, &fcode, filter, 1, NetMask) < 0)
 	{
 		pcap_close((pcap_t*)m_adapter_handle);
+		m_adapter_handle = NULL;
 		return RN_Net_Rt_Complie_Err;
 	}
 	if (pcap_setfilter((pcap_t*)m_adapter_handle, &fcode) < 0)
 	{
 		pcap_close((pcap_t*)m_adapter_handle);
+		m_adapter_handle = NULL;
 		return RN_Net_Rt_SetFilter_Err;
 	}
 
@@ -351,9 +393,9 @@ short CNetDriver::RxPacketDecoder(const void* src, const Uint16 src_len, void* d
 /////////////////////判断有没有报文过来///////////
 short CNetDriver::CheckAdapterPacket(int& packet_num)
 {
-#ifdef DEBUG
+#ifdef MY_CNetDriver_DEBUG_
 	return RxPacketDecoder(NULL, 0, m_rx_buffer, m_rx_packet_length);
-#endif // DEBUG
+#endif // MY_CNetDriver_DEBUG_
 	pcap_pkthdr *header = NULL;
 	short rtn;
 	const Uint8 *pTempRx = NULL;
@@ -398,6 +440,15 @@ unsigned __stdcall NetReceiveThread(void *para)
 		}
 		if (pDriver->TryThreadRx())
 		{
+//			int i;
+// 			for (i = 0; i < 1000;i++)
+// 			{
+// 				pDriver->CheckAdapterPacket(packet_num);
+// 				if (packet_num == 0)
+// 				{
+// 					break;
+// 				}
+// 			}
 			pDriver->CheckAdapterPacket(packet_num);
 			pDriver->OpenThreadRx();
 			if (packet_num <= 0)
@@ -408,3 +459,63 @@ unsigned __stdcall NetReceiveThread(void *para)
 	}
 	return RTN_SUCCESS;
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////接收报文线程，当处于线程接收模式，所有的报文都是由该函数处理///////////
+// void my_packet_handler(u_char *para, const struct pcap_pkthdr *header, const Uint8 *pkt_data);
+// unsigned __stdcall NetReceiveThread(void *para)
+// {
+// 	/* 开始捕获 */
+// 
+// 	CNetDriver* pDriver = (CNetDriver*)para;
+// 	pcap_pkthdr *header = NULL;
+// 	int32 nret = -1;
+// 	const Uint8 *pTempRx = NULL;
+// 	int32 iCount = 0;
+// 	int32 iSuccessNum = 0;
+// 	bool bSuccess = false;
+// 	int packet_num;
+// 	while (1)
+// 	{
+// 		short rtn = pcap_dispatch((pcap_t*)(pDriver->m_adapter_handle), -1, my_packet_handler, (u_char*)para);
+// 		if (-1 == rtn)
+// 		{
+// 			printf("---- pcap_loop error\n");
+// 		}
+// 		else if (-2 == rtn)
+// 		{
+// 			printf("---- pcap_loop break!\n");
+// 		}
+// 	}
+// 	return RTN_SUCCESS;
+// }
+// 
+// /* 每次捕获到数据包时，libpcap都会自动调用这个回调函数 */
+// // typedef void(*pcap_handler)(u_char *, const struct pcap_pkthdr *,
+// // 	const u_char *);
+// void my_packet_handler(u_char *para, const struct pcap_pkthdr *header, const Uint8 *pkt_data)
+// {
+// 
+// 	CNetDriver* pDriver = (CNetDriver*)para;
+// //	pcap_pkthdr *header = NULL;
+// 	int32 nret = -1;
+// //	const Uint8 *pTempRx = NULL;
+// 	int32 iCount = 0;
+// 	int32 iSuccessNum = 0;
+// 	bool bSuccess = false;
+// 	int packet_num;
+// 
+// 	short rtn;
+// 	const Uint8 *pTempRx = pkt_data;
+// 
+// 	if (NULL == header || header->caplen <= CNetDriver::MIN_PACKET_LEN)
+// 	{
+// 		return ;
+// 	}
+// 	//QueryPerformanceCounter(&g_Time3);
+// 	iSuccessNum++;
+// 
+// 	rtn = pDriver->RxPacketDecoder(pTempRx, header->caplen, pDriver->m_rx_buffer, pDriver->m_rx_packet_length);
+// 
+// 	return ;
+// }
+//////////////////////////////////////////////////////////////////////////

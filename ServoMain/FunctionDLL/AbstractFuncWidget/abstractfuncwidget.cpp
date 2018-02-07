@@ -14,7 +14,7 @@
 #include "xmlbuilder.h"
 #include "servocontrol.h"
 #include "MainGTSD/mainwindow.h"
-#include "ServoDriverComDll.h"
+#include "./DllCom/ServoDriverComDll.h"
 #include "QmlFactory/qmlregisterincludes.h"
 #include "option.h"
 #include "optionuserloginitem.h"

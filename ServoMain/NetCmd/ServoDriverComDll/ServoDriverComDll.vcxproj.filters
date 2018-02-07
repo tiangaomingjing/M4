@@ -117,174 +117,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ServoDriverComDll.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="NetCom\include\Net.h">
-      <Filter>NetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="NetCom\include\NetCommunication.h">
-      <Filter>NetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="NetCom\include\Packet.h">
-      <Filter>NetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="NetCom\include\Basetype_def.h">
-      <Filter>NetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="NetCom\include\BaseReturn_def.h">
-      <Filter>NetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="AbsCom\include\AbsCom.h">
-      <Filter>AbsCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="Cmd\include\ST_GTSD_Cmd.h">
-      <Filter>Cmd\include</Filter>
-    </ClInclude>
-    <ClInclude Include="PlotWave\include\PlotWave.h">
-      <Filter>PlotWave\include</Filter>
-    </ClInclude>
-    <ClInclude Include="PlotWave\include\mt_timer.h">
-      <Filter>PlotWave\include</Filter>
-    </ClInclude>
-    <ClInclude Include="PlotWave\include\gdef.h">
-      <Filter>PlotWave\include</Filter>
-    </ClInclude>
-    <ClInclude Include="PlotWave\include\cpu_timer.h">
-      <Filter>PlotWave\include</Filter>
-    </ClInclude>
-    <ClInclude Include="ParseIntelHex\include\ParseHex.h">
-      <Filter>ParseIntelHex\include</Filter>
-    </ClInclude>
-    <ClInclude Include="FirmwareDL\include\FirmwareDl.h">
-      <Filter>FirmwareDL\include</Filter>
-    </ClInclude>
-    <ClInclude Include="UartBoot\include\hex2ldr.h">
-      <Filter>uartboot\include</Filter>
-    </ClInclude>
-    <ClInclude Include="UartBoot\include\serialport.h">
-      <Filter>uartboot\include</Filter>
-    </ClInclude>
-    <ClInclude Include="UartBoot\include\ihex.h">
-      <Filter>uartboot\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RingNetCom\include\RingNetCom.h">
-      <Filter>RingNetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RingNetCom\include\RingNetPacket.h">
-      <Filter>RingNetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RingNetCom\include\Rninterface.h">
-      <Filter>RingNetCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="PlotWave\include\rn_noTimer.h">
-      <Filter>PlotWave\include</Filter>
-    </ClInclude>
-    <ClInclude Include="SocketCom\include\SocketInterface.h">
-      <Filter>socketCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="SocketCom\include\SocketCom.h">
-      <Filter>socketCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="SocketCom\include\SocketPacket.h">
-      <Filter>socketCom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="eeprom\include\eepromOpt.h">
-      <Filter>eeprom\include</Filter>
-    </ClInclude>
-    <ClInclude Include="NetDriver.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RingNetDriver.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="DeviceDataBase.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="StRingNetRegDef.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RnDeviceDataBase.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="StRingNetComUser.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RingNetInterface.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RnDriverWave.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RnDriverPlot.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="ServoDriverComDef.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="UserResp.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RingNetDeviceDef.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="RnServoAxiMapping.h">
-      <Filter>RingNetDriver\include</Filter>
-    </ClInclude>
-    <ClInclude Include="ServoDriverCom.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="RnSerialPort.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MotionControlComDll.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="MotionCtrlCom.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="FPGAUpdate.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="ComBase.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="CpldCom.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GTCmdCtrl.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="driver_command.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="GTDriverCmd.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SPLine.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="AdminstratorComDll.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Eeprom.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ServoDriverComDll.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
@@ -377,9 +210,6 @@
     <ClCompile Include="RnDriverPlot.cpp">
       <Filter>RingNetDriver\src</Filter>
     </ClCompile>
-    <ClCompile Include="UserResp.cpp">
-      <Filter>RingNetDriver\src</Filter>
-    </ClCompile>
     <ClCompile Include="RnServoAxiMapping.cpp">
       <Filter>RingNetDriver\src</Filter>
     </ClCompile>
@@ -387,9 +217,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="RnSerialPort.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="MotionControlComDll.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MotionCtrlCom.cpp">
@@ -413,21 +240,242 @@
     <ClCompile Include="SPLine.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AdminstratorComDll.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Eeprom.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Library Include="NetCom\wpcap\lib\wpcap.lib">
-      <Filter>NetCom\lib</Filter>
-    </Library>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Network.def">
+    <ClCompile Include="DllCom\AdminstratorComDll.cpp">
       <Filter>源文件</Filter>
-    </None>
+    </ClCompile>
+    <ClCompile Include="DllCom\MotionControlComDll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DllCom\ServoDriverComDll.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DllCom\UserResp.cpp">
+      <Filter>RingNetDriver\src</Filter>
+    </ClCompile>
+    <ClCompile Include="IlinkEnc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Ilink.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="IlinkDevice.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PcCtrlCom.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StFileOp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StString.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileServer.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlCodeUpdate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XmlCode.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="ReadMe.txt" />
+    <CustomBuild Include="Network.def">
+      <Filter>源文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ComBase.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CpldCom.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\AdminstratorComDll.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\BaseReturn_def.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\Basetype_def.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\GTDriverCmd.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\MotionControlComDll.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\ServoDriverComDef.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\ServoDriverComDll.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="driver_command.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Eeprom.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="FileServer.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="FPGAUpdate.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="GTCmdCtrl.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Ilink.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="IlinkDevice.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="IlinkEnc.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="MotionCtrlCom.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PcCtrlCom.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RnSerialPort.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ServoDriverCom.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SPLine.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="StFileOp.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="StString.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="targetver.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="XmlCode.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="XmlCodeUpdate.h">
+      <Filter>头文件</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetCom\include\BaseReturn_def.h">
+      <Filter>NetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetCom\include\Basetype_def.h">
+      <Filter>NetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetCom\include\Net.h">
+      <Filter>NetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetCom\include\NetCommunication.h">
+      <Filter>NetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetCom\include\Packet.h">
+      <Filter>NetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetCom\wpcap\lib\wpcap.lib">
+      <Filter>NetCom\lib</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Cmd\include\ST_GTSD_Cmd.h">
+      <Filter>Cmd\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="AbsCom\include\AbsCom.h">
+      <Filter>AbsCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PlotWave\include\cpu_timer.h">
+      <Filter>PlotWave\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PlotWave\include\gdef.h">
+      <Filter>PlotWave\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PlotWave\include\mt_timer.h">
+      <Filter>PlotWave\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PlotWave\include\PlotWave.h">
+      <Filter>PlotWave\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="PlotWave\include\rn_noTimer.h">
+      <Filter>PlotWave\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="ParseIntelHex\include\ParseHex.h">
+      <Filter>ParseIntelHex\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="FirmwareDL\include\FirmwareDl.h">
+      <Filter>FirmwareDL\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="UartBoot\include\hex2ldr.h">
+      <Filter>uartboot\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="UartBoot\include\ihex.h">
+      <Filter>uartboot\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="UartBoot\include\serialport.h">
+      <Filter>uartboot\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RingNetCom\include\RingNetCom.h">
+      <Filter>RingNetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RingNetCom\include\RingNetPacket.h">
+      <Filter>RingNetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RingNetCom\include\Rninterface.h">
+      <Filter>RingNetCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SocketCom\include\SocketCom.h">
+      <Filter>socketCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SocketCom\include\SocketInterface.h">
+      <Filter>socketCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="SocketCom\include\SocketPacket.h">
+      <Filter>socketCom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="eeprom\include\eepromOpt.h">
+      <Filter>eeprom\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DeviceDataBase.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DllCom\UserResp.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="NetDriver.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RingNetDeviceDef.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RingNetDriver.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RingNetInterface.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RnServoAxiMapping.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RnDeviceDataBase.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RnDriverPlot.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
+    <CustomBuild Include="RnDriverWave.h">
+      <Filter>RingNetDriver\include</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

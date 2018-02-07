@@ -3,8 +3,8 @@
 
 #include <QObject>
 #include "globaldef.h"
-#include "Basetype_def.h"
-#include "ServoDriverComDll.h"
+#include "./DllCom/Basetype_def.h"
+#include "./DllCom/ServoDriverComDll.h"
 
 class QTreeWidget;
 

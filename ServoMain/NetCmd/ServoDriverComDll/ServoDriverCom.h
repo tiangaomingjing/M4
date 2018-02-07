@@ -182,5 +182,11 @@ public:
 // 
 // 	int16 GTSD_CMD_ResetFPGA(int16 axis);
 // 	int16 GTSD_CMD_ConfigEEPROM(int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
+	short GTSD_CMD_XmlWriteFile(int16 axis, char* pFileNameList[], int pFileTypeList[], int file_num,
+		void(*tpfUpdataProgressPt)(void*, short*), void* ptrv, short& progress);
+
+	short GTSD_CMD_XmlReadFile(int16 axis, char* pFileNameList[], int pFileTypeList[], int& file_num,
+		void(*tpfUpdataProgressPt)(void*, short*), void* ptrv, short& progress);
+
 };
 

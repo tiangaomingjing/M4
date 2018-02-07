@@ -53,7 +53,8 @@ short CRnServoAxiMapping::InitialMapping(CRingNetDriver* driver)
 
 			m_dsp_num++;
 			break;
-		case TB_GTDS41 :
+		case TB_GTDS41:
+		case TB_GTDS42:
 			m_axi_inf[m_axi_num].m_station_id = driver->m_pRnDeviceOnline[i]->m_station_id;
 			m_axi_inf[m_axi_num].m_station_ch = RN_DSP_CH_ID;
 			m_axi_inf[m_axi_num].m_axi_id_in_dsp = 0;

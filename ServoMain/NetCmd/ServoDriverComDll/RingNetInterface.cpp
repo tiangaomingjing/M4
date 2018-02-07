@@ -443,6 +443,7 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 	{
 		word_num = word_num + 1;
 	}
+
 	int16 length = (word_num << 1) + 4;
 	if (length > RN_USER_TX_LEN_MAX)
 		return RTN_PARAM_OVERFLOW;
@@ -478,6 +479,8 @@ int16 CRingNetInterface::RnNetCom_DSP_ComHandler(int16 mode, int16 byte_addr, in
 		cmd = RN_ARD;
 		needReq = RN_NEED_REQ;
 	}
+
+
 	//////////////////////////////////////////////////////////////////////////
 	rtn = FormatRingNetUserPakcet(&packet, (Uint8)des_id, des_ch,
 		length, cmd, com_mode, RN_USER_PROTOCOL_DRIVER, word_num << 1,

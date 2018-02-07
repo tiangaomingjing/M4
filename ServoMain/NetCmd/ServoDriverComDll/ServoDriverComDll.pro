@@ -3,7 +3,6 @@
 # ------------------------------------------------------
 
 TEMPLATE = lib
-
 CONFIG(debug, debug|release){
     TARGET = ServoDriverComDlld
     LIBS +=$${PWD}/NetCom/wpcap/lib/wpcap.lib
@@ -14,7 +13,8 @@ CONFIG(debug, debug|release){
     DESTDIR =$${PWD}/../../../release/Bin
 }
 DEFINES += _WINDOWS _USRDLL SERVODRIVERCOMDLL_EXPORTS
-INCLUDEPATH += ./NetCom/include \
+INCLUDEPATH += ./DllCom \
+    ./NetCom/include \
     ./NetCom/wpcap/Include/pcap \
     ./NetCom/wpcap/Include \
     ./AbsCom/include \
@@ -27,12 +27,11 @@ INCLUDEPATH += ./NetCom/include \
     ./UartBoot/include \
     ./RingNetCom/include \
     ./socketCom/include \
-    ./eeprom/include
-
+    ./eeprom/include \
 PRECOMPILED_HEADER = stdafx.h
 DEPENDPATH += .
-MOC_DIR += ./GeneratedFiles/debug
-OBJECTS_DIR += debug
+MOC_DIR += ./GeneratedFiles/release
+OBJECTS_DIR += release
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(ServoDriverComDll.pri)

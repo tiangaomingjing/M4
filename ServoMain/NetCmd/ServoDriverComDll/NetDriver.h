@@ -13,8 +13,14 @@ const Uint16 NET_PACKET_SIZE_MIN = 60;// 64 - 4crc;
 4：报文的处理函数RxPacketDecoder为虚构函数，可以重构。
 */
 
-//#define DEBUG 
-class CNetDriver
+//#define MY_CNetDriver_DEBUG_ 
+
+#ifdef SERVODRIVERCOMDLL_EXPORTS
+#define SERVODRIVERCOMDLL_API __declspec(dllexport)
+#else
+#define SERVODRIVERCOMDLL_API __declspec(dllimport)
+#endif
+class SERVODRIVERCOMDLL_API CNetDriver
 {
 public:
 	CNetDriver();
@@ -38,6 +44,7 @@ public:
 	short CheckAdapterPacket(int& packet_num);//判断网络中有没有收到数据。
 public:
 	Uint8 smac[6];
+	int8 filter[128];
 private:
 //	CRITICAL_SECTION m_com_tx_cs;
 	void* m_com_tx_cs;                 //CRITICAL_SECTION for tx receive 
@@ -47,7 +54,7 @@ private:
 public:
 	Uint16 m_rx_thread_status;
 public:
-	static const Uint16 MAX_PACKET_SZIE = 1024;
+	static const Uint16 MAX_PACKET_SZIE = 16384;// 1024;
 	static const int32 	MIN_PACKET_LEN = 34;							// 返回包最小长度限制
 	Uint16 m_tx_packet_length;
 	Uint8 m_tx_buffer[MAX_PACKET_SZIE];
@@ -57,8 +64,10 @@ public:
 	
 //	void* m_pcap_pkthr;
 //	pcap_pkthdr *header;
-	
+// public:
+// 	static char		errbuf[256];// PCAP_ERRBUF_SIZE];
 protected:
+public:
 	Uint8 m_adapter_num;						//网卡个数
 	//////////////////////////////////////////////////////////////////////////
 	Uint8 m_adapter_id;							//当前打开网卡的ID

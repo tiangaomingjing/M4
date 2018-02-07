@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+INCLUDEPATH+=$${PWD}/../../NetCmd/ServoDriverComDll/DllCom
+
 QT       += core gui designer
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

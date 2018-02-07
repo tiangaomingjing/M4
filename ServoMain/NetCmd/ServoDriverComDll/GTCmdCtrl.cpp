@@ -200,6 +200,7 @@ short CGTCmdCtrl::SendCommand(void)
 		}
 
 		rtn = m_pDriver->SendPci(&gPci, m_dsp_tag_id);
+//		rtn = m_pDriver->SendPcie(&gPci, 2, m_dsp_tag_id);
 		if (CMD_SUCCESS != rtn)
 		{
 			return rtn;
