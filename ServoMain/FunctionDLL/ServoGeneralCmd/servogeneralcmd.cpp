@@ -173,14 +173,14 @@ double ServoGeneralCmd::write(const QString &cmdWriteName, double value, qint16 
       Uint32 value;
       value=(Uint32)setValue;
       funcWrite.data[setIndex]=value&0x0000ffff;
-      funcWrite.data[setIndex+1]=value&0xffff0000;
+      funcWrite.data[setIndex+1]=(value&0xffff0000)>>16;
     }
     else
     {
       int32 value;
       value=(int32)setValue;
       funcWrite.data[setIndex]=value&0x0000ffff;
-      funcWrite.data[setIndex+1]=value&0xffff0000;
+      funcWrite.data[setIndex+1]=(value&0xffff0000)>>16;
     }
   }
   else//16位

@@ -709,7 +709,7 @@ void ServoControl::writeFunctionValue2Ram(QTreeWidgetItem *item, QTreeWidget *cm
       length=itemTemp->text(COL_CMD_FUNC_LENGTH).toUShort();
       type=itemTemp->text(COL_CMD_FUNC_TYPE);
       func.data=new short[length];
-      qDebug()<<cmdName<<"id"<<id<<"setindex"<<setIndex<<"length"<<length<<"cmd"<<cmd<<"type"<<type;
+      qDebug()<<cmdName<<"id"<<id<<"setindex"<<setIndex<<"length"<<length<<"cmd"<<cmd<<"type"<<type<<"gain"<<kgain;
       if(id!=-1)
       {
         func.data[3]=id;
@@ -730,7 +730,7 @@ void ServoControl::writeFunctionValue2Ram(QTreeWidgetItem *item, QTreeWidget *cm
 //          value=value*kgain;
           value=(Uint32)setValue;
           func.data[setIndex]=value&0x0000ffff;
-          func.data[setIndex+1]=value&0xffff0000;
+          func.data[setIndex+1]=(value&0xffff0000)>>16;
         }
         else
         {
@@ -742,7 +742,7 @@ void ServoControl::writeFunctionValue2Ram(QTreeWidgetItem *item, QTreeWidget *cm
 //          value=value*kgain;
           value=(int32)setValue;
           func.data[setIndex]=value&0x0000ffff;
-          func.data[setIndex+1]=value&0xffff0000;
+          func.data[setIndex+1]=(value&0xffff0000)>>16;
         }
       }
       else//16位
@@ -750,7 +750,9 @@ void ServoControl::writeFunctionValue2Ram(QTreeWidgetItem *item, QTreeWidget *cm
         if(type.contains("U"))
         {
           setValue=item->text(COL_FUNC_VALUE).toDouble();
+//          qDebug()<<"todouble "<<setValue;
           setValue=setValue*kgain;
+//          qDebug()<<"setValue*kgain "<<setValue;
 
           Uint16 value;
 //          value=item->text(COL_FUNC_VALUE).toUShort();
@@ -770,6 +772,8 @@ void ServoControl::writeFunctionValue2Ram(QTreeWidgetItem *item, QTreeWidget *cm
           func.data[setIndex]=value;
         }
       }
+//      for(int i=0;i<length;i++)
+//        qDebug("data[%d]:%x",i,func.data[i]);
       result=(COM_ERROR)GTSD_CMD_ProcessorGeneralFunc(axisIndex,&func,comtype,comStation);
       if(checkedCmdReturnValue(result))
       {

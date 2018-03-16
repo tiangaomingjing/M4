@@ -98,7 +98,7 @@ typedef enum
 	ALARM_CLEAR_COMM = 45,															// clear alarm
 	RD_ALARM_LOG_CODE_COM = 46,                                                     // read alarm log code ,just log ten recently
 	RD_ALARM_LOG_TIMES_COM = 47,                                                    // read different kind of alarm times 
-	TUNNING_MESSAGE_MAX
+	TUNNING_MESSAGE_MAX=4095
 }tTuningMessageId;
 
 

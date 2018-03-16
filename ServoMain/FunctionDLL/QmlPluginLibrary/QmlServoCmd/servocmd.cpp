@@ -737,7 +737,7 @@ QString ServoCmd::writeCommand(const QString cmdWriteName, double value)
       Uint32 value;
       value=(Uint32)setValue;
       funcWrite.data[setIndex]=value&0x0000ffff;
-      funcWrite.data[setIndex+1]=value&0xffff0000;
+      funcWrite.data[setIndex+1]=(value&0xffff0000)>>16;
     }
     else
     {
@@ -745,7 +745,7 @@ QString ServoCmd::writeCommand(const QString cmdWriteName, double value)
       int32 value;
       value=(int32)setValue;
       funcWrite.data[setIndex]=value&0x0000ffff;
-      funcWrite.data[setIndex+1]=value&0xffff0000;
+      funcWrite.data[setIndex+1]=(value&0xffff0000)>>16;
     }
   }
   else//16位

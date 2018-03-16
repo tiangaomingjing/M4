@@ -749,11 +749,11 @@ Rectangle {
                     if(m_btnStartTest.barValue>=100){
                         m_btnStartTest.barValue=0;
                     }
-                    console.log("servoState.CheckServoOn");
                     servoIsOn=m_cmd.checkServoIsReady();
+                    console.log("servoState.CheckServoOn");
                     if(servoIsOn)
                         currentState=servoState.CheckFinish;
-                    if((servoIsOn===false)&&(checkCount>3)){
+                    if((servoIsOn===false)&&(checkCount>5)){
                         root.showMessage(qsTr("寻相未完成，伺服打开失败"));
                         currentState=servoState.Quit;
                     }
@@ -852,11 +852,16 @@ Rectangle {
                         ret=m_cmd.writeCommand(srcString,0);
                         if(ret!="0")
                             ret=m_cmd.writeCommand(srcString,0);
+                        if(ret!="0")
+                            ret=m_cmd.writeCommand(srcString,0);
+                        if(ret!="0")
+                            ret=m_cmd.writeCommand(srcString,0);
                         console.log("ret write value:"+ret);
                     }
                     root.currentTaskMode=m_cmd.currentServoTaskMode();//先保存当前伺服模式
                     m_cmd.setServoTaskMode(taskMode.TASKMODE_IPA);
                     m_cmd.setPosAdjRef(m_rollWheel.curValue);
+                    m_cmd.setServoOn(true);
                     m_cmd.setServoOn(true);
 
                     root.btnSearchIsClicked=true;
