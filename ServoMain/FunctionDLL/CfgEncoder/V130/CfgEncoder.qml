@@ -27,6 +27,7 @@ Rectangle {
     property color pressColor: "#567DBC";
     property color frameColor: "#BBB9B9";
     property color backgroundColor: Qt.lighter(frameColor,1.2);
+    property string cmd_src_sel:"gSevDrv.sev_obj.pos.seq.prm.cmd_src_sel";
     function updateUiFromServo(){
         console.log("driveEncoder -> onItemValueChanged")
     //            listView.setCurrentIndex(Number(factory.dataTree.textTopLevel(0,1))-1);
@@ -606,7 +607,9 @@ Rectangle {
                     Layout.fillWidth: true;
                     property bool barVisible: false;
                     property int barValue: 0;
-            //        text:"开 始 寻 相";
+                    property string btnText: qsTr("开始寻相")
+                    property string btnTextColor:"black";
+//                    text:"开 始 寻 相";
                     style: ButtonStyle {
                         background: Rectangle {
                             implicitWidth: 100
@@ -639,10 +642,11 @@ Rectangle {
                             }
                         }
                         label: Text{
-                            text:qsTr("开 始 寻 相");
+                            text:m_btnStartTest.btnText;
                             horizontalAlignment: Text.AlignHCenter;
                             verticalAlignment: Text.AlignVCenter;
                             font.bold:control.hovered?true:false;
+                            color: m_btnStartTest.btnTextColor;
                         }
                     }
                 }
@@ -749,11 +753,13 @@ Rectangle {
                     if(m_btnStartTest.barValue>=100){
                         m_btnStartTest.barValue=0;
                     }
+                    m_cmd.writeCommand(root.cmd_src_sel,0);
+                    m_cmd.setServoOn(true);
                     servoIsOn=m_cmd.checkServoIsReady();
-                    console.log("servoState.CheckServoOn");
+                    console.log("servoState.CheckServoOn ="+servoIsOn);
                     if(servoIsOn)
                         currentState=servoState.CheckFinish;
-                    if((servoIsOn===false)&&(checkCount>5)){
+                    if((servoIsOn===false)&&(checkCount>10)){
                         root.showMessage(qsTr("寻相未完成，伺服打开失败"));
                         currentState=servoState.Quit;
                     }
@@ -795,8 +801,15 @@ Rectangle {
                     //还原伺服原来的状态
                     m_cmd.setServoOn(false);
                     m_cmd.setServoTaskMode(root.currentTaskMode);
-                    m_cmd.writeCommand("gSevDrv.sev_obj.pos.seq.prm.cmd_src_sel",root.cmdSrcDefault);
+                    m_cmd.writeCommand(root.cmd_src_sel,root.cmdSrcDefault);
+
+                    m_cmd.setServoOn(false);
+                    m_cmd.setServoTaskMode(root.currentTaskMode);
+                    m_cmd.writeCommand(root.cmd_src_sel,root.cmdSrcDefault);
+
                     root.motorIsRunning=false;
+                    m_btnStartTest.btnText="开始寻相";
+                    m_btnStartTest.btnTextColor="black";
                     currentState=servoState.CheckServoOn;
                     break;
                 }
@@ -842,23 +855,23 @@ Rectangle {
                 else{
                     //先读控制源，0:后台控制 1:控制器控制  如果控制源不是0，则修改控制源
                     var srcSelect=100;
-                    var srcString="gSevDrv.sev_obj.pos.seq.prm.cmd_src_sel";
-                    srcSelect=parseInt(m_cmd.readCommand(srcString));
+                    srcSelect=parseInt(m_cmd.readCommand(root.cmd_src_sel));
                     root.cmdSrcDefault=srcSelect;
                     console.log("srcSelect:"+srcSelect);
                     //获得控制权
                     if(srcSelect!==0){
                         var ret="0";
-                        ret=m_cmd.writeCommand(srcString,0);
-                        if(ret!="0")
-                            ret=m_cmd.writeCommand(srcString,0);
-                        if(ret!="0")
-                            ret=m_cmd.writeCommand(srcString,0);
-                        if(ret!="0")
-                            ret=m_cmd.writeCommand(srcString,0);
+                        var writeCount=0;
+                        do{
+                            ret=m_cmd.writeCommand(root.cmd_src_sel,0);
+                            writeCount++;
+                            console.log("try to get the cmd control"+writeCount);
+                        }while(ret!="0"&&writeCount<10)
                         console.log("ret write value:"+ret);
                     }
                     root.currentTaskMode=m_cmd.currentServoTaskMode();//先保存当前伺服模式
+                    m_cmd.setServoTaskMode(taskMode.TASKMODE_IPA);
+                    m_cmd.setPosAdjRef(m_rollWheel.curValue);
                     m_cmd.setServoTaskMode(taskMode.TASKMODE_IPA);
                     m_cmd.setPosAdjRef(m_rollWheel.curValue);
                     m_cmd.setServoOn(true);
@@ -868,6 +881,9 @@ Rectangle {
                     //显示进度条
                     m_btnStartTest.barVisible=true;
                     m_btnStartTest.barValue=0;
+
+                    m_btnStartTest.btnText="请不要切换页面! 寻相进行中......";
+                    m_btnStartTest.btnTextColor="red";
                 }
             }
         }
