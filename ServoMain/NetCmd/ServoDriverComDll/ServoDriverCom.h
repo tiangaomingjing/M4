@@ -17,6 +17,10 @@ protected:
 	CRnDriverPlot*		m_pPlot;
 	CEeprom* m_pEeprom;
 public:
+	//add by luo.mj 20180328
+	Uint16 m_station_id;
+	short SetStationId(Uint16 station_id);
+	/////////////////////////////////////////////
 	short Initial(CRingNetInterface* pDriver);
 	short InitialEeprom(CEeprom* pEeprom);
 	Uint16 ConvertAxiToStationId(int16 axi_id){ return m_pMapping->ConvertAxiToStationId(axi_id); };

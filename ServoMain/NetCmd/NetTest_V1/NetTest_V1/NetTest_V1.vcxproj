@@ -57,7 +57,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>../../ServoDriverComDll/Debug/</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>../Debug/</AdditionalLibraryDirectories>
       <AdditionalDependencies>ServoDriverComDll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

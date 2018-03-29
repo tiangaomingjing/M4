@@ -384,7 +384,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Close(int16 com_type)
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOn(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetServoOn(axis);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetServoOn(axis);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -396,7 +409,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOn(int16 axis, int16 com_type /*= G
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOff(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetServoOff(axis);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) 
+		return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetServoOff(axis);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -407,7 +434,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOff(int16 axis, int16 com_type /*= 
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetServoState(int16 axis, SERVO_STATE* serv, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetServoState(axis, serv);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) 
+		return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetServoState(axis, serv);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -418,7 +459,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetServoState(int16 axis, SERVO_STATE* serv
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoTaskMode(int16 axis, int16 mode, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetServoTaskMode(axis, mode);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) 
+		return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetServoTaskMode(axis, mode);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -429,7 +484,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoTaskMode(int16 axis, int16 mode, in
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetServoTaskMode(int16 axis, SERVO_MODE* mode, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetServoTaskMode(axis, mode);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) 
+		return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetServoTaskMode(axis, mode);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -440,7 +509,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetServoTaskMode(int16 axis, SERVO_MODE* mo
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Write16BitByAdr(int16 axis, int16 ofst, int16 value, void* ptr,int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Write16BitByAdr(axis, ofst, value, ptr);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) 
+		return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Write16BitByAdr(axis, ofst, value, ptr);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -451,7 +534,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Write16BitByAdr(int16 axis, int16 ofst, int
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Read16BitByAdr(int16 axis, int16 ofst, int16* value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Read16BitByAdr(axis, ofst, value, ptr);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Read16BitByAdr(axis, ofst, value, ptr);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -462,7 +558,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Read16BitByAdr(int16 axis, int16 ofst, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Write32BitByAdr(int16 axis, int16 ofst, int32 value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Write32BitByAdr(axis, ofst, value, ptr);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Write32BitByAdr(axis, ofst, value, ptr);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -473,7 +582,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Write32BitByAdr(int16 axis, int16 ofst, int
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Read32BitByAdr(int16 axis, int16 ofst, int32* value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Read32BitByAdr(axis, ofst, value, ptr);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Read32BitByAdr(axis, ofst, value, ptr);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -484,7 +606,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Read32BitByAdr(int16 axis, int16 ofst, int3
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Write64BitByAdr(int16 axis, int16 ofst, int64 value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Write64BitByAdr(axis, ofst, value, ptr);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Write64BitByAdr(axis, ofst, value, ptr);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -495,7 +630,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Write64BitByAdr(int16 axis, int16 ofst, int
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Read64BitByAdr(int16 axis, int16 ofst, int64* value, void* ptr, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Read64BitByAdr(axis, ofst, value, ptr);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Read64BitByAdr(axis, ofst, value, ptr);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -506,7 +654,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Read64BitByAdr(int16 axis, int16 ofst, int6
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetIdRef(int16 axis, double id_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetIdRef(axis, id_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetIdRef(axis, id_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -517,7 +678,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetIdRef(int16 axis, double id_ref, int16 c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetIdRef(int16 axis, ID_STATE* id_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetIdRef(axis, id_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetIdRef(axis, id_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -528,7 +702,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetIdRef(int16 axis, ID_STATE* id_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetIqRef(int16 axis, double iq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetIqRef(axis, iq_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetIqRef(axis, iq_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -539,7 +726,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetIqRef(int16 axis, double iq_ref, int16 c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetIqRef(int16 axis, IQ_STATE* iq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetIqRef(axis, iq_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetIqRef(axis, iq_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -550,7 +750,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetIqRef(int16 axis, IQ_STATE* iq_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetSpdRef(int16 axis, double spd_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetSpdRef(axis, spd_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetSpdRef(axis, spd_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -561,7 +774,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetSpdRef(int16 axis, double spd_ref, int16
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetSpdRef(int16 axis, SPD_STATE* spd_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetSpdRef(axis, spd_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetSpdRef(axis, spd_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -572,7 +798,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetSpdRef(int16 axis, SPD_STATE* spd_ref, i
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUdRef(int16 axis, double ud_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetUdRef(axis, ud_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetUdRef(axis, ud_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -584,7 +823,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUdRef(int16 axis, double ud_ref, int16 c
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUdRef(int16 axis, UD_STATE* ud_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetUdRef(axis, ud_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetUdRef(axis, ud_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -595,7 +847,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUdRef(int16 axis, UD_STATE* ud_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUqRef(int16 axis, double uq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetUqRef(axis, uq_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetUqRef(axis, uq_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -606,7 +871,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUqRef(int16 axis, double uq_ref, int16 c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUqRef(int16 axis, UQ_STATE* uq_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetUqRef(axis, uq_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetUqRef(axis, uq_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -617,7 +895,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUqRef(int16 axis, UQ_STATE* uq_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUaRef(int16 axis, double ua_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetUaRef(axis, ua_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetUaRef(axis, ua_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -628,7 +919,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUaRef(int16 axis, double ua_ref, int16 c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUaRef(int16 axis, UA_STATE* ua_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetUaRef(axis, ua_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetUaRef(axis, ua_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -639,7 +943,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUaRef(int16 axis, UA_STATE* ua_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUbRef(int16 axis, double ub_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetUbRef(axis, ub_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetUbRef(axis, ub_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -650,7 +967,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUbRef(int16 axis, double ub_ref, int16 c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUbRef(int16 axis, UB_STATE* ub_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetUbRef(axis, ub_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetUbRef(axis, ub_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -661,7 +991,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUbRef(int16 axis, UB_STATE* ub_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUcRef(int16 axis, double uc_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetUcRef(axis, uc_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetUcRef(axis, uc_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -672,7 +1015,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetUcRef(int16 axis, double uc_ref, int16 c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUcRef(int16 axis, UC_STATE* uc_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetUcRef(axis, uc_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetUcRef(axis, uc_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -683,7 +1039,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetUcRef(int16 axis, UC_STATE* uc_ref, int1
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetPosAdjRef(int16 axis, double PosAdj_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetPosAdjRef(axis, PosAdj_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetPosAdjRef(axis, PosAdj_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -694,7 +1063,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetPosAdjRef(int16 axis, double PosAdj_ref,
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos_adj_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetPosAdjRef(axis, pos_adj_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetPosAdjRef(axis, pos_adj_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -705,7 +1087,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetPosAdjRef(int16 axis, POS_ADJ_STATE* pos
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetPosRef(int16 axis, int32 Pos_ref, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetPosRef(axis, Pos_ref);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetPosRef(axis, Pos_ref);
+	}
 	//////////////////////////////////////////////////////////////////////////
 	if (Net_Rt_Lock_Err == TryLock())
 	{
@@ -988,7 +1383,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetKgvFfdPos(int16 axis, int16* kgvffdpos, 
 */
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Set16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Set16bitFPGAByAddr(dsp_number, com_addr, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Set16bitFPGAByAddr(dsp_number, com_addr, value);
+	}
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1003,7 +1411,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Set16bitFPGAByAddr(int16 dsp_number, int16 
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Get16bitFPGAByAddr(int16 dsp_number, int16 com_addr, int16* pvalue, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Get16bitFPGAByAddr(dsp_number, com_addr, pvalue);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Get16bitFPGAByAddr(dsp_number, com_addr, pvalue);
+	}
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1018,7 +1439,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Get16bitFPGAByAddr(int16 dsp_number, int16 
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Set32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Set32bitFPGAByAddr(dsp_number, com_addr, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Set32bitFPGAByAddr(dsp_number, com_addr, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1033,7 +1468,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Set32bitFPGAByAddr(int16 dsp_number, int16 
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Get32bitFPGAByAddr(int16 dsp_number, int16 com_addr, int32* pvalue, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Get32bitFPGAByAddr(dsp_number, com_addr, pvalue);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Get32bitFPGAByAddr(dsp_number, com_addr, pvalue);
+	}
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1050,7 +1498,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Get32bitFPGAByAddr(int16 dsp_number, int16 
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_SetWaveBuf(dsp_number, wave);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_SetWaveBuf(dsp_number, wave);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1065,7 +1527,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetWaveBuf(int16 dsp_number, WAVE_BUF_PRM w
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetWaveBuf(int16 dsp_number, tWaveBufCmd* ctrlword, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetWaveBuf(dsp_number, ctrlword);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetWaveBuf(dsp_number, ctrlword);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1080,7 +1556,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetWaveBuf(int16 dsp_number, tWaveBufCmd* c
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetWaveData(int16 dsp_number, int16* read_num, int16** data, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_GetWaveData(dsp_number, read_num, data);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_GetWaveData(dsp_number, read_num, data);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1095,7 +1585,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetWaveData(int16 dsp_number, int16* read_n
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClearFpgaFifo(int16 dsp_number, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ClearFpgaFifo(dsp_number);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ClearFpgaFifo(dsp_number);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1105,7 +1609,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClearFpgaFifo(int16 dsp_number, int16 com_t
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write16BitByAdr(int16 axis, int16 ofst, int16 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Fram_Write16BitByAdr(axis, ofst, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Fram_Write16BitByAdr(axis, ofst, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1116,7 +1634,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write16BitByAdr(int16 axis, int16 ofst
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read16BitByAdr(int16 axis, int16 ofst, int16* value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Fram_Read16BitByAdr(axis, ofst, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Fram_Read16BitByAdr(axis, ofst, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1126,7 +1658,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read16BitByAdr(int16 axis, int16 ofst,
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write32BitByAdr(int16 axis, int16 ofst, int32 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Fram_Write32BitByAdr(axis, ofst, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Fram_Write32BitByAdr(axis, ofst, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1136,7 +1682,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write32BitByAdr(int16 axis, int16 ofst
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read32BitByAdr(int16 axis, int16 ofst, int32* value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Fram_Read32BitByAdr(axis, ofst, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Fram_Read32BitByAdr(axis, ofst, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1146,7 +1706,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read32BitByAdr(int16 axis, int16 ofst,
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write64BitByAdr(int16 axis, int16 ofst, int64 value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Fram_Write64BitByAdr(axis, ofst, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Fram_Write64BitByAdr(axis, ofst, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1156,7 +1730,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Write64BitByAdr(int16 axis, int16 ofst
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst, int64* value, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_Fram_Read64BitByAdr(axis, ofst, value);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_Fram_Read64BitByAdr(axis, ofst, value);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1167,7 +1755,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Fram_Read64BitByAdr(int16 axis, int16 ofst,
 
 int16 GTSD_CMD_FlashWrite(int16 axis, INTEL_HEX_FRAME* packet, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_FlashWrite(axis, packet);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_FlashWrite(axis, packet);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1177,7 +1779,21 @@ int16 GTSD_CMD_FlashWrite(int16 axis, INTEL_HEX_FRAME* packet, int16 com_type /*
 }
 int16 GTSD_CMD_FlashRead(int16 axis, INTEL_HEX_FRAME* packet_w, INTEL_HEX_FRAME* packet_r, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_FlashRead(axis, packet_w, packet_r);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_FlashRead(axis, packet_w, packet_r);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1187,7 +1803,21 @@ int16 GTSD_CMD_FlashRead(int16 axis, INTEL_HEX_FRAME* packet_w, INTEL_HEX_FRAME*
 }
 int16 GTSD_CMD_FlashErase(int16 axis, int16 blockNum, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_FlashErase(axis, blockNum);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_FlashErase(axis, blockNum);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1197,7 +1827,21 @@ int16 GTSD_CMD_FlashErase(int16 axis, int16 blockNum, int16 com_type /*= GTSD_CO
 }
 int16 GTSD_CMD_InterruptSwitch(int16 axis, int16 int_switch, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_InterruptSwitch(axis, int_switch);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_InterruptSwitch(axis, int_switch);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1205,6 +1849,7 @@ int16 GTSD_CMD_InterruptSwitch(int16 axis, int16 int_switch, int16 com_type /*= 
 	if(com_type == GTSD_COM_TYPE_RNNET)  stationId = GTSD_Convert_axi(axis);
 	return Unlock(GTSD_CMD_ST_InterruptSwitch(axis, int_switch, com_type, stationId));
 }
+//////   ?????????????????????           ///////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& filePath, void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	int16 progress;
@@ -1306,7 +1951,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorFlashHandler(int16 axis, wstring& 
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_StartPlot(axis, wave);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_StartPlot(axis, wave);
+	}
 // 	if (com_type == GTSD_COM_TYPE_RNNET)
 // 	{
 // 		if (g_RnDrivePlot == NULL)
@@ -1365,7 +2023,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StartPlot(int16& axis, WAVE_BUF_PRM& wave, 
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_StopPlot(axis, wave);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_StopPlot(axis, wave);
+	}
 // 	if (com_type == GTSD_COM_TYPE_RNNET)
 // 	{
 // 		if (g_RnDrivePlot == NULL)
@@ -1413,7 +2084,20 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_StopPlot(int16& axis, WAVE_BUF_PRM& wave, i
 }
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_PcGetWaveData(int16& axis, double** data, int32& number, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_PcGetWaveData(axis, data, number);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_PcGetWaveData(axis, data, number);
+	}
 // 	if (com_type == GTSD_COM_TYPE_RNNET)
 // 	{
 // 		Uint32 read_number;
@@ -1530,7 +2214,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_FirmwareFlashHandler(int16 axis, wstring& f
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorGeneralFunc(int16 axis, GENERALFUNCTION* gefunc, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ProcessorGeneralFunc(axis, gefunc);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ProcessorGeneralFunc(axis, gefunc);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1541,7 +2239,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorGeneralFunc(int16 axis, GENERALFUN
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ResetSystem(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ResetSystem(axis);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ResetSystem(axis);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1552,7 +2264,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ResetSystem(int16 axis, int16 com_type /*= 
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_finish, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_CheckResetFinish(axis, flag_finish);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_CheckResetFinish(axis, flag_finish);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1563,7 +2289,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_CheckResetFinish(int16 axis, bool& flag_fin
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ver, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ReadProcessorVersion(axis, ver);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ReadProcessorVersion(axis, ver);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1575,7 +2315,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadProcessorVersion(int16 axis, Uint16& ve
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFirmwareVersion(int16 axis, Uint16& ver, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
   if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
-  if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ReadFirmwareVersion(axis, ver);
+
+  if (com_type == GTSD_COM_TYPE_RNNET)
+  {
+	  if (0xF0 != stationId)
+	  {
+		  short rtn;
+		  rtn = g_RnServoCom->SetStationId(stationId);
+		  if (rtn != 0)
+		  {
+			  return rtn;
+		  }
+	  }
+	  return g_RnServoCom->GTSD_CMD_ReadFirmwareVersion(axis, ver);
+  }
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1588,8 +2342,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFpgaVersion(int16 axis, VERSION* ver, i
 {
   if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL)
     return RTN_OBJECT_UNCREATED;
+
   if (com_type == GTSD_COM_TYPE_RNNET)
-    return g_RnServoCom->GTSD_CMD_ReadFPGAVersion(axis, ver);
+  {
+	  if (0xF0 != stationId)
+	  {
+		  short rtn;
+		  rtn = g_RnServoCom->SetStationId(stationId);
+		  if (rtn != 0)
+		  {
+			  return rtn;
+		  }
+	  }
+
+	  return g_RnServoCom->GTSD_CMD_ReadFPGAVersion(axis, ver);
+  }
 
   if (Net_Rt_Lock_Err == TryLock())
   {
@@ -1602,7 +2369,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadFpgaVersion(int16 axis, VERSION* ver, i
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ClrAlarm(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ClrAlarm(axis);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ClrAlarm(axis);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1709,7 +2490,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ProcessorUartBootHandler(int16 axis, wstrin
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadLogAlarmCode(int16 axis, Uint32* alarmCode, Uint16& lenth, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ReadLogAlarmCode(axis, alarmCode, lenth);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ReadLogAlarmCode(axis, alarmCode, lenth);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -1720,7 +2515,21 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadLogAlarmCode(int16 axis, Uint32* alarmC
 
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadLogAlarmTimes(int16 axis, Uint16* alarmTimes, Uint16& lenth, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
-	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; if (com_type == GTSD_COM_TYPE_RNNET) return g_RnServoCom->GTSD_CMD_ReadLogAlarmTimes(axis, alarmTimes, lenth);
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return g_RnServoCom->GTSD_CMD_ReadLogAlarmTimes(axis, alarmTimes, lenth);
+	}
+
 	if (Net_Rt_Lock_Err == TryLock())
 	{
 		return Net_Rt_Lock_Err;
@@ -2136,10 +2945,23 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadEEPROM(int16 axis, Uint16 ofst, Uint8* 
 		return Net_Rt_Lock_Err;
 	}
 
-	if (com_type == GTSD_COM_TYPE_RNNET) 
-		return Unlock(g_RnServoCom->GTSD_CMD_ReadEEPROM(axis, ofst, value, num));
 
-	return RTN_PARAM_ERR;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+
+		return Unlock(g_RnServoCom->GTSD_CMD_ReadEEPROM(axis, ofst, value, num));
+	}
+
+	return Unlock(RTN_PARAM_ERR);
 // 	if (Net_Rt_Lock_Err == TryLock())
 // 	{
 // 		return Net_Rt_Lock_Err;
@@ -2156,10 +2978,23 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8*
 		return Net_Rt_Lock_Err;
 	}
 
-	if (com_type == GTSD_COM_TYPE_RNNET) 
-		return Unlock(g_RnServoCom->GTSD_CMD_WriteEEPROM(axis, ofst, value, num));
 
-	return RTN_PARAM_ERR;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+
+		return Unlock(g_RnServoCom->GTSD_CMD_WriteEEPROM(axis, ofst, value, num));
+	}
+
+	return Unlock(RTN_PARAM_ERR);;
 // 	if (Net_Rt_Lock_Err == TryLock())
 // 	{
 // 		return Net_Rt_Lock_Err;
@@ -2176,10 +3011,22 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_ReadEEPROMExt(int16 axis, Uint16 ofst, Uint
 		return Net_Rt_Lock_Err;
 	}
 
-	if (com_type == GTSD_COM_TYPE_RNNET)
-		return Unlock(g_RnServoCom->GTSD_CMD_ReadEEPROMExt(axis, ofst, value, num));
 
-	return RTN_PARAM_ERR;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return Unlock(g_RnServoCom->GTSD_CMD_ReadEEPROMExt(axis, ofst, value, num));
+	}
+
+	return Unlock(RTN_PARAM_ERR);;
 	// 	if (Net_Rt_Lock_Err == TryLock())
 	// 	{
 	// 		return Net_Rt_Lock_Err;
@@ -2196,10 +3043,22 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteEEPROMExt(int16 axis, Uint16 ofst, Uin
 		return Net_Rt_Lock_Err;
 	}
 
-	if (com_type == GTSD_COM_TYPE_RNNET)
-		return Unlock(g_RnServoCom->GTSD_CMD_WriteEEPROMExt(axis, ofst, value, num));
 
-	return RTN_PARAM_ERR;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
+		return Unlock(g_RnServoCom->GTSD_CMD_WriteEEPROMExt(axis, ofst, value, num));
+	}
+
+	return Unlock(RTN_PARAM_ERR);;
 	// 	if (Net_Rt_Lock_Err == TryLock())
 	// 	{
 	// 		return Net_Rt_Lock_Err;
@@ -2254,8 +3113,20 @@ SERVODRIVERCOMDLL_API short GTSD_CMD_XmlWriteFile(int16 axis, char* pFileNameLis
 
 	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL)
 		return Unlock(RTN_OBJECT_UNCREATED);
+
 	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
 		return Unlock(g_RnServoCom->GTSD_CMD_XmlWriteFile(axis, pFileNameList, pFileTypeList, file_num, tpfUpdataProgressPt, ptrv, progress));
+	}
 
 	return Unlock(RTN_PARAM_ERR);
 }
@@ -2270,8 +3141,20 @@ SERVODRIVERCOMDLL_API short GTSD_CMD_XmlReadFile(int16 axis, char* pFileNameList
 
 	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) 
 		return Unlock(RTN_OBJECT_UNCREATED);
-	if (com_type == GTSD_COM_TYPE_RNNET) 
+
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		if (0xF0 != stationId)
+		{
+			short rtn;
+			rtn = g_RnServoCom->SetStationId(stationId);
+			if (rtn != 0)
+			{
+				return rtn;
+			}
+		}
 		return Unlock(g_RnServoCom->GTSD_CMD_XmlReadFile(axis, pFileNameList, pFileTypeList, file_num, tpfUpdataProgressPt, ptrv, progress));
+	}
 
 	return Unlock(RTN_PARAM_ERR);
 

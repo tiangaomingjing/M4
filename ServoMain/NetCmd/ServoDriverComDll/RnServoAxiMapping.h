@@ -66,11 +66,15 @@ protected:
 	const int32						FPGA_RN_APP_END_OFST = 0xFFFF;
 public:
 	short InitialMapping(CRingNetDriver* driver);
-	Uint16 ConvertAxiToStationId(int16 axi_id);
-	Uint16 ConvertDspToStationId(int16 dsp_id);
+	Uint16 ConvertAxiToStationId(int16 axi_id);//把轴号转换为相对应的站号和通道号
+	Uint16 ConvertDspToStationId(int16 dsp_id);//把DSP站号号转换为相对应的站号和通道号
 	Uint16 ConvertAxiToDspId(int16 axi_id);
-	Uint16 ConvertAxiToSubAxiId(int16 axi_id);
+	Uint16 ConvertAxiToSubAxiId(int16 axi_id);//把轴号转换为DSP中的对应的轴号
 public:
 	Uint16 ConvertFpgaByteAddrByDspId(Uint16 axi_id, Uint16 fpga_byte_address);
+	//add by luo.mj 20180328
+	int16 m_map_type;//map模式，0：按轴映射；1：按站号映射；默认为按轴映射
+	Uint16 m_station_id;//按站号映射时，存储站号信息
+	/////////////////////////////////////////////
 };
 
