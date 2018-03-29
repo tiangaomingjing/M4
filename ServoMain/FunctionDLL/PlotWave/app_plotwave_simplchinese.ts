@@ -1582,12 +1582,12 @@ read error!</source>
 <context>
     <name>ServoControl</name>
     <message>
-        <location filename="../../ServoControl/servocontrol.cpp" line="779"/>
+        <location filename="../../ServoControl/servocontrol.cpp" line="783"/>
         <source>write error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../ServoControl/servocontrol.cpp" line="779"/>
+        <location filename="../../ServoControl/servocontrol.cpp" line="783"/>
         <source>write error
 please check your servo&apos;s status</source>
         <translation type="unfinished"></translation>

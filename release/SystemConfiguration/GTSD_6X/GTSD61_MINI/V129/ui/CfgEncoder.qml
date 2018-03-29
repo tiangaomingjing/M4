@@ -873,8 +873,9 @@ Rectangle {
                     //显示进度条
                     m_btnStartTest.barVisible=true;
                     m_btnStartTest.barValue=0;
-                    m_btnStartTest.btnText="请不要切换页面! 寻相进行中......";
+                    m_btnStartTest.btnText="寻相进行中......";
                     m_btnStartTest.btnTextColor="red";
+					root.showMessage("寻相进行中......");
                 }
             }
         }

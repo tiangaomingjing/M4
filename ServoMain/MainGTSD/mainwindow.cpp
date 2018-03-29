@@ -64,7 +64,7 @@
 #define XMLFILE_CHILD_VERSION_ROW_INDEX 0
 #define XMLFILE_NODE_NAME "XmlFileInformation"
 
-#define SDT_VERSION "1.1.13"
+#define SDT_VERSION "1.1.15"
 
 QString MainWindow::g_lastFilePath="./";
 int MainWindow::m_progessValue=0;
@@ -255,7 +255,7 @@ void MainWindow::onClearWarning()
 }
 void MainWindow::onQmlUiShowMessage(QString msg)
 {
-  ui->statusBar->showMessage(msg,5000);
+  ui->statusBar->showMessage(msg,10000);
   //暂时这样处理11-17
 //  if(ui->stackedWidget->currentWidget()->objectName()=="CfgMotor")
 //    QMessageBox::information(0,tr("warnning"),msg);
@@ -806,6 +806,7 @@ void MainWindow::onActionFile2ServoClicked()
       hardwareValid=check.checkHardwareValid(tree,m_powerLimitMapList);
       if(hardwareValid==false)
       {
+        QMessageBox::information(0,tr("! Error !"),tr("the paramaters do not load successfully"));
         tree->clear();
         delete tree;
         ui->progressBar->hide();

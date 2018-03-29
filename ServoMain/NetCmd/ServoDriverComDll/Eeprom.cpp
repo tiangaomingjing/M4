@@ -43,13 +43,15 @@ int16 CEeprom::EepromBaseOptWr(Uint16 eeprom_addr, Uint8 byte_data)
 	if (pCom->GetComProtocolType() == COM_PROTOCO_NET)
 	{
 		com_addr = eeprom_addr;
-		base_addr = FPGA_RN_EPR_START_OFST;
+        //base_addr = FPGA_RN_EPR_START_OFST;
+        base_addr = m_eeprom_id == FPGA_NORMAL_EEPROM ? FPGA_RN_EPR_START_OFST : FPGA_RN_EPR_EXT_START_OFST;
 		comAddr = base_addr + (com_addr);
 	}
 	else if (pCom->GetComProtocolType() == COM_PROTOCO_RINGNET)
 	{
 		com_addr = eeprom_addr;
-		base_addr = FPGA_EEPROM_BASEADDR;
+        //base_addr = FPGA_EEPROM_BASEADDR;
+        base_addr = m_eeprom_id == FPGA_NORMAL_EEPROM ? FPGA_EEPROM_BASEADDR : FPGA_EEPROM_EXT_BASEADDR;
 		comAddr = base_addr + (com_addr);
 	}
 	int16 comNum = 1;
@@ -74,13 +76,15 @@ int16 CEeprom::EepromBaseOptRd(Uint16 eeprom_addr, Uint8* byte_data)
 	if (pCom->GetComProtocolType() == COM_PROTOCO_NET)
 	{
 		com_addr = eeprom_addr;
-		base_addr = FPGA_RN_EPR_START_OFST; 
+        //base_addr = FPGA_RN_EPR_START_OFST;
+        base_addr = m_eeprom_id == FPGA_NORMAL_EEPROM ? FPGA_RN_EPR_START_OFST : FPGA_RN_EPR_EXT_START_OFST;
 		comAddr = base_addr + (com_addr);
 	}
 	else if (pCom->GetComProtocolType() == COM_PROTOCO_RINGNET)
 	{
 		com_addr = eeprom_addr;
-		base_addr = FPGA_EEPROM_BASEADDR;
+        //base_addr = FPGA_EEPROM_BASEADDR;
+        base_addr = m_eeprom_id == FPGA_NORMAL_EEPROM ? FPGA_EEPROM_BASEADDR : FPGA_EEPROM_EXT_BASEADDR;
 		comAddr = base_addr + (com_addr);
 	}
 	int16 comNum = 1;

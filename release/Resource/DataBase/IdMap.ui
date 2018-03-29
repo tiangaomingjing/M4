@@ -75,6 +75,17 @@
        <string>SD63P003</string>
       </property>
      </item>
+     <item>
+      <property name="text">
+       <string>GTSD21</string>
+      </property>
+      <property name="text">
+       <string>21000509</string>
+      </property>
+      <property name="text">
+       <string>SD43P004</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

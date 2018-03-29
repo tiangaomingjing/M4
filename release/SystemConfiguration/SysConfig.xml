@@ -21,6 +21,7 @@
 	<Model name="GTSD42" axisCount ="4">
 		<FirmWare name="V123"/>
 		<FirmWare name="V126"/>
+		<FirmWare name="V127"/>
 		<FirmWare name="V128"/>
 		<FirmWare name="V129"/>
 		<FirmWare name="V130"/>
@@ -86,4 +87,36 @@
       </Root>
     </Tree>
   </Type>
+  
+  <Type id="2" name="GTSD_2X">
+	<Model name="GTSD21" axisCount ="2">
+		<FirmWare name="V129"/>
+		<FirmWare name="V130"/>
+	</Model>
+    <Tree>
+      <Root name="参数配置">
+		<Child name="电机参数" classname="CfgMotor" PrmFuncFile="PrmFuncMotor"/>
+		<Child name="编码器" classname="CfgEncoder" PrmFuncFile="PrmFuncEncoder"/>
+		<Child name="功率配置" classname="CfgDriverPower" PrmFuncFile="PrmFuncPower"/>
+        <Child name="电流控制器" classname="CfgCurrentLoop" PrmFuncFile="PrmFuncCurrentloop"/>
+        <Child name="速度控制器" classname="CfgSpeedLoop" PrmFuncFile="PrmFuncSpeedloop"/>
+        <Child name="位置控制器" classname="CfgPositionLoop" PrmFuncFile="PrmFuncPositionloop"/>
+		<Child name="制动" classname="CfgBrake" PrmFuncFile="PrmFuncBrake"/>
+        <!--Child name="阈值设定" classname="CfgLimit" PrmFuncFile="PrmFuncPositionloop" /-->
+        <!--Child name="运动规划" classname="CfgMoveProfile" PrmFuncFile="PrmFuncPositionloop"/-->
+        <!--Child name="输入输出" classname="CfgIO" PrmFuncFile="PrmFuncPositionloop"/-->
+      </Root>
+      
+      <Root name="运行监视">
+        <Child name="设备状态" classname="DeviceStatus" PrmFuncFile="PrmFuncDeviceStatus"/>
+      </Root>
+	  
+	  <Root name="高级功能">
+        <Child name="RamAcess" classname="AdvRAM" PrmFuncFile="PrmRAMAxis"/>
+        <Child name="FlashAcess" classname="AdvFLASH" PrmFuncFile="PrmFlashAxis"/>
+      </Root>
+
+    </Tree>
+  </Type>
+  
 </GTSD>
