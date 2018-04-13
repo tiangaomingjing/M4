@@ -33,7 +33,7 @@ protected:
 	Uint16		m_wave_en;
 	Uint16		m_wave_num;
 	Uint16		*m_wave_byte_size_list;
-	BOOL		m_find_keyword;
+  bool		m_find_keyword;
 
 	Uint16		m_keyword_distane_cnt;
 	//////////////////////////////////////////////////////////////////////////

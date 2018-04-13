@@ -1,9 +1,10 @@
-﻿#include <QCoreApplication>
+﻿#include <QApplication>
 #include <QDebug>
 #include <QString>
 #include <QList>
 #include <QMap>
 #include <QMapIterator>
+#include <QLabel>
 
 #include <iostream>
 #include <vector>
@@ -63,7 +64,7 @@ void getArray(int **p)
 
 int main(int argc, char *argv[])
 {
-  QCoreApplication a(argc, argv);
+  QApplication a(argc, argv);
   QString str="65535";
   int aa=str.toInt();
   qDebug()<<"toUShort:"<<str.toUShort();
@@ -244,6 +245,19 @@ int main(int argc, char *argv[])
     printf("\r\n");
   }
 
+  QStringList slist;
+  slist<<"aa"<<"bb"<<"cc";
+  QLabel *label=new QLabel;
+  QString strTest;
+  for(int i=0;i<slist.count();i++)
+  {
+    strTest.append(slist.at(i)+"\n");
+  }
+  label->setText(strTest);
+  label->show();
+  label=new QLabel;
+  label->setText(QString(slist.join('\n')));
+  label->show();
   return a.exec();
 }
 

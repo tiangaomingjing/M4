@@ -1,6 +1,8 @@
 ﻿#include "newconfigdialog.h"
 #include "ui_newconfigdialog.h"
 #include "globaldef.h"
+#include "ServoDriverComDll.h"
+
 #include <QMessageBox>
 #define RECORD_VERSION 0x80
 #define RECORD_COM_ETHERNET 0x01
@@ -13,7 +15,7 @@ NewConfigDialog::NewConfigDialog(QWidget *parent) : QWidget(parent),
   m_recordClick(0)
 {
   ui->setupUi(this);
-  ui->widget_ip->hide();
+//  ui->widget_ip->hide();
   drawPicture();
 }
 
@@ -26,7 +28,8 @@ NewConfigDialog::NewConfigDialog(SysConfig *srcConfig, QWidget *parent) : QWidge
   connect(ui->treeWidget,SIGNAL(itemClicked(QTreeWidgetItem*,int)),this,SLOT(onTreeItemClicked(QTreeWidgetItem*,int)));
   connect(ui->btn_cancle,SIGNAL(clicked(bool)),this,SLOT(onBtnCancleClicked()));
   connect(ui->btn_apply,SIGNAL(clicked(bool)),this,SLOT(onBtnApplyClicked()));
-  ui->widget_ip->hide();
+  connect(ui->btnSearch,SIGNAL(clicked(bool)),this,SLOT(onBtnSearchClicked()));
+//  ui->widget_ip->hide();
   ui->widget_rnnetPort->hide();
   drawPicture();
   ui->btn_apply->setText(tr("Apply"));
@@ -66,7 +69,7 @@ NewConfigDialog::NewConfigDialog(SysConfig *srcConfig, QWidget *parent) : QWidge
       itemType=new QTreeWidgetItem(itemRoot);
       itemType->setText(0,srcConfig->sysTypeList.at(i).typeName);
       itemType->setText(1,QString::number(srcConfig->sysTypeList.at(i).typeId));
-      qDebug()<<"typeIDDDDDDDDDDDDDDDD"<<srcConfig->sysTypeList.at(i).typeId;
+//      qDebug()<<"typeIDDDDDDDDDDDDDDDD"<<srcConfig->sysTypeList.at(i).typeId;
       for(int j=0;j<srcConfig->sysTypeList.at(i).modelList.size();j++)
       {
         itemModel=new QTreeWidgetItem(itemType);
@@ -85,6 +88,8 @@ NewConfigDialog::NewConfigDialog(SysConfig *srcConfig, QWidget *parent) : QWidge
   ui->treeWidget->expandAll();
   ui->treeWidget->resizeColumnToContents(0);
   setIpInputFormat();
+
+  ui->progressBar->setVisible(false);
 }
 NewConfigDialog::~NewConfigDialog()
 {
@@ -102,19 +107,19 @@ void NewConfigDialog::onTreeItemClicked(QTreeWidgetItem *item, int column)
       switch (comtype)
       {
       case 0:
-        ui->widget_ip->hide();
+//        ui->widget_ip->hide();
         ui->widget_rnnetPort->hide();
         break;
       case 1:
-        ui->widget_ip->hide();
+//        ui->widget_ip->hide();
         ui->widget_rnnetPort->show();
         break;
       case 2:
-        ui->widget_ip->show();
+//        ui->widget_ip->show();
         ui->widget_rnnetPort->hide();
         break;
       default:
-        ui->widget_ip->hide();
+//        ui->widget_ip->hide();
         ui->widget_rnnetPort->hide();
         break;
       }
@@ -151,7 +156,7 @@ void NewConfigDialog::onTreeItemClicked(QTreeWidgetItem *item, int column)
   }
   QString str;
   str.sprintf("%.2x",m_recordClick);
-  qDebug()<<"column"<<column<<"record"<<str;
+//  qDebug()<<"column"<<column<<"record"<<str;
 }
 
 void NewConfigDialog::onBtnCancleClicked()
@@ -174,14 +179,53 @@ void NewConfigDialog::onBtnApplyClicked()
   }
   else
   {
-    m_userConfig.com.ipAddress=ui->lineEdit_Addr->text();
-    m_userConfig.com.ipPort=ui->lineEdit_Port->text().toInt();
-    qDebug()<<ui->lineEdit_Addr->text();
+//    m_userConfig.com.ipAddress=ui->lineEdit_Addr->text();
+//    m_userConfig.com.ipPort=ui->lineEdit_Port->text().toInt();
+//    qDebug()<<ui->lineEdit_Addr->text();
     m_userConfig.com.rnStation=ui->lineEdit_rnNetPort->text().toInt();
     this->hide();
+
     emit newConfig(&m_userConfig);
   }
 
+}
+
+void NewConfigDialog::onBtnSearchClicked()
+{
+  ui->progressBar->setVisible(true);
+  qint16 ret=0;
+  ui->label_stationList->setText("240");
+  ret=openRnNet(processCallBackFunc,(void *)ui->progressBar);
+//  qDebug()<<"open ret"<<ret;
+  if(ret==0)
+  {
+    std::vector<qint16>stationVector=getStationsWhenBroadcast();
+    QVector<qint16> vec;
+    vec=vec.fromStdVector(stationVector);
+    QStringList sList;
+    QString str;
+    quint8 axisCount=0;
+    for(int i=0;i<vec.count();i++)
+    {
+//      qDebug()<<"station="<<vec.at(i);
+      axisCount=getAxisCount(vec.at(i));
+      if(axisCount!=0)
+      {
+        str=tr("Station:%1  axisCount:%2").arg(vec.at(i)).arg(axisCount);
+        sList.append(str);
+      }
+      else
+      {
+        QMessageBox::information(0,tr("NetError"),tr("read Axis Count error!"));
+      }
+    }
+    ui->label_stationList->setText(sList.join('\n'));
+  }
+  else
+    QMessageBox::information(0,tr("Net Error"),tr("Net Error:\n1 net com is wrong\n2 net not connect"));
+
+  closeRnNet();
+  ui->progressBar->setVisible(false);
 }
 
 //!-------------------private  function----------------------------
@@ -195,21 +239,59 @@ void NewConfigDialog::drawPicture()
 void NewConfigDialog::setIpInputFormat()
 {
   //Ip地址输入检测
-  QRegExp rx("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
-  QRegExpValidator *v=new QRegExpValidator(rx,ui->lineEdit_Addr);
-  ui->lineEdit_Addr->setValidator(v);
+//  QRegExp rx("^((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)$");
+//  QRegExpValidator *v=new QRegExpValidator(rx,ui->lineEdit_Addr);
+//  ui->lineEdit_Addr->setValidator(v);
 //  ui->lineEdit_Addr->setInputMask("000.000.000.000;0");//只要加上;0保证有默认值即可使得正则和mask同时生效。
 
   //端口号输入检测
-  QRegExp regExp("^([0-9]|[1-9]\\d|[1-9]\\d{2}|[1-9]\\d{3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$");
-  QRegExpValidator *v2=new QRegExpValidator(regExp,ui->lineEdit_Port);
-  ui->lineEdit_Port->setValidator(v2);
+//  QRegExp regExp("^([0-9]|[1-9]\\d|[1-9]\\d{2}|[1-9]\\d{3}|[1-5]\\d{4}|6[0-4]\\d{3}|65[0-4]\\d{2}|655[0-2]\\d|6553[0-5])$");
+//  QRegExpValidator *v2=new QRegExpValidator(regExp,ui->lineEdit_Port);
+//  ui->lineEdit_Port->setValidator(v2);
 
   //站号输入检测
   QIntValidator *v3=new QIntValidator(0,255,ui->lineEdit_rnNetPort);
   ui->lineEdit_rnNetPort->setValidator(v3);
 
-  ui->lineEdit_Addr->setText("192.168.0.0");
-  ui->lineEdit_Port->setText("8086");
+//  ui->lineEdit_Addr->setText("192.168.0.0");
+//  ui->lineEdit_Port->setText("8086");
   ui->lineEdit_rnNetPort->setText("240");
+}
+
+std::vector<qint16> NewConfigDialog::getStationsWhenBroadcast()
+{
+  std::vector<qint16> v;
+  v.clear();
+  qint16 ret=GTSD_CMD_GetStationIdList(v, GTSD_COM_TYPE_RNNET);
+//  qDebug()<<"GTSD_CMD_GetStationIdList ret="<<ret;
+  if(ret!=0)
+    v.clear();
+  return v;
+}
+
+quint8 NewConfigDialog::getAxisCount(quint8 rnStation)
+{
+  qint16 axisNum;
+  qint16 ret=GTSD_CMD_GetStationAxisNum(&axisNum, GTSD_COM_TYPE_RNNET, rnStation);
+//  qDebug()<<"GTSD_CMD_GetStationAxisNum "<<ret;
+  if(ret!=0)
+    axisNum=0;
+  return axisNum;
+}
+
+qint16 NewConfigDialog::openRnNet(void (*processCallBack)(void *argv, short *value),void *pBar)
+{
+  qint16 ret=GTSD_CMD_Open(processCallBack, pBar, GTSD_COM_TYPE_RNNET);
+  return ret;
+}
+
+void NewConfigDialog::closeRnNet()
+{
+  GTSD_CMD_Close(GTSD_COM_TYPE_RNNET);
+}
+
+void NewConfigDialog::processCallBackFunc(void *argv, short *value)
+{
+  QProgressBar *bar=static_cast<QProgressBar *>(argv);
+  bar->setValue(*value);
 }

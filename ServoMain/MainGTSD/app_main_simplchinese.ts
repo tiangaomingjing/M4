@@ -643,6 +643,8 @@ file download unsuccessful !</source>
         <location filename="mainwindow.cpp" line="1582"/>
         <source>
  error type:%1</source>
+        <oldsource>
+ error type:%1</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1699,8 +1701,8 @@ SDT版本:%2
     <message>
         <location filename="NewConfigDialog/NewConfigDialog.ui" line="20"/>
         <location filename="NewConfigDialog/NewConfigDialog.ui" line="62"/>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="159"/>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="215"/>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="131"/>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="187"/>
         <source>TextLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1715,14 +1717,12 @@ SDT版本:%2
         <translation type="unfinished">当前设置信息</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="91"/>
         <source>IP Address:</source>
-        <translation type="unfinished">IP 地址:</translation>
+        <translation type="obsolete">IP 地址:</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="114"/>
         <source>IP Port:</source>
-        <translation type="unfinished">IP 端口:</translation>
+        <translation type="obsolete">IP 端口:</translation>
     </message>
     <message>
         <location filename="NewConfigDialog/NewConfigDialog.ui" line="73"/>
@@ -1730,53 +1730,63 @@ SDT版本:%2
         <translation type="unfinished">端口:</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="137"/>
-        <source>RnNetPort:</source>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="88"/>
+        <source>240</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="170"/>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="95"/>
+        <source>search net</source>
+        <translation type="unfinished">查询网络</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="107"/>
+        <source>RnNetPort:</source>
+        <translation type="unfinished">目标站号：</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="142"/>
         <source>Type:</source>
         <translation type="unfinished">名称:</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="199"/>
-        <location filename="NewConfigDialog/NewConfigDialog.ui" line="206"/>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="171"/>
+        <location filename="NewConfigDialog/NewConfigDialog.ui" line="178"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="32"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="35"/>
         <source>Apply</source>
         <translation type="unfinished">应用</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="33"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="36"/>
         <source>cancle</source>
         <translation type="unfinished">退出</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="38"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="41"/>
         <source>configuration</source>
         <translation type="unfinished">配置</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="48"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="51"/>
         <source>Com</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="61"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="64"/>
         <source>Type</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="135"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="140"/>
         <source>Com:%1</source>
         <translation type="unfinished">端口:%1</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="147"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="152"/>
         <source>Type:%1
 ID:%2
 Model:%3
@@ -1789,20 +1799,49 @@ axisCount:%4
 %5</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="165"/>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="172"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="170"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="177"/>
         <source>information</source>
         <translation type="unfinished">信息</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="165"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="170"/>
         <source>please select firmware version</source>
         <translation type="unfinished">请选择固件版本</translation>
     </message>
     <message>
-        <location filename="NewConfigDialog/newconfigdialog.cpp" line="172"/>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="177"/>
         <source>please select com type</source>
         <translation type="unfinished">请选择端口类型</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="214"/>
+        <source>Station:%1  axisCount:%2</source>
+        <translation type="unfinished">站号:%1  驱动器轴数:%2</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="219"/>
+        <source>NetError</source>
+        <translation type="unfinished">网络错误</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="219"/>
+        <source>read Axis Count error!</source>
+        <translation type="unfinished">读取轴数信息错误！</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="225"/>
+        <source>Net Error</source>
+        <translation type="unfinished">网络错误</translation>
+    </message>
+    <message>
+        <location filename="NewConfigDialog/newconfigdialog.cpp" line="225"/>
+        <source>Net Error:
+1 net com is wrong
+2 net not connect</source>
+        <translation type="unfinished">网络错误：
+1 网络接口插错
+2 网络未连接</translation>
     </message>
 </context>
 <context>
@@ -1997,7 +2036,7 @@ is out of range (%4~%5)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="main.cpp" line="22"/>
+        <location filename="main.cpp" line="23"/>
         <source>GOOGOLTECH servo application initialing......</source>
         <translation type="unfinished"></translation>
     </message>

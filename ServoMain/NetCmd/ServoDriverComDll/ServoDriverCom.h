@@ -5,6 +5,8 @@
 #include "RnDriverPlot.h"
 #include "ServoDriverComDef.h"
 #include "Eeprom.h"
+#include<vector>  
+using namespace std;
 
 class CServoDriverCom
 {
@@ -20,6 +22,8 @@ public:
 	//add by luo.mj 20180328
 	Uint16 m_station_id;
 	short SetStationId(Uint16 station_id);
+	short GetStationIdList(vector<int16>& stationIdList);
+	short GetStationAxisNum(int16* axisNum);
 	/////////////////////////////////////////////
 	short Initial(CRingNetInterface* pDriver);
 	short InitialEeprom(CEeprom* pEeprom);

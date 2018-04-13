@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "ServoDriverCom.h"
 #include "XmlCodeUpdate.h"
+#include "RingNetDeviceDef.h"
 
 
 
@@ -66,17 +67,62 @@ short CServoDriverCom::Initial(CRingNetInterface* pDriver)
 		{
 			return RTN_MALLOC_FAIL;
 		}
-		Uint16 dsp_list[3] = {0xF001, 0xF002, 0xF003};
-		for (int i = 0; i < 3; i++)
+// 		Uint16 dsp_list[3] = {0xF001, 0xF002, 0xF003};
+// 		for (int i = 0; i < 3; i++)
+// 		{
+// 			dsp_list[i] = m_pMapping->ConvertDspToStationId(i);
+// 		}
+// 		
+// 		short rtn = m_pPlot->PW_CreateDspWave(3, dsp_list);
+// 		if (rtn != RTN_SUCCESS)
+// 		{
+// 			return rtn;
+// 		}
+// 		m_pDriver->m_pUserHandleRespFunctionDriver = m_pPlot;
+
+		int station_num = m_pDriver->m_device_num;
+		int dsp_num = 0;
+		for (int i = 0; i < station_num; i++)
 		{
-			dsp_list[i] = m_pMapping->ConvertDspToStationId(i);
+			switch (m_pDriver->m_pRnDeviceOnline[i]->m_CNS.m_station_msg.bit.station_msg)
+			{
+			case TB_GTSD13:
+			case TB_GTSD21:
+				dsp_num += 1;
+				break;
+			case TB_GTDS41:
+			case TB_GTDS42:
+				dsp_num += 2;
+				break;
+			case TB_GTSD61:
+				dsp_num += 3;
+				break;
+			default:
+				break;
+			}
+		}
+
+		Uint16 *dsp_list = NULL;
+		dsp_list = 	(Uint16*)malloc(dsp_num * sizeof(Uint16));
+		if (NULL != dsp_list)
+		{
+			for (int i = 0; i < dsp_num; i++)
+			{
+				dsp_list[i] = m_pMapping->ConvertDspToStationId(i);
+			}
+
+			short rtn = m_pPlot->PW_CreateDspWave(dsp_num, dsp_list);
+			free(dsp_list);
+			if (rtn != RTN_SUCCESS)
+			{
+				return rtn;
+			}
+		}
+		else
+		{
+			return RTN_MALLOC_FAIL;
 		}
 		
-		short rtn = m_pPlot->PW_CreateDspWave(3, dsp_list);
-		if (rtn != RTN_SUCCESS)
-		{
-			return rtn;
-		}
 		m_pDriver->m_pUserHandleRespFunctionDriver = m_pPlot;
 	}
 	return RTN_SUCCESS;
@@ -2656,5 +2702,52 @@ short CServoDriverCom::SetStationId(Uint16 station_id)
 	}
 
 	m_station_id = 0xF0;
+}
+
+short CServoDriverCom::GetStationIdList(vector<int16>& stationIdList)
+{
+	int16 stationId = 0;
+
+	for (int16 i = 0; i < m_pDriver->m_device_num; i++)
+	{
+		switch (m_pDriver->m_pRnDeviceOnline[i]->m_CNS.m_station_msg.bit.station_msg)
+		{
+		case TB_GTSD13:
+		case TB_GTSD21:
+		case TB_GTDS41:
+		case TB_GTDS42:
+		case TB_GTSD61:
+			stationId = m_pDriver->m_pRnDeviceOnline[i]->m_CNS.m_online_msg.bit.device_id;
+			stationIdList.push_back(stationId);
+			break;
+		default:
+			break;
+		}
+	}
+	return RTN_SUCCESS;
+}
+
+short CServoDriverCom::GetStationAxisNum(int16* axisNum)
+{
+	switch (m_pDriver->m_pRnDevice[m_station_id]->m_staion_type)
+	{
+	case TB_GTSD13:
+		*axisNum = 1;
+		break;
+	case TB_GTSD21:
+		*axisNum = 2;
+		break;
+	case TB_GTDS41:
+	case TB_GTDS42:
+		*axisNum = 4;
+		break;
+	case TB_GTSD61:
+		*axisNum = 6;
+		break;
+	default:
+		return RTN_PARAM_ERR;
+		break;
+	}
+	return RTN_SUCCESS;
 }
 /////////////////////////////////////////////

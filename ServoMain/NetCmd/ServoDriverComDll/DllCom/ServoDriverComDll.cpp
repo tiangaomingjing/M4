@@ -275,11 +275,12 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Close(int16 com_type)
 		{
 			return Net_Rt_Lock_Err;
 		}
+		
 		if (g_RnServoCom)
 		{
 			delete g_RnServoCom;
 			g_RnServoCom = NULL;
-		}
+ 		}
 		if (g_RnInterface)
 		{
 			delete g_RnInterface;
@@ -382,6 +383,42 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_Close(int16 com_type)
 	}
 	return Unlock(GTSD_CMD_ST_CLOSE(com_type));
 }
+
+////////////   add by luo.mj 20180329                //////////////////////////////////////////////
+
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetStationIdList(vector<int16>& stationIdList, int16 com_type/* = GTSD_COM_TYPE_NET*/)
+{
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+		g_RnServoCom->GetStationIdList(stationIdList);
+		return RTN_SUCCESS;
+	}
+
+	return RTN_PARAM_ERR;
+}
+
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetStationAxisNum(int16* axisNum, int16 com_type/* = GTSD_COM_TYPE_NET*/, int16 stationId/* = 0xf0*/)
+{
+	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED;
+	if (com_type == GTSD_COM_TYPE_RNNET)
+	{
+    if (0xF0 != stationId)
+    {
+      short rtn;
+      rtn = g_RnServoCom->SetStationId(stationId);
+      if (rtn != 0)
+      {
+        return rtn;
+      }
+    }
+		g_RnServoCom->GetStationAxisNum(axisNum);
+		return RTN_SUCCESS;
+	}
+	return RTN_PARAM_ERR;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOn(int16 axis, int16 com_type /*= GTSD_COM_TYPE_NET*/, int16 stationId /*= 0xf0*/)
 {
 	if (com_type == GTSD_COM_TYPE_RNNET && g_RnServoCom == NULL) return RTN_OBJECT_UNCREATED; 
@@ -2994,7 +3031,7 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_WriteEEPROM(int16 axis, Uint16 ofst, Uint8*
 		return Unlock(g_RnServoCom->GTSD_CMD_WriteEEPROM(axis, ofst, value, num));
 	}
 
-	return Unlock(RTN_PARAM_ERR);;
+	return Unlock(RTN_PARAM_ERR);
 // 	if (Net_Rt_Lock_Err == TryLock())
 // 	{
 // 		return Net_Rt_Lock_Err;

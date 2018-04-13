@@ -14,6 +14,7 @@ INCLUDEPATH +=$${PWD}/../ServoControl\
                 $${PWD}/../NetCmd/ServoDriverComDll\
                 $${PWD}/../NetCmd/ServoDriverComDll/NetCom/include\
                 $${PWD}/../NetCmd/ServoDriverComDll/DllCom\
+                $${PWD}/../NetCmd/ServoDriverComDll/RingNetCom/include\
                 $${PWD}/..\
                 $${PWD}/../FunctionDLL/AbstractFuncWidget\
                 $${PWD}/../FunctionDLL/AdvFLASH\

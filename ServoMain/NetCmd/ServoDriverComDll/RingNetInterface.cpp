@@ -39,6 +39,7 @@ CRingNetInterface::CRingNetInterface()
 
 CRingNetInterface::~CRingNetInterface()
 {
+
 }
 /*******************************************************************************************
 功能：		打开设备

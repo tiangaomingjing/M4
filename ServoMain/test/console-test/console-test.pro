@@ -1,4 +1,4 @@
-QT += core
+QT += core widgets
 QT -= gui
 
 TARGET = console-test

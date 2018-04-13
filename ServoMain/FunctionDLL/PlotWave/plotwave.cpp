@@ -4616,7 +4616,7 @@ void PlotWave::onMotionStatusPlanVelTimeOut(int axisIndex)
   qDebug()<<"input axis_"<<axisIndex<<" set run spd=0";
   if(axisInSum>=ui->listWidget_axis_tab2->selectedItems().count())
   {
-    m_motionStatusPtrList.at(0)->delayms(50);
+    m_motionStatusPtrList.at(0)->delayms(400);
     qDebug()<<"set servo off";
     for(int i=0;i<m_motionStatusPtrList.count();i++)
     {

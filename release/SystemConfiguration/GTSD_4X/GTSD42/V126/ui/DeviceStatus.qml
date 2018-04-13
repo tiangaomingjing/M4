@@ -228,7 +228,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_BrkPh;
-                        title: "输入断线";
+                        title: "输入缺相";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -309,7 +309,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_OBPH;
-                        title: "输出断线";
+                        title: "电流跟踪误差超限";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -394,7 +394,7 @@ Rectangle{
         target: driverStatus;
         onTimeOutToQml:{
             updateUiData();
-            //console.log(qsTr("updata qml ui....")+axisIndex);
+            console.log(qsTr("updata qml ui....")+axisIndex);
         }
     }
 }

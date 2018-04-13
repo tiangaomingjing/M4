@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
   }
 
   QSplashScreen *splashScreen = new QSplashScreen;
+  splashScreen->setEnabled(false);
   splashScreen->setPixmap(QPixmap(ICON_FILE_PATH+ICON_STARTUP));
   splashScreen->show();
   splashScreen->showMessage(QObject::tr("GOOGOLTECH servo application initialing......"), Qt::AlignLeft | Qt::AlignBottom, Qt::white);

@@ -22,10 +22,18 @@ private slots:
   void onTreeItemClicked(QTreeWidgetItem *item,int column);
   void onBtnCancleClicked(void);
   void onBtnApplyClicked(void);
+  void onBtnSearchClicked();
+
 
 private:
   void drawPicture(void);
   void setIpInputFormat(void);
+  std::vector<qint16> getStationsWhenBroadcast();
+  quint8 getAxisCount(quint8 rnStation);
+  qint16 openRnNet(void (*processCallBack)(void *argv, short *value),void *pBar);
+  void closeRnNet();
+
+  static void processCallBackFunc(void *argv, short *value);
 private:
   Ui::NewConfigDialog *ui;
   SysConfig *mp_sysConfig;

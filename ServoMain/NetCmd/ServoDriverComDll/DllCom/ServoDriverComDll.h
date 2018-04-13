@@ -45,6 +45,9 @@ using namespace std;
 //25---说明网络通信不正常
 //27---说明上一条指令没有完成，这时可忽略通信错误计数
 #include "ServoDriverComDef.h"
+
+#include<vector>  
+using namespace std;
 // typedef enum
 // {
 // 	COM_OK,
@@ -318,6 +321,9 @@ SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetNetCardMsg(void);
 //////////////////////////////////////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Open(void(*tpfUpdataProgressPt)(void*, int16*), void* ptrv, int16 com_type = GTSD_COM_TYPE_NET);
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_Close(int16 com_type = GTSD_COM_TYPE_NET);
+////////////   add by luo.mj 20180329                //////////////////////////////////////////////
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetStationIdList(vector<int16>& stationIdList, int16 com_type = GTSD_COM_TYPE_NET);
+SERVODRIVERCOMDLL_API int16 GTSD_CMD_GetStationAxisNum(int16* axisNum, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);
 
 /////////////////////////////////com vs dsp/////////////////////////////////////////
 SERVODRIVERCOMDLL_API int16 GTSD_CMD_SetServoOn(int16 axis, int16 com_type = GTSD_COM_TYPE_NET, int16 stationId = 0xf0);

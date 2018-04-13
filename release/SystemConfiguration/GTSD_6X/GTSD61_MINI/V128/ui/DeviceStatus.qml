@@ -228,7 +228,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_BrkPh;
-                        title: "输入断线";
+                        title: "输入缺相";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -302,7 +302,7 @@ Rectangle{
                     }
                     LedIndicator{
                         id:led_OBPH;
-                        title: "输出断线";
+                        title: "电流跟踪误差超限";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -358,8 +358,8 @@ Rectangle{
                         Layout.fillHeight: true;
                     }
                     LedIndicator{
-                        id:led_rsv1;
-                        title: "保留";
+                        id:led_com;
+                        title: "GLINK_2通信异常";
                         iconPath: root.iconPath;
                         Layout.fillHeight: true;
                     }
@@ -400,6 +400,7 @@ Rectangle{
         led_FAN.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,19,1)));
         led_SRF.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,20,1)));
         led_OBP.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,21,1)));
+        led_com.ledOn=!Boolean(parseInt(factory.dataTree.textChild(3,22,1)));
 
         m_allLedFlag.ledOn=!Boolean(parseInt(factory.dataTree.textTopLevel(2,1)));
 
@@ -437,7 +438,7 @@ Rectangle{
         target: driverStatus;
         onTimeOutToQml:{
             updateUiData();
-            //console.log(qsTr("updata qml ui....")+axisIndex);
+            console.log(qsTr("updata qml ui....")+axisIndex);
         }
     }
 }
